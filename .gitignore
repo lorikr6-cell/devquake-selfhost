@@ -2,7 +2,8 @@ node_modules/
 .next/
 .env
 .env.local
-data/
+/data/
+shell/data/
 *.log
 .DS_Store
 next-env.d.ts
