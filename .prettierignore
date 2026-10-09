@@ -1,0 +1,7 @@
+vendor/
+shell/src/generated/
+pnpm-lock.yaml
+.next/
+apps/*/docker-compose.yml
+apps/*/.env.example
+apps/*/README.md

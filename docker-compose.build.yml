@@ -1,0 +1,10 @@
+# Builds the app from this repository instead of pulling the published image (for testing):
+#   APP=pulse docker compose -f apps/pulse/docker-compose.yml -f docker-compose.build.yml up --build
+# Paths are relative to apps/<app>/, the first file's folder.
+services:
+  app:
+    image: devquake-${APP:?set APP to the app, e.g. pulse}:local
+    build:
+      context: ../..
+      args:
+        APP: ${APP}

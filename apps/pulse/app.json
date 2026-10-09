@@ -1,0 +1,32 @@
+{
+  "id": "pulse",
+  "name": "Pulse",
+  "tagline": "A self-hosted realtime events API: your servers and websites send events with your own key:value data, and every connected browser receives them live.",
+  "features": [
+    "Send events from your server (secret key), your users' browsers (short-lived client tokens) or verified websites (public key)",
+    "Every browser listening to a channel receives them live (Server-Sent Events, with polling as a fallback)",
+    "Your own event types with checked key:value fields, a live test page and copy-ready snippets",
+    "No per-message pricing: limits are yours to set"
+  ],
+  "audience": "Developers and teams who want a Pusher-style service on their own server.",
+  "plugins": ["pulse"],
+  "hostedUrl": "https://pulse.devquake.com",
+  "secrets": {
+    "PULSE_MASTER_KEY": {
+      "kind": "base64-32",
+      "help": "Derives the apps' secret keys (32 random bytes, base64). Made on first start and kept in the data volume; set it to manage it yourself. Changing it invalidates every secret key."
+    }
+  },
+  "env": [
+    {
+      "name": "PULSE_DEFAULT_PLAN",
+      "default": "full",
+      "help": "Limits for members: full (default here) or standard."
+    },
+    {
+      "name": "PULSE_MAX_STREAMS",
+      "default": "500",
+      "help": "Live connections this server keeps open at most, for all apps together."
+    }
+  ]
+}

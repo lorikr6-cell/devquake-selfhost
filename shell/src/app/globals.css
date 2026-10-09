@@ -1,0 +1,70 @@
+@import 'tailwindcss';
+
+/* Tailwind classes used by the shared UI and the app (copied by scripts/sync.mjs). */
+@source '../../../vendor/packages/ui/src';
+@source '../../../vendor/plugins';
+
+/* Dark mode follows the device, as "Adaptive" on DevQuake. */
+@custom-variant dark {
+  &:where([data-theme='dark'], [data-theme='dark'] *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:not([data-theme='light'], [data-theme='light'] *)) {
+      @slot;
+    }
+  }
+}
+
+:root {
+  color-scheme: light dark;
+  --dq-ink: #16181d;
+  --dq-paper: #f4f1ea;
+  --dq-quake: #e4572e;
+  --font-brand: system-ui, sans-serif;
+}
+
+@theme inline {
+  --color-ink: var(--dq-ink);
+  --color-paper: var(--dq-paper);
+  --color-quake: var(--dq-quake);
+  --font-display: var(--font-brand);
+}
+
+@layer base {
+  body {
+    background: var(--dq-paper);
+    color: var(--dq-ink);
+  }
+  @media (prefers-color-scheme: dark) {
+    body {
+      background: var(--dq-ink);
+      color: var(--dq-paper);
+    }
+  }
+  option,
+  optgroup {
+    background-color: #ffffff;
+    color: var(--dq-ink);
+  }
+  @media (prefers-color-scheme: dark) {
+    option,
+    optgroup {
+      background-color: var(--dq-ink);
+      color: var(--dq-paper);
+    }
+  }
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']),
+  summary,
+  select:not(:disabled),
+  input[type='checkbox']:not(:disabled),
+  input[type='radio']:not(:disabled) {
+    cursor: pointer;
+  }
+  button:disabled,
+  select:disabled,
+  input:disabled {
+    cursor: not-allowed;
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "devquake-selfhost",
+  "private": true,
+  "description": "DevQuake apps on your own server: one app per instance, with its own MySQL database.",
+  "license": "AGPL-3.0-only",
+  "scripts": {
+    "sync": "node scripts/sync.mjs",
+    "select": "node scripts/select-app.mjs",
+    "setup": "node scripts/setup.mjs",
+    "dev": "pnpm --filter @devquake-selfhost/shell dev",
+    "build": "pnpm --filter @devquake-selfhost/shell build",
+    "start": "pnpm --filter @devquake-selfhost/shell start",
+    "typecheck": "pnpm --filter @devquake-selfhost/shell typecheck",
+    "test": "pnpm --filter @devquake-selfhost/shell test",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "prettier": "^3.3.0",
+    "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@12.6.0"
+}

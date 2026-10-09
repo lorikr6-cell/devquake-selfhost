@@ -1,0 +1,16 @@
+{
+  "id": "darts",
+  "name": "Darts club",
+  "tagline": "Your darts club or pub on its own server: player profiles, practice, live games and tournaments on a TV, players join with a QR code.",
+  "features": [
+    "Player profiles with hand, level, entry mode and favourite double",
+    "Practice alone with drills made from your own statistics",
+    "Casual games with a join code or QR, live scoring on a phone and a TV view",
+    "Tournaments with brackets for your club nights"
+  ],
+  "audience": "Darts clubs, pubs and leagues.",
+  "plugins": ["darts"],
+  "hostedUrl": "https://darts.devquake.com",
+  "secrets": {},
+  "env": []
+}

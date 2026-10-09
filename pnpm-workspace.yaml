@@ -1,0 +1,7 @@
+packages:
+  - 'shell'
+  - 'vendor/packages/*'
+  - 'vendor/plugins/*'
+allowBuilds:
+  esbuild: true
+  tesseract.js: false
