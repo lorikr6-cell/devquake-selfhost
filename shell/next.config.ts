@@ -1,6 +1,6 @@
 import path from 'node:path';
 import type { NextConfig } from 'next';
-import { PLUGIN_PACKAGE } from './src/generated/plugin-package';
+import { PLUGIN_PACKAGES } from './src/generated/plugin-package';
 
 const repoRoot = path.resolve(process.cwd(), '..');
 
@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
   outputFileTracingRoot: repoRoot,
   turbopack: { root: repoRoot },
   // The shared packages and the plugin ship TypeScript source; Next compiles them.
-  transpilePackages: ['@devquake/plugin-sdk', '@devquake/ui', PLUGIN_PACKAGE],
+  transpilePackages: ['@devquake/plugin-sdk', '@devquake/ui', ...PLUGIN_PACKAGES],
   serverExternalPackages: ['mysql2', 'nodemailer'],
   experimental: { serverActions: { bodySizeLimit: '2mb' } },
   poweredByHeader: false,

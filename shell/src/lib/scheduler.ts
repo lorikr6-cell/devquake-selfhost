@@ -1,7 +1,8 @@
 import 'server-only';
-import { loadPlugin } from '@/generated/app';
+import { APP, PLUGIN_IDS, loadPlugin } from '@/generated/app';
 import { database, queryOne } from './db';
-import { configuredPublicUrl } from './env';
+import { configuredPublicUrl, domainSetting } from './env';
+import { appOrigin } from './hosts';
 import { pluginMailer } from './mail';
 
 // The app's background work (reminders, monthly emails) once an hour, as DevQuake's host does
@@ -36,18 +37,25 @@ export async function runScheduled(force = false): Promise<boolean> {
       "INSERT INTO dq_state (name, value) VALUES ('scheduled_at', ?) ON DUPLICATE KEY UPDATE value = VALUES(value)",
       [new Date().toISOString()],
     );
-    const plugin = await loadPlugin();
-    const hooks = plugin.platform ? await plugin.platform() : null;
-    if (!hooks?.scheduled) return false;
-    await hooks.scheduled({
-      pluginId: plugin.manifest.id,
-      db: database(),
-      // Links in emails need the address; without PUBLIC_URL they stay relative to nothing.
-      baseUrl: configuredPublicUrl() ?? 'http://localhost',
-      now: new Date(),
-      mail: pluginMailer,
-      lastActiveAt,
-    });
+    // Links in emails need the address; without PUBLIC_URL or DOMAIN they point at localhost.
+    const base = configuredPublicUrl() ?? 'http://localhost';
+    for (const id of PLUGIN_IDS) {
+      const plugin = await loadPlugin(id);
+      const hooks = plugin.platform ? await plugin.platform() : null;
+      if (!hooks?.scheduled) continue;
+      try {
+        await hooks.scheduled({
+          pluginId: id,
+          db: database(id),
+          baseUrl: appOrigin(id, base, APP.multi, domainSetting()),
+          now: new Date(),
+          mail: pluginMailer,
+          lastActiveAt,
+        });
+      } catch (err) {
+        console.error(`[instance] Scheduled work of ${id} failed:`, err);
+      }
+    }
     return true;
   } catch (err) {
     console.error('[instance] Scheduled work failed:', err);

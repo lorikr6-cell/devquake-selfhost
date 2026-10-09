@@ -1,5 +1,5 @@
 import 'server-only';
-import { loadPlugin } from '@/generated/app';
+import { PLUGIN_IDS, loadPlugin } from '@/generated/app';
 import { database, queryOne } from './db';
 import { hashPassword, randomToken, sha256 } from './passwords';
 
@@ -154,13 +154,26 @@ export async function removeMember(userId: number): Promise<void> {
     [userId],
   );
   if (!target || target.role === 'admin') return;
-  const plugin = await loadPlugin();
-  const hooks = plugin.platform ? await plugin.platform() : {};
-  const ctx = { pluginId: plugin.manifest.id, db: database() };
+  const apps = await Promise.all(
+    PLUGIN_IDS.map(async (id) => {
+      const plugin = await loadPlugin(id);
+      return {
+        hooks: plugin.platform ? await plugin.platform() : {},
+        ctx: { pluginId: id, db: database(id) },
+      };
+    }),
+  );
   const alias = `REMOVED_${userId}`;
-  const keep = hooks.hasContributions ? await hooks.hasContributions(userId, ctx) : false;
-  if (keep && hooks.anonymizeUserData) {
-    await hooks.anonymizeUserData(userId, alias, ctx);
+  // Kept under an alias when any app still shows what they added for others (ADR 0042).
+  let keep = false;
+  for (const { hooks, ctx } of apps) {
+    if (hooks.hasContributions && (await hooks.hasContributions(userId, ctx))) keep = true;
+  }
+  if (keep) {
+    for (const { hooks, ctx } of apps) {
+      if (hooks.anonymizeUserData) await hooks.anonymizeUserData(userId, alias, ctx);
+      else if (hooks.deleteUserData) await hooks.deleteUserData(userId, ctx);
+    }
     await database().execute(
       "UPDATE dq_users SET active = 0, display_name = ?, email = CONCAT('removed-', id, '@invalid'), password_hash = '' WHERE id = ?",
       [alias, userId],
@@ -168,6 +181,8 @@ export async function removeMember(userId: number): Promise<void> {
     await database().execute('DELETE FROM dq_sessions WHERE user_id = ?', [userId]);
     return;
   }
-  if (hooks.deleteUserData) await hooks.deleteUserData(userId, ctx);
+  for (const { hooks, ctx } of apps) {
+    if (hooks.deleteUserData) await hooks.deleteUserData(userId, ctx);
+  }
   await database().execute('DELETE FROM dq_users WHERE id = ?', [userId]);
 }

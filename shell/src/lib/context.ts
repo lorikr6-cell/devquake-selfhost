@@ -10,15 +10,17 @@ import {
 } from '@devquake/plugin-sdk';
 import { isLocale, isTimeZone } from '@devquake/ui';
 import { APP, CHANGELOGS } from '@/generated/app';
+import { linksFor } from './links';
+import { getOrigins } from './place';
 import { database } from './db';
 import { env, flag } from './env';
 import { extendSession, getSessionUser } from './session';
-import { publicUrl } from './url';
 import { listMembers } from './users';
 
 // What the app gets from its host (PluginContext, ADR 0007 on DevQuake), made from the
-// instance's own parts. Platform-only parts (NPS points, app links, shared profile) are left
-// out: the plugins already work without them.
+// instance's own parts. With several apps (ADR 0056) each has its own address and database and
+// they reach each other through app links. Platform-only parts (NPS points, shared profile) are
+// left out: the plugins already work without them.
 
 export const LOCALE_HEADER = 'x-dq-locale';
 
@@ -50,22 +52,25 @@ function settingsFor(manifest: PluginManifest): PluginSettings {
 }
 
 export const buildContext = cache(async (manifest: PluginManifest): Promise<PluginContext> => {
-  const h = await headers();
-  const base = publicUrl(h);
+  const origins = await getOrigins();
+  const base = origins.app(manifest.id);
   const locale = await getLocale();
   const tz = (await cookies()).get('dq_tz')?.value;
+  const timeZone = tz && isTimeZone(tz) ? tz : 'UTC';
   const session = await getSessionUser().catch(() => null);
-  const changelog = CHANGELOGS[locale] ?? CHANGELOGS.en;
+  const notes = CHANGELOGS[manifest.id] ?? {};
+  const changelog = notes[locale] ?? notes.en;
+  const user = session
+    ? { id: session.id, displayName: session.displayName, isAdmin: session.role === 'admin' }
+    : null;
   return {
     pluginId: manifest.id,
-    rootDomain: new URL(base).host,
+    rootDomain: new URL(origins.home).host,
     baseUrl: base,
-    // There is no separate platform: "DevQuake" links in the app lead to the instance itself.
-    hostUrl: base,
-    user: session
-      ? { id: session.id, displayName: session.displayName, isAdmin: session.role === 'admin' }
-      : null,
-    db: manifest.database ? database() : undefined,
+    // There is no separate platform: "DevQuake" links in the app lead to the instance's home.
+    hostUrl: origins.home,
+    user,
+    db: manifest.database ? database(manifest.id) : undefined,
     people: session
       ? {
           // Everyone in this instance, as the person's "network".
@@ -83,7 +88,7 @@ export const buildContext = cache(async (manifest: PluginManifest): Promise<Plug
         }
       : undefined,
     changelog: changelog ? parseChangelog(changelog) : [],
-    timeZone: tz && isTimeZone(tz) ? tz : 'UTC',
+    timeZone,
     locale,
     session: session
       ? {
@@ -91,7 +96,10 @@ export const buildContext = cache(async (manifest: PluginManifest): Promise<Plug
           extend: async (hours = 3) => (await extendSession(session, hours)).toISOString(),
         }
       : null,
-    app: { name: APP.name, iconUrl: `${base}/instance/icon.svg` },
+    app: {
+      name: APP.multi ? manifest.name : APP.name,
+      iconUrl: `${origins.home}/instance/icon.svg${APP.multi ? `?app=${encodeURIComponent(manifest.id)}` : ''}`,
+    },
     // A single tenant: every active member may use the app fully.
     accessOf: async (userIds) => {
       if (userIds.length === 0) return {};
@@ -103,5 +111,8 @@ export const buildContext = cache(async (manifest: PluginManifest): Promise<Plug
       return Object.fromEntries(userIds.map((id) => [id, active.has(id) ? 'member' : 'none']));
     },
     settings: manifest.adminSettings?.length ? settingsFor(manifest) : undefined,
+    // The other bundled apps (ADR 0056); none for a one-app instance.
+    links:
+      user && APP.multi ? await linksFor(manifest, user, locale, timeZone, origins) : undefined,
   };
 });

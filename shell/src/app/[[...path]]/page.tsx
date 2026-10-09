@@ -3,15 +3,18 @@ import { notFound, redirect } from 'next/navigation';
 import { matchRoute, type SearchParams } from '@devquake/plugin-sdk';
 import { localizePath } from '@devquake/ui';
 import { loadPlugin } from '@/generated/app';
-import { InstanceBar } from '@/components/instance-bar';
+import { HomePage } from '@/components/home';
+import { InstanceBar, ReturnBar } from '@/components/instance-bar';
 import { NotReady } from '@/components/not-ready';
 import { buildContext, getLocale } from '@/lib/context';
 import { instanceState } from '@/lib/gate';
+import { getPlace } from '@/lib/place';
 import { isOpenRoute, isPublicPage } from '@/lib/routes';
 import { getSessionUser } from '@/lib/session';
 
-// Every page of the app, served at the root of the instance's address. Members only, except the
-// app's public pages (its manual) and the links members shared publicly.
+// Every page of the app the request's hostname is for (ADR 0056): one app at the root of the
+// instance's address, or with several apps the home on the domain and each app on its own name.
+// Members only, except the app's public pages (its manual) and links members shared publicly.
 
 type Props = {
   params: Promise<{ path?: string[] }>;
@@ -21,7 +24,9 @@ type Props = {
 async function resolve(props: Props) {
   const { path = [] } = await props.params;
   const route = `/${path.join('/')}`;
-  const plugin = await loadPlugin();
+  const place = await getPlace();
+  if (place.kind !== 'app') return null;
+  const plugin = await loadPlugin(place.id);
   const match = matchRoute(Object.keys(plugin.pages), route);
   if (!match) return null;
   const mod = await plugin.pages[match.pattern]!();
@@ -60,6 +65,12 @@ export default async function AppPage(props: Props) {
     if (state.reason === 'setup') redirect('/instance/setup');
     return <NotReady reason={state.reason} />;
   }
+  const place = await getPlace();
+  if (place.kind === 'home') {
+    const { path = [] } = await props.params;
+    if (path.length > 0) notFound();
+    return <HomePage />;
+  }
   const resolved = await resolve(props);
   if (!resolved) notFound();
   const { plugin, mod, pageProps, route } = resolved;
@@ -71,6 +82,8 @@ export default async function AppPage(props: Props) {
     redirect(`${localizePath('/instance/sign-in', locale)}?next=${encodeURIComponent(back)}`);
   }
 
+  // Opened from another bundled app: the way back (ADR 0035).
+  const back = await pageProps.ctx.links?.returnFrom(pageProps.searchParams).catch(() => null);
   const Page = mod.default;
   const content = await Page(pageProps);
   const page = plugin.layout
@@ -82,6 +95,7 @@ export default async function AppPage(props: Props) {
   return (
     <>
       {user ? <InstanceBar user={user} locale={locale} /> : null}
+      {back ? <ReturnBar back={back} locale={locale} /> : null}
       {page}
     </>
   );

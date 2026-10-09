@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { instanceDomain } from './hosts';
 
 // Every setting of an instance comes from the environment (Hostinger's single-tenant rule;
 // .env.example lists them). Defaults keep a bare `docker compose up` working.
@@ -54,11 +55,11 @@ export function dbConfig(): DbConfig | null {
 }
 
 /**
- * PUBLIC_URL without a trailing slash; else https://DOMAIN (Caddy's automatic HTTPS in
- * docker-compose.yml); else null, to take it from each request.
+ * PUBLIC_URL without a trailing slash (the home, with several apps); else https://DOMAIN or the
+ * sslip.io name from PUBLIC_IP (Caddy's automatic HTTPS); else null, to take it from each request.
  */
 export function configuredPublicUrl(): string | null {
-  const domain = env('DOMAIN');
+  const domain = instanceDomain({ DOMAIN: env('DOMAIN'), PUBLIC_IP: env('PUBLIC_IP') });
   const v =
     env('PUBLIC_URL') ??
     (domain && /^[a-z0-9.-]+$/i.test(domain) ? `https://${domain}` : undefined);
@@ -69,4 +70,9 @@ export function configuredPublicUrl(): string | null {
   } catch {
     return null;
   }
+}
+
+/** The instance's domain for several apps on their own hostnames (ADR 0056), or null. */
+export function domainSetting(): string | null {
+  return instanceDomain({ DOMAIN: env('DOMAIN'), PUBLIC_IP: env('PUBLIC_IP') });
 }

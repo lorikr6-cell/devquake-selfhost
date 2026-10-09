@@ -1,6 +1,6 @@
 import 'server-only';
-import { MIGRATIONS } from '@/generated/app';
-import { migrationConnection } from './db';
+import { APP, MIGRATIONS, PLUGIN_IDS } from '@/generated/app';
+import { databaseNameOf, migrationConnection } from './db';
 
 // Runs on every start (instrumentation.ts): the shell's own tables, then the plugin's SQL files
 // in order. Both are safe to re-run (IF NOT EXISTS / INSERT IGNORE).
@@ -76,14 +76,37 @@ async function apply(
 }
 
 export async function migrate(): Promise<void> {
+  let applied = 0;
   const conn = await migrationConnection();
   try {
     await conn.query("SET time_zone = '+00:00'");
-    const shell = await apply(conn, 'dq_migrations', SHELL_MIGRATIONS, 'instance');
-    // The plugin's files record themselves in schema_migrations, as on DevQuake (ADR 0007).
-    const plugin = await apply(conn, 'schema_migrations', MIGRATIONS, 'app');
-    console.log(`[instance] Database ready (${shell + plugin} migration(s) applied).`);
+    applied += await apply(conn, 'dq_migrations', SHELL_MIGRATIONS, 'instance');
+    if (!APP.multi) {
+      // One app: its tables next to the shell's; its files record themselves in
+      // schema_migrations, as on DevQuake (ADR 0007).
+      applied += await apply(conn, 'schema_migrations', MIGRATIONS[PLUGIN_IDS[0]!] ?? [], 'app');
+      console.log(`[instance] Database ready (${applied} migration(s) applied).`);
+      return;
+    }
+    // Several apps (ADR 0056): each in its own database, created here.
+    for (const id of PLUGIN_IDS) {
+      const name = databaseNameOf(id);
+      if (!/^[A-Za-z0-9_]{1,64}$/.test(name)) throw new Error(`Bad database name: ${name}`);
+      await conn.query(
+        `CREATE DATABASE IF NOT EXISTS \`${name}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`,
+      );
+    }
   } finally {
     await conn.end();
   }
+  for (const id of PLUGIN_IDS) {
+    const own = await migrationConnection(databaseNameOf(id));
+    try {
+      await own.query("SET time_zone = '+00:00'");
+      applied += await apply(own, 'schema_migrations', MIGRATIONS[id] ?? [], id);
+    } finally {
+      await own.end();
+    }
+  }
+  console.log(`[instance] Databases ready (${applied} migration(s) applied).`);
 }

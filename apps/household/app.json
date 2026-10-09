@@ -1,0 +1,18 @@
+{
+  "id": "household",
+  "name": "Household",
+  "version": "0.1.0",
+  "tagline": "Your household's apps on your own server: shared expenses and utility bills, recipes, a meal planner and shared shopping lists, with one sign-in and working together.",
+  "features": [
+    "Shared expenses: who paid what, who owes whom, and the fewest transfers to settle up",
+    "Utility bills: upload the provider's PDF, split it with flatmates, see who paid",
+    "Recipes, a weekly meal planner and shared shopping lists that fill each other",
+    "A bill or what you bought becomes a shared expense in one tap",
+    "One sign-in for every app; invite the people you live with by link"
+  ],
+  "audience": "Flatmates, couples and families who want their household's money and meals on their own server.",
+  "plugins": ["expenses", "utilities", "shopping", "cookbook", "meals"],
+  "hostedUrl": "https://devquake.com",
+  "secrets": {},
+  "env": []
+}

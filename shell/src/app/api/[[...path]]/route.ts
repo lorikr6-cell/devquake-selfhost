@@ -1,6 +1,7 @@
 import { headers } from 'next/headers';
 import { matchRoute, type HttpMethod } from '@devquake/plugin-sdk';
-import { APP, loadPlugin } from '@/generated/app';
+import { APP, PLUGIN_IDS, loadPlugin } from '@/generated/app';
+import { getPlace } from '@/lib/place';
 import { ready } from '@/lib/boot';
 import { buildContext } from '@/lib/context';
 import { database } from '@/lib/db';
@@ -35,7 +36,10 @@ async function dispatch(request: Request, context: RouteContext, method: HttpMet
 
   const state = await ready();
   if (!state.ok) return json(503, { error: 'The instance is not ready (see the server log).' });
-  const plugin = await loadPlugin();
+  // The app this hostname is for (ADR 0056); the home of several apps has no API.
+  const place = await getPlace();
+  if (place.kind !== 'app') return json(404, { error: 'Not found' });
+  const plugin = await loadPlugin(place.id);
 
   // What DevQuake's host answers for its apps: here there are no platform notifications.
   if (route === '/_notifications') {
@@ -44,7 +48,8 @@ async function dispatch(request: Request, context: RouteContext, method: HttpMet
       : new Response(null, { status: 204 });
   }
   if (route === '/_icon') {
-    return new Response(iconSvg(), {
+    const index = APP.multi ? PLUGIN_IDS.indexOf(place.id) + 1 : 0;
+    return new Response(iconSvg(APP.multi ? plugin.manifest.name : APP.name, index), {
       headers: { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'public, max-age=3600' },
     });
   }

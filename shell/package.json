@@ -11,9 +11,14 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@devquake/plugin-cookbook": "workspace:*",
     "@devquake/plugin-darts": "workspace:*",
+    "@devquake/plugin-expenses": "workspace:*",
+    "@devquake/plugin-meals": "workspace:*",
     "@devquake/plugin-pulse": "workspace:*",
     "@devquake/plugin-sdk": "workspace:*",
+    "@devquake/plugin-shopping": "workspace:*",
+    "@devquake/plugin-utilities": "workspace:*",
     "@devquake/ui": "workspace:*",
     "mysql2": "^3.24.4",
     "next": "^16.0.0",

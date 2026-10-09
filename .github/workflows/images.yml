@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        app: [pulse, darts]
+        app: [pulse, darts, household]
     steps:
       - uses: actions/checkout@v4
 
@@ -57,7 +57,8 @@ jobs:
           IMAGE: ghcr.io/${{ github.repository_owner }}/devquake-${{ matrix.app }}
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
-          VERSION=$(node -p "require('./vendor/plugins/${{ matrix.app }}/package.json').version")
+          # The app's own version (bundles like Household), else its one plugin's.
+          VERSION=$(node -p "const a = require('./apps/${{ matrix.app }}/app.json'); a.version || require('./vendor/plugins/' + a.plugins[0] + '/package.json').version")
           for TAG in latest "$VERSION" "sha-${GITHUB_SHA::7}"; do
             docker tag devquake-${{ matrix.app }}:ci "$IMAGE:$TAG"
             docker push "$IMAGE:$TAG"

@@ -1,8 +1,9 @@
 # DevQuake self-hosted
 
 [DevQuake](https://devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=repo) apps
-packaged to run on your own server: one app per instance, with its own MySQL database, set up
-from a single `docker-compose.yml`. No dependency on DevQuake's servers.
+packaged to run on your own server, with their own MySQL database, set up from a single
+`docker-compose.yml`. One app per instance, or a bundle (Household) with each app on its own
+name. No dependency on DevQuake's servers.
 
 > **Prefer not to run a server?** Every app is free on
 > [devquake.com](https://devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=repo),
@@ -10,13 +11,13 @@ from a single `docker-compose.yml`. No dependency on DevQuake's servers.
 
 ## Apps
 
-| App                                | For                                                            | Deploy                                |
-| ---------------------------------- | -------------------------------------------------------------- | ------------------------------------- |
-| [Pulse](apps/pulse/README.md)      | A self-hosted realtime events API (a Pusher-style service)     | [README](apps/pulse/README.md#deploy) |
-| [Darts club](apps/darts/README.md) | Clubs and pubs: profiles, practice, live games and tournaments | [README](apps/darts/README.md#deploy) |
+| App                                   | For                                                                                      | Deploy                                    |
+| ------------------------------------- | ---------------------------------------------------------------------------------------- | ----------------------------------------- |
+| [Pulse](apps/pulse/README.md)         | A self-hosted realtime events API (a Pusher-style service)                               | [README](apps/pulse/README.md#deploy)     |
+| [Darts club](apps/darts/README.md)    | Clubs and pubs: profiles, practice, live games and tournaments                           | [README](apps/darts/README.md#deploy)     |
+| [Household](apps/household/README.md) | Shared expenses, utility bills, recipes, meal plans and shopping lists, working together | [README](apps/household/README.md#deploy) |
 
-Planned: **Household** (shared expenses with utility bills, recipes, meal plans and shopping
-lists in one instance) and **Store** (a lightweight shop with payments and shipping).
+Planned: **Store** (a lightweight shop with payments and shipping).
 
 Each app's README has the **Deploy on Hostinger** button, the first run and every setting.
 

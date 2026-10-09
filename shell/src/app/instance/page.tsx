@@ -1,12 +1,12 @@
-import { headers } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { formatDateTime, localizePath } from '@devquake/ui';
+import { formatDateTime, isTimeZone, localizePath } from '@devquake/ui';
 import { APP } from '@/generated/app';
 import { ConfirmRemove } from '@/components/confirm-remove';
 import { CopyField } from '@/components/copy-field';
 import { InstanceFrame } from '@/components/instance-frame';
 import { NotReady } from '@/components/not-ready';
-import { buildContext, getLocale } from '@/lib/context';
+import { getLocale } from '@/lib/context';
 import { devquakeUrl, ISSUES_URL } from '@/lib/funnel';
 import { instanceState } from '@/lib/gate';
 import { mailConfigured } from '@/lib/mail';
@@ -14,7 +14,6 @@ import { getSessionUser } from '@/lib/session';
 import { shellT } from '@/lib/texts';
 import { publicUrl } from '@/lib/url';
 import { listMembers } from '@/lib/users';
-import { loadPlugin } from '@/generated/app';
 import { createInviteAction, removeMemberAction } from './actions';
 
 export const metadata = { title: 'Instance' };
@@ -45,8 +44,8 @@ export default async function InstancePage({
       : null;
   const removed = typeof query.removed === 'string' ? query.removed.slice(0, 80) : null;
   const members = await listMembers();
-  const ctx = await buildContext((await loadPlugin()).manifest);
-  const tz = ctx.timeZone ?? 'UTC';
+  const zone = (await cookies()).get('dq_tz')?.value;
+  const tz = zone && isTimeZone(zone) ? zone : 'UTC';
 
   return (
     <InstanceFrame title={t('instanceTitle')} wide>

@@ -3,6 +3,9 @@ import { cookies, headers } from 'next/headers';
 import { cache } from 'react';
 import { database, queryOne } from './db';
 import { randomToken, sha256 } from './passwords';
+import { APP } from '@/generated/app';
+import { domainSetting } from './env';
+import { cookieDomain } from './hosts';
 import { isHttps } from './url';
 
 // Sign-in sessions: a random token in an httpOnly cookie, only its hash in the database.
@@ -71,6 +74,8 @@ export async function startSession(userId: number): Promise<void> {
     secure: isHttps(await headers()),
     path: '/',
     expires,
+    // Several apps on their own hostnames share the sign-in (ADR 0056).
+    domain: cookieDomain(APP.multi, domainSetting()),
   });
   // Old sessions of this person are cleaned up now and then.
   await database()
@@ -84,7 +89,11 @@ export async function endSession(): Promise<void> {
   if (token) {
     await database().execute('DELETE FROM dq_sessions WHERE token_hash = ?', [sha256(token)]);
   }
-  jar.delete(SESSION_COOKIE);
+  jar.set(SESSION_COOKIE, '', {
+    path: '/',
+    maxAge: 0,
+    domain: cookieDomain(APP.multi, domainSetting()),
+  });
 }
 
 /** Pushes the session's end to at least `hours` from now (PluginSession.extend). */

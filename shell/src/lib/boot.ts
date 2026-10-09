@@ -1,5 +1,6 @@
 import 'server-only';
-import { APP } from '@/generated/app';
+import { APP, PLUGIN_IDS } from '@/generated/app';
+import { databaseNameOf } from './db';
 import { dbConfig } from './env';
 import { migrate } from './migrate';
 import { startScheduler } from './scheduler';
@@ -12,16 +13,18 @@ const g = globalThis as unknown as { dqBoot?: Promise<BootState> };
 
 export type BootState = { ok: true } | { ok: false; reason: 'no-database' | 'database-error' };
 
-/** The plugin reads its database settings as <ID>_DB_* on DevQuake (ADR 0007): same here. */
+/** Each app reads its database settings as <ID>_DB_* on DevQuake (ADR 0007): same here. */
 function aliasDatabaseEnv() {
   const config = dbConfig();
   if (!config) return;
-  const prefix = `${APP.plugin.toUpperCase().replace(/-/g, '_')}_DB`;
-  process.env[`${prefix}_NAME`] = config.database;
-  process.env[`${prefix}_USER`] = config.user;
-  process.env[`${prefix}_PWD`] = config.password;
-  process.env[`${prefix}_HOST`] = config.host;
-  process.env[`${prefix}_PORT`] = String(config.port);
+  for (const id of PLUGIN_IDS) {
+    const prefix = `${id.toUpperCase().replace(/-/g, '_')}_DB`;
+    process.env[`${prefix}_NAME`] = databaseNameOf(id);
+    process.env[`${prefix}_USER`] = config.user;
+    process.env[`${prefix}_PWD`] = config.password;
+    process.env[`${prefix}_HOST`] = config.host;
+    process.env[`${prefix}_PORT`] = String(config.port);
+  }
 }
 
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
