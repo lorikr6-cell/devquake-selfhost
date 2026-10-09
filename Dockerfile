@@ -14,7 +14,7 @@ RUN pnpm --filter @devquake-selfhost/shell build
 FROM node:22-alpine
 ARG APP=pulse
 LABEL org.opencontainers.image.source="https://github.com/lorikr6-cell/devquake-selfhost" \
-      org.opencontainers.image.licenses="AGPL-3.0-only" \
+      org.opencontainers.image.licenses="MIT" \
       org.opencontainers.image.title="DevQuake ${APP} (self-hosted)"
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \

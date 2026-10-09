@@ -75,4 +75,4 @@ the Deploy buttons.
 
 ## Licence
 
-[AGPL-3.0](LICENSE). Running a changed version for others means offering them its source.
+[MIT](LICENSE).

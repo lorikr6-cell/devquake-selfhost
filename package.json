@@ -2,7 +2,7 @@
   "name": "devquake-selfhost",
   "private": true,
   "description": "DevQuake apps on your own server: one app per instance, with its own MySQL database.",
-  "license": "AGPL-3.0-only",
+  "license": "MIT",
   "scripts": {
     "sync": "node scripts/sync.mjs",
     "select": "node scripts/select-app.mjs",

@@ -298,7 +298,7 @@ pnpm build && pnpm start
 ## About
 
 ${app.name} is a [DevQuake](https://devquake.com/?${utm(app, 'readme')}) app (${versions}),
-packaged to run on its own. Licence: [AGPL-3.0](../../LICENSE). Problems and ideas:
+packaged to run on its own. Licence: [MIT](../../LICENSE). Problems and ideas:
 [GitHub issues](https://github.com/${config.repository}/issues).
 `;
 }

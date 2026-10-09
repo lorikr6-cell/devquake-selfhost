@@ -5,7 +5,7 @@ A self-hosted realtime events API: your servers and websites send events with yo
 > **Prefer not to run a server?** Pulse is free on DevQuake, hosted for you:
 > [pulse.devquake.com](https://pulse.devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=pulse)
 
-[![Deploy on Hostinger](https://assets.hostinger.com/vps/deploy.svg)](https://www.hostinger.com/docker-hosting?compose_url=https%3A%2F%2Fraw.githubusercontent.com%2Florikr6-cell%2Fdevquake-selfhost%2Fmain%2Fapps%2Fpulse%2Fdocker-compose.yml)
+[![Deploy on Hostinger](https://assets.hostinger.com/vps/deploy.svg)](https://www.hostinger.com/docker-hosting?compose_url=https%3A%2F%2Fraw.githubusercontent.com%2Florikr6-cell%2Fdevquake-selfhost%2Fmain%2Fapps%2Fpulse%2Fdocker-compose.yml&REFERRALCODE=BYLLORIKRXAQ)
 
 For: Developers and teams who want a Pusher-style service on their own server.
 
@@ -98,5 +98,5 @@ pnpm build && pnpm start
 ## About
 
 Pulse is a [DevQuake](https://devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=pulse) app (pulse 0.6.0),
-packaged to run on its own. Licence: [AGPL-3.0](../../LICENSE). Problems and ideas:
+packaged to run on its own. Licence: [MIT](../../LICENSE). Problems and ideas:
 [GitHub issues](https://github.com/lorikr6-cell/devquake-selfhost/issues).

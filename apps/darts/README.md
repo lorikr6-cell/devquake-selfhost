@@ -5,7 +5,7 @@ Your darts club or pub on its own server: player profiles, practice, live games 
 > **Prefer not to run a server?** Darts club is free on DevQuake, hosted for you:
 > [darts.devquake.com](https://darts.devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=darts)
 
-[![Deploy on Hostinger](https://assets.hostinger.com/vps/deploy.svg)](https://www.hostinger.com/docker-hosting?compose_url=https%3A%2F%2Fraw.githubusercontent.com%2Florikr6-cell%2Fdevquake-selfhost%2Fmain%2Fapps%2Fdarts%2Fdocker-compose.yml)
+[![Deploy on Hostinger](https://assets.hostinger.com/vps/deploy.svg)](https://www.hostinger.com/docker-hosting?compose_url=https%3A%2F%2Fraw.githubusercontent.com%2Florikr6-cell%2Fdevquake-selfhost%2Fmain%2Fapps%2Fdarts%2Fdocker-compose.yml&REFERRALCODE=BYLLORIKRXAQ)
 
 For: Darts clubs, pubs and leagues.
 
@@ -95,5 +95,5 @@ pnpm build && pnpm start
 ## About
 
 Darts club is a [DevQuake](https://devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=darts) app (darts 0.6.2),
-packaged to run on its own. Licence: [AGPL-3.0](../../LICENSE). Problems and ideas:
+packaged to run on its own. Licence: [MIT](../../LICENSE). Problems and ideas:
 [GitHub issues](https://github.com/lorikr6-cell/devquake-selfhost/issues).
