@@ -330,7 +330,7 @@ function readme(app) {
 
 ${app.tagline}
 
-> **Prefer not to run a server?** ${app.name} is free on DevQuake, hosted for you:
+> ${app.hostedNote ?? `**Prefer not to run a server?** ${app.name} is free on DevQuake, hosted for you:`}
 > [${new URL(app.hostedUrl).host}](${app.hostedUrl}/?${utm(app, 'readme')})
 
 [![Deploy on Hostinger](https://assets.hostinger.com/vps/deploy.svg)](${deployLink(app)})

@@ -1,0 +1,26 @@
+{
+  "id": "store",
+  "name": "Store",
+  "tagline": "Your own online shop on your own server: products of any type, campaigns, vouchers and newsletters, reviews, buyer accounts, your own design, card, PayPal, bank transfer or cash on delivery, and pages search engines can index.",
+  "features": [
+    "Products of any type with their own fields (ready-made for electronics, clothing, books, food and more), options, photos, stock, vendors and sale prices",
+    "Card payments with your own Stripe account, PayPal, bank transfer and cash on delivery: the money goes straight to you",
+    "Automatic discounts and free shipping from an amount or a number of items, shown in the cart before checkout",
+    "Campaigns, voucher codes, announcements and email newsletters with product cards to confirmed subscribers",
+    "Buyers need no account to order; with one they see their orders and write to you. Reviews, product comparison, sharing and QR codes",
+    "Your own logo, banner, colours and fonts; search engine texts with a score per product; Google Analytics, Google Ads or the Meta pixel after the buyer agrees",
+    "A team where each member can have several roles (products, marketing, support, shipping, maintenance) and an overview of their tasks; statistics per product",
+    "Maintenance mode, and your shop in any language: copy the labels, translate them and paste them back"
+  ],
+  "audience": "Makers, small brands and local shops who want to sell online without a monthly shop subscription.",
+  "plugins": ["store"],
+  "hostedUrl": "https://devquake.com",
+  "hostedNote": "**More apps without a server?** DevQuake hosts free apps for your household, health and hobbies:",
+  "secrets": {
+    "STORE_MASTER_KEY": {
+      "kind": "base64-32",
+      "help": "Encrypts the Stripe and PayPal secrets the shop owner enters (32 random bytes, base64). Made on first start and kept in the data volume; set it to manage it yourself. Changing it makes the saved secrets unreadable: enter them again."
+    }
+  },
+  "env": []
+}

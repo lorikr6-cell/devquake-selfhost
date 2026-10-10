@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        app: [pulse, darts, household]
+        app: [pulse, darts, household, store]
     steps:
       - uses: actions/checkout@v4
 

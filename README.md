@@ -11,13 +11,12 @@ name. No dependency on DevQuake's servers.
 
 ## Apps
 
-| App                                   | For                                                                                      | Deploy                                    |
-| ------------------------------------- | ---------------------------------------------------------------------------------------- | ----------------------------------------- |
-| [Pulse](apps/pulse/README.md)         | A self-hosted realtime events API (a Pusher-style service)                               | [README](apps/pulse/README.md#deploy)     |
-| [Darts club](apps/darts/README.md)    | Clubs and pubs: profiles, practice, live games and tournaments                           | [README](apps/darts/README.md#deploy)     |
-| [Household](apps/household/README.md) | Shared expenses, utility bills, recipes, meal plans and shopping lists, working together | [README](apps/household/README.md#deploy) |
-
-Planned: **Store** (a lightweight shop with payments and shipping).
+| App                                   | For                                                                                             | Deploy                                    |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| [Pulse](apps/pulse/README.md)         | A self-hosted realtime events API (a Pusher-style service)                                      | [README](apps/pulse/README.md#deploy)     |
+| [Darts club](apps/darts/README.md)    | Clubs and pubs: profiles, practice, live games and tournaments                                  | [README](apps/darts/README.md#deploy)     |
+| [Household](apps/household/README.md) | Shared expenses, utility bills, recipes, meal plans and shopping lists, working together        | [README](apps/household/README.md#deploy) |
+| [Store](apps/store/README.md)         | A small online shop: products, sales, card, PayPal, bank transfer or cash on delivery, shipping | [README](apps/store/README.md#deploy)     |
 
 Each app's README has the **Deploy on Hostinger** button, the first run and every setting.
 

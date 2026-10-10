@@ -74,3 +74,28 @@ export function brandedQrSvg(text: string, options: BrandedQrOptions = {}): stri
     `</svg></svg>`
   );
 }
+
+/**
+ * Inline SVG string of a plain QR code (dark modules on white, no logo), for codes that belong
+ * to someone else's brand, e.g. a shop's product page. Error correction M.
+ */
+export function plainQrSvg(text: string, options: BrandedQrOptions = {}): string {
+  const qr = QRCode.create(text, { errorCorrectionLevel: 'M' });
+  const n = qr.modules.size;
+  const margin = options.margin ?? 2;
+  const size = n + margin * 2;
+  let d = '';
+  for (let y = 0; y < n; y++) {
+    for (let x = 0; x < n; x++) {
+      if (qr.modules.get(y, x) === 1) d += `M${x + margin} ${y + margin}h1v1h-1z`;
+    }
+  }
+  const escape = (s: string) =>
+    s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return (
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" shape-rendering="crispEdges">` +
+    (options.title ? `<title>${escape(options.title)}</title>` : '') +
+    `<rect width="100%" height="100%" fill="#FFFFFF"/>` +
+    `<path d="${d}" fill="#000000"/></svg>`
+  );
+}
