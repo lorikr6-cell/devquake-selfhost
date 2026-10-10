@@ -29,6 +29,7 @@ services:
       SHOW_POWERED_BY: ${SHOW_POWERED_BY:-true}
       APP_SECRET: ${APP_SECRET:-}
       STORE_MASTER_KEY: ${STORE_MASTER_KEY:-}
+      APP_SETTING_MEMBERS_OPEN_SHOPS: ${APP_SETTING_MEMBERS_OPEN_SHOPS:-false}
     volumes:
       - app-data:/data
 

@@ -1,4 +1,4 @@
-import { api, mine } from '../lib/api';
+import { api, mayOpenShop, mine } from '../lib/api';
 import { createStore, updateStore } from '../lib/data';
 import { HttpError } from '../lib/http';
 import { readBody, storeInput } from '../lib/validate';
@@ -7,9 +7,10 @@ import { readBody, storeInput } from '../lib/validate';
 export const GET = api(null, async ({ store, roles }) => ({ store, roles }));
 
 // POST /api/store { name, slug?, tagline, about, currency, vatRate, published }: the member's store.
-export const POST = api(null, async ({ request, db, user, store }) => {
+export const POST = api(null, async ({ request, db, user, store, ctx }) => {
   // A member on another shop's team cannot open their own.
   if (store) throw new HttpError(409, 'otherShop');
+  if (!(await mayOpenShop(ctx))) throw new HttpError(403, 'shopsClosed');
   const id = await createStore(db, user.id, storeInput(await readBody(request)));
   return { id };
 });

@@ -22,6 +22,7 @@ export const SHOP_NAMESPACES = [
   'newsletterPage',
   'cookies',
   'privacy',
+  'promo',
   'rules',
   'errors',
   'fields',

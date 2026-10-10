@@ -2,6 +2,7 @@ import type { CSSProperties, ReactNode } from 'react';
 import type { PluginDatabase } from '@devquake/plugin-sdk';
 import { I18nProvider, Link, cn, type Locale } from '@devquake/ui';
 import { FALLBACK_MESSAGES, shopLanguageState, translator } from '../i18n';
+import { DevQuakePromo } from './devquake-promo';
 import { ShopLanguagePicker } from './shop-language';
 import type { ProductSummary, Store } from '../lib/data';
 import { shopMailConfigured } from '../lib/mailer';
@@ -123,6 +124,7 @@ export async function ShopFrame({
         </nav>
       </header>
       {children}
+      {preview || team ? null : <DevQuakePromo locale={locale} />}
       <footer className={cn('space-y-4 border-t pt-6 text-xs', S.line, S.muted)}>
         {shopMailConfigured() && !preview ? (
           <NewsletterSignup slug={store.slug} source="shop" />

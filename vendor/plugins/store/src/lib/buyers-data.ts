@@ -18,8 +18,23 @@ export const SESSION_DAYS = 90;
 export const TOKEN = /^[A-Za-z0-9_-]{43}$/;
 export { MESSAGE_LIMITS } from './buyers-data-limits';
 
+/**
+ * The cookie's value after signing out: a DevQuake member who connected the shop is otherwise
+ * recognised without a cookie (ADR 0059), so signing out must be remembered.
+ */
+export const SIGNED_OUT = 'out';
+
 /** The session cookie of a shop (one per store, so several shops never mix). */
 export const buyerCookie = (storeId: number) => `dq_store_buyer_${storeId}`;
+
+/** Delivery details a buyer saved, to fill in the checkout (ADR 0059). */
+export interface BuyerDetails {
+  phone: string | null;
+  addressLine: string | null;
+  city: string | null;
+  postalCode: string | null;
+  country: string | null;
+}
 
 export interface Buyer {
   id: number;
@@ -27,7 +42,12 @@ export interface Buyer {
   email: string;
   name: string | null;
   locale: Locale;
+  /** The DevQuake member who connected this account, if any (ADR 0059). */
+  platformUserId: number | null;
+  details: BuyerDetails;
 }
+
+const text = (v: unknown) => (typeof v === 'string' && v !== '' ? v : null);
 
 const toBuyer = (r: Record<string, unknown>): Buyer => ({
   id: num(r.id),
@@ -35,6 +55,14 @@ const toBuyer = (r: Record<string, unknown>): Buyer => ({
   email: String(r.email),
   name: (r.name as string | null) ?? null,
   locale: (r.locale as Locale) ?? 'en',
+  platformUserId: r.platform_user_id == null ? null : num(r.platform_user_id),
+  details: {
+    phone: text(r.phone),
+    addressLine: text(r.address_line),
+    city: text(r.city),
+    postalCode: text(r.postal_code),
+    country: text(r.country),
+  },
 });
 
 const newToken = () => randomBytes(32).toString('base64url');
@@ -57,6 +85,68 @@ export async function buyerFor(
     [storeId, email.toLowerCase()],
   );
   return toBuyer(r!);
+}
+
+/**
+ * The account of a DevQuake member in this shop (ADR 0059): the one they connected before, else
+ * the buyer with their DevQuake address (their orders by email follow), linked now, else a new
+ * one with their name. `email` is the member's own address from the platform, already verified,
+ * so its member owns that account even when another member linked it under an old address.
+ */
+export async function buyerForMember(
+  db: Db,
+  storeId: number,
+  userId: number,
+  email: string,
+  name: string,
+  locale: Locale,
+): Promise<Buyer> {
+  const linked = await buyerOfMember(db, storeId, userId);
+  if (linked) return linked;
+  const address = email.toLowerCase();
+  await db.execute(
+    `INSERT INTO buyers (store_id, email, platform_user_id, locale, name) VALUES (?, ?, ?, ?, ?)
+     ON DUPLICATE KEY UPDATE platform_user_id = VALUES(platform_user_id),
+       name = COALESCE(name, VALUES(name))`,
+    [storeId, address, userId, locale, name.slice(0, 120) || null],
+  );
+  const [r] = await db.query<Record<string, unknown>>(
+    'SELECT * FROM buyers WHERE store_id = ? AND email = ?',
+    [storeId, address],
+  );
+  return toBuyer(r!);
+}
+
+/** The account a DevQuake member connected in this shop, if any. */
+export async function buyerOfMember(
+  db: Db,
+  storeId: number,
+  userId: number,
+): Promise<Buyer | null> {
+  const [r] = await db.query<Record<string, unknown>>(
+    'SELECT * FROM buyers WHERE store_id = ? AND platform_user_id = ?',
+    [storeId, userId],
+  );
+  return r ? toBuyer(r) : null;
+}
+
+/** A new session for a buyer (a token for the cookie). */
+export async function createSession(db: Db, buyerId: number): Promise<string> {
+  const session = newToken();
+  await db.execute(
+    `INSERT INTO buyer_tokens (token_hash, buyer_id, kind, expires_at)
+     VALUES (?, ?, 'session', UTC_TIMESTAMP() + INTERVAL ${SESSION_DAYS} DAY)`,
+    [hashCode(session), buyerId],
+  );
+  return session;
+}
+
+/** The buyer's saved delivery details (null clears one). */
+export async function setBuyerDetails(db: Db, buyerId: number, d: BuyerDetails): Promise<void> {
+  await db.execute(
+    'UPDATE buyers SET phone = ?, address_line = ?, city = ?, postal_code = ?, country = ? WHERE id = ?',
+    [d.phone, d.addressLine, d.city, d.postalCode, d.country, buyerId],
+  );
 }
 
 /** A one-time sign-in link's token (valid LINK_MINUTES). */

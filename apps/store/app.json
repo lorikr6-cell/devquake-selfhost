@@ -22,5 +22,11 @@
       "help": "Encrypts the Stripe and PayPal secrets the shop owner enters (32 random bytes, base64). Made on first start and kept in the data volume; set it to manage it yourself. Changing it makes the saved secrets unreadable: enter them again."
     }
   },
-  "env": []
+  "env": [
+    {
+      "name": "APP_SETTING_MEMBERS_OPEN_SHOPS",
+      "default": "false",
+      "help": "true lets every member open a shop of their own. false: only administrators open one, and members shop like visitors."
+    }
+  ]
 }

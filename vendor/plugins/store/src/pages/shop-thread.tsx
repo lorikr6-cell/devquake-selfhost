@@ -25,7 +25,7 @@ export default async function ThreadPage({ ctx, params }: PluginPageProps) {
   if (!scope.ok) return scope.notice;
   const { store, preview, team, locale, timeZone, db } = scope;
   const t = translator(locale, 'account');
-  const buyer = await currentBuyer(db, store);
+  const buyer = await currentBuyer(db, store, ctx.user);
   if (!buyer) redirect(localizePath(`/s/${store.slug}/account`, locale));
   const threadId = Number(params.id);
   if (!Number.isSafeInteger(threadId) || threadId <= 0) notFound();

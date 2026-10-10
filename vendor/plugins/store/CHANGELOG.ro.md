@@ -1,5 +1,13 @@
 # Jurnal de modificări — Magazin
 
+## 0.4.0
+
+- Membrii DevQuake continuă cu contul lor DevQuake: contul lor din magazin se completează din profil (nume și adresă de e-mail, permise o singură dată pe DevQuake), iar magazinul îi recunoaște la vizitele următoare. Ceilalți se înregistrează în continuare cu orice adresă de e-mail.
+- Cumpărătorii își salvează datele de livrare în cont, iar finalizarea comenzii le completează; la finalizare pot păstra datele noi pentru data viitoare.
+- Administratorii site-ului decid dacă membrii pot deschide magazine proprii; dacă nu, membrii văd magazinul ca vizitatorii.
+- Opțional, vizitatorii văd deasupra subsolului magazinului ce oferă DevQuake și cum se pot alătura.
+- Motoarele de căutare pot citi paginile și produsele magazinelor și le găsesc harta site-ului.
+
 ## 0.3.0
 
 - Membrii echipei pot avea mai multe roluri: produse, marketing, asistență clienți, expediere și livrare, mentenanță sau manager.

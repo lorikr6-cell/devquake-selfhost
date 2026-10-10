@@ -1,5 +1,13 @@
 # Változásnapló — Bolt
 
+## 0.4.0
+
+- A DevQuake-tagok a DevQuake-fiókjukkal folytathatják: a boltbeli fiókjuk a profiljukból töltődik ki (név és e-mail-cím, egyszer engedélyezve a DevQuake-en), és a bolt a következő látogatásokkor felismeri őket. Mindenki más továbbra is bármilyen e-mail-címmel regisztrálhat.
+- A vásárlók elmenthetik a szállítási adataikat a fiókjukba, és a pénztár kitölti őket; a pénztárnál az új adatokat megtarthatják a következő alkalomra.
+- Az oldal adminisztrátorai döntik el, nyithatnak-e a tagok saját boltot; ha nem, a tagok a látogatókhoz hasonlóan látják a boltot.
+- Igény szerint a látogatók a bolt lábléce felett láthatják, mit kínál a DevQuake, és hogyan lehet csatlakozni.
+- A keresőmotorok olvashatják a boltok oldalait és termékeit, és megtalálják az oldaltérképüket.
+
 ## 0.3.0
 
 - A csapattagoknak több szerepkörük is lehet: termékek, marketing, ügyfélszolgálat, szállítás és kézbesítés, karbantartás vagy vezető.

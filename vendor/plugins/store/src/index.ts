@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'store',
     name: 'Store',
-    version: '0.3.0',
+    version: '0.4.0',
     description:
       'A lightweight shop: products of any type with their own fields, vendors, campaigns, vouchers, announcements and newsletters, reviews, product comparison, QR codes and sharing, the shop’s own design, automatic discounts, a team with several roles per member and a task board, maintenance mode, the shop in any language, buyer accounts with messages and order history, statistics, card (Stripe), PayPal, bank transfer or cash on delivery, and pages search engines can index.',
     status: 'active',
@@ -55,8 +55,41 @@ export default definePlugin({
       '/s/:slug/newsletter/unsubscribe',
       '/s/:slug/account',
       '/s/:slug/account/signin',
+      '/s/:slug/account/connect',
       '/s/:slug/account/messages',
       '/s/:slug/account/messages/:id',
+    ],
+    // The shops' pages and their sitemap may be found by search engines (ADR 0059), next to the
+    // front page and the manual.
+    searchable: {
+      pages: ['/s/:slug', '/s/:slug/p/:product', '/s/:slug/info'],
+      sitemap: '/api/sitemap.xml',
+    },
+    // "Continue with DevQuake" (ADR 0059): a member's account in a shop, from their profile.
+    profileFields: [
+      {
+        field: 'email',
+        purpose: {
+          en: 'To make your account in the shop with your email address, so your orders, messages and order emails reach you without signing up again.',
+          de: 'Um dein Konto im Shop mit deiner E-Mail-Adresse anzulegen, damit dich Bestellungen, Nachrichten und Bestell-E-Mails erreichen, ohne dass du dich neu registrierst.',
+          ro: 'Ca să-ți facă un cont în magazin cu adresa ta de e-mail, ca să primești comenzile, mesajele și e-mailurile despre comenzi fără să te înregistrezi din nou.',
+          hu: 'Hogy az e-mail-címeddel hozza létre a fiókodat a boltban, így a rendeléseid, üzeneteid és a rendelési e-mailek újabb regisztráció nélkül eljutnak hozzád.',
+        },
+      },
+    ],
+    adminSettings: [
+      {
+        key: 'membersOpenShops',
+        kind: 'toggle',
+        label: 'Members may open their own shops',
+        help: 'Off: only administrators open a shop, and members shop like visitors (store.devquake.com sells DevQuake merch). On: every member with access may open one shop.',
+      },
+      {
+        key: 'promoteDevQuake',
+        kind: 'toggle',
+        label: 'Show the DevQuake promotion in the shop',
+        help: 'Visitors who are not signed in see what DevQuake offers and a link to join, above the shop footer. Members never see it.',
+      },
     ],
   },
   layout: () => import('./layout'),
@@ -160,6 +193,7 @@ export default definePlugin({
     '/s/:slug/newsletter/unsubscribe': () => import('./api/shop-unsubscribe'),
     '/s/:slug/account': () => import('./api/shop-account'),
     '/s/:slug/account/signin': () => import('./api/shop-signin'),
+    '/s/:slug/account/connect': () => import('./api/shop-connect'),
     '/s/:slug/account/messages': () => import('./api/shop-threads'),
     '/s/:slug/account/messages/:id': () => import('./api/shop-thread'),
     '/sitemap.xml': () => import('./api/sitemap'),

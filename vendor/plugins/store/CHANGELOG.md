@@ -1,5 +1,13 @@
 # Changelog — Store
 
+## 0.4.0
+
+- DevQuake members continue with their DevQuake account: their account in the shop is filled in from their profile (name and email address, allowed once on DevQuake), and the shop recognises them on their next visits. Everyone else still signs up with any email address.
+- Buyers save their delivery details in their account, and the checkout fills them in; at checkout they can keep new details for next time.
+- The site's administrators decide whether members may open their own shops; when they may not, members see the shop like visitors.
+- Optionally, visitors see what DevQuake offers and how to join, above the shop footer.
+- Search engines may read the shops' pages and products and find their sitemap.
+
 ## 0.3.0
 
 - Team members can have several roles: products, marketing, support, shipping and delivery, maintenance or manager.

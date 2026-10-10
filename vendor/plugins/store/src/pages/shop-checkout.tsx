@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { localeOf, translator } from '../i18n';
 import { CheckoutForm } from '../components/checkout-form';
-import { countryNamer, shopScope } from '../components/guard';
+import { countryNamer, currentBuyer, shopScope } from '../components/guard';
 import { cn } from '@devquake/ui';
 import { ShopFrame } from '../components/shop';
 import { liveRules } from '../lib/marketing-data';
@@ -23,6 +23,8 @@ export default async function CheckoutPage({ ctx, params }: PluginPageProps) {
   if (!scope.ok) return scope.notice;
   const { store, preview, team, locale, db } = scope;
   const t = translator(locale, 'checkout');
+  // The signed-in buyer (or connected DevQuake member) finds their details filled in (ADR 0059).
+  const me = await currentBuyer(db, store, ctx.user);
   const zones = await zonesOf(db, store.id);
   const name = countryNamer(locale);
   // The countries the shop ships to: named ones, or every listed one with a catch-all zone.
@@ -49,6 +51,15 @@ export default async function CheckoutPage({ ctx, params }: PluginPageProps) {
         countries={countries}
         newsletter={shopMailConfigured()}
         rules={await liveRules(db, store.id, new Date())}
+        prefill={
+          me
+            ? {
+                name: me.name,
+                email: me.email,
+                ...me.details,
+              }
+            : null
+        }
       />
     </ShopFrame>
   );

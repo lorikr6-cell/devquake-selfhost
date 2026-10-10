@@ -39,6 +39,13 @@ export interface PluginManifest {
    */
   openRoutes?: { pages?: string[]; api?: string[] };
   /**
+   * Open-route pages search engines may crawl (ADR 0059), e.g. a shop's products: the host
+   * allows them in the app's robots.txt, in every language, and lists `sitemap` (an `api` route
+   * of the app answering a sitemap, e.g. "/sitemap.xml") next to the host's own. Each page still
+   * says itself whether it may be indexed (its metadata `robots`).
+   */
+  searchable?: { pages: string[]; sitemap?: string };
+  /**
    * The app may email active DevQuake users who have no access to it, with
    * `mail.sendToUser(id, compose, { withoutAccess: true })` (ADR 0022). Only for people the app
    * has a reason to write to (e.g. recipients a member chose); never for marketing.
@@ -424,7 +431,11 @@ export type PluginLocalizedText = { en: string } & Partial<Record<PluginLocale, 
  * Shared profile fields (ADR 0035). 'birthday' is day, month and an optional year; 'birthYear'
  * is the year alone (data minimisation for apps that only need an age).
  */
-export type PluginProfileField = 'birthday' | 'birthYear';
+/**
+ * 'email' (ADR 0059): the member's own sign-in address, read only, for apps that keep their own
+ * accounts for people (a shop's buyers). Never in `profile.of()`: only the member's own.
+ */
+export type PluginProfileField = 'birthday' | 'birthYear' | 'email';
 
 /** A profile field an app asks for, with why (shown on the consent page) and whether it saves. */
 export interface PluginProfileFieldUse {
@@ -444,6 +455,8 @@ export interface PluginBirthday {
 export interface PluginProfileValues {
   birthday?: PluginBirthday | null;
   birthYear?: number | null;
+  /** Only from `get()`, the signed-in member's own address (ADR 0059). */
+  email?: string | null;
 }
 
 export type PluginProfileError =

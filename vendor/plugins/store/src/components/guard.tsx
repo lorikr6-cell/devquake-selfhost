@@ -5,10 +5,12 @@ import { LOCALE_TAGS, Link, isLocale, rich, type Locale } from '@devquake/ui';
 import type { ReactNode } from 'react';
 import { applyShopLanguage, localeOf, translator } from '../i18n';
 import { languageMessages, languageNames } from '../lib/languages-data';
-import { buyerBySession, buyerCookie, type Buyer } from '../lib/buyers-data';
+import { buyerCookie, type Buyer } from '../lib/buyers-data';
+import { resolveBuyer } from '../lib/buyer-session';
 import { storeBySlug, storeOfMember, type Store } from '../lib/data';
 import { formatCents } from '../lib/pricing';
 import { can, type Area, type Role } from '../lib/roles';
+import { preparePromo } from './devquake-promo';
 import { Notice } from './ui';
 
 export type OwnerScope =
@@ -122,6 +124,7 @@ export async function shopScope(ctx: PluginContext, slug: string | undefined): P
   const store = await storeBySlug(ctx.db, slug ?? '');
   if (!store) notFound();
   await chooseShopLanguage(ctx.db, store, localeOf(ctx));
+  await preparePromo(ctx);
   const team = ctx.user
     ? ctx.user.id === store.ownerUserId ||
       (await storeOfMember(ctx.db, ctx.user.id))?.store.id === store.id
@@ -186,10 +189,17 @@ async function chooseShopLanguage(db: PluginDatabase, store: Store, locale: Loca
   );
 }
 
-/** The buyer signed in to this shop on this browser (their session cookie), if any. */
-export async function currentBuyer(db: PluginDatabase, store: Store): Promise<Buyer | null> {
+/**
+ * The buyer signed in to this shop on this browser (their session cookie), or the account the
+ * signed-in DevQuake member connected (ADR 0059), if any.
+ */
+export async function currentBuyer(
+  db: PluginDatabase,
+  store: Store,
+  user?: PluginUser | null,
+): Promise<Buyer | null> {
   const jar = await cookies();
-  return buyerBySession(db, store.id, jar.get(buyerCookie(store.id))?.value);
+  return resolveBuyer(db, store.id, jar.get(buyerCookie(store.id))?.value, user);
 }
 
 /** Money in the page language and the store's currency. */

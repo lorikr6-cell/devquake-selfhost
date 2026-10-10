@@ -1,8 +1,11 @@
 # Store
 
-A lightweight shop, run **standalone** by the self-host shell (ADR 0054); not registered on
-devquake.com, so `store.devquake.com` stays closed. Own MySQL database (ADR 0007); decisions in
-[ADR 0057](../../docs/adr/0057-store.md) and [ADR 0058](../../docs/adr/0058-store-growth.md).
+A lightweight shop, run **standalone** by the self-host shell (ADR 0054) and on
+**`store.devquake.com`** for DevQuake's own merch (ADR 0059: registered offline by platform
+migration 0055; the owner opens it in /admin-cp/projects). Own MySQL database (ADR 0007);
+decisions in [ADR 0057](../../docs/adr/0057-store.md),
+[ADR 0058](../../docs/adr/0058-store-growth.md) and
+[ADR 0059](../../docs/adr/0059-store-on-devquake.md).
 
 The owner (a signed-in member, one store each) adds **products** with **options** (size,
 colour…: price, code, optional stock, an optional **sale price** with a start and an end) and up
@@ -35,6 +38,12 @@ Growing the shop (ADR 0058):
   per product); **maintenance mode** with a message for buyers.
 - **Automatic discounts and free shipping**: from an amount or a number of items, shown with
   hints in the cart and at checkout, before a voucher.
+- **On DevQuake** (ADR 0059): members **continue with DevQuake** (their account in the shop
+  from their profile: name and the consented, read-only `email` field) and are recognised on
+  later visits; buyers save **delivery details** that fill in the checkout; admin settings
+  `membersOpenShops` (off: only administrators open shops, members shop like visitors) and
+  `promoteDevQuake` (off: a DevQuake promotion for visitors above the shop footer); the shops'
+  pages and sitemap are `searchable` for robots.txt.
 - **Languages**: the owner copies the labels buyers see as JSON, translates them anywhere and
   pastes them back as a new language or changes to a built-in one; buyers pick it in the shop.
 
@@ -124,20 +133,22 @@ Owner and team pages need a member with a role allowing the page's area (`lib/ro
 | API  | `/s/:slug/newsletter` POST, `/confirm` POST                          | key route             | `src/api/shop-newsletter.ts`, `-confirm.ts`                     |
 | API  | `/s/:slug/newsletter/unsubscribe` POST (one-click), GET              | key route             | `src/api/shop-unsubscribe.ts`                                   |
 | API  | `/s/:slug/account/signin` POST, GET (email link)                     | key route             | `src/api/shop-signin.ts`                                        |
-| API  | `/s/:slug/account` PATCH, DELETE, POST (sign out)                    | key route             | `src/api/shop-account.ts`                                       |
+| API  | `/s/:slug/account` PATCH, PUT (details), DELETE, POST (sign out)     | key route             | `src/api/shop-account.ts`                                       |
+| API  | `/s/:slug/account/connect` POST (Continue with DevQuake)             | key route             | `src/api/shop-connect.ts`                                       |
 | API  | `/s/:slug/account/messages` POST, `/:id` POST                        | key route             | `src/api/shop-threads.ts`, `src/api/shop-thread.ts`             |
 
 ## Configuration
 
-| Variable           | What                                                                                                                                                                                                                         |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `STORE_DB_*`       | The app's own database (the self-host shell sets it up).                                                                                                                                                                     |
-| `STORE_MASTER_KEY` | 32 random bytes, base64: encrypts the owners' Stripe and PayPal secrets (AES-256-GCM). The shell generates it. Without it, Stripe and PayPal cannot be set up.                                                               |
-| `SMTP_*`           | The instance's mail server (`SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM`), shared with the shell. Without `SMTP_HOST` there are no buyer accounts, newsletters or order confirmations. |
+| Variable           | What                                                                                                                                                                                                                                                                                                                                 |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `STORE_DB_*`       | The app's own database (the self-host shell sets it up).                                                                                                                                                                                                                                                                             |
+| `STORE_MASTER_KEY` | 32 random bytes, base64: encrypts the owners' Stripe and PayPal secrets (AES-256-GCM). The shell generates it. Without it, Stripe and PayPal cannot be set up.                                                                                                                                                                       |
+| `SMTP_*`           | The instance's mail server (`SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM`), shared with the shell. On devquake.com the platform's `SMTP_USER`, `SMTP_PWD` and `MAIL_FROM` work too (Hostinger's server). Without a mail server there are no email sign-ups, newsletters or order confirmations. |
 
 ## Database
 
-`db/migrations/0001_store.sql` and `0002_growth.sql` on the app's own database: `stores`,
+`db/migrations/0001_store.sql`, `0002_growth.sql` and `0003_platform_buyers.sql` (buyers'
+`platform_user_id` and saved details) on the app's own database: `stores`,
 `products`, `variants`, `product_photos`, `shipping_zones`, `orders`, `order_items`;
 `store_assets`, `store_staff`, `store_invites`, `vendors`, `product_types`, `product_fields`,
 `product_values`, `campaigns`, `campaign_products`, `vouchers`, `price_rules`, `announcements`,

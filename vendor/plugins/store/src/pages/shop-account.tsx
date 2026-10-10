@@ -2,15 +2,21 @@ import type { Metadata } from 'next';
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { Link, cn, formatDateTime } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
-import { AccountActions, NewThreadForm, SignInForm } from '../components/account-client';
-import { currentBuyer, moneyIn, shopScope } from '../components/guard';
+import {
+  AccountActions,
+  ConnectButton,
+  DetailsForm,
+  NewThreadForm,
+  SignInForm,
+} from '../components/account-client';
+import { countryNamer, currentBuyer, moneyIn, shopScope } from '../components/guard';
 import { StatusBadge } from '../components/order-view';
 import { ShopFrame } from '../components/shop';
 import { NewsletterSignup } from '../components/shop-client';
 import { S } from '../components/shop-style';
 import { buyerOrders, threadsOfBuyer } from '../lib/buyers-data';
 import { shopMailConfigured } from '../lib/mailer';
-import { orderReference } from '../lib/model';
+import { COUNTRIES, orderReference } from '../lib/model';
 import { subscriberByEmail } from '../lib/newsletter-data';
 
 export async function generateMetadata({ ctx, params }: PluginPageProps): Promise<Metadata> {
@@ -34,7 +40,7 @@ export default async function AccountPage({ ctx, params, searchParams }: PluginP
   if (!scope.ok) return scope.notice;
   const { store, preview, team, locale, timeZone, db } = scope;
   const t = translator(locale, 'account');
-  const buyer = await currentBuyer(db, store);
+  const buyer = await currentBuyer(db, store, ctx.user);
 
   if (!buyer) {
     return (
@@ -45,9 +51,20 @@ export default async function AccountPage({ ctx, params, searchParams }: PluginP
           {one(searchParams.expired) !== undefined ? (
             <p className="font-medium text-red-700 dark:text-red-400">{t('expired')}</p>
           ) : null}
+          {ctx.user && ctx.profile ? (
+            // A DevQuake member: their account here from their DevQuake profile (ADR 0059).
+            <div className={cn('max-w-md space-y-3', S.panel)}>
+              <h2 className={cn('text-lg font-semibold', S.heading)}>{t('connectTitle')}</h2>
+              <p className="text-sm">{t('connectBody', { name: ctx.user.displayName })}</p>
+              <ConnectButton slug={store.slug} />
+            </div>
+          ) : null}
+          {ctx.user && ctx.profile && shopMailConfigured() ? (
+            <h2 className={cn('text-lg font-semibold', S.heading)}>{t('orEmail')}</h2>
+          ) : null}
           {shopMailConfigured() ? (
             <SignInForm slug={store.slug} />
-          ) : (
+          ) : ctx.user && ctx.profile ? null : (
             <p className={S.panel}>{t('mailOff')}</p>
           )}
         </div>
@@ -61,12 +78,16 @@ export default async function AccountPage({ ctx, params, searchParams }: PluginP
     subscriberByEmail(db, store.id, buyer.email),
   ]);
   const money = (cents: number, currency: string) => moneyIn(locale, currency)(cents);
+  const countryName = countryNamer(locale);
 
   return (
     <ShopFrame store={store} preview={preview} team={team} locale={locale} db={db}>
       <div className="space-y-1">
         <h1 className={cn('text-2xl font-bold', S.heading)}>{t('title')}</h1>
         <p className={cn('text-sm', S.muted)}>{t('signedInAs', { email: buyer.email })}</p>
+        {buyer.platformUserId !== null && buyer.platformUserId === ctx.user?.id ? (
+          <p className={cn('text-sm', S.muted)}>{t('linked')}</p>
+        ) : null}
       </div>
 
       <section className="space-y-3">
@@ -154,6 +175,13 @@ export default async function AccountPage({ ctx, params, searchParams }: PluginP
       <section className="space-y-3">
         <h2 className={cn('text-xl font-semibold', S.heading)}>{t('details')}</h2>
         <AccountActions slug={store.slug} name={buyer.name} />
+        <DetailsForm
+          slug={store.slug}
+          details={buyer.details}
+          countries={COUNTRIES.map((code) => ({ code, name: countryName(code) })).sort((a, b) =>
+            a.name.localeCompare(b.name, locale),
+          )}
+        />
         <p className={cn('text-xs', S.muted)}>{t('privacyNote')}</p>
       </section>
     </ShopFrame>

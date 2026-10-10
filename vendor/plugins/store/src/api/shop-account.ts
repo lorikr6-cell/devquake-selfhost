@@ -1,8 +1,14 @@
 import { cookieOf, shopApi } from '../lib/api';
-import { clearedCookie } from '../lib/buyer-session';
-import { buyerCookie, deleteBuyer, endSession, setBuyerName } from '../lib/buyers-data';
+import { clearedCookie, signedOutCookie } from '../lib/buyer-session';
+import {
+  buyerCookie,
+  deleteBuyer,
+  endSession,
+  setBuyerDetails,
+  setBuyerName,
+} from '../lib/buyers-data';
 import { HttpError } from '../lib/http';
-import { optionalText, readBody } from '../lib/validate';
+import { buyerDetailsInput, optionalText, readBody } from '../lib/validate';
 
 // PATCH /api/s/:slug/account { name }: the buyer's name in their messages.
 export const PATCH = shopApi(
@@ -11,6 +17,17 @@ export const PATCH = shopApi(
     if (!me) throw new HttpError(401, 'buyerSignIn');
     const { name } = await readBody(request, 4096);
     await setBuyerName(db, me.id, optionalText(name, 'buyerName', 120));
+  },
+  { limit: 20, sameSite: true },
+);
+
+// PUT /api/s/:slug/account { phone, addressLine, city, postalCode, country }: the buyer's saved
+// delivery details, which fill in the checkout (ADR 0059).
+export const PUT = shopApi(
+  async ({ request, db, buyer }) => {
+    const me = await buyer();
+    if (!me) throw new HttpError(401, 'buyerSignIn');
+    await setBuyerDetails(db, me.id, buyerDetailsInput(await readBody(request, 4096)));
   },
   { limit: 20, sameSite: true },
 );
@@ -37,7 +54,7 @@ export const POST = shopApi(
     if (token) await endSession(db, token);
     return new Response(null, {
       status: 204,
-      headers: { 'Set-Cookie': clearedCookie(store.id, ctx.baseUrl) },
+      headers: { 'Set-Cookie': signedOutCookie(store.id, ctx.baseUrl) },
     });
   },
   { limit: 20, sameSite: true, unpublished: true },

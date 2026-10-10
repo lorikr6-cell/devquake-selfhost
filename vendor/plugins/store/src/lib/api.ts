@@ -7,7 +7,8 @@ import type {
 } from '@devquake/plugin-sdk';
 import type { Locale, Translate } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
-import { buyerBySession, buyerCookie, type Buyer } from './buyers-data';
+import { resolveBuyer } from './buyer-session';
+import { buyerCookie, type Buyer } from './buyers-data';
 import { storeBySlug, storeOfMember, type Store } from './data';
 import { HttpError } from './http';
 import { Buckets } from './rate';
@@ -80,6 +81,17 @@ export function api(
       return errorResponse(err, t);
     }
   };
+}
+
+/**
+ * Whether this member may open a shop (ADR 0059): the site's administrators always; other
+ * members only when the owner turned on "membersOpenShops" (on store.devquake.com, where the
+ * shop sells DevQuake's own merch, it stays off).
+ */
+export async function mayOpenShop(ctx: PluginContext): Promise<boolean> {
+  if (!ctx.user) return false;
+  if (ctx.user.isAdmin || !ctx.settings) return true;
+  return ctx.settings.enabled('membersOpenShops').catch(() => false);
 }
 
 /** The member's store, or 404 when they have none yet. */
@@ -159,7 +171,8 @@ export function shopApi(
         throw new HttpError(404, 'storeNotFound');
       // In maintenance, buyers can still finish payments already started, and nothing else.
       if (store.maintenance && !options.unpublished) throw new HttpError(503, 'maintenance');
-      const buyer = () => buyerBySession(db, store.id, cookieOf(request, buyerCookie(store.id)));
+      const buyer = () =>
+        resolveBuyer(db, store.id, cookieOf(request, buyerCookie(store.id)), ctx.user);
       return toResponse(await fn({ request, params, db, store, locale, t, ctx, buyer }));
     } catch (err) {
       return errorResponse(err, t);

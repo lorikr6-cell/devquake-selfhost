@@ -23,6 +23,7 @@ import {
 } from './model';
 import { parseCents, type Zone } from './pricing';
 import { MESSAGE_LIMITS } from './buyers-data-limits';
+import type { BuyerDetails } from './buyers-data';
 import type { FieldInput, VendorInput } from './catalog-data';
 import { FIELD_LIMITS, fieldValue, isFieldKind, parseChoices, type FieldDef } from './fields';
 import {
@@ -366,6 +367,19 @@ export function buyerInput(body: Body): Buyer {
     postalCode: optionalText(b.postalCode, 'postalCode', LIMITS.postalCode),
     country,
     note: longOptionalText(b.note, 'orderNote', LIMITS.note),
+  };
+}
+
+/** A buyer's saved delivery details (ADR 0059): every field optional. */
+export function buyerDetailsInput(body: Body): BuyerDetails {
+  const raw = typeof body.country === 'string' ? body.country.trim().toUpperCase() : '';
+  if (raw && !isCountry(raw)) throw bad('country');
+  return {
+    phone: optionalText(body.phone, 'phone', LIMITS.phone),
+    addressLine: optionalText(body.addressLine, 'addressLine', LIMITS.addressLine),
+    city: optionalText(body.city, 'city', LIMITS.city),
+    postalCode: optionalText(body.postalCode, 'postalCode', LIMITS.postalCode),
+    country: raw || null,
   };
 }
 

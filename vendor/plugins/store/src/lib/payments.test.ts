@@ -19,7 +19,10 @@ describe('secrets', () => {
     expect(sealed).not.toContain('sk_live');
     expect(openSecret(sealed, key)).toBe('sk_live_123');
     expect(openSecret(sealed, randomBytes(32).toString('base64'))).toBeNull();
-    expect(openSecret(sealed.replace(/.$/, 'A'), key)).toBeNull();
+    // A changed authentication tag (its first character: every bit of it counts).
+    const [v, iv, tag, data] = sealed.split('.');
+    const forged = `${v}.${iv}.${tag![0] === 'A' ? 'B' : 'A'}${tag!.slice(1)}.${data}`;
+    expect(openSecret(forged, key)).toBeNull();
     expect(openSecret(null, key)).toBeNull();
     expect(canKeepSecrets(key)).toBe(true);
     expect(canKeepSecrets('short')).toBe(false);

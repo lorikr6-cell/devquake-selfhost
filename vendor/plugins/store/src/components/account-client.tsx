@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from 'react';
 import { cn, trackEvent, useT } from '@devquake/ui';
 import { MESSAGE_LIMITS } from '../lib/buyers-data-limits';
+import { LIMITS } from '../lib/model';
 import { errorMessage } from './call-api';
 import { useFeedback } from './feedback';
 import { S } from './shop-style';
@@ -65,6 +66,146 @@ export function SignInForm({ slug }: { slug: string }) {
         {t('sendLink')}
       </button>
       <p className={cn('text-xs', S.muted)}>{t('linkHint')}</p>
+    </form>
+  );
+}
+
+/**
+ * "Continue with DevQuake" (ADR 0059): the signed-in member's account in this shop, filled in
+ * from their DevQuake profile. The first time, DevQuake asks them to allow their email address.
+ */
+export function ConnectButton({ slug }: { slug: string }) {
+  const t = useT('account');
+  const tErr = useT('errors');
+  const router = useAppRouter();
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+
+  async function connect() {
+    setBusy(true);
+    setError('');
+    try {
+      const data = await post(`/api/s/${slug}/account/connect`, 'POST');
+      if (typeof data?.consentUrl === 'string') {
+        window.location.assign(data.consentUrl);
+        return;
+      }
+      trackEvent('store_buyer_connected');
+      router.refresh();
+    } catch (err) {
+      setError(errorMessage(err, tErr));
+    }
+    setBusy(false);
+  }
+
+  return (
+    <div className="space-y-2">
+      <button type="button" className={S.button} disabled={busy} onClick={connect}>
+        {t('connect')}
+      </button>
+      <ErrorText>{error}</ErrorText>
+    </div>
+  );
+}
+
+type Details = {
+  phone: string | null;
+  addressLine: string | null;
+  city: string | null;
+  postalCode: string | null;
+  country: string | null;
+};
+
+/** The buyer's saved delivery details, which fill in the checkout (ADR 0059). */
+export function DetailsForm({
+  slug,
+  details,
+  countries,
+}: {
+  slug: string;
+  details: Details;
+  countries: Array<{ code: string; name: string }>;
+}) {
+  const t = useT('account');
+  const tErr = useT('errors');
+  const router = useAppRouter();
+  const { toast } = useFeedback();
+  const [value, setValue] = useState({
+    phone: details.phone ?? '',
+    addressLine: details.addressLine ?? '',
+    city: details.city ?? '',
+    postalCode: details.postalCode ?? '',
+    country: details.country ?? '',
+  });
+  const [busy, setBusy] = useState(false);
+  const set = (k: keyof typeof value) => (v: string) => setValue((d) => ({ ...d, [k]: v }));
+
+  async function submit(event: FormEvent) {
+    event.preventDefault();
+    setBusy(true);
+    try {
+      await post(`/api/s/${slug}/account`, 'PUT', value);
+      toast(t('detailsSaved'));
+      router.refresh();
+    } catch (err) {
+      toast(errorMessage(err, tErr), 'error');
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <form onSubmit={submit} className={cn('max-w-2xl space-y-3', S.panel)}>
+      <h3 className={cn('font-semibold', S.heading)}>{t('deliveryTitle')}</h3>
+      <p className={cn('text-xs', S.muted)}>{t('deliveryHint')}</p>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label={t('phone')}>
+          <Input
+            type="tel"
+            autoComplete="tel"
+            maxLength={LIMITS.phone}
+            value={value.phone}
+            onChange={(e) => set('phone')(e.target.value)}
+          />
+        </Field>
+        <Field label={t('addressLine')}>
+          <Input
+            autoComplete="street-address"
+            maxLength={LIMITS.addressLine}
+            value={value.addressLine}
+            onChange={(e) => set('addressLine')(e.target.value)}
+          />
+        </Field>
+        <Field label={t('city')}>
+          <Input
+            autoComplete="address-level2"
+            maxLength={LIMITS.city}
+            value={value.city}
+            onChange={(e) => set('city')(e.target.value)}
+          />
+        </Field>
+        <Field label={t('postalCode')}>
+          <Input
+            autoComplete="postal-code"
+            maxLength={LIMITS.postalCode}
+            value={value.postalCode}
+            onChange={(e) => set('postalCode')(e.target.value)}
+          />
+        </Field>
+        <Field label={t('country')}>
+          <Select value={value.country} onChange={(e) => set('country')(e.target.value)}>
+            <option value="">{t('noCountry')}</option>
+            {countries.map((c) => (
+              <option key={c.code} value={c.code}>
+                {c.name}
+              </option>
+            ))}
+          </Select>
+        </Field>
+      </div>
+      <button type="submit" className={S.buttonSecondary} disabled={busy}>
+        {t('saveDetails')}
+      </button>
     </form>
   );
 }

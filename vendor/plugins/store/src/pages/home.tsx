@@ -3,6 +3,8 @@ import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { Link, buttonClass, formatDateTime } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
 import { moneyIn, ownerScope } from '../components/guard';
+import { mayOpenShop } from '../lib/api';
+import { preparePromo } from '../components/devquake-promo';
 import { StatusBadge } from '../components/order-view';
 import { StoreForm } from '../components/store-form';
 import { JoinButton } from '../components/team-editor';
@@ -21,9 +23,12 @@ import {
 import { orderReference } from '../lib/model';
 import { StoreFront, frontFilters, shopMetadata } from './shop';
 
-/** The instance's open shop, for visitors at the root (ADR 0057: one store per instance). */
-async function rootShop(props: PluginPageProps) {
-  if (props.ctx.user || !props.ctx.db) return null;
+/**
+ * The instance's open shop at the root (ADR 0057: one store per instance), for visitors and for
+ * members who may not open a shop of their own (ADR 0059).
+ */
+async function rootShop(props: PluginPageProps, member = false) {
+  if ((props.ctx.user && !member) || !props.ctx.db) return null;
   const [first] = await publishedStores(props.ctx.db);
   return first ? storeBySlug(props.ctx.db, first.slug) : null;
 }
@@ -44,6 +49,7 @@ export default async function Home(props: PluginPageProps) {
   if (!ctx.user) {
     const shop = await rootShop(props);
     if (shop) {
+      await preparePromo(ctx);
       return (
         <StoreFront
           ctx={ctx}
@@ -66,6 +72,28 @@ export default async function Home(props: PluginPageProps) {
   const scope = await ownerScope(ctx);
   if (!scope.ok) return scope.notice;
   const { db, store, roles, timeZone } = scope;
+  if (!store && !(await mayOpenShop(ctx))) {
+    // A member on a site where only its administrators open shops: they shop like visitors.
+    const shop = await rootShop(props, true);
+    if (shop) {
+      return (
+        <StoreFront
+          ctx={ctx}
+          store={shop}
+          preview={false}
+          team={false}
+          locale={locale}
+          {...frontFilters(searchParams)}
+        />
+      );
+    }
+    const tShop = translator(locale, 'shop');
+    return (
+      <Notice title={tShop('noShopTitle')}>
+        <p>{tShop('noShopBody')}</p>
+      </Notice>
+    );
+  }
   if (!store) {
     const t = translator(locale, 'create');
     return (

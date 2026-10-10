@@ -1,5 +1,13 @@
 # Änderungsprotokoll — Shop
 
+## 0.4.0
+
+- DevQuake-Mitglieder machen mit ihrem DevQuake-Konto weiter: Ihr Konto im Shop wird aus ihrem Profil ausgefüllt (Name und E-Mail-Adresse, einmal auf DevQuake erlaubt), und der Shop erkennt sie bei den nächsten Besuchen wieder. Alle anderen registrieren sich weiter mit einer beliebigen E-Mail-Adresse.
+- Käufer speichern ihre Lieferangaben in ihrem Konto, und die Kasse füllt sie aus; an der Kasse können sie neue Angaben für das nächste Mal behalten.
+- Die Administratoren der Seite entscheiden, ob Mitglieder eigene Shops eröffnen dürfen; wenn nicht, sehen Mitglieder den Shop wie Besucher.
+- Auf Wunsch sehen Besucher über der Fußzeile des Shops, was DevQuake bietet und wie man mitmacht.
+- Suchmaschinen dürfen die Seiten und Produkte der Shops lesen und finden ihre Sitemap.
+
 ## 0.3.0
 
 - Teammitglieder können mehrere Rollen haben: Produkte, Marketing, Kundenservice, Versand und Zustellung, Wartung oder Manager.

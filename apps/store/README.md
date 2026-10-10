@@ -77,6 +77,7 @@ with `docker compose up -d` after a change.
 | `APP_SECRET` | — | Instance secret. Made on first start and kept in the data volume; set it to manage it yourself. |
 | `APP_VERSION` | `latest` | Image tag to run, e.g. a version number. |
 | `STORE_MASTER_KEY` | — | Encrypts the Stripe and PayPal secrets the shop owner enters (32 random bytes, base64). Made on first start and kept in the data volume; set it to manage it yourself. Changing it makes the saved secrets unreadable: enter them again. |
+| `APP_SETTING_MEMBERS_OPEN_SHOPS` | `false` | true lets every member open a shop of their own. false: only administrators open one, and members shop like visitors. |
 
 ## Updating and backups
 
@@ -99,6 +100,6 @@ pnpm build && pnpm start
 
 ## About
 
-Store is a [DevQuake](https://devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=store) app (store 0.3.0),
+Store is a [DevQuake](https://devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=store) app (store 0.4.0),
 packaged to run on its own. Licence: [MIT](../../LICENSE). Problems and ideas:
 [GitHub issues](https://github.com/lorikr6-cell/devquake-selfhost/issues).

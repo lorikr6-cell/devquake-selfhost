@@ -13,6 +13,7 @@ import { formatCents } from '../lib/pricing';
 import { ruleLabel } from '../lib/rules';
 import { LOCALE_TAGS } from '@devquake/ui';
 import { translator } from '../i18n';
+import { setBuyerDetails } from '../lib/buyers-data';
 import { buyerInput, paymentMethod, readBody } from '../lib/validate';
 
 /**
@@ -23,7 +24,7 @@ import { buyerInput, paymentMethod, readBody } from '../lib/validate';
  * the order's page. The buyer gets a confirmation email when the shop can send email.
  */
 export const POST = shopApi(
-  async ({ request, db, store, locale, t, ctx }) => {
+  async ({ request, db, store, locale, t, ctx, buyer: signedIn }) => {
     const body = await readBody(request, 64 * 1024);
     const cart = parseCart(body.cart);
     if (!cart) throw new HttpError(400, 'cart');
@@ -98,6 +99,19 @@ export const POST = shopApi(
       },
     );
     const order = await orderById(db, store.id, placed.id);
+    // A signed-in buyer may keep these delivery details for next time (ADR 0059).
+    if (body.remember === true) {
+      const me = await signedIn().catch(() => null);
+      if (me) {
+        await setBuyerDetails(db, me.id, {
+          phone: buyer.phone,
+          addressLine: buyer.addressLine,
+          city: buyer.city,
+          postalCode: buyer.postalCode,
+          country: buyer.country,
+        }).catch(() => undefined);
+      }
+    }
     if (order && shopMailConfigured()) {
       // The buyer's copy of the order page's link; a failed email never fails the order.
       await sendOrderConfirmation(store, ctx.baseUrl, order, locale).catch(() => false);

@@ -272,6 +272,22 @@ const en: Manual = {
         },
       ],
     },
+    {
+      id: 'devquake',
+      title: '17. Accounts for DevQuake members',
+      blocks: [
+        {
+          p: 'On a site that is part of DevQuake, members sign in to your shop with **Continue with DevQuake** on the account page: DevQuake asks them once to allow their email address, and their account in the shop is filled in with their name and that address. Orders they placed with it show up, and the shop recognises them on their next visits until they sign out of it.',
+        },
+        {
+          list: [
+            'Everyone else still opens an account with any email address, by a link.',
+            'Buyers save their **delivery details** in their account, and the checkout fills them in; at checkout they can keep new details for next time.',
+            'The site’s administrators decide whether members may open their own shops, and whether visitors see a short introduction to DevQuake above the shop’s footer.',
+          ],
+        },
+      ],
+    },
   ],
   questions: 'Questions or ideas? Write to {email}.',
   back: 'Back to your shop',
@@ -523,6 +539,22 @@ const de: Manual = {
         },
         {
           tip: 'Käufer wählen die Sprache unten im Shop; du kannst auch eine deiner Sprachen zu der machen, die Käufer zuerst sehen.',
+        },
+      ],
+    },
+    {
+      id: 'devquake',
+      title: '17. Konten für DevQuake-Mitglieder',
+      blocks: [
+        {
+          p: 'Auf einer Seite, die zu DevQuake gehört, melden sich Mitglieder mit **Weiter mit DevQuake** auf der Kontoseite in deinem Shop an: DevQuake fragt sie einmal, ob ihre E-Mail-Adresse genutzt werden darf, und ihr Konto im Shop wird mit ihrem Namen und dieser Adresse ausgefüllt. Bestellungen, die sie damit aufgegeben haben, erscheinen, und der Shop erkennt sie bei den nächsten Besuchen wieder, bis sie sich abmelden.',
+        },
+        {
+          list: [
+            'Alle anderen eröffnen ein Konto weiter mit einer beliebigen E-Mail-Adresse, über einen Link.',
+            'Käufer speichern ihre **Lieferangaben** in ihrem Konto, und die Kasse füllt sie aus; an der Kasse können sie neue Angaben für das nächste Mal behalten.',
+            'Die Administratoren der Seite entscheiden, ob Mitglieder eigene Shops eröffnen dürfen und ob Besucher über der Fußzeile des Shops eine kurze Vorstellung von DevQuake sehen.',
+          ],
         },
       ],
     },
@@ -780,6 +812,22 @@ const ro: Manual = {
         },
       ],
     },
+    {
+      id: 'devquake',
+      title: '17. Conturi pentru membrii DevQuake',
+      blocks: [
+        {
+          p: 'Pe un site care face parte din DevQuake, membrii intră în magazinul tău cu **Continuă cu DevQuake** pe pagina contului: DevQuake îi întreabă o singură dată dacă își permit adresa de e-mail, iar contul lor din magazin se completează cu numele și acea adresă. Comenzile plasate cu ea apar, iar magazinul îi recunoaște la vizitele următoare până ies din cont.',
+        },
+        {
+          list: [
+            'Ceilalți își deschid în continuare un cont cu orice adresă de e-mail, printr-un link.',
+            'Cumpărătorii își salvează **datele de livrare** în cont, iar finalizarea comenzii le completează; la finalizare pot păstra datele noi pentru data viitoare.',
+            'Administratorii site-ului decid dacă membrii pot deschide magazine proprii și dacă vizitatorii văd deasupra subsolului magazinului o scurtă prezentare a DevQuake.',
+          ],
+        },
+      ],
+    },
   ],
   questions: 'Întrebări sau idei? Scrie la {email}.',
   back: 'Înapoi la magazinul tău',
@@ -1031,6 +1079,22 @@ const hu: Manual = {
         },
         {
           tip: 'A vásárlók a bolt alján választanak nyelvet; azt is beállíthatod, hogy melyik saját nyelvedet lássák először.',
+        },
+      ],
+    },
+    {
+      id: 'devquake',
+      title: '17. Fiókok DevQuake-tagoknak',
+      blocks: [
+        {
+          p: 'A DevQuake-hez tartozó oldalon a tagok a fiókoldalon a **Folytatás DevQuake-kel** gombbal lépnek be a boltodba: a DevQuake egyszer megkérdezi, használható-e az e-mail-címük, és a boltbeli fiókjuk a nevükkel és ezzel a címmel töltődik ki. Az ezzel leadott rendeléseik megjelennek, és a bolt a következő látogatásokkor felismeri őket, amíg ki nem lépnek.',
+        },
+        {
+          list: [
+            'Mindenki más továbbra is bármilyen e-mail-címmel, linkkel nyit fiókot.',
+            'A vásárlók elmentik a **szállítási adataikat** a fiókjukba, és a pénztár kitölti őket; a pénztárnál az új adatokat megtarthatják a következő alkalomra.',
+            'Az oldal adminisztrátorai döntik el, nyithatnak-e a tagok saját boltot, és látnak-e a látogatók rövid DevQuake-bemutatót a bolt lábléce felett.',
+          ],
         },
       ],
     },

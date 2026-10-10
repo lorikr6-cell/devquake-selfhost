@@ -1723,10 +1723,12 @@ export async function markAnnounced(db: Db, orderId: number): Promise<void> {
 /**
  * Deletes the user's store with everything in it (products, photos, zones, orders, reviews,
  * marketing, buyers' accounts and messages, subscribers, statistics), their place on another
- * shop's team and the invitations they made.
+ * shop's team and the invitations they made, and the shop accounts they connected as a DevQuake
+ * member (ADR 0059; their orders stay with those shops, as for any buyer).
  */
 export async function deleteStoreOf(db: Db, userId: number): Promise<void> {
   await db.execute('DELETE FROM stores WHERE owner_user_id = ?', [userId]);
+  await db.execute('DELETE FROM buyers WHERE platform_user_id = ?', [userId]);
   await db.execute('DELETE FROM store_staff WHERE user_id = ?', [userId]);
   await db.execute('DELETE FROM store_invites WHERE created_by = ?', [userId]);
 }

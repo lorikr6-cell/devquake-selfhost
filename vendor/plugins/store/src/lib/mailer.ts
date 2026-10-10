@@ -6,31 +6,37 @@ import type { Store } from './data';
 // mailer only writes to members, so these go through the instance's SMTP server (the same
 // SMTP_* variables the self-host shell uses), from the shop's name, with replies to the
 // seller's contact address. Without SMTP_HOST nothing is sent and the pages say so.
+// On devquake.com (ADR 0059) the platform's names work too: SMTP_USER with SMTP_PWD and no
+// SMTP_HOST means Hostinger's server, as for the platform's own mailer; MAIL_FROM is the sender.
 
 const env = (name: string) => process.env[name]?.trim() || undefined;
+
+/** The mail server: SMTP_HOST, else Hostinger's when the platform's mailbox is set. */
+const smtpHost = () =>
+  env('SMTP_HOST') ?? (env('SMTP_USER') && env('SMTP_PWD') ? 'smtp.hostinger.com' : undefined);
+const smtpPassword = () => env('SMTP_PASSWORD') ?? env('SMTP_PWD');
 
 const g = globalThis as unknown as { dqStoreMail?: Transporter | null };
 
 function transport(): Transporter | null {
   if (g.dqStoreMail !== undefined) return g.dqStoreMail;
-  const host = env('SMTP_HOST');
-  const port = Number(env('SMTP_PORT') ?? 587);
+  const host = smtpHost();
+  // The platform's mailbox defaults to 465 (TLS), the self-host shell's to 587.
+  const port = Number(env('SMTP_PORT') ?? (env('SMTP_HOST') ? 587 : 465));
   const secure = env('SMTP_SECURE');
   g.dqStoreMail = host
     ? nodemailer.createTransport({
         host,
         port,
         secure: secure === undefined ? port === 465 : secure === 'true' || secure === '1',
-        auth: env('SMTP_USER')
-          ? { user: env('SMTP_USER')!, pass: env('SMTP_PASSWORD') }
-          : undefined,
+        auth: env('SMTP_USER') ? { user: env('SMTP_USER')!, pass: smtpPassword() } : undefined,
       })
     : null;
   return g.dqStoreMail;
 }
 
 /** Whether the shop can send emails at all. */
-export const shopMailConfigured = () => Boolean(env('SMTP_HOST'));
+export const shopMailConfigured = () => Boolean(smtpHost());
 
 /** "Shop <no-reply@x>" or "no-reply@x" → the address alone. */
 export function senderAddress(value: string | undefined): string {
@@ -53,7 +59,10 @@ export async function sendShopMail(store: Store, mail: ShopMail): Promise<boolea
   if (!t) return false;
   try {
     await t.sendMail({
-      from: { name: store.name, address: senderAddress(env('SMTP_FROM') ?? env('SMTP_USER')) },
+      from: {
+        name: store.name,
+        address: senderAddress(env('SMTP_FROM') ?? env('MAIL_FROM') ?? env('SMTP_USER')),
+      },
       replyTo: store.seller.email ?? undefined,
       to: mail.to,
       subject: mail.subject,

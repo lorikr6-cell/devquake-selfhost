@@ -28,6 +28,7 @@ export function CheckoutForm({
   countries,
   newsletter,
   rules,
+  prefill = null,
 }: {
   slug: string;
   currency: string;
@@ -40,6 +41,16 @@ export function CheckoutForm({
   newsletter: boolean;
   /** The shop's live automatic discounts and free shipping. */
   rules: PublicRule[];
+  /** The signed-in buyer's details (ADR 0059), to fill the form in. */
+  prefill?: {
+    name: string | null;
+    email: string;
+    phone: string | null;
+    addressLine: string | null;
+    city: string | null;
+    postalCode: string | null;
+    country: string | null;
+  } | null;
 }) {
   const tRules = useT('rules');
   const t = useT('checkout');
@@ -50,15 +61,20 @@ export function CheckoutForm({
   const { toast } = useFeedback();
   const { cart, items, reload } = useCartItems(slug);
   const [buyer, setBuyer] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    addressLine: '',
-    city: '',
-    postalCode: '',
-    country: countries[0]?.code ?? '',
+    name: prefill?.name ?? '',
+    email: prefill?.email ?? '',
+    phone: prefill?.phone ?? '',
+    addressLine: prefill?.addressLine ?? '',
+    city: prefill?.city ?? '',
+    postalCode: prefill?.postalCode ?? '',
+    // The saved country when the shop ships there.
+    country:
+      (prefill?.country && countries.some((c) => c.code === prefill.country)
+        ? prefill.country
+        : countries[0]?.code) ?? '',
     note: '',
   });
+  const [remember, setRemember] = useState(Boolean(prefill));
   const [method, setMethod] = useState<PaymentMethod | ''>(methods[0] ?? '');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -155,6 +171,7 @@ export function CheckoutForm({
           method,
           voucher: voucher?.code ?? null,
           newsletter: join,
+          remember: Boolean(prefill) && remember,
           expectedTotal: q.totals.totalCents,
         }),
       });
@@ -185,6 +202,7 @@ export function CheckoutForm({
       <div className="space-y-6">
         <fieldset className="space-y-3">
           <legend className={cn('text-lg font-semibold', S.heading)}>{t('contact')}</legend>
+          {prefill ? <p className={cn('text-sm', S.muted)}>{t('filledIn')}</p> : null}
           <Field label={t('name')}>
             <Input
               value={buyer.name}
@@ -297,6 +315,17 @@ export function CheckoutForm({
           ))}
         </fieldset>
 
+        {prefill ? (
+          <label className="flex items-start gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={remember}
+              onChange={(e) => setRemember(e.target.checked)}
+              className="mt-1 [accent-color:var(--shop-accent)]"
+            />
+            <span className="font-medium">{t('remember')}</span>
+          </label>
+        ) : null}
         {newsletter ? (
           <label className="flex items-start gap-2 text-sm">
             <input
