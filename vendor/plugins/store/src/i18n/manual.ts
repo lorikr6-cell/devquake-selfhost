@@ -284,6 +284,23 @@ const en: Manual = {
             'Everyone else still opens an account with any email address, by a link.',
             'Buyers save their **delivery details** in their account, and the checkout fills them in; at checkout they can keep new details for next time.',
             'The site’s administrators decide whether members may open their own shops, and whether visitors see a short introduction to DevQuake above the shop’s footer.',
+            'With **approximate prices in other currencies** on, buyers choose a currency at the bottom of the shop and see “≈” prices in it; they still pay in your shop’s currency.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'interest',
+      title: '18. Interest votes before selling',
+      blocks: [
+        {
+          p: 'Not sure a product will sell? When the site’s administrators turn on **Interest votes**, switch a product to **Ask for votes instead of selling** on its page. Buyers then see a vote instead of the price: whether they want it, what they would pay and which version (the multiple-choice fields of its type, such as colours and sizes). Nobody can order it meanwhile.',
+        },
+        {
+          list: [
+            'Enter a **cost per piece** and a **one-time investment** on the product’s page.',
+            'Under **Statistics → Interest votes** you see the demand, what voters would pay, a suggested price, the expected buyers, revenue, profit, return and break-even, and the most wanted versions.',
+            'To start selling, switch the vote off and give the options their real prices.',
           ],
         },
       ],
@@ -554,6 +571,23 @@ const de: Manual = {
             'Alle anderen eröffnen ein Konto weiter mit einer beliebigen E-Mail-Adresse, über einen Link.',
             'Käufer speichern ihre **Lieferangaben** in ihrem Konto, und die Kasse füllt sie aus; an der Kasse können sie neue Angaben für das nächste Mal behalten.',
             'Die Administratoren der Seite entscheiden, ob Mitglieder eigene Shops eröffnen dürfen und ob Besucher über der Fußzeile des Shops eine kurze Vorstellung von DevQuake sehen.',
+            'Mit **ungefähren Preisen in anderen Währungen** wählen Käufer unten im Shop eine Währung und sehen darin „≈“-Preise; sie zahlen weiter in der Währung deines Shops.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'interest',
+      title: '18. Interessenabfragen vor dem Verkauf',
+      blocks: [
+        {
+          p: 'Nicht sicher, ob sich ein Produkt verkauft? Wenn die Administratoren der Seite **Interessenabfragen** einschalten, stellst du ein Produkt auf seiner Seite auf **Abstimmen lassen statt verkaufen**. Käufer sehen dann statt des Preises eine Abstimmung: ob sie es wollen, was sie zahlen würden und welche Ausführung (die Mehrfachauswahl-Felder seines Typs, etwa Farben und Größen). Bestellen kann es solange niemand.',
+        },
+        {
+          list: [
+            'Trag auf der Seite des Produkts **Kosten pro Stück** und eine **einmalige Investition** ein.',
+            'Unter **Statistik → Interessenabfragen** siehst du die Nachfrage, was die Abstimmenden zahlen würden, einen vorgeschlagenen Preis, die erwarteten Käufer, Umsatz, Gewinn, Rendite und Gewinnschwelle sowie die gefragtesten Ausführungen.',
+            'Zum Verkaufen schaltest du die Abstimmung aus und gibst den Ausführungen ihre echten Preise.',
           ],
         },
       ],
@@ -824,6 +858,23 @@ const ro: Manual = {
             'Ceilalți își deschid în continuare un cont cu orice adresă de e-mail, printr-un link.',
             'Cumpărătorii își salvează **datele de livrare** în cont, iar finalizarea comenzii le completează; la finalizare pot păstra datele noi pentru data viitoare.',
             'Administratorii site-ului decid dacă membrii pot deschide magazine proprii și dacă vizitatorii văd deasupra subsolului magazinului o scurtă prezentare a DevQuake.',
+            'Cu **prețuri aproximative în alte monede**, cumpărătorii aleg o monedă în partea de jos a magazinului și văd în ea prețuri „≈”; plătesc în continuare în moneda magazinului tău.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'interest',
+      title: '18. Voturi de interes înainte de vânzare',
+      blocks: [
+        {
+          p: 'Nu știi sigur dacă un produs se va vinde? Când administratorii site-ului pornesc **Voturile de interes**, treci un produs pe **Cere voturi în loc să-l vinzi** pe pagina lui. Cumpărătorii văd atunci un vot în locul prețului: dacă îl vor, cât ar plăti și ce variantă (câmpurile cu alegere multiplă ale tipului, de ex. culori și mărimi). Între timp nu îl poate comanda nimeni.',
+        },
+        {
+          list: [
+            'Trece pe pagina produsului **costul pe bucată** și o **investiție unică**.',
+            'La **Statistici → Voturi de interes** vezi cererea, cât ar plăti votanții, un preț sugerat, cumpărătorii așteptați, veniturile, profitul, randamentul și pragul de rentabilitate, plus variantele cele mai dorite.',
+            'Ca să începi vânzarea, oprește votul și dă variantelor prețurile reale.',
           ],
         },
       ],
@@ -1094,6 +1145,23 @@ const hu: Manual = {
             'Mindenki más továbbra is bármilyen e-mail-címmel, linkkel nyit fiókot.',
             'A vásárlók elmentik a **szállítási adataikat** a fiókjukba, és a pénztár kitölti őket; a pénztárnál az új adatokat megtarthatják a következő alkalomra.',
             'Az oldal adminisztrátorai döntik el, nyithatnak-e a tagok saját boltot, és látnak-e a látogatók rövid DevQuake-bemutatót a bolt lábléce felett.',
+            'A **hozzávetőleges árak más pénznemekben** bekapcsolásával a vásárlók a bolt alján pénznemet választanak, és abban „≈” árakat látnak; továbbra is a boltod pénznemében fizetnek.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'interest',
+      title: '18. Érdeklődési szavazás eladás előtt',
+      blocks: [
+        {
+          p: 'Nem biztos, hogy egy termék fogyni fog? Ha az oldal adminisztrátorai bekapcsolják az **Érdeklődési szavazást**, a termék oldalán állítsd **Szavazás eladás helyett** módba. A vásárlók ekkor ár helyett szavazást látnak: szeretnék-e, mennyit fizetnének érte és melyik változatot (a típus többválasztós mezői, pl. színek és méretek). Addig senki sem rendelheti meg.',
+        },
+        {
+          list: [
+            'Add meg a termék oldalán a **darabköltséget** és egy **egyszeri befektetést**.',
+            'A **Statisztika → Érdeklődési szavazások** alatt látod a keresletet, amit a szavazók fizetnének, egy javasolt árat, a várható vásárlókat, a bevételt, a nyereséget, a megtérülést és a megtérülési pontot, valamint a legkeresettebb változatokat.',
+            'Az eladáshoz kapcsold ki a szavazást, és add meg a változatok valódi árát.',
           ],
         },
       ],

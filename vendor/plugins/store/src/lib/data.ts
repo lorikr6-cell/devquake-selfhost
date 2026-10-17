@@ -563,6 +563,8 @@ export interface ProductSummary {
   /** Published reviews. */
   rating: { average: number; count: number };
   campaign: ProductCampaign | null;
+  /** Shown with an interest vote instead of a price, never sold (ADR 0060). */
+  interest: boolean;
 }
 
 export interface Product extends Omit<
@@ -578,6 +580,9 @@ export interface Product extends Omit<
   photoIds: number[];
   /** Field id → stored value (product_values). */
   values: Record<number, string>;
+  /** The owner's cost estimates for the interest report (ADR 0060). */
+  unitCostCents: number | null;
+  setupCostCents: number | null;
 }
 
 type VariantRow = {
@@ -686,6 +691,7 @@ export async function listProducts(
     summary: string | null;
     category: string | null;
     published: number;
+    interest_only: number;
     updated_at: Date;
     created_at: Date;
     photo_id: number | null;
@@ -697,7 +703,7 @@ export async function listProducts(
     rating_count: number | string;
   }>(
     // sql-safe: whereSql, orderSql — fixed fragments above; every value is a ? parameter
-    `SELECT p.id, p.slug, p.name, p.summary, p.category, p.published, p.updated_at, p.created_at, p.type_id, p.vendor_id,
+    `SELECT p.id, p.slug, p.name, p.summary, p.category, p.published, p.interest_only, p.updated_at, p.created_at, p.type_id, p.vendor_id,
             ven.name AS vendor_name, ven.is_brand AS vendor_brand,
             (SELECT ph.id FROM product_photos ph WHERE ph.product_id = p.id ORDER BY ph.position, ph.id LIMIT 1) AS photo_id,
             (SELECT AVG(rv.rating) FROM reviews rv WHERE rv.product_id = p.id AND rv.status = 'published') AS rating_avg,
@@ -724,6 +730,7 @@ export async function listProducts(
       summary: r.summary,
       category: r.category,
       published: Boolean(r.published),
+      interest: Boolean(num(r.interest_only)),
       photoId: r.photo_id === null ? null : num(r.photo_id),
       updatedAt: iso(r.updated_at),
       createdAt: iso(r.created_at),
@@ -814,6 +821,9 @@ async function loadProduct(db: Db, storeId: number, column: 'id' | 'slug', value
     variants: variants.map(toVariant),
     photoIds: photos.map((p) => num(p.id)),
     values: Object.fromEntries(values.map((v) => [num(v.field_id), v.value])),
+    interest: Boolean(num(r.interest_only)),
+    unitCostCents: r.unit_cost_cents == null ? null : num(r.unit_cost_cents),
+    setupCostCents: r.setup_cost_cents == null ? null : num(r.setup_cost_cents),
   };
   return product;
 }
@@ -1220,11 +1230,12 @@ export async function sellableVariants(
       product_name: string;
       product_slug: string;
       published: number;
+      interest_only: number;
       vat_rate: string | null;
       category: string | null;
     }
   >(
-    `SELECT v.*, p.name AS product_name, p.slug AS product_slug, p.published, p.vat_rate, p.category
+    `SELECT v.*, p.name AS product_name, p.slug AS product_slug, p.published, p.interest_only, p.vat_rate, p.category
      FROM variants v JOIN products p ON p.id = v.product_id
      WHERE v.store_id = ? AND v.id IN (${placeholders(variantIds.length)})${lock ? ' FOR UPDATE' : ''}`,
     [storeId, ...variantIds],
@@ -1239,7 +1250,8 @@ export async function sellableVariants(
     productName: r.product_name,
     productSlug: r.product_slug,
     optionName: r.name,
-    available: Boolean(r.published),
+    // Products that only ask for interest votes are never sold (ADR 0060).
+    available: Boolean(r.published) && !num(r.interest_only),
     priceCents: num(r.price_cents),
     saleCents: r.sale_cents === null ? null : num(r.sale_cents),
     saleFrom: iso(r.sale_from),
@@ -1729,6 +1741,7 @@ export async function markAnnounced(db: Db, orderId: number): Promise<void> {
 export async function deleteStoreOf(db: Db, userId: number): Promise<void> {
   await db.execute('DELETE FROM stores WHERE owner_user_id = ?', [userId]);
   await db.execute('DELETE FROM buyers WHERE platform_user_id = ?', [userId]);
+  await db.execute('DELETE FROM interest_votes WHERE voter_key = ?', [`u${userId}`]);
   await db.execute('DELETE FROM store_staff WHERE user_id = ?', [userId]);
   await db.execute('DELETE FROM store_invites WHERE created_by = ?', [userId]);
 }

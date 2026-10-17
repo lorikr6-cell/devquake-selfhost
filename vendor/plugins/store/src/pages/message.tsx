@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { BackLink, Link, cn, formatDateTime } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { needArea, ownerScope } from '../components/guard';
 import { ThreadActions } from '../components/thread-actions';
 import { Panel } from '../components/ui';
@@ -9,8 +10,8 @@ import { openThread } from '../lib/buyers-data';
 import { can } from '../lib/roles';
 import { orderReference } from '../lib/model';
 
-export function generateMetadata({ ctx }: PluginPageProps) {
-  return { title: translator(localeOf(ctx))('meta.messages') };
+export async function generateMetadata({ ctx }: PluginPageProps) {
+  return { title: translator(localeOf(ctx))('meta.messages'), icons: await appIcons(ctx) };
 }
 
 /** A conversation with a buyer: their messages and the team's answers (emailed to them). */

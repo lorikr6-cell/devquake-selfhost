@@ -24,6 +24,12 @@ export const platformDe: MessagesOf<typeof platformEn> = {
     remember: 'Diese Lieferangaben in meinem Konto speichern',
     filledIn: 'Aus deinem Konto ausgefüllt.',
   },
+  shop: {
+    theme: { label: 'Design', adaptive: 'Automatisch', light: 'Hell', dark: 'Dunkel' },
+    currency: 'Währung',
+    fxNote:
+      'Preise in {currency} sind ungefähr, zu den Kursen der Europäischen Zentralbank vom {date}. Du zahlst in {base}; deine Bank oder Karte rechnet um.',
+  },
   promo: {
     title: 'Gemacht von DevQuake',
     body: 'Dieser Shop gehört zu DevQuake, einer Entwicklerwerkstatt mit Web-Apps für Alltagsprobleme. Ein kostenloses Konto meldet dich bei allen an, und bei diesem Shop.',

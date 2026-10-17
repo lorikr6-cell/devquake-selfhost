@@ -4,7 +4,7 @@ import { cn } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
 import { NewsletterAction } from '../components/account-client';
 import { shopScope } from '../components/guard';
-import { ShopFrame } from '../components/shop';
+import { ShopFrame, shopIcons } from '../components/shop';
 import { NewsletterSignup } from '../components/shop-client';
 import { S } from '../components/shop-style';
 import { shopMailConfigured } from '../lib/mailer';
@@ -17,6 +17,7 @@ export async function generateMetadata({ ctx, params }: PluginPageProps): Promis
     title: translator(localeOf(ctx))('meta.newsletter', { store }),
     robots: { index: false, follow: true },
     referrer: 'no-referrer',
+    icons: scope?.ok ? shopIcons(scope.store, scope.preview) : undefined,
   };
 }
 

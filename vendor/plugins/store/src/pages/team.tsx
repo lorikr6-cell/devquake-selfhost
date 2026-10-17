@@ -1,13 +1,14 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { formatDateTime } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { needArea, ownerScope } from '../components/guard';
 import { SubNav } from '../components/sub-nav';
 import { TeamEditor } from '../components/team-editor';
 import { listInvites, listStaff } from '../lib/team-data';
 
-export function generateMetadata({ ctx }: PluginPageProps) {
-  return { title: translator(localeOf(ctx))('meta.team') };
+export async function generateMetadata({ ctx }: PluginPageProps) {
+  return { title: translator(localeOf(ctx))('meta.team'), icons: await appIcons(ctx) };
 }
 
 /** The shop's team: members with their roles, and one-time links to invite more. */

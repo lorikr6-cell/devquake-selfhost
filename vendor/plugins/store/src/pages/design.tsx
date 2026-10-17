@@ -1,11 +1,12 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { DesignEditor } from '../components/design-editor';
 import { needArea, ownerScope } from '../components/guard';
 import { SubNav } from '../components/sub-nav';
 
-export function generateMetadata({ ctx }: PluginPageProps) {
-  return { title: translator(localeOf(ctx))('meta.design') };
+export async function generateMetadata({ ctx }: PluginPageProps) {
+  return { title: translator(localeOf(ctx))('meta.design'), icons: await appIcons(ctx) };
 }
 
 /** The shop's look: logo, banner, colours, fonts, corners, cards, header and grid. */

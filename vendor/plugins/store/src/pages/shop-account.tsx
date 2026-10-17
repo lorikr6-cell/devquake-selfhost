@@ -11,7 +11,7 @@ import {
 } from '../components/account-client';
 import { countryNamer, currentBuyer, moneyIn, shopScope } from '../components/guard';
 import { StatusBadge } from '../components/order-view';
-import { ShopFrame } from '../components/shop';
+import { ShopFrame, shopIcons } from '../components/shop';
 import { NewsletterSignup } from '../components/shop-client';
 import { S } from '../components/shop-style';
 import { buyerOrders, threadsOfBuyer } from '../lib/buyers-data';
@@ -25,6 +25,7 @@ export async function generateMetadata({ ctx, params }: PluginPageProps): Promis
   return {
     title: translator(localeOf(ctx))('meta.account', { store }),
     robots: { index: false, follow: false },
+    icons: scope?.ok ? shopIcons(scope.store, scope.preview) : undefined,
   };
 }
 

@@ -1,6 +1,7 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { Link, buttonClass, cn, formatDateTime } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { needArea, ownerScope } from '../components/guard';
 import { SubscriberList } from '../components/newsletter-editor';
 import { SubNav } from '../components/sub-nav';
@@ -8,8 +9,8 @@ import { Notice, Panel } from '../components/ui';
 import { shopMailConfigured } from '../lib/mailer';
 import { listNewsletters, listSubscribers, subscriberCounts } from '../lib/newsletter-data';
 
-export function generateMetadata({ ctx }: PluginPageProps) {
-  return { title: translator(localeOf(ctx))('meta.newsletters') };
+export async function generateMetadata({ ctx }: PluginPageProps) {
+  return { title: translator(localeOf(ctx))('meta.newsletters'), icons: await appIcons(ctx) };
 }
 
 const STATUS_TONE = {

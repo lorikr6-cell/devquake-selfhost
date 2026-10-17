@@ -1,5 +1,23 @@
 # Änderungsprotokoll — Shop
 
+## 0.8.0
+
+- Das Logo deines Shops ist jetzt das Symbol im Browser-Tab und auf dem Startbildschirm, auf den Seiten des Shops und auf deinen eigenen Seiten (Übersicht, Produkte, Bestellungen…). Ohne Logo bleibt das Symbol der App.
+
+## 0.7.0
+
+- Shops im DevQuake-Look haben oben einen Design-Schalter: automatisch (wie dein Gerät), hell oder dunkel. Deine Wahl gilt auch auf DevQuake. Shops mit eigenem Design behalten ihre Farben.
+
+## 0.6.0
+
+- Käufer können unten im Shop eine Währung wählen und sehen darin ungefähre Preise neben den echten, zu den Tageskursen der Europäischen Zentralbank; rumänische und ungarische Seiten beginnen mit Lei und Forint. Bestellungen und Zahlungen bleiben in der Währung des Shops, und der Shop sagt das.
+
+## 0.5.0
+
+- Interessenabfragen: Ein Produkt kann statt eines Preises eine Abstimmung zeigen. Angemeldete Personen sagen, ob sie es kaufen würden, was sie zahlen würden und welche Farbe, Größe oder Ausführung sie wollen, und können ihre Stimme ändern oder zurückziehen.
+- Die Statistik zeigt für jedes Produkt mit Abstimmung die Nachfrage, was die Abstimmenden zahlen würden, einen vorgeschlagenen Preis, die erwarteten Käufer, Umsatz, Gewinn, Rendite und Gewinnschwelle, mit einer kurzen Einschätzung und den gefragtesten Ausführungen.
+- Auf der Seite jedes Produkts lassen sich Kosten pro Stück und eine einmalige Investition für diese Schätzungen eintragen.
+
 ## 0.4.0
 
 - DevQuake-Mitglieder machen mit ihrem DevQuake-Konto weiter: Ihr Konto im Shop wird aus ihrem Profil ausgefüllt (Name und E-Mail-Adresse, einmal auf DevQuake erlaubt), und der Shop erkennt sie bei den nächsten Besuchen wieder. Alle anderen registrieren sich weiter mit einer beliebigen E-Mail-Adresse.

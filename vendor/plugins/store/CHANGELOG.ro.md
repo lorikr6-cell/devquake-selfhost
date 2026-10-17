@@ -1,5 +1,23 @@
 # Jurnal de modificări — Magazin
 
+## 0.8.0
+
+- Logo-ul magazinului tău este acum pictograma din fila browserului și de pe ecranul de pornire, pe paginile magazinului și pe paginile tale (prezentare, produse, comenzi…). Fără logo rămâne pictograma aplicației.
+
+## 0.7.0
+
+- Magazinele cu aspectul DevQuake au în antet un comutator de temă: automată (ca dispozitivul tău), luminoasă sau întunecată. Alegerea ta se aplică și pe DevQuake. Magazinele cu design propriu își păstrează culorile.
+
+## 0.6.0
+
+- Cumpărătorii pot alege o monedă în partea de jos a magazinului și văd în ea prețuri aproximative lângă cele reale, la cursurile zilnice ale Băncii Centrale Europene; paginile în română și maghiară încep cu lei și forinți. Comenzile și plățile rămân în moneda magazinului, iar magazinul spune asta.
+
+## 0.5.0
+
+- Voturi de interes: un produs poate arăta un vot în locul prețului. Persoanele conectate spun dacă l-ar cumpăra, cât ar plăti și ce culoare, mărime sau variantă vor, și își pot schimba sau retrage votul.
+- Statisticile arată pentru fiecare produs votat cererea, cât ar plăti votanții, un preț sugerat, cumpărătorii așteptați, veniturile, profitul, randamentul investiției și pragul de rentabilitate, cu o scurtă concluzie și variantele cele mai dorite.
+- Pe pagina fiecărui produs se pot trece costul pe bucată și o investiție unică pentru aceste estimări.
+
 ## 0.4.0
 
 - Membrii DevQuake continuă cu contul lor DevQuake: contul lor din magazin se completează din profil (nume și adresă de e-mail, permise o singură dată pe DevQuake), iar magazinul îi recunoaște la vizitele următoare. Ceilalți se înregistrează în continuare cu orice adresă de e-mail.

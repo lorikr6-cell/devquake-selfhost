@@ -2,12 +2,13 @@ import type { ReactNode } from 'react';
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { Link, localizePath, rich } from '@devquake/ui';
 import { localeOf } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { MANUAL, type ManualBlock } from '../i18n/manual';
 
 const CONTACT_EMAIL = 'contact@devquake.com';
 
 /** Public page (ADR 0009): indexed, with the app's own address as canonical URL. */
-export function generateMetadata({ ctx }: PluginPageProps) {
+export async function generateMetadata({ ctx }: PluginPageProps) {
   const locale = localeOf(ctx);
   const manual = MANUAL[locale];
   const url = `${ctx.baseUrl}${localizePath('/help', locale)}`;
@@ -17,6 +18,7 @@ export function generateMetadata({ ctx }: PluginPageProps) {
     // The host adds the other languages (hreflang).
     alternates: { canonical: url },
     openGraph: { title: manual.ogTitle, url, siteName: 'DevQuake', type: 'article' },
+    icons: await appIcons(ctx),
   };
 }
 

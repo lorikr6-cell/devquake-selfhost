@@ -1,13 +1,14 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { needArea, ownerScope } from '../components/guard';
 import { SubNav } from '../components/sub-nav';
 import { TypesEditor } from '../components/types-editor';
 import { TEMPLATE_IDS, TYPE_TEMPLATES } from '../i18n/type-templates';
 import { listTypes } from '../lib/catalog-data';
 
-export function generateMetadata({ ctx }: PluginPageProps) {
-  return { title: translator(localeOf(ctx))('meta.types') };
+export async function generateMetadata({ ctx }: PluginPageProps) {
+  return { title: translator(localeOf(ctx))('meta.types'), icons: await appIcons(ctx) };
 }
 
 /**

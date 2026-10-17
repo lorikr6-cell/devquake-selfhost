@@ -3,7 +3,7 @@ import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { localeOf, translator } from '../i18n';
 import { shopScope } from '../components/guard';
 import { cn } from '@devquake/ui';
-import { ShopFrame } from '../components/shop';
+import { ShopFrame, shopIcons } from '../components/shop';
 import { liveRules } from '../lib/marketing-data';
 import { S } from '../components/shop-style';
 import { CartView } from '../components/shop-client';
@@ -11,7 +11,11 @@ import { CartView } from '../components/shop-client';
 export async function generateMetadata({ ctx, params }: PluginPageProps): Promise<Metadata> {
   const scope = await shopScope(ctx, params.slug).catch(() => null);
   const store = scope?.ok ? scope.store.name : '';
-  return { title: translator(localeOf(ctx))('meta.cart', { store }), robots: { index: false } };
+  return {
+    title: translator(localeOf(ctx))('meta.cart', { store }),
+    robots: { index: false },
+    icons: scope?.ok ? shopIcons(scope.store, scope.preview) : undefined,
+  };
 }
 
 /** The cart kept in the buyer's browser, checked against the shop's current prices and stock. */

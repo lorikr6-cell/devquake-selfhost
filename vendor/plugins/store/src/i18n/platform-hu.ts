@@ -24,6 +24,12 @@ export const platformHu: MessagesOf<typeof platformEn> = {
     remember: 'A szállítási adatok mentése a fiókomba',
     filledIn: 'A fiókodból kitöltve.',
   },
+  shop: {
+    theme: { label: 'Téma', adaptive: 'Automatikus', light: 'Világos', dark: 'Sötét' },
+    currency: 'Pénznem',
+    fxNote:
+      'A(z) {currency} árak hozzávetőlegesek, az Európai Központi Bank {date} árfolyamán. {base} pénznemben fizetsz; a bankod vagy a kártyád váltja át.',
+  },
   promo: {
     title: 'A DevQuake készítette',
     body: 'Ez a bolt a DevQuake-é, egy fejlesztői műhelyé, amely webes alkalmazásokat készít a mindennapi gondokra. Egyetlen ingyenes fiókkal mindegyikbe belépsz, és ebbe a boltba is.',

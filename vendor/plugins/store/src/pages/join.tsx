@@ -1,16 +1,18 @@
 import type { Metadata } from 'next';
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { ownerScope } from '../components/guard';
 import { JoinButton } from '../components/team-editor';
 import { Notice } from '../components/ui';
 import { inviteByCode } from '../lib/team-data';
 
-export function generateMetadata({ ctx }: PluginPageProps): Metadata {
+export async function generateMetadata({ ctx }: PluginPageProps): Promise<Metadata> {
   return {
     title: translator(localeOf(ctx))('meta.join'),
     robots: { index: false, follow: false },
     referrer: 'no-referrer',
+    icons: await appIcons(ctx),
   };
 }
 

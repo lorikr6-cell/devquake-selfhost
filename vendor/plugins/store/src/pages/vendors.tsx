@@ -1,12 +1,13 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { needArea, ownerScope } from '../components/guard';
 import { SubNav } from '../components/sub-nav';
 import { VendorsEditor } from '../components/vendors-editor';
 import { listVendors } from '../lib/catalog-data';
 
-export function generateMetadata({ ctx }: PluginPageProps) {
-  return { title: translator(localeOf(ctx))('meta.vendors') };
+export async function generateMetadata({ ctx }: PluginPageProps) {
+  return { title: translator(localeOf(ctx))('meta.vendors'), icons: await appIcons(ctx) };
 }
 
 /** Who supplies or makes the products: brands, workshops, wholesalers, with their contacts. */

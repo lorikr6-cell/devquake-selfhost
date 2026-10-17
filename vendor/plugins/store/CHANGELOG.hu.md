@@ -1,5 +1,23 @@
 # Változásnapló — Bolt
 
+## 0.8.0
+
+- A boltod logója mostantól a böngészőfül és a kezdőképernyő ikonja, a bolt oldalain és a saját oldalaidon is (áttekintés, termékek, rendelések…). Logó nélkül az alkalmazás ikonja marad.
+
+## 0.7.0
+
+- A DevQuake megjelenését használó boltok fejlécében témaváltó van: automatikus (az eszközödet követi), világos vagy sötét. A választásod a DevQuake-en is érvényes. A saját megjelenésű boltok megtartják a színeiket.
+
+## 0.6.0
+
+- A vásárlók a bolt alján pénznemet választhatnak, és abban hozzávetőleges árakat látnak a valódiak mellett, az Európai Központi Bank napi árfolyamán; a román és a magyar oldalak lejjel és forinttal indulnak. A rendelések és a fizetések a bolt pénznemében maradnak, és a bolt ezt jelzi is.
+
+## 0.5.0
+
+- Érdeklődési szavazás: egy termék ár helyett szavazást mutathat. A bejelentkezettek megmondják, megvennék-e, mennyit fizetnének érte, és melyik színt, méretet vagy változatot szeretnék; a szavazatukat módosíthatják vagy visszavonhatják.
+- A Statisztika minden szavazott terméknél mutatja a keresletet, amit a szavazók fizetnének, egy javasolt árat, a várható vásárlókat, a bevételt, a nyereséget, a megtérülést és a megtérülési pontot, rövid értékeléssel és a legkeresettebb változatokkal.
+- Minden termék oldalán megadható a darabköltség és egy egyszeri befektetés ezekhez a becslésekhez.
+
 ## 0.4.0
 
 - A DevQuake-tagok a DevQuake-fiókjukkal folytathatják: a boltbeli fiókjuk a profiljukból töltődik ki (név és e-mail-cím, egyszer engedélyezve a DevQuake-en), és a bolt a következő látogatásokkor felismeri őket. Mindenki más továbbra is bármilyen e-mail-címmel regisztrálhat.

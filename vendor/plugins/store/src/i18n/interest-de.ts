@@ -1,0 +1,82 @@
+import type { MessagesOf } from '@devquake/ui';
+import type { interestEn } from './interest-en';
+
+export const interestDe: MessagesOf<typeof interestEn> = {
+  interest: {
+    badge: 'Abstimmen',
+    cardHint: 'Noch nicht im Verkauf: stimm dafür',
+    notSold: 'Noch nicht im Verkauf',
+    title: 'Würdest du das kaufen?',
+    intro:
+      'Wir stellen es nur her, wenn genug Leute es wollen. Sag es uns, und wenn du magst, welche Ausführung du willst und was du zahlen würdest.',
+    count: { one: '{count} Person will es', other: '{count} Personen wollen es' },
+    any: 'Egal',
+    priceRange: 'Was würdest du zahlen? Optional, in {currency}',
+    priceMin: 'Von',
+    priceMax: 'Bis',
+    yes: 'Ja, ich will es',
+    update: 'Stimme ändern',
+    no: 'Nichts für mich',
+    withdraw: 'Stimme zurückziehen',
+    votedYes: 'Du hast gesagt, dass du es willst. Du kannst deine Antwort ändern.',
+    votedNo: 'Du hast gesagt, dass es nichts für dich ist. Du kannst deine Antwort ändern.',
+    thanks: 'Danke, deine Stimme zählt',
+    withdrawn: 'Deine Stimme wurde zurückgezogen',
+    signIn: 'Eine Stimme pro Person:',
+    signInLink: 'zum Abstimmen anmelden',
+  },
+  interestAdmin: {
+    title: 'Interessenabfrage',
+    intro:
+      'Zeig eine Abstimmung statt des Preises: Käufer sagen, ob sie es wollen, was sie zahlen würden und welche Ausführung (die Mehrfachauswahl-Felder seines Typs, etwa Farben und Größen). Solange das an ist, kann es nicht bestellt werden.',
+    toggle: 'Abstimmen lassen statt verkaufen',
+    unitCost: 'Kosten pro Stück ({currency})',
+    unitCostHint: 'Material, Druck und Verpackung, für die Renditeschätzung.',
+    setupCost: 'Einmalige Investition ({currency})',
+    setupCostHint: 'Design, Drucksiebe, Muster.',
+    save: 'Speichern',
+    saved: 'Interessenabfrage gespeichert',
+    results: 'Abstimmungen ansehen',
+  },
+  interestStats: {
+    title: 'Interessenabfragen',
+    intro:
+      'Produkte mit Abstimmung, mit der Nachfrage und einer Schätzung aus dem, was die Abstimmenden zahlen würden. Preise mit MwSt.; Umsatz und Gewinn ohne MwSt. und vor Versand.',
+    empty: 'Noch kein Produkt lässt abstimmen. Schalte es auf der Seite eines Produkts ein.',
+    total:
+      'Alle Produkte mit Abstimmung: {interested} Interessierte, bis zu {revenue} Umsatz und {profit} Gewinn zu den vorgeschlagenen Preisen.',
+    votes: '{yes} wollen es · {no} nicht',
+    range: 'Was sie zahlen würden (Median)',
+    priced: { one: '{count} hat einen Preis genannt', other: '{count} haben einen Preis genannt' },
+    suggested: 'Vorgeschlagener Preis',
+    units: 'Erwartete Käufer',
+    revenue: 'Umsatz (ohne MwSt.)',
+    costs: 'Kosten',
+    addCosts: 'Kosten eintragen',
+    costLine: '{unit} pro Stück, {setup} einmalig',
+    investment: 'Investition',
+    profit: 'Gewinn',
+    roi: 'Rendite (ROI)',
+    breakEven: 'Gewinnschwelle',
+    pieces: { one: '{count} Stück', other: '{count} Stück' },
+    never: 'nie zu diesem Preis',
+    preferences: 'Gewünschte Ausführungen',
+    verdict: {
+      early: 'Zu früh: weniger als {min} Personen wollen es.',
+      noCosts: 'Trag die Kosten pro Stück ein, um Gewinn und Rendite zu sehen.',
+      loss: 'Zum akzeptierten Preis würde es Geld kosten.',
+      thin: 'Kleine Rendite: unter {roi} % zum akzeptierten Preis.',
+      good: 'Lohnt sich: gute Rendite zum Preis, den die Abstimmenden akzeptieren.',
+    },
+    note: 'Der vorgeschlagene Preis bringt am meisten aus den Obergrenzen der Abstimmenden; Abstimmende ohne Preis zählen im gleichen Anteil. Echte Verkäufe sind meist geringer als Stimmen.',
+  },
+  errors: {
+    interestOff: 'Interessenabfragen sind in diesem Shop ausgeschaltet.',
+    voteSignIn: 'Melde dich zum Abstimmen an: eine Stimme pro Person.',
+  },
+  fields: {
+    unitCost: 'Die Kosten pro Stück',
+    setupCost: 'Die einmalige Investition',
+    price: 'Der Preis',
+  },
+};

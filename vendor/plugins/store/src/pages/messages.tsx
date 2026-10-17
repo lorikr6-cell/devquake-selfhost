@@ -1,12 +1,13 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { Link, cn, formatDateTime } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { needArea, ownerScope } from '../components/guard';
 import { threadsOfStore } from '../lib/buyers-data';
 import { orderReference } from '../lib/model';
 
-export function generateMetadata({ ctx }: PluginPageProps) {
-  return { title: translator(localeOf(ctx))('meta.messages') };
+export async function generateMetadata({ ctx }: PluginPageProps) {
+  return { title: translator(localeOf(ctx))('meta.messages'), icons: await appIcons(ctx) };
 }
 
 const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);

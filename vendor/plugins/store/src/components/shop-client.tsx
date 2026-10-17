@@ -7,6 +7,7 @@ import { formatCents } from '../lib/pricing';
 import { applyRules, ruleHints, ruleLabel, type PublicRule } from '../lib/rules';
 import { errorMessage } from './call-api';
 import { useCart, type CartItem } from './cart';
+import { useApprox } from './currency-client';
 import { COMPARE_MAX, useCompare } from './compare';
 import { useFeedback } from './feedback';
 import { S } from './shop-style';
@@ -14,7 +15,13 @@ import { S } from './shop-style';
 /** Money in the page language, for client components. */
 export function useMoney(currency: string) {
   const tag = LOCALE_TAGS[useLocale()];
-  return (cents: number) => formatCents(cents, currency, tag);
+  // With another display currency chosen (ADR 0061): "€22.50 (≈ 112,40 lei)".
+  const approx = useApprox(currency);
+  return (cents: number) => {
+    const exact = formatCents(cents, currency, tag);
+    const other = approx(cents);
+    return other ? `${exact} (${other})` : exact;
+  };
 }
 
 /** The cart in the shop's header, with the number of pieces in it. */

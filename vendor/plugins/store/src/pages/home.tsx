@@ -2,9 +2,11 @@ import type { Metadata } from 'next';
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { Link, buttonClass, formatDateTime } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { moneyIn, ownerScope } from '../components/guard';
 import { mayOpenShop } from '../lib/api';
 import { preparePromo } from '../components/devquake-promo';
+import { prepareCurrency } from '../components/shop-currency';
 import { StatusBadge } from '../components/order-view';
 import { StoreForm } from '../components/store-form';
 import { JoinButton } from '../components/team-editor';
@@ -36,7 +38,11 @@ async function rootShop(props: PluginPageProps, member = false) {
 export async function generateMetadata(props: PluginPageProps): Promise<Metadata> {
   const shop = await rootShop(props).catch(() => null);
   if (shop) return shopMetadata(shop, props.ctx.baseUrl, false);
-  return { title: translator(localeOf(props.ctx))('meta.home'), robots: { index: false } };
+  return {
+    title: translator(localeOf(props.ctx))('meta.home'),
+    robots: { index: false },
+    icons: await appIcons(props.ctx),
+  };
 }
 
 /**
@@ -50,6 +56,7 @@ export default async function Home(props: PluginPageProps) {
     const shop = await rootShop(props);
     if (shop) {
       await preparePromo(ctx);
+      await prepareCurrency(ctx, shop.currency, locale);
       return (
         <StoreFront
           ctx={ctx}
@@ -76,6 +83,7 @@ export default async function Home(props: PluginPageProps) {
     // A member on a site where only its administrators open shops: they shop like visitors.
     const shop = await rootShop(props, true);
     if (shop) {
+      await prepareCurrency(ctx, shop.currency, locale);
       return (
         <StoreFront
           ctx={ctx}

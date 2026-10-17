@@ -1,13 +1,14 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { Link, cn, formatDateTime } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { countryNamer, moneyIn, needArea, ownerScope } from '../components/guard';
 import { StatusBadge } from '../components/order-view';
 import { listOrders } from '../lib/data';
 import { ORDER_STATUSES, orderReference, type OrderStatus } from '../lib/model';
 
-export function generateMetadata({ ctx }: PluginPageProps) {
-  return { title: translator(localeOf(ctx))('meta.orders') };
+export async function generateMetadata({ ctx }: PluginPageProps) {
+  return { title: translator(localeOf(ctx))('meta.orders'), icons: await appIcons(ctx) };
 }
 
 const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);

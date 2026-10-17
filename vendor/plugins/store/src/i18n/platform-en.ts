@@ -25,6 +25,12 @@ export const platformEn = {
     remember: 'Save these delivery details in my account',
     filledIn: 'Filled in from your account.',
   },
+  shop: {
+    theme: { label: 'Theme', adaptive: 'Adaptive', light: 'Light', dark: 'Dark' },
+    currency: 'Currency',
+    fxNote:
+      'Prices in {currency} are approximate, at the European Central Bank’s rates of {date}. You pay in {base}; your bank or card converts it.',
+  },
   promo: {
     title: 'Made by DevQuake',
     body: 'This shop belongs to DevQuake, a developer’s workshop of web apps for everyday problems. One free account signs you in to all of them, and to this shop.',

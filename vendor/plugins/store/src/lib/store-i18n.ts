@@ -23,6 +23,7 @@ export const SHOP_NAMESPACES = [
   'cookies',
   'privacy',
   'promo',
+  'interest',
   'rules',
   'errors',
   'fields',

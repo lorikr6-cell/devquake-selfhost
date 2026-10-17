@@ -1,14 +1,17 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { LOCALE_TAGS, Link, cn } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { BarChart } from '../components/bar-chart';
 import { moneyIn, needArea, ownerScope } from '../components/guard';
 import { Panel } from '../components/ui';
 import { PERIODS, bucket, bucketSize, parsePeriod } from '../lib/stats';
 import { storeStats } from '../lib/stats-data';
+import { InterestStats } from '../components/interest-stats';
+import { interestEnabled, interestOverview } from '../lib/interest-data';
 
-export function generateMetadata({ ctx }: PluginPageProps) {
-  return { title: translator(localeOf(ctx))('meta.stats') };
+export async function generateMetadata({ ctx }: PluginPageProps) {
+  return { title: translator(localeOf(ctx))('meta.stats'), icons: await appIcons(ctx) };
 }
 
 const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
@@ -32,6 +35,9 @@ export default async function StatsPage({ ctx, searchParams }: PluginPageProps) 
   const sortAsked = one(searchParams.sort);
   const sort: Sort = SORTS.includes(sortAsked as Sort) ? (sortAsked as Sort) : 'revenue';
   const s = await storeStats(db, store.id, period, new Date());
+  // Interest votes (ADR 0060): while they are on, or while products still have votes.
+  const votes = await interestOverview(db, store.id, store.vatRate);
+  const interest = votes.length > 0 || (await interestEnabled(ctx)) ? votes : null;
   const money = moneyIn(locale, store.currency);
   const tag = LOCALE_TAGS[locale];
   const size = bucketSize(period);
@@ -289,6 +295,7 @@ export default async function StatsPage({ ctx, searchParams }: PluginPageProps) 
         </div>
         <p className="text-xs text-ink/60 dark:text-paper/60">{t('note')}</p>
       </section>
+      {interest ? <InterestStats rows={interest} locale={locale} money={money} /> : null}
     </div>
   );
 }

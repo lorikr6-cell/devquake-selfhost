@@ -1,0 +1,82 @@
+import type { MessagesOf } from '@devquake/ui';
+import type { interestEn } from './interest-en';
+
+export const interestHu: MessagesOf<typeof interestEn> = {
+  interest: {
+    badge: 'Szavazás',
+    cardHint: 'Még nem kapható: szavazz rá',
+    notSold: 'Még nem kapható',
+    title: 'Megvennéd?',
+    intro:
+      'Csak akkor gyártjuk le, ha elég sokan szeretnék. Mondd el, és ha szeretnéd, azt is, melyik változatot kérnéd és mennyit fizetnél érte.',
+    count: { one: '{count} ember szeretné', other: '{count} ember szeretné' },
+    any: 'Bármelyik',
+    priceRange: 'Mennyit fizetnél érte? Nem kötelező, {currency}',
+    priceMin: 'Ettől',
+    priceMax: 'Eddig',
+    yes: 'Igen, kérem',
+    update: 'Szavazat módosítása',
+    no: 'Nem nekem való',
+    withdraw: 'Szavazat visszavonása',
+    votedYes: 'Azt mondtad, szeretnéd. A válaszod módosíthatod.',
+    votedNo: 'Azt mondtad, nem neked való. A válaszod módosíthatod.',
+    thanks: 'Köszönjük, a szavazatod számít',
+    withdrawn: 'A szavazatod visszavontuk',
+    signIn: 'Személyenként egy szavazat:',
+    signInLink: 'lépj be a szavazáshoz',
+  },
+  interestAdmin: {
+    title: 'Érdeklődési szavazás',
+    intro:
+      'Ár helyett szavazás: a vásárlók megmondják, szeretnék-e, mennyit fizetnének érte és melyik változatot (a típus többválasztós mezői, pl. színek és méretek). Amíg be van kapcsolva, nem rendelhető.',
+    toggle: 'Szavazás eladás helyett',
+    unitCost: 'Darabköltség ({currency})',
+    unitCostHint: 'Anyag, nyomás és csomagolás, a megtérülés becsléséhez.',
+    setupCost: 'Egyszeri befektetés ({currency})',
+    setupCostHint: 'Tervezés, nyomószita, minták.',
+    save: 'Mentés',
+    saved: 'Érdeklődési szavazás elmentve',
+    results: 'A szavazatok',
+  },
+  interestStats: {
+    title: 'Érdeklődési szavazások',
+    intro:
+      'A szavazást kérő termékek a kereslettel és egy becsléssel abból, amit a szavazók fizetnének. Az árak áfával értendők; a bevétel és a nyereség áfa nélkül, szállítás előtt.',
+    empty: 'Még egy termék sem kér szavazást. Kapcsold be egy termék oldalán.',
+    total:
+      'Minden szavazott termék: {interested} érdeklődő, legfeljebb {revenue} bevétel és {profit} nyereség a javasolt árakon.',
+    votes: '{yes} szeretné · {no} nem',
+    range: 'Amit fizetnének (medián)',
+    priced: { one: '{count} adott meg árat', other: '{count} adott meg árat' },
+    suggested: 'Javasolt ár',
+    units: 'Várható vásárlók',
+    revenue: 'Bevétel (áfa nélkül)',
+    costs: 'Költségek',
+    addCosts: 'Költségek megadása',
+    costLine: 'darabonként {unit}, egyszer {setup}',
+    investment: 'Befektetés',
+    profit: 'Nyereség',
+    roi: 'Megtérülés (ROI)',
+    breakEven: 'Megtérülési pont',
+    pieces: { one: '{count} darab', other: '{count} darab' },
+    never: 'ezen az áron soha',
+    preferences: 'Kért változatok',
+    verdict: {
+      early: 'Még korai: kevesebb mint {min} ember szeretné.',
+      noCosts: 'Add meg a darabköltséget a nyereséghez és a megtérüléshez.',
+      loss: 'A szavazók által elfogadott áron veszteséges lenne.',
+      thin: 'Kis megtérülés: {roi} % alatt a szavazók által elfogadott áron.',
+      good: 'Megéri elkészíteni: jó megtérülés a szavazók által elfogadott áron.',
+    },
+    note: 'A javasolt ár hozza a legtöbbet a szavazók saját felső határaiból; az ár nélküli szavazók ugyanabban az arányban számítanak. A valós eladás általában kevesebb a szavazatoknál.',
+  },
+  errors: {
+    interestOff: 'Ebben a boltban az érdeklődési szavazás ki van kapcsolva.',
+    voteSignIn: 'Lépj be a szavazáshoz: személyenként egy szavazat.',
+  },
+  fields: {
+    unitCost: 'A darabköltség',
+    setupCost: 'Az egyszeri befektetés',
+    price: 'Az ár',
+  },
+};

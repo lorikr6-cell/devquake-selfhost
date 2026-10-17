@@ -24,6 +24,12 @@ export const platformRo: MessagesOf<typeof platformEn> = {
     remember: 'Salvează aceste date de livrare în contul meu',
     filledIn: 'Completat din contul tău.',
   },
+  shop: {
+    theme: { label: 'Temă', adaptive: 'Automată', light: 'Luminoasă', dark: 'Întunecată' },
+    currency: 'Moneda',
+    fxNote:
+      'Prețurile în {currency} sunt aproximative, la cursurile Băncii Centrale Europene din {date}. Plătești în {base}; banca sau cardul tău face conversia.',
+  },
   promo: {
     title: 'Realizat de DevQuake',
     body: 'Acest magazin aparține DevQuake, un atelier de dezvoltator cu aplicații web pentru problemele de zi cu zi. Un singur cont gratuit te conectează la toate, și la acest magazin.',

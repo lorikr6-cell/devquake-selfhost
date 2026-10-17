@@ -4,7 +4,7 @@ import { Link, cn, type Locale } from '@devquake/ui';
 import { translator } from '../i18n';
 import { AnnouncementView } from '../components/announcement-view';
 import { shopScope } from '../components/guard';
-import { Paragraphs, ProductCard, ShopFrame, assetUrl } from '../components/shop';
+import { assetUrl, Paragraphs, ProductCard, ShopFrame, shopIcons } from '../components/shop';
 import { SortSelect } from '../components/shop-browse';
 import { S } from '../components/shop-style';
 import {
@@ -42,6 +42,7 @@ export function shopMetadata(store: Store, baseUrl: string, preview: boolean): M
       ...(banner ? { images: [{ url: banner, alt: store.name }] } : {}),
     },
     twitter: { card: banner ? 'summary_large_image' : 'summary' },
+    icons: shopIcons(store, preview),
     // Search engines' ownership checks (Search Console, Bing Webmaster Tools).
     verification:
       t?.googleVerification || t?.bingVerification

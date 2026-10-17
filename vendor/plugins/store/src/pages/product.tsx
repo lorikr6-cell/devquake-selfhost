@@ -2,11 +2,14 @@ import { notFound } from 'next/navigation';
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { BackLink, Link } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { needArea, ownerScope } from '../components/guard';
 import { PhotoManager } from '../components/photo-manager';
 import { ProductForm } from '../components/product-form';
 import { emptyProduct, type ProductValue } from '../components/product-value';
 import { Panel } from '../components/ui';
+import { InterestPanel } from '../components/interest-panel';
+import { interestEnabled } from '../lib/interest-data';
 import { ProductShare } from '../components/product-share';
 import { listTypes, listVendors } from '../lib/catalog-data';
 import { categoriesOf, productById } from '../lib/data';
@@ -18,11 +21,12 @@ const isNew = (params: Record<string, string>) => params.id === undefined;
 
 export async function generateMetadata({ ctx, params }: PluginPageProps) {
   const t = translator(localeOf(ctx));
-  if (isNew(params) || !ctx.user || !ctx.db) return { title: t('meta.newProduct') };
+  const icons = await appIcons(ctx);
+  if (isNew(params) || !ctx.user || !ctx.db) return { title: t('meta.newProduct'), icons };
   const scope = await ownerScope(ctx);
   const product =
     scope.ok && scope.store ? await productById(scope.db, scope.store.id, Number(params.id)) : null;
-  return { title: product ? t('meta.product', { name: product.name }) : t('meta.products') };
+  return { title: product ? t('meta.product', { name: product.name }) : t('meta.products'), icons };
 }
 
 /** A new product (/products/new) or one to edit, with its photos. */
@@ -44,6 +48,9 @@ export default async function ProductPage({ ctx, params }: PluginPageProps) {
   let checks: ReturnType<typeof productChecks> | null = null;
   let published = false;
 
+  // Interest votes (ADR 0060): the panel shows when the owner turned them on in /admin-cp.
+  const votes = await interestEnabled(ctx);
+  let interest: { on: boolean; unitCost: string; setupCost: string } | null = null;
   let value: ProductValue = emptyProduct();
   let photoIds: number[] | null = null;
   let slug: string | null = null;
@@ -54,6 +61,13 @@ export default async function ProductPage({ ctx, params }: PluginPageProps) {
     if (!product) notFound();
     slug = product.slug;
     photoIds = product.photoIds;
+    if (votes || product.interest) {
+      interest = {
+        on: product.interest,
+        unitCost: product.unitCostCents === null ? '' : centsToText(product.unitCostCents),
+        setupCost: product.setupCostCents === null ? '' : centsToText(product.setupCostCents),
+      };
+    }
     published = product.published;
     checks = productChecks(
       { ...product, photos: product.photoIds.length, brand: product.brand },
@@ -111,6 +125,9 @@ export default async function ProductPage({ ctx, params }: PluginPageProps) {
         vendors={vendors.map((x) => ({ id: x.id, name: x.name }))}
         checks={checks}
       />
+      {interest && value.id ? (
+        <InterestPanel productId={value.id} currency={store.currency} {...interest} />
+      ) : null}
       {slug && published && store.published ? (
         <Panel className="flex flex-wrap items-center justify-between gap-3">
           <div>

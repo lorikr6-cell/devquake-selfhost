@@ -1,14 +1,15 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { Link, buttonClass } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { moneyIn, needArea, ownerScope } from '../components/guard';
 import { ProductList } from '../components/product-list';
 import { SubNav } from '../components/sub-nav';
 import { listTypes, listVendors } from '../lib/catalog-data';
 import { listProducts } from '../lib/data';
 
-export function generateMetadata({ ctx }: PluginPageProps) {
-  return { title: translator(localeOf(ctx))('meta.products') };
+export async function generateMetadata({ ctx }: PluginPageProps) {
+  return { title: translator(localeOf(ctx))('meta.products'), icons: await appIcons(ctx) };
 }
 
 const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);

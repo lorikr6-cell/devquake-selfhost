@@ -11,6 +11,7 @@ import { storeBySlug, storeOfMember, type Store } from '../lib/data';
 import { formatCents } from '../lib/pricing';
 import { can, type Area, type Role } from '../lib/roles';
 import { preparePromo } from './devquake-promo';
+import { prepareCurrency } from './shop-currency';
 import { Notice } from './ui';
 
 export type OwnerScope =
@@ -125,6 +126,7 @@ export async function shopScope(ctx: PluginContext, slug: string | undefined): P
   if (!store) notFound();
   await chooseShopLanguage(ctx.db, store, localeOf(ctx));
   await preparePromo(ctx);
+  await prepareCurrency(ctx, store.currency, localeOf(ctx));
   const team = ctx.user
     ? ctx.user.id === store.ownerUserId ||
       (await storeOfMember(ctx.db, ctx.user.id))?.store.id === store.id

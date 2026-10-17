@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { BackLink } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { moneyIn, needArea, ownerScope } from '../components/guard';
 import { NewsletterEditor } from '../components/newsletter-editor';
 import { listProducts } from '../lib/data';
@@ -12,7 +13,10 @@ import { composeNewsletter } from '../lib/shop-mail';
 
 export async function generateMetadata({ ctx, params }: PluginPageProps) {
   const t = translator(localeOf(ctx));
-  return { title: params.id ? t('meta.newsletter', { store: '' }) : t('meta.newNewsletter') };
+  return {
+    title: params.id ? t('meta.newsletter', { store: '' }) : t('meta.newNewsletter'),
+    icons: await appIcons(ctx),
+  };
 }
 
 /**

@@ -5,7 +5,7 @@ import { Link, cn, formatDateTime, localizePath } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
 import { ReplyForm } from '../components/account-client';
 import { currentBuyer, shopScope } from '../components/guard';
-import { Paragraphs, ShopFrame } from '../components/shop';
+import { Paragraphs, ShopFrame, shopIcons } from '../components/shop';
 import { S } from '../components/shop-style';
 import { openThread } from '../lib/buyers-data';
 import { orderReference } from '../lib/model';
@@ -16,6 +16,7 @@ export async function generateMetadata({ ctx, params }: PluginPageProps): Promis
   return {
     title: translator(localeOf(ctx))('meta.account', { store }),
     robots: { index: false, follow: false },
+    icons: scope?.ok ? shopIcons(scope.store, scope.preview) : undefined,
   };
 }
 

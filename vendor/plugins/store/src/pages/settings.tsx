@@ -1,5 +1,6 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { needArea, ownerScope } from '../components/guard';
 import { SubNav } from '../components/sub-nav';
 import { LegalForm, StoreForm } from '../components/store-form';
@@ -7,8 +8,8 @@ import { MaintenanceForm } from '../components/maintenance-form';
 import { Panel } from '../components/ui';
 import { listOrders } from '../lib/data';
 
-export function generateMetadata({ ctx }: PluginPageProps) {
-  return { title: translator(localeOf(ctx))('meta.settings') };
+export async function generateMetadata({ ctx }: PluginPageProps) {
+  return { title: translator(localeOf(ctx))('meta.settings'), icons: await appIcons(ctx) };
 }
 
 /** The shop's name, address, texts, currency, VAT, open or closed; seller details and terms. */

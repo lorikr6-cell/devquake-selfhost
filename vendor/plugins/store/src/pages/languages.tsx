@@ -1,6 +1,7 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { formatDateTime } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { needArea, ownerScope } from '../components/guard';
 import { LanguagesEditor } from '../components/languages-editor';
 import { SubNav } from '../components/sub-nav';
@@ -8,8 +9,8 @@ import { listLanguages } from '../lib/languages-data';
 import { countLabels, exportLabels } from '../lib/store-i18n';
 import { appMessages } from '../i18n';
 
-export function generateMetadata({ ctx }: PluginPageProps) {
-  return { title: translator(localeOf(ctx))('meta.languages') };
+export async function generateMetadata({ ctx }: PluginPageProps) {
+  return { title: translator(localeOf(ctx))('meta.languages'), icons: await appIcons(ctx) };
 }
 
 /**

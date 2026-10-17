@@ -3,7 +3,7 @@ import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { localeOf, translator } from '../i18n';
 import { shopScope } from '../components/guard';
 import { cn } from '@devquake/ui';
-import { AnpcLinks, Paragraphs, ShopFrame } from '../components/shop';
+import { AnpcLinks, Paragraphs, ShopFrame, shopIcons } from '../components/shop';
 import { S } from '../components/shop-style';
 import { shopMailConfigured } from '../lib/mailer';
 
@@ -15,6 +15,7 @@ export async function generateMetadata({ ctx, params }: PluginPageProps): Promis
     title: t('meta.info', { store: scope.store.name }),
     robots: scope.preview ? { index: false } : { index: true, follow: true },
     alternates: { canonical: `${ctx.baseUrl}/s/${scope.store.slug}/info` },
+    icons: shopIcons(scope.store, scope.preview),
   };
 }
 

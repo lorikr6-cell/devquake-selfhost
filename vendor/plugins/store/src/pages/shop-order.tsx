@@ -4,7 +4,7 @@ import { formatDateTime, rich } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
 import { countryNamer, moneyIn, shopScope } from '../components/guard';
 import { OrderSums, StatusBadge } from '../components/order-view';
-import { ShopFrame } from '../components/shop';
+import { ShopFrame, shopIcons } from '../components/shop';
 import { CopyLink, PayNow } from '../components/shop-client';
 import { OrderReviews } from '../components/order-reviews';
 import { S } from '../components/shop-style';
@@ -23,6 +23,7 @@ export async function generateMetadata({ ctx, params }: PluginPageProps): Promis
     title: translator(localeOf(ctx))('meta.orderPage', { store }),
     robots: { index: false, follow: false },
     referrer: 'no-referrer',
+    icons: scope?.ok ? shopIcons(scope.store, scope.preview) : undefined,
   };
 }
 

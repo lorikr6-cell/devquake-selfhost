@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { BackLink, Link, formatDateTime } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { OrderStatusButtons, TrackingForm } from '../components/order-actions';
 import { OrderSums, StatusBadge } from '../components/order-view';
 import { countryNamer, needArea, ownerScope } from '../components/guard';
@@ -9,9 +10,10 @@ import { Panel } from '../components/ui';
 import { orderById } from '../lib/data';
 import { nextStatuses, orderReference, trackingLink } from '../lib/model';
 
-export function generateMetadata({ ctx, params }: PluginPageProps) {
+export async function generateMetadata({ ctx, params }: PluginPageProps) {
   return {
     title: translator(localeOf(ctx))('meta.order', { ref: orderReference(Number(params.id) || 0) }),
+    icons: await appIcons(ctx),
   };
 }
 

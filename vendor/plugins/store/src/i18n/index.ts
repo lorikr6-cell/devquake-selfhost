@@ -11,6 +11,7 @@ import { appTexts } from './app-texts';
 import { growth } from './growth';
 import { ops } from './ops';
 import { platform } from './platform';
+import { interest } from './interest';
 import { screens } from './screens';
 
 // The app's texts in every language (ADR 0011). The host gives each page and API call the
@@ -32,7 +33,10 @@ function merge(a: Messages, b: Messages): Messages {
 const CATALOGS = Object.fromEntries(
   (Object.keys(screens) as Locale[]).map((l) => [
     l,
-    merge(merge(merge(merge(screens[l]!, appTexts[l]!), growth[l]!), ops[l]!), platform[l]!),
+    merge(
+      merge(merge(merge(merge(screens[l]!, appTexts[l]!), growth[l]!), ops[l]!), platform[l]!),
+      interest[l]!,
+    ),
   ]),
 ) as Record<Locale, Messages>;
 

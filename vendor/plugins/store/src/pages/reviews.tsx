@@ -1,13 +1,14 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { formatDateTime } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { needArea, ownerScope } from '../components/guard';
 import { ReviewModeration } from '../components/review-moderation';
 import { REVIEW_STATUSES, type ReviewStatus } from '../lib/reviews';
 import { storeReviews } from '../lib/reviews-data';
 
-export function generateMetadata({ ctx }: PluginPageProps) {
-  return { title: translator(localeOf(ctx))('meta.reviews') };
+export async function generateMetadata({ ctx }: PluginPageProps) {
+  return { title: translator(localeOf(ctx))('meta.reviews'), icons: await appIcons(ctx) };
 }
 
 const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);

@@ -3,9 +3,11 @@ import { notFound } from 'next/navigation';
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { Link, ZoomableImage, cn, formatDateTime, LOCALE_TAGS } from '@devquake/ui';
 import { translator } from '../i18n';
-import { shopScope } from '../components/guard';
-import { Paragraphs, ShopFrame, Stars, photoUrl } from '../components/shop';
+import { currentBuyer, shopScope } from '../components/guard';
+import { Paragraphs, photoUrl, ShopFrame, shopIcons, Stars } from '../components/shop';
 import { AddToCart, CompareToggle } from '../components/shop-client';
+import { InterestVote } from '../components/interest-vote';
+import { interestEnabled, optionsOf, voteState, voterKey } from '../lib/interest-data';
 import { ProductShare } from '../components/product-share';
 import { ReviewForm } from '../components/review-form';
 import { S } from '../components/shop-style';
@@ -51,6 +53,7 @@ export async function generateMetadata(props: PluginPageProps): Promise<Metadata
       ...(image ? { images: [{ url: image, alt: product.name }] } : {}),
     },
     twitter: { card: image ? 'summary_large_image' : 'summary' },
+    icons: shopIcons(store, scope.preview),
   };
 }
 
@@ -82,6 +85,19 @@ export default async function ProductPage(props: PluginPageProps) {
     };
   });
   const saleEnds = options.find((o) => o.saleUntil)?.saleUntil ?? null;
+  // A product that asks for interest votes instead of being sold (ADR 0060).
+  const interest =
+    product.interest && (await interestEnabled(props.ctx))
+      ? await (async () => {
+          const buyer = props.ctx.user ? null : await currentBuyer(db, store, null);
+          const voter = voterKey(props.ctx.user?.id, buyer?.id);
+          return {
+            voter,
+            options: await optionsOf(db, store.id, product),
+            state: await voteState(db, store.id, product.id, voter),
+          };
+        })()
+      : null;
   const vatRate = product.vatRate ?? store.vatRate;
   const base = `${props.ctx.baseUrl}/s/${store.slug}`;
   const url = `${base}/p/${product.slug}`;
@@ -134,20 +150,25 @@ export default async function ProductPage(props: PluginPageProps) {
             reviewBody: r.body ?? undefined,
           }))
         : undefined,
-      offers: product.variants.map((v, i) => ({
-        '@type': 'Offer',
-        name: v.name || undefined,
-        sku: v.sku ?? undefined,
-        price: (options[i]!.cents / 100).toFixed(2),
-        priceCurrency: store.currency,
-        availability:
-          v.stock !== null && v.stock <= 0
-            ? 'https://schema.org/OutOfStock'
-            : 'https://schema.org/InStock',
-        ...(options[i]!.saleUntil ? { priceValidUntil: options[i]!.saleUntil!.slice(0, 10) } : {}),
-        url,
-        seller: { '@type': 'Organization', name: store.seller.companyName ?? store.name },
-      })),
+      // Not on sale yet (ADR 0060): no price to offer.
+      offers: product.interest
+        ? undefined
+        : product.variants.map((v, i) => ({
+            '@type': 'Offer',
+            name: v.name || undefined,
+            sku: v.sku ?? undefined,
+            price: (options[i]!.cents / 100).toFixed(2),
+            priceCurrency: store.currency,
+            availability:
+              v.stock !== null && v.stock <= 0
+                ? 'https://schema.org/OutOfStock'
+                : 'https://schema.org/InStock',
+            ...(options[i]!.saleUntil
+              ? { priceValidUntil: options[i]!.saleUntil!.slice(0, 10) }
+              : {}),
+            url,
+            seller: { '@type': 'Organization', name: store.seller.companyName ?? store.name },
+          })),
     },
     {
       '@context': 'https://schema.org',
@@ -256,13 +277,27 @@ export default async function ProductPage(props: PluginPageProps) {
               <span>{product.campaign.name}</span>
             </p>
           ) : null}
-          <AddToCart slug={store.slug} currency={store.currency} options={options} />
-          <p className={cn('text-xs', S.muted)}>
-            {t('vatRate', { rate: vatRate.toLocaleString(tag) })}
-            {saleEnds
-              ? ` · ${t('saleEnds', { date: formatDateTime(saleEnds, timeZone, 'datetime', locale) })}`
-              : ''}
-          </p>
+          {interest ? (
+            <InterestVote
+              slug={store.slug}
+              product={product.slug}
+              currency={store.currency}
+              options={interest.options}
+              initial={interest.state}
+              canVote={interest.voter !== null && !preview}
+              signInHref={`/s/${store.slug}/account`}
+            />
+          ) : (
+            <>
+              <AddToCart slug={store.slug} currency={store.currency} options={options} />
+              <p className={cn('text-xs', S.muted)}>
+                {t('vatRate', { rate: vatRate.toLocaleString(tag) })}
+                {saleEnds
+                  ? ` · ${t('saleEnds', { date: formatDateTime(saleEnds, timeZone, 'datetime', locale) })}`
+                  : ''}
+              </p>
+            </>
+          )}
           <div className="flex flex-wrap gap-2">
             <CompareToggle slug={store.slug} product={product.slug} withLabel />
             {product.published && !preview ? (

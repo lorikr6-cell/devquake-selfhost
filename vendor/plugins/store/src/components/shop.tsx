@@ -1,8 +1,14 @@
+import type { Metadata } from 'next';
 import type { CSSProperties, ReactNode } from 'react';
 import type { PluginDatabase } from '@devquake/plugin-sdk';
-import { I18nProvider, Link, cn, type Locale } from '@devquake/ui';
+import { I18nProvider, LOCALE_TAGS, Link, cn, type Locale } from '@devquake/ui';
 import { FALLBACK_MESSAGES, shopLanguageState, translator } from '../i18n';
+import { cookies } from 'next/headers';
 import { DevQuakePromo } from './devquake-promo';
+import { ThemeSwitch, type ShopTheme } from './theme-switch';
+import { CurrencyPicker, FxNote, FxProvider } from './currency-client';
+import { shopFx } from './shop-currency';
+import { approxText } from '../lib/fx';
 import { ShopLanguagePicker } from './shop-language';
 import type { ProductSummary, Store } from '../lib/data';
 import { shopMailConfigured } from '../lib/mailer';
@@ -34,6 +40,16 @@ export function photoUrl(
     ? `/api/products/${productId}/photos/${photoId}`
     : `/api/s/${store.slug}/photos/${photoId}`;
   return thumb ? `${base}?size=thumb` : base;
+}
+
+/**
+ * The shop's logo as the browser tab's icon and the home-screen icon, on DevQuake and on a
+ * self-hosted instance alike (both use a page's own icons over the app's). Undefined without a
+ * logo, so the app's icon stays.
+ */
+export function shopIcons(store: Store, preview: boolean): Metadata['icons'] {
+  const logo = assetUrl(store, preview, 'logo');
+  return logo ? { icon: [{ url: logo }], apple: [{ url: logo }] } : undefined;
 }
 
 /** The shop's logo or banner, from the open route (or the team's while it is closed). */
@@ -75,6 +91,8 @@ export async function ShopFrame({
       )
     : [];
   const language = shopLanguageState();
+  const picked = (await cookies()).get('dq_theme')?.value;
+  const siteTheme: ShopTheme = picked === 'light' || picked === 'dark' ? picked : 'adaptive';
   const frame = (
     <div
       data-shop-theme={theme ? '' : undefined}
@@ -116,6 +134,8 @@ export async function ShopFrame({
           {store.tagline ? <p className={cn('mt-1', S.muted)}>{store.tagline}</p> : null}
         </div>
         <nav aria-label={t('shopNav')} className="flex flex-wrap items-center gap-2">
+          {/* Light, dark or the device's, only while the shop keeps DevQuake's look. */}
+          {theme ? null : <ThemeSwitch initial={siteTheme} />}
           <Link href={`/s/${store.slug}/account`} className={S.buttonSecondary}>
             {t('account')}
           </Link>
@@ -124,6 +144,7 @@ export async function ShopFrame({
         </nav>
       </header>
       {children}
+      <FxNote className={cn('text-xs', S.muted)} />
       {preview || team ? null : <DevQuakePromo locale={locale} />}
       <footer className={cn('space-y-4 border-t pt-6 text-xs', S.line, S.muted)}>
         {shopMailConfigured() && !preview ? (
@@ -157,6 +178,7 @@ export async function ShopFrame({
             options={language.options}
           />
         ) : null}
+        <CurrencyPicker />
       </footer>
       {tracking ? (
         <ShopTracking
@@ -167,13 +189,15 @@ export async function ShopFrame({
       ) : null}
     </div>
   );
-  // The shop's own labels for its client parts too (cart, checkout, forms).
+  // The shop's own labels for its client parts too (cart, checkout, forms), and the buyer's
+  // display currency for their prices (ADR 0061).
+  const withFx = <FxProvider value={shopFx()}>{frame}</FxProvider>;
   return language.catalog ? (
     <I18nProvider locale={locale} messages={language.catalog} fallback={FALLBACK_MESSAGES}>
-      {frame}
+      {withFx}
     </I18nProvider>
   ) : (
-    frame
+    withFx
   );
 }
 
@@ -221,11 +245,14 @@ export function Price({
   const t = translator(locale, 'shop');
   const money = moneyIn(locale, currency);
   const now = money(cents);
+  const fx = shopFx();
+  const approx = fx?.base === currency ? approxText(cents, fx, LOCALE_TAGS[locale]) : null;
   return (
     <span className={cn('inline-flex flex-wrap items-baseline gap-x-2', className)}>
       <span className={cn('font-semibold', onSale && S.accent)}>
         {from ? t('from', { price: now }) : now}
       </span>
+      {approx ? <span className={cn('text-sm', S.muted)}>{approx}</span> : null}
       {onSale ? (
         <s className={cn('text-sm', S.muted)} aria-label={t('was', { price: money(regularCents) })}>
           {money(regularCents)}
@@ -280,14 +307,17 @@ export function ProductCard({
   locale: Locale;
 }) {
   const t = translator(locale, 'shop');
-  const soldOut = product.stock === 0;
-  const badge = soldOut
-    ? t('soldOut')
-    : product.campaign
-      ? `−${product.campaign.percentOff}%`
-      : product.onSale
-        ? t('onSale')
-        : null;
+  const tInterest = translator(locale, 'interest');
+  const soldOut = product.stock === 0 && !product.interest;
+  const badge = product.interest
+    ? tInterest('badge')
+    : soldOut
+      ? t('soldOut')
+      : product.campaign
+        ? `−${product.campaign.percentOff}%`
+        : product.onSale
+          ? t('onSale')
+          : null;
   return (
     <div className={cn('group relative flex h-full flex-col', S.card)}>
       <Link
@@ -339,15 +369,20 @@ export function ProductCard({
           {product.summary ? (
             <span className={cn('line-clamp-2 text-xs', S.muted)}>{product.summary}</span>
           ) : null}
-          <Price
-            cents={product.fromCents}
-            regularCents={product.regularCents}
-            onSale={product.onSale}
-            from={product.priceVaries}
-            locale={locale}
-            currency={store.currency}
-            className="mt-auto pt-1"
-          />
+          {product.interest ? (
+            // Not sold yet (ADR 0060): buyers vote on its page.
+            <span className="mt-auto pt-1 text-sm font-medium">{tInterest('cardHint')}</span>
+          ) : (
+            <Price
+              cents={product.fromCents}
+              regularCents={product.regularCents}
+              onSale={product.onSale}
+              from={product.priceVaries}
+              locale={locale}
+              currency={store.currency}
+              className="mt-auto pt-1"
+            />
+          )}
         </span>
       </Link>
       <CompareToggle slug={store.slug} product={product.slug} className="absolute top-2 right-2" />

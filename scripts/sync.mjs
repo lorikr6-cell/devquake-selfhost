@@ -26,7 +26,9 @@ if (!fs.existsSync(path.join(source, 'packages', 'plugin-sdk'))) {
 }
 
 // Build output, dependencies and notes for DevQuake's own tooling stay behind.
-const SKIP = new Set(['node_modules', '.next', '.turbo', 'CLAUDE.md']);
+// DevQuake's own content and tools (the Store's merch seeds and photo scripts) stay behind too:
+// instances only run db/migrations.
+const SKIP = new Set(['node_modules', '.next', '.turbo', 'CLAUDE.md', 'seeds', 'scripts']);
 function copy(from, to) {
   fs.rmSync(to, { recursive: true, force: true });
   fs.cpSync(from, to, { recursive: true, filter: (src) => !SKIP.has(path.basename(src)) });

@@ -1,5 +1,6 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { moneyIn, needArea, ownerScope } from '../components/guard';
 import { MarketingEditor } from '../components/marketing-editor';
 import { RulesEditor } from '../components/rules-editor';
@@ -10,8 +11,8 @@ import { windowState } from '../lib/marketing';
 import { listAnnouncements, listCampaigns, listRules, listVouchers } from '../lib/marketing-data';
 import { centsToText } from '../lib/pricing';
 
-export function generateMetadata({ ctx }: PluginPageProps) {
-  return { title: translator(localeOf(ctx))('meta.marketing') };
+export async function generateMetadata({ ctx }: PluginPageProps) {
+  return { title: translator(localeOf(ctx))('meta.marketing'), icons: await appIcons(ctx) };
 }
 
 /**

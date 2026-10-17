@@ -4,7 +4,7 @@ import { localeOf, translator } from '../i18n';
 import { CheckoutForm } from '../components/checkout-form';
 import { countryNamer, currentBuyer, shopScope } from '../components/guard';
 import { cn } from '@devquake/ui';
-import { ShopFrame } from '../components/shop';
+import { ShopFrame, shopIcons } from '../components/shop';
 import { liveRules } from '../lib/marketing-data';
 import { S } from '../components/shop-style';
 import { shopMailConfigured } from '../lib/mailer';
@@ -14,7 +14,11 @@ import { COUNTRIES } from '../lib/model';
 export async function generateMetadata({ ctx, params }: PluginPageProps): Promise<Metadata> {
   const scope = await shopScope(ctx, params.slug).catch(() => null);
   const store = scope?.ok ? scope.store.name : '';
-  return { title: translator(localeOf(ctx))('meta.checkout', { store }), robots: { index: false } };
+  return {
+    title: translator(localeOf(ctx))('meta.checkout', { store }),
+    robots: { index: false },
+    icons: scope?.ok ? shopIcons(scope.store, scope.preview) : undefined,
+  };
 }
 
 /** The buyer's details, where to ship, how to pay, and the order. */

@@ -1,6 +1,7 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { Link, cn } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { needArea, ownerScope } from '../components/guard';
 import { SeoForm, TrackingForm } from '../components/seo-forms';
 import { SubNav } from '../components/sub-nav';
@@ -10,8 +11,8 @@ import { can } from '../lib/roles';
 import { productChecks, storeChecks, storeMeta } from '../lib/seo';
 import { EMPTY_TRACKING } from '../lib/tracking';
 
-export function generateMetadata({ ctx }: PluginPageProps) {
-  return { title: translator(localeOf(ctx))('meta.seo') };
+export async function generateMetadata({ ctx }: PluginPageProps) {
+  return { title: translator(localeOf(ctx))('meta.seo'), icons: await appIcons(ctx) };
 }
 
 /**

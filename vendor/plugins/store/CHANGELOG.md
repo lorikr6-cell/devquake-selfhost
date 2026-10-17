@@ -1,5 +1,23 @@
 # Changelog — Store
 
+## 0.8.0
+
+- Your shop’s logo is now the icon in the browser tab and on the home screen, on the shop’s pages and on your own pages (overview, products, orders…). Without a logo, the app’s icon stays.
+
+## 0.7.0
+
+- Shops that keep DevQuake’s look have a theme switch in their header: adaptive (follows your device), light or dark. Your choice also applies on DevQuake. Shops with their own design keep their colours.
+
+## 0.6.0
+
+- Buyers can choose a currency at the bottom of the shop and see approximate prices in it next to the real ones, at the European Central Bank’s daily rates; Romanian and Hungarian pages start with lei and forint. Orders and payments stay in the shop’s currency, and the shop says so.
+
+## 0.5.0
+
+- Interest votes: a product can show a vote instead of a price. Signed-in people say whether they would buy it, what they would pay and which colour, size or version they want, and can change or take back their vote.
+- Statistics shows every voted product's demand, what voters would pay, a suggested price, the expected buyers, revenue, profit, return on investment and break-even, with a short verdict and the most wanted versions.
+- Each product's page takes a cost per piece and a one-time investment for these estimates.
+
 ## 0.4.0
 
 - DevQuake members continue with their DevQuake account: their account in the shop is filled in from their profile (name and email address, allowed once on DevQuake), and the shop recognises them on their next visits. Everyone else still signs up with any email address.

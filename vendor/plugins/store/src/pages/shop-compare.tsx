@@ -4,7 +4,7 @@ import { LOCALE_TAGS, cn } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
 import { CompareTable, type CompareColumn, type CompareRow } from '../components/compare-table';
 import { moneyIn, shopScope } from '../components/guard';
-import { ShopFrame, photoUrl } from '../components/shop';
+import { photoUrl, ShopFrame, shopIcons } from '../components/shop';
 import { S } from '../components/shop-style';
 import { fieldsOfTypes } from '../lib/catalog-data';
 import { listProducts, productBySlug } from '../lib/data';
@@ -18,6 +18,7 @@ export async function generateMetadata({ ctx, params }: PluginPageProps): Promis
   return {
     title: translator(localeOf(ctx))('meta.compare', { store }),
     robots: { index: false, follow: true },
+    icons: scope?.ok ? shopIcons(scope.store, scope.preview) : undefined,
   };
 }
 

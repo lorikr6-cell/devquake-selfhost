@@ -1,0 +1,90 @@
+import type { MessagesOf } from '@devquake/ui';
+import type { interestEn } from './interest-en';
+
+export const interestRo: MessagesOf<typeof interestEn> = {
+  interest: {
+    badge: 'Votează',
+    cardHint: 'Nu e încă de vânzare: votează-l',
+    notSold: 'Nu e încă de vânzare',
+    title: 'L-ai cumpăra?',
+    intro:
+      'Îl producem doar dacă îl vor destui oameni. Spune-ne și, dacă vrei, ce variantă ai alege și cât ai plăti.',
+    count: {
+      one: '{count} persoană îl vrea',
+      few: '{count} persoane îl vor',
+      other: '{count} de persoane îl vor',
+    },
+    any: 'Oricare',
+    priceRange: 'Cât ai plăti? Opțional, în {currency}',
+    priceMin: 'De la',
+    priceMax: 'Până la',
+    yes: 'Da, îl vreau',
+    update: 'Schimbă votul',
+    no: 'Nu e pentru mine',
+    withdraw: 'Retrage votul',
+    votedYes: 'Ai spus că îl vrei. Îți poți schimba răspunsul.',
+    votedNo: 'Ai spus că nu e pentru tine. Îți poți schimba răspunsul.',
+    thanks: 'Mulțumim, votul tău contează',
+    withdrawn: 'Votul tău a fost retras',
+    signIn: 'Un vot de persoană:',
+    signInLink: 'intră în cont ca să votezi',
+  },
+  interestAdmin: {
+    title: 'Vot de interes',
+    intro:
+      'Arată un vot în locul prețului: cumpărătorii spun dacă îl vor, cât ar plăti și ce variantă (câmpurile cu alegere multiplă ale tipului, de ex. culori și mărimi). Cât timp e pornit, nu poate fi comandat.',
+    toggle: 'Cere voturi în loc să-l vinzi',
+    unitCost: 'Cost pe bucată ({currency})',
+    unitCostHint: 'Materiale, imprimare și ambalare, pentru estimarea randamentului.',
+    setupCost: 'Investiție unică ({currency})',
+    setupCostHint: 'Design, site de imprimare, mostre.',
+    save: 'Salvează',
+    saved: 'Votul de interes a fost salvat',
+    results: 'Vezi voturile',
+  },
+  interestStats: {
+    title: 'Voturi de interes',
+    intro:
+      'Produsele care cer voturi, cu cererea și o estimare din ce ar plăti votanții. Prețurile includ TVA; veniturile și profitul sunt fără TVA și înainte de livrare.',
+    empty: 'Încă niciun produs nu cere voturi. Pornește-l pe pagina unui produs.',
+    total:
+      'Toate produsele votate: {interested} interesați, până la {revenue} venituri și {profit} profit la prețurile sugerate.',
+    votes: '{yes} îl vor · {no} nu',
+    range: 'Cât ar plăti (mediana)',
+    priced: {
+      one: '{count} a dat un preț',
+      few: '{count} au dat un preț',
+      other: '{count} au dat un preț',
+    },
+    suggested: 'Preț sugerat',
+    units: 'Cumpărători așteptați',
+    revenue: 'Venituri (fără TVA)',
+    costs: 'Costuri',
+    addCosts: 'Adaugă costurile',
+    costLine: '{unit} pe bucată, {setup} o dată',
+    investment: 'Investiție',
+    profit: 'Profit',
+    roi: 'Randament (ROI)',
+    breakEven: 'Prag de rentabilitate',
+    pieces: { one: '{count} bucată', few: '{count} bucăți', other: '{count} de bucăți' },
+    never: 'niciodată la acest preț',
+    preferences: 'Variante dorite',
+    verdict: {
+      early: 'Prea devreme: mai puțin de {min} persoane îl vor.',
+      noCosts: 'Adaugă costul pe bucată ca să vezi profitul și randamentul.',
+      loss: 'Ar pierde bani la prețul acceptat de votanți.',
+      thin: 'Randament mic: sub {roi} % la prețul acceptat de votanți.',
+      good: 'Merită produs: randament bun la prețul acceptat de votanți.',
+    },
+    note: 'Prețul sugerat aduce cel mai mult din limitele superioare date de votanți; votanții fără preț contează în aceeași proporție. Vânzările reale sunt de obicei mai mici decât voturile.',
+  },
+  errors: {
+    interestOff: 'Voturile de interes sunt oprite în acest magazin.',
+    voteSignIn: 'Intră în cont ca să votezi: un vot de persoană.',
+  },
+  fields: {
+    unitCost: 'Costul pe bucată',
+    setupCost: 'Investiția unică',
+    price: 'Prețul',
+  },
+};

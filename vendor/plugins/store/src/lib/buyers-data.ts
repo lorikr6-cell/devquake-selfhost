@@ -220,6 +220,10 @@ export async function endSession(db: Db, token: string): Promise<void> {
  */
 export async function deleteBuyer(db: Db, storeId: number, buyerId: number): Promise<void> {
   await db.execute('DELETE FROM buyers WHERE id = ? AND store_id = ?', [buyerId, storeId]);
+  await db.execute('DELETE FROM interest_votes WHERE store_id = ? AND voter_key = ?', [
+    storeId,
+    `b${buyerId}`,
+  ]);
 }
 
 export async function setBuyerName(db: Db, buyerId: number, name: string | null): Promise<void> {

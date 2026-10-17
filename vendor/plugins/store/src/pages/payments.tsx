@@ -1,12 +1,13 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { localeOf, translator } from '../i18n';
+import { appIcons } from '../components/app-icons';
 import { needArea, ownerScope } from '../components/guard';
 import { SubNav } from '../components/sub-nav';
 import { PaymentsForm } from '../components/payments-form';
 import { canKeepSecrets } from '../lib/secrets';
 
-export function generateMetadata({ ctx }: PluginPageProps) {
-  return { title: translator(localeOf(ctx))('meta.payments') };
+export async function generateMetadata({ ctx }: PluginPageProps) {
+  return { title: translator(localeOf(ctx))('meta.payments'), icons: await appIcons(ctx) };
 }
 
 /** Card (Stripe), PayPal, bank transfer and cash on delivery, each set up by the owner. */

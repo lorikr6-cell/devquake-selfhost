@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'store',
     name: 'Store',
-    version: '0.4.0',
+    version: '0.8.0',
     description:
       'A lightweight shop: products of any type with their own fields, vendors, campaigns, vouchers, announcements and newsletters, reviews, product comparison, QR codes and sharing, the shop’s own design, automatic discounts, a team with several roles per member and a task board, maintenance mode, the shop in any language, buyer accounts with messages and order history, statistics, card (Stripe), PayPal, bank transfer or cash on delivery, and pages search engines can index.',
     status: 'active',
@@ -50,6 +50,7 @@ export default definePlugin({
       '/s/:slug/stripe',
       '/s/:slug/voucher',
       '/s/:slug/p/:product/reviews',
+      '/s/:slug/p/:product/interest',
       '/s/:slug/newsletter',
       '/s/:slug/newsletter/confirm',
       '/s/:slug/newsletter/unsubscribe',
@@ -83,6 +84,18 @@ export default definePlugin({
         kind: 'toggle',
         label: 'Members may open their own shops',
         help: 'Off: only administrators open a shop, and members shop like visitors (store.devquake.com sells DevQuake merch). On: every member with access may open one shop.',
+      },
+      {
+        key: 'interestVotes',
+        kind: 'toggle',
+        label: 'Interest votes before selling',
+        help: 'Products can show a vote instead of a price: signed-in members and buyers say whether they want it, what they would pay and which colour or size. Statistics then shows the demand with a price, profit and ROI estimate. Products in a vote cannot be ordered.',
+      },
+      {
+        key: 'showCurrencies',
+        kind: 'toggle',
+        label: 'Approximate prices in other currencies',
+        help: 'Buyers pick a currency at the bottom of the shop (Romanian and Hungarian pages start with lei and forint) and see approximate prices next to the real ones, at the European Central Bank’s daily rates. Orders and payments stay in the shop’s currency.',
       },
       {
         key: 'promoteDevQuake',
@@ -150,6 +163,7 @@ export default definePlugin({
     '/products/bulk': () => import('./api/products-bulk'),
     '/products/:id': () => import('./api/product'),
     '/products/:id/duplicate': () => import('./api/product-duplicate'),
+    '/products/:id/interest': () => import('./api/product-interest'),
     '/products/:id/photos': () => import('./api/product-photos'),
     '/products/:id/photos/:photoId': () => import('./api/product-photo'),
     '/types': () => import('./api/types'),
@@ -181,6 +195,7 @@ export default definePlugin({
     '/s/:slug/assets/:kind': () => import('./api/shop-asset'),
     '/s/:slug/p/:product/qr': () => import('./api/shop-qr'),
     '/s/:slug/p/:product/reviews': () => import('./api/shop-review'),
+    '/s/:slug/p/:product/interest': () => import('./api/shop-interest'),
     '/s/:slug/cart': () => import('./api/shop-cart'),
     '/s/:slug/voucher': () => import('./api/shop-voucher'),
     '/s/:slug/checkout': () => import('./api/shop-checkout'),
