@@ -10,6 +10,7 @@ import {
   withdrawVote,
 } from '../lib/interest-data';
 import { productBySlug } from '../lib/data';
+import { isBlocked } from '../lib/favorites-data';
 import { parseCents } from '../lib/pricing';
 import { readBody } from '../lib/validate';
 
@@ -29,6 +30,8 @@ async function target(scope: Parameters<Parameters<typeof shopApi>[0]>[0]) {
     throw new HttpError(404, 'productNotFound');
   const voter = voterKey(ctx.user?.id, ctx.user ? null : (await buyer())?.id);
   if (!voter) throw new HttpError(401, 'voteSignIn');
+  // Blocked by the owner (ADR 0064).
+  if (await isBlocked(db, store.id, voter)) throw new HttpError(403, 'blocked');
   return { product, voter };
 }
 

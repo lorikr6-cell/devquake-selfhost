@@ -31,6 +31,10 @@ const WORDS: Record<
     close: string;
     fresh: string;
     unread: (n: number) => string;
+    clear: string;
+    clearAsk: string;
+    clearYes: string;
+    cancel: string;
   }
 > = {
   en: {
@@ -40,6 +44,10 @@ const WORDS: Record<
     close: 'Close',
     fresh: 'new',
     unread: (n) => `${n} new`,
+    clear: 'Clear all',
+    clearAsk: 'Delete all these notifications? They cannot be brought back.',
+    clearYes: 'Delete',
+    cancel: 'Cancel',
   },
   de: {
     open: 'Benachrichtigungen',
@@ -48,6 +56,10 @@ const WORDS: Record<
     close: 'Schließen',
     fresh: 'neu',
     unread: (n) => `${n} neu`,
+    clear: 'Alle löschen',
+    clearAsk: 'Alle diese Benachrichtigungen löschen? Sie lassen sich nicht wiederherstellen.',
+    clearYes: 'Löschen',
+    cancel: 'Abbrechen',
   },
   ro: {
     open: 'Notificări',
@@ -56,6 +68,10 @@ const WORDS: Record<
     close: 'Închide',
     fresh: 'nou',
     unread: (n) => `${n} noi`,
+    clear: 'Șterge tot',
+    clearAsk: 'Ștergi toate aceste notificări? Nu mai pot fi recuperate.',
+    clearYes: 'Șterge',
+    cancel: 'Anulează',
   },
   hu: {
     open: 'Értesítések',
@@ -64,6 +80,10 @@ const WORDS: Record<
     close: 'Bezárás',
     fresh: 'új',
     unread: (n) => `${n} új`,
+    clear: 'Összes törlése',
+    clearAsk: 'Törlöd az összes értesítést? Nem állíthatók vissza.',
+    clearYes: 'Törlés',
+    cancel: 'Mégse',
   },
 };
 
@@ -78,7 +98,7 @@ const REFRESH_MS = 60_000;
  * and a centred sheet on phones and tablets: reminders of upcoming events that their
  * apps also email. `endpoint` is the host route: "/api/_notifications" in an app (that app's
  * only), "/api/notifications" on devquake.com (all, with the app's name). Opening marks them
- * read. Times are shown in the browser's time zone. With `hideWhenEmpty` it renders nothing
+ * read; "Clear all" deletes them (after asking in place). Times are shown in the browser's time zone. With `hideWhenEmpty` it renders nothing
  * until there is a notification.
  */
 export function NotificationBell({
@@ -96,6 +116,7 @@ export function NotificationBell({
   const [items, setItems] = useState<NotificationBellItem[] | null>(null);
   const [unread, setUnread] = useState(0);
   const [open, setOpen] = useState(false);
+  const [asking, setAsking] = useState(false);
   const [wide, setWide] = useState(false);
   const [place, setPlace] = useState<CSSProperties>({});
   const bell = useRef<HTMLButtonElement>(null);
@@ -170,7 +191,22 @@ export function NotificationBell({
     return () => window.removeEventListener('focus', onFocus);
   }, [load]);
 
+  const clearAll = async () => {
+    setAsking(false);
+    const before = items;
+    setItems([]);
+    setUnread(0);
+    try {
+      const res = await fetch(endpoint, { method: 'DELETE', credentials: 'same-origin' });
+      if (!res.ok) throw new Error(String(res.status));
+    } catch {
+      // Not deleted: show them again.
+      setItems(before);
+    }
+  };
+
   const show = () => {
+    setAsking(false);
     if (open) {
       setOpen(false);
       return;
@@ -204,8 +240,48 @@ export function NotificationBell({
     </div>
   );
 
+  const clear =
+    items.length === 0 ? null : asking ? (
+      <div
+        role="alert"
+        className="mb-3 rounded-lg border border-ink/10 p-3 text-sm dark:border-paper/15"
+      >
+        <p>{w.clearAsk}</p>
+        <div className="mt-2 flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => void clearAll()}
+            className={buttonClass(
+              'primary',
+              'bg-red-700 hover:bg-red-800 dark:bg-red-600 dark:text-white dark:hover:bg-red-700',
+            )}
+          >
+            {w.clearYes}
+          </button>
+          <button
+            type="button"
+            onClick={() => setAsking(false)}
+            className={buttonClass('secondary')}
+          >
+            {w.cancel}
+          </button>
+        </div>
+      </div>
+    ) : (
+      <div className="mb-2 flex justify-end">
+        <button
+          type="button"
+          onClick={() => setAsking(true)}
+          className={buttonClass('ghost', 'text-sm')}
+        >
+          {w.clear}
+        </button>
+      </div>
+    );
+
   const list = (
     <div>
+      {clear}
       {items.length === 0 ? (
         <p className="text-sm text-ink/70 dark:text-paper/70">{w.empty}</p>
       ) : (

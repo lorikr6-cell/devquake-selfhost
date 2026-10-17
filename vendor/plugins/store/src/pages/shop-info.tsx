@@ -98,6 +98,7 @@ export default async function InfoPage({ ctx, params }: PluginPageProps) {
         {shopMailConfigured() ? <p>{tp('accounts')}</p> : null}
         {shopMailConfigured() ? <p>{tp('newsletter')}</p> : null}
         {store.reviewsMode !== 'off' ? <p>{tp('reviews')}</p> : null}
+        <p>{tp('favorites')}</p>
         <p>{tp('browser')}</p>
         {tools.length > 0 ? <p>{tp('tracking', { tools: tools.join(', ') })}</p> : null}
         <p>{tp('rights', { email: s.email ?? '' })}</p>

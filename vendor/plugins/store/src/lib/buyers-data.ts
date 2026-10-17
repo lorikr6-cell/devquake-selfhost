@@ -124,7 +124,8 @@ export async function buyerOfMember(
   userId: number,
 ): Promise<Buyer | null> {
   const [r] = await db.query<Record<string, unknown>>(
-    'SELECT * FROM buyers WHERE store_id = ? AND platform_user_id = ?',
+    // Blocked by the owner (ADR 0064): not recognised.
+    'SELECT * FROM buyers WHERE store_id = ? AND platform_user_id = ? AND blocked_at IS NULL',
     [storeId, userId],
   );
   return r ? toBuyer(r) : null;
@@ -172,6 +173,7 @@ export async function useSignInLink(
     const [r] = await tx.query<{ buyer_id: number }>(
       `SELECT t.buyer_id FROM buyer_tokens t JOIN buyers b ON b.id = t.buyer_id
        WHERE t.token_hash = ? AND t.kind = 'link' AND t.expires_at > UTC_TIMESTAMP() AND b.store_id = ?
+         AND b.blocked_at IS NULL
        FOR UPDATE`,
       [hashCode(token), storeId],
     );
@@ -196,7 +198,8 @@ export async function buyerBySession(
   if (!token || !TOKEN.test(token)) return null;
   const [r] = await db.query<Record<string, unknown>>(
     `SELECT b.* FROM buyer_tokens t JOIN buyers b ON b.id = t.buyer_id
-     WHERE t.token_hash = ? AND t.kind = 'session' AND t.expires_at > UTC_TIMESTAMP() AND b.store_id = ?`,
+     WHERE t.token_hash = ? AND t.kind = 'session' AND t.expires_at > UTC_TIMESTAMP() AND b.store_id = ?
+       AND b.blocked_at IS NULL`,
     [hashCode(token), storeId],
   );
   if (!r) return null;
@@ -221,6 +224,10 @@ export async function endSession(db: Db, token: string): Promise<void> {
 export async function deleteBuyer(db: Db, storeId: number, buyerId: number): Promise<void> {
   await db.execute('DELETE FROM buyers WHERE id = ? AND store_id = ?', [buyerId, storeId]);
   await db.execute('DELETE FROM interest_votes WHERE store_id = ? AND voter_key = ?', [
+    storeId,
+    `b${buyerId}`,
+  ]);
+  await db.execute('DELETE FROM favorites WHERE store_id = ? AND owner_key = ?', [
     storeId,
     `b${buyerId}`,
   ]);

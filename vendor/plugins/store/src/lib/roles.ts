@@ -24,6 +24,8 @@ export const AREAS = [
   'products',
   'orders',
   'messages',
+  // Buyers and members with their feedback, votes, favourites and conversations (ADR 0064).
+  'customers',
   'reviews',
   'marketing',
   'stats',
@@ -45,6 +47,7 @@ const ACCESS: Record<StaffRole, readonly Area[]> = {
     'products',
     'orders',
     'messages',
+    'customers',
     'reviews',
     'marketing',
     'stats',
@@ -58,12 +61,16 @@ const ACCESS: Record<StaffRole, readonly Area[]> = {
   // Promoting the products: campaigns, vouchers, rules, announcements, newsletters, reviews.
   marketing: ['overview', 'marketing', 'seo', 'design', 'reviews', 'stats'],
   // Helping buyers: their messages, reviews and orders.
-  support: ['overview', 'messages', 'reviews', 'orders'],
+  support: ['overview', 'messages', 'customers', 'reviews', 'orders'],
   // Packing, shipping and delivering orders.
   shipping: ['overview', 'orders', 'shipping'],
   // Keeping the shop running: opening, maintenance mode, seller details, languages, design.
   maintenance: ['overview', 'settings', 'design'],
 };
+
+/** Blocking a customer or deleting their account (ADR 0064): the owner and managers. */
+export const canManageCustomers = (roles: readonly Role[]) =>
+  roles.some((r) => r === 'owner' || r === 'manager');
 
 /** Whether any of the roles may use the area. */
 export function can(roles: Role | readonly Role[], area: Area): boolean {

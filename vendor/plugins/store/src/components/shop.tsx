@@ -136,8 +136,13 @@ export async function ShopFrame({
         <nav aria-label={t('shopNav')} className="flex flex-wrap items-center gap-2">
           {/* Light, dark or the device's, only while the shop keeps DevQuake's look. */}
           {theme ? null : <ThemeSwitch initial={siteTheme} />}
+          {/* The buyer's display currency, before the account and the cart (ADR 0061). */}
+          <CurrencyPicker compact />
           <Link href={`/s/${store.slug}/account`} className={S.buttonSecondary}>
             {t('account')}
+          </Link>
+          <Link href={`/s/${store.slug}/favorites`} className={S.buttonSecondary}>
+            {t('favorites')}
           </Link>
           <CompareLink slug={store.slug} label={t('compare')} />
           <CartLink slug={store.slug} label={t('cart')} />
@@ -178,7 +183,6 @@ export async function ShopFrame({
             options={language.options}
           />
         ) : null}
-        <CurrencyPicker />
       </footer>
       {tracking ? (
         <ShopTracking

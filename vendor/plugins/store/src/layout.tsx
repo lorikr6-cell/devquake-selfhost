@@ -11,6 +11,7 @@ const SECTIONS: Array<{ href: string; key: string; area: Area; also?: string[] }
   { href: '/products', key: 'products', area: 'products', also: ['/vendors'] },
   { href: '/orders', key: 'orders', area: 'orders' },
   { href: '/messages', key: 'messages', area: 'messages' },
+  { href: '/customers', key: 'customers', area: 'customers' },
   { href: '/reviews', key: 'reviews', area: 'reviews' },
   { href: '/marketing', key: 'marketing', area: 'marketing', also: ['/newsletters'] },
   { href: '/stats', key: 'stats', area: 'stats' },

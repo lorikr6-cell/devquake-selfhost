@@ -23,7 +23,7 @@ export const opsRo: MessagesOf<typeof opsEn> = {
       catalog: 'produse, tipuri, furnizori, stoc și textele pentru motoarele de căutare.',
       marketing:
         'campanii, vouchere, reduceri automate, anunțuri, newslettere, recenzii, design și statistici.',
-      support: 'mesajele cumpărătorilor, recenzii și comenzi.',
+      support: 'mesajele cumpărătorilor, clienți, recenzii și comenzi.',
       shipping: 'comenzi de împachetat, expediat și livrat, și zonele de livrare.',
       maintenance:
         'deschiderea magazinului, modul de mentenanță, datele vânzătorului, limbi și design.',

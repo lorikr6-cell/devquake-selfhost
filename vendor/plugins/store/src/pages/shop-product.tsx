@@ -7,6 +7,9 @@ import { currentBuyer, shopScope } from '../components/guard';
 import { Paragraphs, photoUrl, ShopFrame, shopIcons, Stars } from '../components/shop';
 import { AddToCart, CompareToggle } from '../components/shop-client';
 import { InterestVote } from '../components/interest-vote';
+import { FavoriteButton } from '../components/favorite-button';
+import { favoriteOwner } from '../lib/favorites';
+import { isFavorite } from '../lib/favorites-data';
 import { interestEnabled, optionsOf, voteState, voterKey } from '../lib/interest-data';
 import { ProductShare } from '../components/product-share';
 import { ReviewForm } from '../components/review-form';
@@ -98,6 +101,12 @@ export default async function ProductPage(props: PluginPageProps) {
           };
         })()
       : null;
+  // Favourites (ADR 0064): a DevQuake member's or the shop's signed-in buyer's.
+  const favoriteBy = favoriteOwner(
+    props.ctx.user?.id,
+    props.ctx.user ? null : (await currentBuyer(db, store, null))?.id,
+  );
+  const favorite = favoriteBy ? await isFavorite(db, store.id, favoriteBy, product.id) : false;
   const vatRate = product.vatRate ?? store.vatRate;
   const base = `${props.ctx.baseUrl}/s/${store.slug}`;
   const url = `${base}/p/${product.slug}`;
@@ -299,6 +308,14 @@ export default async function ProductPage(props: PluginPageProps) {
             </>
           )}
           <div className="flex flex-wrap gap-2">
+            {product.published && !preview ? (
+              <FavoriteButton
+                slug={store.slug}
+                product={product.slug}
+                initial={favorite}
+                canSave={favoriteBy !== null}
+              />
+            ) : null}
             <CompareToggle slug={store.slug} product={product.slug} withLabel />
             {product.published && !preview ? (
               <ProductShare

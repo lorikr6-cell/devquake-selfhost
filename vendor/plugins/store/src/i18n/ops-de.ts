@@ -23,7 +23,7 @@ export const opsDe: MessagesOf<typeof opsEn> = {
       catalog: 'Produkte, Typen, Lieferanten, Bestand und Suchmaschinentexte.',
       marketing:
         'Kampagnen, Gutscheine, automatische Rabatte, Hinweise, Newsletter, Bewertungen, Design und Statistik.',
-      support: 'Nachrichten von Käufern, Bewertungen und Bestellungen.',
+      support: 'Nachrichten von Käufern, Kunden, Bewertungen und Bestellungen.',
       shipping: 'Bestellungen packen, versenden und zustellen, und Versandzonen.',
       maintenance: 'den Shop öffnen, Wartungsmodus, Verkäuferangaben, Sprachen und Design.',
     },

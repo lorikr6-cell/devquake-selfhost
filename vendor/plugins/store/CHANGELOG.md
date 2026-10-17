@@ -1,5 +1,11 @@
 # Changelog — Store
 
+## 0.9.0
+
+- Favourites: save products with the heart on their page and find them under Favourites in the shop’s header, with the date you saved each one, today’s price and how much cheaper or dearer it is since then. Products that can no longer be bought are struck through.
+- The currency choice moved to the shop’s header, before your account and the cart.
+- Customers, for the owner and the team: every buyer account and the members who voted or saved favourites, with their orders, reviews, votes, favourites and conversations, and whether each was answered or resolved. The owner and managers can block an account or delete it.
+
 ## 0.8.0
 
 - Your shop’s logo is now the icon in the browser tab and on the home screen, on the shop’s pages and on your own pages (overview, products, orders…). Without a logo, the app’s icon stays.

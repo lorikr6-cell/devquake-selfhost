@@ -1740,8 +1740,18 @@ export async function markAnnounced(db: Db, orderId: number): Promise<void> {
  */
 export async function deleteStoreOf(db: Db, userId: number): Promise<void> {
   await db.execute('DELETE FROM stores WHERE owner_user_id = ?', [userId]);
+  // Their buyer accounts' votes and favourites first (keyed 'b<id>'), then the accounts.
+  await db.execute(
+    "DELETE v FROM interest_votes v JOIN buyers b ON v.voter_key = CONCAT('b', b.id) WHERE b.platform_user_id = ?",
+    [userId],
+  );
+  await db.execute(
+    "DELETE f FROM favorites f JOIN buyers b ON f.owner_key = CONCAT('b', b.id) WHERE b.platform_user_id = ?",
+    [userId],
+  );
   await db.execute('DELETE FROM buyers WHERE platform_user_id = ?', [userId]);
   await db.execute('DELETE FROM interest_votes WHERE voter_key = ?', [`u${userId}`]);
+  await db.execute('DELETE FROM favorites WHERE owner_key = ?', [`u${userId}`]);
   await db.execute('DELETE FROM store_staff WHERE user_id = ?', [userId]);
   await db.execute('DELETE FROM store_invites WHERE created_by = ?', [userId]);
 }

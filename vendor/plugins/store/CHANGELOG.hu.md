@@ -1,5 +1,11 @@
 # Változásnapló — Bolt
 
+## 0.9.0
+
+- Kedvencek: ments termékeket a szívvel az oldalukon, és találd meg őket a bolt fejlécében a „Kedvencek” alatt, a mentés dátumával, a mai árral és azzal, mennyivel lettek olcsóbbak vagy drágábbak azóta. A már nem megvásárolható termékek át vannak húzva.
+- A pénznem választása a bolt fejlécébe került, a fiókod és a kosár elé.
+- Vásárlók, a tulajdonosnak és a csapatnak: minden vásárlói fiók és a tagok, akik szavaztak vagy kedvenceket mentettek, rendeléseikkel, értékeléseikkel, szavazataikkal, kedvenceikkel és beszélgetéseikkel, és hogy mindegyikre válaszoltak-e vagy megoldották-e. A tulajdonos és a menedzserek letilthatnak vagy törölhetnek egy fiókot.
+
 ## 0.8.0
 
 - A boltod logója mostantól a böngészőfül és a kezdőképernyő ikonja, a bolt oldalain és a saját oldalaidon is (áttekintés, termékek, rendelések…). Logó nélkül az alkalmazás ikonja marad.

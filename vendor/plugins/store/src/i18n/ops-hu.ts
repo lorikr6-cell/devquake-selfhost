@@ -23,7 +23,7 @@ export const opsHu: MessagesOf<typeof opsEn> = {
       catalog: 'termékek, típusok, beszállítók, készlet és keresőmotoros szövegek.',
       marketing:
         'kampányok, kuponok, automatikus kedvezmények, közlemények, hírlevelek, értékelések, megjelenés és statisztika.',
-      support: 'a vásárlók üzenetei, értékelések és rendelések.',
+      support: 'a vásárlók üzenetei, a vásárlók adatai, értékelések és rendelések.',
       shipping: 'rendelések csomagolása, feladása és kézbesítése, valamint a szállítási zónák.',
       maintenance: 'a bolt megnyitása, karbantartási mód, eladói adatok, nyelvek és megjelenés.',
     },

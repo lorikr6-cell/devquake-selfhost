@@ -1,5 +1,11 @@
 # Änderungsprotokoll — Shop
 
+## 0.9.0
+
+- Favoriten: Speichere Produkte mit dem Herz auf ihrer Seite und finde sie unter „Favoriten“ in der Kopfzeile des Shops, mit dem Datum des Speicherns, dem heutigen Preis und wie viel günstiger oder teurer sie seitdem sind. Produkte, die man nicht mehr kaufen kann, sind durchgestrichen.
+- Die Währungsauswahl ist in die Kopfzeile des Shops gewandert, vor dein Konto und den Warenkorb.
+- Kunden, für Inhaber und Team: jedes Käuferkonto und die Mitglieder, die abgestimmt oder Favoriten gespeichert haben, mit Bestellungen, Bewertungen, Stimmen, Favoriten und Unterhaltungen, und ob jede beantwortet oder gelöst wurde. Inhaber und Manager können ein Konto sperren oder löschen.
+
 ## 0.8.0
 
 - Das Logo deines Shops ist jetzt das Symbol im Browser-Tab und auf dem Startbildschirm, auf den Seiten des Shops und auf deinen eigenen Seiten (Übersicht, Produkte, Bestellungen…). Ohne Logo bleibt das Symbol der App.

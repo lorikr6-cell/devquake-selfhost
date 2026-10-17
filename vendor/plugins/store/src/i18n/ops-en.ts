@@ -23,7 +23,7 @@ export const opsEn = {
       catalog: 'products, types, vendors, stock and search engine texts.',
       marketing:
         'campaigns, vouchers, automatic discounts, announcements, newsletters, reviews, design and statistics.',
-      support: 'buyers’ messages, reviews and orders.',
+      support: 'buyers’ messages, customers, reviews and orders.',
       shipping: 'orders to pack, ship and deliver, and shipping zones.',
       maintenance: 'opening the shop, maintenance mode, seller details, languages and design.',
     },

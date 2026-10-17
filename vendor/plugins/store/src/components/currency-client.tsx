@@ -33,14 +33,17 @@ export function useApprox(currency: string) {
   return (cents: number) => (fx && fx.base === currency ? approxText(cents, fx, tag) : null);
 }
 
-/** The buyer's choice of currency at the bottom of the shop (a cookie for every shop here). */
-export function CurrencyPicker() {
+/**
+ * The buyer's choice of currency (a cookie for every shop here). `compact`: in the shop's header,
+ * before the account and the cart, the label only for screen readers.
+ */
+export function CurrencyPicker({ compact = false }: { compact?: boolean }) {
   const fx = useContext(FxContext);
   const t = useT('shop');
   if (!fx) return null;
   return (
-    <label className="inline-flex items-center gap-2">
-      <span>{t('currency')}</span>
+    <label className="inline-flex items-center gap-2" title={compact ? t('currency') : undefined}>
+      <span className={compact ? 'sr-only' : undefined}>{t('currency')}</span>
       <select
         value={fx.code === fx.base ? 'base' : fx.code}
         onChange={(e) => {

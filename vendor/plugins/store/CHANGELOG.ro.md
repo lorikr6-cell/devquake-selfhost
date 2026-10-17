@@ -1,5 +1,11 @@
 # Jurnal de modificări — Magazin
 
+## 0.9.0
+
+- Favorite: salvează produse cu inimioara de pe pagina lor și găsește-le la „Favorite” în antetul magazinului, cu data la care le-ai salvat, prețul de azi și cu cât sunt mai ieftine sau mai scumpe de atunci. Produsele care nu se mai pot cumpăra sunt tăiate.
+- Alegerea monedei s-a mutat în antetul magazinului, înaintea contului și a coșului.
+- Clienți, pentru proprietar și echipă: fiecare cont de cumpărător și membrii care au votat sau au salvat favorite, cu comenzile, recenziile, voturile, favoritele și conversațiile lor și dacă fiecare a primit răspuns sau a fost rezolvată. Proprietarul și managerii pot bloca sau șterge un cont.
+
 ## 0.8.0
 
 - Logo-ul magazinului tău este acum pictograma din fila browserului și de pe ecranul de pornire, pe paginile magazinului și pe paginile tale (prezentare, produse, comenzi…). Fără logo rămâne pictograma aplicației.

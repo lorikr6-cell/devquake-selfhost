@@ -56,8 +56,17 @@ Growing the shop (ADR 0058):
   address and quote); `scripts/merch-banner.mjs` makes the shop banner
   `db/seeds/merch-photos/banner.webp` the same way).
 - **Display currencies** (ADR 0061, admin setting `showCurrencies`, off): buyers pick a currency
-  in the footer and see "≈" prices at the ECB's daily rates; orders and payments stay in the
-  shop's currency.
+  in the shop's header, before their account and the cart (ADR 0064), and see "≈" prices at the
+  ECB's daily rates; orders and payments stay in the shop's currency.
+- **Favourites** (ADR 0064): signed-in buyers and DevQuake members save products with the heart;
+  `/s/:slug/favorites` lists them with the date saved, the price then and now (cheaper / dearer)
+  and strikes through what can no longer be bought (deleted, unpublished, voting only) or is sold
+  out. Kept per person as `u<id>` / `b<id>`, like interest votes; deleted with the account.
+- **Customers** (ADR 0064, area `customers`: owner, manager, support): buyer accounts and members
+  who voted or saved favourites, with their orders, reviews (answered or not), votes, favourites
+  and conversations (open, answered, resolved). The owner and managers block a buyer (signed out,
+  no sign-in, reviews, messages, votes or favourites; orders stay) or delete the account, or
+  remove a member's votes and favourites.
 - **Languages**: the owner copies the labels buyers see as JSON, translates them anywhere and
   pastes them back as a new language or changes to a built-in one; buyers pick it in the shop.
 
@@ -80,6 +89,7 @@ Owner and team pages need a member with a role allowing the page's area (`lib/ro
 | Page | `/vendors`                                                           | products              | `src/pages/vendors.tsx`                                         |
 | Page | `/orders`, `/orders/:id`                                             | orders                | `src/pages/orders.tsx`, `src/pages/order.tsx`                   |
 | Page | `/messages`, `/messages/:id`                                         | messages              | `src/pages/messages.tsx`, `src/pages/message.tsx`               |
+| Page | `/customers`, `/customers/:key`                                      | customers             | `src/pages/customers.tsx`, `src/pages/customer.tsx`             |
 | Page | `/reviews`                                                           | reviews               | `src/pages/reviews.tsx`                                         |
 | Page | `/marketing`                                                         | marketing             | `src/pages/marketing.tsx`                                       |
 | Page | `/newsletters`, `/newsletters/new`, `/newsletters/:id`               | marketing             | `src/pages/newsletters.tsx`, `src/pages/newsletter.tsx`         |
@@ -100,6 +110,7 @@ Owner and team pages need a member with a role allowing the page's area (`lib/ro
 | Page | `/s/:slug/orders/:code`                                              | open (secret)         | `src/pages/shop-order.tsx`                                      |
 | Page | `/s/:slug/info`                                                      | open                  | `src/pages/shop-info.tsx`                                       |
 | Page | `/s/:slug/compare`                                                   | open                  | `src/pages/shop-compare.tsx`                                    |
+| Page | `/s/:slug/favorites`                                                 | open (signed in)      | `src/pages/shop-favorites.tsx`                                  |
 | Page | `/s/:slug/account`, `/s/:slug/account/messages/:id`                  | open (buyer cookie)   | `src/pages/shop-account.tsx`, `src/pages/shop-thread.tsx`       |
 | Page | `/s/:slug/newsletter`                                                | open                  | `src/pages/shop-newsletter.tsx`                                 |
 | API  | `/health`                                                            | member                | `src/api/health.ts`                                             |
@@ -124,6 +135,7 @@ Owner and team pages need a member with a role allowing the page's area (`lib/ro
 | API  | `/vendors` POST, `/vendors/:id` PUT, DELETE                          | products              | `src/api/vendors.ts`, `src/api/vendor.ts`                       |
 | API  | `/orders/:id` PATCH                                                  | orders                | `src/api/order.ts`                                              |
 | API  | `/messages/:id` POST, PATCH                                          | messages              | `src/api/message.ts`                                            |
+| API  | `/customers/:key` PATCH (block), DELETE                              | customers (manage)    | `src/api/customer.ts`                                           |
 | API  | `/reviews/:id` PATCH, DELETE                                         | reviews               | `src/api/review.ts`                                             |
 | API  | `/campaigns`, `/vouchers`, `/announcements` POST; `/:id` PUT, DELETE | marketing             | `src/api/campaign(s).ts`, `voucher(s).ts`, `announcement(s).ts` |
 | API  | `/newsletters` POST, `/newsletters/:id` PUT, DELETE                  | marketing             | `src/api/newsletters.ts`, `src/api/newsletter.ts`               |
@@ -150,6 +162,8 @@ Owner and team pages need a member with a role allowing the page's area (`lib/ro
 | API  | `/s/:slug/account` PATCH, PUT (details), DELETE, POST (sign out)     | key route             | `src/api/shop-account.ts`                                       |
 | API  | `/s/:slug/account/connect` POST (Continue with DevQuake)             | key route             | `src/api/shop-connect.ts`                                       |
 | API  | `/s/:slug/p/:product/interest` POST, DELETE (interest vote)          | key route             | `src/api/shop-interest.ts`                                      |
+| API  | `/s/:slug/p/:product/favorite` POST, DELETE                          | key route             | `src/api/shop-favorite.ts`                                      |
+| API  | `/s/:slug/favorites/:id` DELETE                                      | key route             | `src/api/shop-favorites.ts`                                     |
 | API  | `/products/:id/interest` PUT (vote mode and cost estimates)          | owner, products       | `src/api/product-interest.ts`                                   |
 | API  | `/s/:slug/account/messages` POST, `/:id` POST                        | key route             | `src/api/shop-threads.ts`, `src/api/shop-thread.ts`             |
 
@@ -164,14 +178,15 @@ Owner and team pages need a member with a role allowing the page's area (`lib/ro
 ## Database
 
 `db/migrations/0001_store.sql`, `0002_growth.sql`, `0003_platform_buyers.sql` (buyers'
-`platform_user_id` and saved details) and `0004_interest_votes.sql` (`interest_votes`, products'
-vote mode and costs) on the app's own database: `stores`,
+`platform_user_id` and saved details), `0004_interest_votes.sql` (`interest_votes`, products'
+vote mode and costs) and `0005_favorites_and_customers.sql` (`favorites`, buyers' `blocked_at`)
+on the app's own database: `stores`,
 `products`, `variants`, `product_photos`, `shipping_zones`, `orders`, `order_items`;
 `store_assets`, `store_staff`, `store_invites`, `vendors`, `product_types`, `product_fields`,
 `product_values`, `campaigns`, `campaign_products`, `vouchers`, `price_rules`, `announcements`,
 `store_languages`, `reviews`,
 `product_views`, `buyers`, `buyer_tokens`, `threads`, `messages`, `subscribers`, `newsletters`,
-`newsletter_products`, `newsletter_deliveries`. Money in whole cents; times in UTC.
+`newsletter_products`, `newsletter_deliveries`, `interest_votes`, `favorites`. Money in whole cents; times in UTC.
 
 ```bash
 pnpm db:migrate --plugin store
