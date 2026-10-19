@@ -164,12 +164,21 @@ export const getHighlights: PluginPlatformModule['getHighlights'] = async ({ db 
         de: 'Einkaufslisten',
         ro: 'Liste de cumpărături',
         hu: 'Bevásárlólista',
+        it: 'Liste della spesa',
+        es: 'Listas de la compra',
       },
       icon: '🛒',
     },
     {
       value: n(row?.items),
-      label: { en: 'Items', de: 'Artikel', ro: 'Produse', hu: 'Tétel' },
+      label: {
+        en: 'Items',
+        de: 'Artikel',
+        ro: 'Produse',
+        hu: 'Tétel',
+        it: 'Prodotti',
+        es: 'Productos',
+      },
       icon: '🧾',
     },
   ];

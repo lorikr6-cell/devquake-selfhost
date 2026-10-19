@@ -35,7 +35,14 @@ export default async function FavoritesPage({ ctx, params }: PluginPageProps) {
   const list = owner ? await favoritesOf(db, store.id, owner) : [];
 
   return (
-    <ShopFrame store={store} preview={preview} team={team} locale={locale} db={db}>
+    <ShopFrame
+      store={store}
+      preview={preview}
+      team={team}
+      locale={locale}
+      db={db}
+      viewer={scope.viewer}
+    >
       <div className="space-y-5">
         <div>
           <h1 className={cn('text-2xl font-bold', S.heading)}>{t('title')}</h1>

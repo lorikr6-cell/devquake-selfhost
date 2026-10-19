@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'cookbook',
     name: 'Cookbook',
-    version: '0.6.1',
+    version: '0.7.0',
     description:
       'Recipes that adapt to the people at the table: choose the servings and every quantity and the nutrition per portion update; cooking mode with timers and a voice; diet tags and allergens.',
     status: 'active',
@@ -23,6 +23,8 @@ export default definePlugin({
         de: 'Alle 100 Empfehlungen deines öffentlichen Rezepts',
         ro: 'La fiecare 100 de recomandări ale rețetei tale publice',
         hu: 'A nyilvános recepted minden 100 ajánlása után',
+        it: 'Ogni 100 consigli della tua ricetta pubblica',
+        es: 'Cada 100 recomendaciones de tu receta pública',
       },
       maxPointsPerDay: 5,
     },
@@ -38,6 +40,8 @@ export default definePlugin({
             de: 'Rezepte in deinem Kochbuch finden, mit Zeit, Ernährungsformen und Nährwerten',
             ro: 'Să găsească rețete în cartea ta de bucate, cu timp, diete și valori nutritive',
             hu: 'Recepteket keressen a szakácskönyvedben, idővel, étrendekkel és tápértékkel',
+            it: 'Cercare ricette nel tuo ricettario, con tempi, diete e valori nutrizionali',
+            es: 'Buscar recetas en tu recetario, con tiempo, dietas y valores nutricionales',
           },
         },
         {
@@ -49,6 +53,8 @@ export default definePlugin({
             de: 'Zutaten und Nährwerte eines Rezepts für eine Anzahl Portionen lesen',
             ro: 'Să citească ingredientele și valorile nutritive ale unei rețete pentru un număr de porții',
             hu: 'Egy recept hozzávalóit és tápértékét olvassa adott számú adagra',
+            it: 'Leggere ingredienti e valori nutrizionali di una ricetta per un certo numero di porzioni',
+            es: 'Leer los ingredientes y valores nutricionales de una receta para un número de raciones',
           },
         },
       ],
@@ -56,7 +62,14 @@ export default definePlugin({
         {
           id: 'recipe',
           path: '/r/:id',
-          title: { en: 'a recipe', de: 'ein Rezept', ro: 'o rețetă', hu: 'egy receptet' },
+          title: {
+            en: 'a recipe',
+            de: 'ein Rezept',
+            ro: 'o rețetă',
+            hu: 'egy receptet',
+            it: 'una ricetta',
+            es: 'una receta',
+          },
         },
       ],
       uses: [
@@ -69,6 +82,8 @@ export default definePlugin({
             de: 'Ein Rezept mit einem Schritt für einen Tag deiner Woche planen, mit Portionen und Nährwerten.',
             ro: 'Planifică o rețetă pentru o zi din săptămâna ta dintr-un pas, cu porții și valori nutritive.',
             hu: 'Egy lépésben beteheted a receptet a heted egy napjára, adagokkal és tápértékkel.',
+            it: 'Pianifica una ricetta per un giorno della tua settimana in un solo passaggio, con porzioni e valori nutrizionali.',
+            es: 'Planifica una receta para un día de tu semana en un solo paso, con sus raciones y valores nutricionales.',
           },
         },
         {
@@ -80,6 +95,8 @@ export default definePlugin({
             de: 'Die Zutaten eines Rezepts für beliebig viele Personen mit einem Schritt auf eine Einkaufsliste setzen.',
             ro: 'Pune ingredientele unei rețete, pentru oricâte persoane, pe o listă de cumpărături dintr-un pas.',
             hu: 'Egy recept hozzávalóit bármennyi főre egy lépésben bevásárlólistára teheted.',
+            it: 'Metti gli ingredienti di una ricetta, per quante persone vuoi, in una lista della spesa in un solo passaggio.',
+            es: 'Pon los ingredientes de una receta, para las personas que quieras, en una lista de la compra en un solo paso.',
           },
         },
       ],

@@ -11,6 +11,8 @@ export const about: PluginAbout = {
     de: 'Kosten auf Reisen, in der WG oder als Paar teilen: wer was bezahlt hat, wer wem etwas schuldet und die wenigsten Überweisungen zum Ausgleich.',
     ro: 'Împarte costurile în excursii, în apartament sau în cuplu: cine ce a plătit, cine cui datorează și cele mai puține transferuri pentru decontare.',
     hu: 'Oszd meg a költségeket utazáson, albérletben vagy párként: ki mit fizetett, ki kinek tartozik, és a legkevesebb utalás az elszámoláshoz.',
+    it: 'Dividi le spese in viaggio, in una casa condivisa o in coppia: chi ha pagato cosa, chi deve quanto a chi e il minor numero di trasferimenti per saldare.',
+    es: 'Comparte gastos en viajes, en un piso compartido o en pareja: quién pagó qué, quién debe a quién y las menos transferencias para saldar cuentas.',
   },
   features: {
     en: [
@@ -36,6 +38,18 @@ export const about: PluginAbout = {
       'Megosztás egyenlően, arányosan, százalékosan vagy pontos összegekkel',
       'Egyenlegek és a legkevesebb utalás az elszámoláshoz',
       'Hozzászólások, eseménynapló és statisztika kategória és hónap szerint',
+    ],
+    it: [
+      'Gruppi per viaggi, case condivise, coppie ed eventi, con ingresso tramite link o codice QR',
+      'Dividi in parti uguali, per quote, in percentuale o con importi esatti',
+      'Saldi e il minor numero di trasferimenti per saldare i conti',
+      'Commenti, un registro delle attività e statistiche per categoria e mese',
+    ],
+    es: [
+      'Grupos para viajes, pisos compartidos, parejas y eventos, con acceso por enlace o código QR',
+      'Divide a partes iguales, por partes, por porcentaje o con importes exactos',
+      'Saldos y las menos transferencias para saldar cuentas',
+      'Comentarios, un registro de actividad y estadísticas por categoría y mes',
     ],
   },
 };

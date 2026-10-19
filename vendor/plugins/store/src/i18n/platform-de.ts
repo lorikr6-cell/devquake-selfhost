@@ -9,6 +9,15 @@ export const platformDe: MessagesOf<typeof platformEn> = {
     connect: 'Weiter mit DevQuake',
     orEmail: 'Oder mit einer beliebigen E-Mail-Adresse anmelden',
     linked: 'Mit deinem DevQuake-Konto verbunden.',
+    devquakeTitle: 'Aus deinem DevQuake-Konto',
+    devquakeName: 'Name',
+    devquakeEmail: 'E-Mail',
+    manageOnDevQuake: 'Auf DevQuake ändern',
+    statFavorites: 'Favoriten',
+    statPurchases: 'Einkäufe',
+    statCart: 'Im Warenkorb',
+    memberPrivacyNote:
+      'Dein Name und deine E-Mail-Adresse kommen aus deinem DevQuake-Konto. Dieser Shop speichert deine Lieferangaben, deine Nachrichten und deine Bestellungen (wie es das Gesetz verlangt); wenn du das Konto hier löschst, wird alles außer den Bestellungen entfernt.',
     deliveryTitle: 'Lieferangaben',
     deliveryHint: 'Gespeichert in deinem Konto hier, füllen sie die Kasse für dich aus.',
     phone: 'Telefon',
@@ -27,6 +36,12 @@ export const platformDe: MessagesOf<typeof platformEn> = {
   shop: {
     theme: { label: 'Design', adaptive: 'Automatisch', light: 'Hell', dark: 'Dunkel' },
     currency: 'Währung',
+    newsletterToggle: 'Schick mir den Newsletter dieses Shops',
+    newsletterToggleHint: 'An {email}. Haken entfernen, um ihn jederzeit abzubestellen.',
+    newsletterOn: 'Newsletter eingeschaltet.',
+    newsletterOff: 'Newsletter ausgeschaltet.',
+    newsletterFailed:
+      'Die Newsletter-Einstellung konnte nicht gespeichert werden. Bitte versuche es erneut.',
     fxNote:
       'Preise in {currency} sind ungefähr, zu den Kursen der Europäischen Zentralbank vom {date}. Du zahlst in {base}; deine Bank oder Karte rechnet um.',
   },

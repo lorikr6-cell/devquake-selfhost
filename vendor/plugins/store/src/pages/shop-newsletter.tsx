@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { cn } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
-import { NewsletterAction } from '../components/account-client';
+import { NewsletterAction, NewsletterCheckbox } from '../components/account-client';
 import { shopScope } from '../components/guard';
 import { ShopFrame, shopIcons } from '../components/shop';
 import { NewsletterSignup } from '../components/shop-client';
@@ -61,6 +61,14 @@ export default async function NewsletterPage({ ctx, params, searchParams }: Plug
           <NewsletterAction slug={store.slug} token={leave} kind="unsubscribe" />
         </>
       );
+  } else if (shopMailConfigured() && scope.viewer?.newsletter) {
+    body = (
+      <NewsletterCheckbox
+        slug={store.slug}
+        on={scope.viewer.newsletter.on}
+        email={scope.viewer.newsletter.email}
+      />
+    );
   } else if (shopMailConfigured()) {
     body = <NewsletterSignup slug={store.slug} source="shop" />;
   } else {
@@ -68,7 +76,14 @@ export default async function NewsletterPage({ ctx, params, searchParams }: Plug
   }
 
   return (
-    <ShopFrame store={store} preview={preview} team={team} locale={locale} db={db}>
+    <ShopFrame
+      store={store}
+      preview={preview}
+      team={team}
+      locale={locale}
+      db={db}
+      viewer={scope.viewer}
+    >
       <div className="max-w-xl space-y-4">
         <h1 className={cn('text-2xl font-bold', S.heading)}>{t('title')}</h1>
         <div className={cn('space-y-3', S.panel)}>{body}</div>

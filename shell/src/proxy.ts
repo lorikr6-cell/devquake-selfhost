@@ -1,7 +1,8 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { LOCALE_COOKIE, LOCALE_COOKIE_MAX_AGE, isLocale, stripLocale } from '@devquake/ui';
 
-// Languages in the URL, as on DevQuake (ADR 0011): /de/…, /ro/…, /hu/…; English has no prefix.
+// Languages in the URL, as on DevQuake (ADR 0011, 0069): /de/…, /ro/…, /hu/…, /it/…, /es/…;
+// English has no prefix.
 // The prefix is removed before routing and the language passed on in a request header. API
 // calls carry no prefix: they use the remembered language.
 

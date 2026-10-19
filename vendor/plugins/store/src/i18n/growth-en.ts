@@ -620,6 +620,7 @@ export const growthEn = {
   },
   shop: {
     shopNav: 'The shop',
+    returnBack: 'Back',
     account: 'Account',
     compare: 'Compare',
     categories: 'Categories',

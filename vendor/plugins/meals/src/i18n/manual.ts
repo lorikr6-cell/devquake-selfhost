@@ -595,4 +595,290 @@ const hu: Manual = {
   back: '← Vissza az étkezéstervezőhöz',
 };
 
-export const MANUAL: Record<Locale, Manual> = { en, de, ro, hu };
+const it: Manual = {
+  metaTitle: 'Manuale utente · Pianificatore dei pasti',
+  metaDescription:
+    'Come pianificare i pasti della settimana per la tua casa: chi mangia, una settimana suggerita dal tuo ricettario, valori nutrizionali al giorno, un’unica lista della spesa e promemoria la sera prima.',
+  ogTitle: 'Pianificatore dei pasti: manuale utente',
+  cta: 'Vuoi provarlo? Il Pianificatore dei pasti è un’app per i membri di DevQuake. {link}, poi abbonati all’app.',
+  ctaLink: 'Crea un account o accedi',
+  kicker: 'Pianificatore dei pasti · Manuale utente',
+  title: 'Come pianificare i pasti della settimana',
+  intro:
+    'Il Pianificatore dei pasti risponde alla domanda “cosa mangiamo questa settimana?” per una casa. Funziona al meglio con il Ricettario, che porta le ricette, i loro valori nutrizionali e gli ingredienti. Questo manuale ti guida passo dopo passo.',
+  contents: 'Indice',
+  sections: [
+    {
+      id: 'start',
+      title: '1. Primi passi',
+      blocks: [
+        {
+          steps: [
+            'Accedi su {host} (oppure crea un account e conferma la tua email).',
+            'Apri **Il tuo account → Progetti disponibili** e **abbonati** a “Pianificatore dei pasti” (e a “Ricettario” per le ricette).',
+            'Apri l’app e **crea una casa**, ad esempio “Casa”. Diventi il suo **pianificatore**.',
+            'Collega il **Ricettario** quando l’app te lo propone (una sola volta, su DevQuake).',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'household',
+      title: '2. La casa',
+      blocks: [
+        {
+          p: 'In **Casa**, aggiungi **chi mangia**: tutti a tavola, con o senza account, ognuno con una **porzione** (un bambino piccolo mangia mezza porzione, chi ha un grande appetito una e mezza). Le porzioni decidono quante se ne cucinano.',
+        },
+        {
+          list: [
+            '**Dieta per i suggerimenti**: ad esempio mediterranea o vegetariana.',
+            '**Allergeni da evitare**: le ricette che li contengono non compaiono mai.',
+            '**Cibi sgraditi**: parole come “funghi”; i suggerimenti escludono le ricette che le hanno nel nome.',
+            '**Obiettivi** a persona al giorno per energia e proteine: una semplice indicazione.',
+          ],
+        },
+        {
+          p: 'Invita le persone con un account DevQuake con un **link di invito**. **Chi pianifica** modifica la casa e suggerisce le settimane; tutti possono aggiungere, scambiare e spuntare i pasti.',
+        },
+      ],
+    },
+    {
+      id: 'week',
+      title: '3. Pianificare la settimana',
+      blocks: [
+        {
+          list: [
+            'Ogni giorno ha **+ Aggiungi un pasto**: scegli colazione, pranzo, cena o spuntino, poi **cerca una ricetta** nel tuo ricettario o **scrivi un pasto** (“serata pizza”).',
+            'Le porzioni vengono calcolate in base a chi mangia. Cucinane di più di proposito e pianifica gli **avanzi** per un altro giorno: gli avanzi non richiedono di cucinare né di comprare nulla.',
+            'Spunta un pasto quando è **cucinato**. Tocca il nome di una ricetta per aprirla nel Ricettario e torna indietro con la barra in alto.',
+            'Passa da una settimana all’altra con **Precedente** e **Successiva**.',
+          ],
+        },
+        {
+          p: '**Suggerisci la settimana** (chi pianifica) riempie le colazioni, i pranzi o le cene vuoti con ricette del ricettario adatte alla tua dieta, senza i tuoi allergeni e i cibi sgraditi, nessuna due volte nella settimana.',
+        },
+        {
+          p: 'Un pasto può avere **più parti**: tocca **+ parte** per aggiungere un’altra ricetta (una zuppa e un secondo) o un semplice articolo con una quantità (pane, yogurt). Dal Ricettario, **Pianifica questa ricetta** aggiunge una ricetta al pasto di quel giorno, oppure ne crea uno.',
+        },
+      ],
+    },
+    {
+      id: 'nutrition',
+      title: '4. Valori nutrizionali al giorno',
+      blocks: [
+        {
+          p: 'Sotto ogni giorno: l’energia e le proteine di una porzione di ogni pasto, rispetto ai tuoi obiettivi. I pasti scritti a mano non hanno valori nutrizionali.',
+        },
+        {
+          tip: 'I numeri sono approssimativi e gli obiettivi sono semplici indicazioni, non consigli medici.',
+        },
+      ],
+    },
+    {
+      id: 'shopping',
+      title: '5. Un’unica lista della spesa',
+      blocks: [
+        {
+          p: 'Con le liste della spesa collegate, **Dalla settimana alla lista della spesa** aggiunge in un solo passaggio tutto ciò che serve per la settimana: gli ingredienti di ogni ricetta per le porzioni del suo pasto e gli articoli semplici così come sono. Lo stesso ingrediente viene sommato (due cipolle e una cipolla diventano tre); gli avanzi sono esclusi.',
+        },
+      ],
+    },
+    {
+      id: 'saved',
+      title: '6. Pasti salvati e pubblici',
+      blocks: [
+        {
+          p: 'Tocca **Salva questo pasto** su un pasto pianificato per conservarne le parti come **pasto salvato**, poi aggiungilo a qualsiasi giorno da **Aggiungi un pasto → Pasto salvato** o da **Pasti salvati**.',
+        },
+        {
+          list: [
+            'Rendi **pubblico** un pasto salvato per condividerlo con tutti quelli che usano il Pianificatore dei pasti. Le sue ricette devono essere pubbliche nel tuo Ricettario o della sua libreria, così gli altri possono aprirle.',
+            'Gli altri possono **aggiungerlo al loro piano**, **consigliarlo** (come un “mi piace”) e lasciare un **commento**; tu ricevi una notifica e trovi il commento nei tuoi **messaggi** su DevQuake.',
+            'In **Pasti salvati → Community** trovi i pasti pubblici di tutti, prima i più consigliati.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'reminders',
+      title: '7. Promemoria',
+      blocks: [
+        {
+          p: 'Dai a un pasto un **promemoria la sera prima**, come “togli il pollo dal congelatore”: tutti nella casa lo ricevono per email alle 18:00 del giorno prima e come notifica.',
+        },
+      ],
+    },
+    {
+      id: 'apps',
+      title: '8. Con le tue altre app',
+      blocks: [
+        {
+          list: [
+            '**Ricettario**: ricette, porzioni, valori nutrizionali e ingredienti.',
+            '**Liste della spesa**: la settimana in un’unica lista.',
+            '**Agenda di famiglia**: se collegata, i pasti pianificati compaiono nel calendario di famiglia.',
+          ],
+        },
+        {
+          p: 'I collegamenti si fanno una volta su DevQuake (**Funziona con** in fondo a ogni pagina) e si possono rimuovere in **Account → App collegate**.',
+        },
+      ],
+    },
+    {
+      id: 'privacy',
+      title: '9. I tuoi dati',
+      blocks: [
+        {
+          p: 'Solo i membri della casa vedono il suo piano. Se elimini il tuo account o annulli l’abbonamento, una casa che hai creato passa a un altro pianificatore o membro, oppure viene eliminata con il suo piano se eri da solo.',
+        },
+      ],
+    },
+  ],
+  questions: 'Domande o idee? Scrivi a {email}.',
+  back: '← Torna al pianificatore dei pasti',
+};
+
+const es: Manual = {
+  metaTitle: 'Manual de usuario · Planificador de comidas',
+  metaDescription:
+    'Cómo planificar las comidas de la semana para tu hogar: quién come, una semana sugerida desde tu recetario, valores nutricionales por día, una sola lista de la compra y recordatorios la noche anterior.',
+  ogTitle: 'Planificador de comidas: manual de usuario',
+  cta: '¿Quieres probarlo? El Planificador de comidas es una app para miembros de DevQuake. {link} y suscríbete a la app.',
+  ctaLink: 'Crea una cuenta o inicia sesión',
+  kicker: 'Planificador de comidas · Manual de usuario',
+  title: 'Cómo planificar las comidas de la semana',
+  intro:
+    'El Planificador de comidas responde a “¿qué comemos esta semana?” para un hogar. Funciona mejor con el Recetario, que aporta las recetas, sus valores nutricionales e ingredientes. Este manual te guía paso a paso.',
+  contents: 'Contenido',
+  sections: [
+    {
+      id: 'start',
+      title: '1. Primeros pasos',
+      blocks: [
+        {
+          steps: [
+            'Inicia sesión en {host} (o crea una cuenta y confirma tu correo).',
+            'Abre **Tu cuenta → Proyectos disponibles** y **suscríbete** a “Planificador de comidas” (y a “Recetario” para las recetas).',
+            'Abre la app y **crea un hogar**, por ejemplo “Casa”. Te conviertes en su **planificador**.',
+            'Conecta el **Recetario** cuando la app te lo ofrezca (una sola vez, en DevQuake).',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'household',
+      title: '2. El hogar',
+      blocks: [
+        {
+          p: 'En **Hogar**, añade **quién come**: todos los de la mesa, con o sin cuenta, cada uno con una **ración** (un niño pequeño come media, alguien con mucho apetito una y media). Las raciones deciden cuánto se cocina.',
+        },
+        {
+          list: [
+            '**Dieta para las sugerencias**: por ejemplo mediterránea o vegetariana.',
+            '**Alérgenos que evitar**: las recetas que los llevan nunca aparecen.',
+            '**Lo que no os gusta**: palabras como “setas”; las sugerencias excluyen las recetas que las tienen en el nombre.',
+            '**Objetivos** por persona y día de energía y proteínas: una orientación sencilla.',
+          ],
+        },
+        {
+          p: 'Invita a personas con cuenta de DevQuake con un **enlace de invitación**. **Quienes planifican** cambian el hogar y sugieren semanas; todos pueden añadir, cambiar y marcar comidas.',
+        },
+      ],
+    },
+    {
+      id: 'week',
+      title: '3. Planificar la semana',
+      blocks: [
+        {
+          list: [
+            'Cada día tiene **+ Añadir una comida**: elige desayuno, almuerzo, cena o tentempié y luego **busca una receta** en tu recetario o **escribe una comida** (“noche de pizza”).',
+            'Las raciones se calculan según quién come. Cocina más a propósito y planifica las **sobras** para otro día: las sobras no necesitan cocinar ni comprar nada.',
+            'Marca una comida cuando esté **cocinada**. Toca el nombre de una receta para abrirla en el Recetario y vuelve con la barra de arriba.',
+            'Pasa de una semana a otra con **Anterior** y **Siguiente**.',
+          ],
+        },
+        {
+          p: '**Sugerir la semana** (quienes planifican) rellena los desayunos, almuerzos o cenas vacíos con recetas del recetario que encajan con tu dieta, sin tus alérgenos ni lo que no os gusta, ninguna dos veces en la semana.',
+        },
+        {
+          p: 'Una comida puede tener **varias partes**: toca **+ parte** para añadir otra receta (una sopa y un segundo plato) o un artículo sencillo con una cantidad (pan, yogur). Desde el Recetario, **Planificar esta receta** añade una receta a la comida de ese día, o crea una.',
+        },
+      ],
+    },
+    {
+      id: 'nutrition',
+      title: '4. Valores nutricionales por día',
+      blocks: [
+        {
+          p: 'Debajo de cada día: la energía y las proteínas de una ración de cada comida, frente a tus objetivos. Las comidas escritas a mano no tienen valores nutricionales.',
+        },
+        {
+          tip: 'Las cifras son aproximadas y los objetivos son orientaciones sencillas, no consejos médicos.',
+        },
+      ],
+    },
+    {
+      id: 'shopping',
+      title: '5. Una sola lista de la compra',
+      blocks: [
+        {
+          p: 'Con las listas de la compra conectadas, **De la semana a la lista de la compra** añade en un solo paso todo lo que necesita la semana: los ingredientes de cada receta para las raciones de su comida y los artículos sencillos tal cual. El mismo ingrediente se suma (dos cebollas y una cebolla son tres); las sobras quedan fuera.',
+        },
+      ],
+    },
+    {
+      id: 'saved',
+      title: '6. Comidas guardadas y públicas',
+      blocks: [
+        {
+          p: 'Toca **Guardar esta comida** en una comida planificada para conservar sus partes como **comida guardada** y añádela luego a cualquier día desde **Añadir una comida → Comida guardada** o desde **Comidas guardadas**.',
+        },
+        {
+          list: [
+            'Haz **pública** una comida guardada para compartirla con todos los que usan el Planificador de comidas. Sus recetas deben ser públicas en tu Recetario o de su biblioteca, para que otros puedan abrirlas.',
+            'Los demás pueden **añadirla a su plan**, **recomendarla** (como un “me gusta”) y dejar un **comentario**; recibes una notificación y encuentras el comentario en tus **mensajes** de DevQuake.',
+            'En **Comidas guardadas → Comunidad** encuentras las comidas públicas de todos, primero las más recomendadas.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'reminders',
+      title: '7. Recordatorios',
+      blocks: [
+        {
+          p: 'Pon a una comida un **recordatorio la noche anterior**, como “saca el pollo del congelador”: todos en el hogar lo reciben por correo a las 18:00 del día anterior y como notificación.',
+        },
+      ],
+    },
+    {
+      id: 'apps',
+      title: '8. Con tus otras apps',
+      blocks: [
+        {
+          list: [
+            '**Recetario**: recetas, raciones, valores nutricionales e ingredientes.',
+            '**Listas de la compra**: la semana en una sola lista.',
+            '**Agenda familiar**: si está conectada, las comidas planificadas aparecen en el calendario familiar.',
+          ],
+        },
+        {
+          p: 'Las conexiones se hacen una vez en DevQuake (**Funciona con** al final de cada página) y se pueden quitar en **Cuenta → Apps conectadas**.',
+        },
+      ],
+    },
+    {
+      id: 'privacy',
+      title: '9. Tus datos',
+      blocks: [
+        {
+          p: 'Solo los miembros del hogar ven su plan. Si eliminas tu cuenta o cancelas la suscripción, un hogar que creaste pasa a otro planificador o miembro, o se elimina con su plan si estabas solo.',
+        },
+      ],
+    },
+  ],
+  questions: '¿Preguntas o ideas? Escribe a {email}.',
+  back: '← Volver al planificador de comidas',
+};
+
+export const MANUAL: Record<Locale, Manual> = { en, de, ro, hu, it, es };

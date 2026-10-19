@@ -1,5 +1,9 @@
 # Changelog — Meal planner
 
+## 0.5.0
+
+- The app is now also in Italian and Spanish: pick the language at the top of the page.
+
 ## 0.4.1
 
 - Notifications: on large screens the list now opens right under the bell; on phones and tablets it stays centred on the screen. It always fits the screen: the heading stays in view and only the list scrolls.
@@ -28,7 +32,7 @@
 
 - The app’s card on DevQuake and its front page now show how many members use it and its totals: shared meals, planned meals, households.
 
-0.1.0
+## 0.1.0
 
 - Plan the week’s meals for your household: breakfast, lunch, dinner and snacks, with recipes from your cookbook or meals you type in.
 - Add who eats, with their portion: the servings to cook are filled in, and leftovers can be planned on purpose.

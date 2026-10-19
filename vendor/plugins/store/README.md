@@ -44,6 +44,23 @@ Growing the shop (ADR 0058):
   `membersOpenShops` (off: only administrators open shops, members shop like visitors) and
   `promoteDevQuake` (off: a DevQuake promotion for visitors above the shop footer); the shops'
   pages and sitemap are `searchable` for robots.txt.
+- **Members' account page** (0.11.0): a member signed in on DevQuake sees their DevQuake name
+  and email (changed on DevQuake), counters of favourites, purchases (`#orders`) and cart items
+  (counted in the browser) that open each list and their delivery details. Buyers without
+  DevQuake see the page as before.
+- **Newsletter checkbox** (0.12.0): anyone signed in to the shop (buyer session or connected
+  member) gets the newsletter with one auto-saving checkbox for their account's address on the
+  account page, in the footer and on `/s/:slug/newsletter` (`ShopViewer.newsletter`,
+  `PUT /api/s/:slug/newsletter { on }`), confirmed at once since the sign-in proved the address.
+  Visitors keep the email form with double opt-in.
+- **Signed in as on DevQuake** (Store 0.10.0): once a member allowed shops to use their sign-in
+  address, every shop page connects them silently (`AutoConnect`, `shopViewer` in `guard.tsx`),
+  and the header shows their name; signing out of the shop (`SIGNED_OUT`) stops it.
+  DevQuake's sign-in decides whose shop session counts (`sessionFits` in `buyer-session.ts`): a
+  connected account only while that member is signed in on DevQuake, an emailed-link account
+  only while nobody is, so another account signing in (another tab) never mixes identities. Visitors who
+  came from a DevQuake page see "←" with the DevQuake mark at the right end of the header,
+  returning there (tooltip "Back: devquake.com/…"; `ReturnLink` from `@devquake/ui`).
 - **Interest votes** (ADR 0060, admin setting `interestVotes`, off): a product shows a vote
   instead of a price (interested or not, an optional price range, preferred fit, size, colour or
   capacity from its type's multiple-choice fields), one per signed-in member or buyer; Statistics

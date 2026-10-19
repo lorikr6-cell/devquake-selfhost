@@ -8,8 +8,22 @@ import { ErrorText, Field, Input, Select, TextArea } from './ui';
 import { useAction } from './use-action';
 
 /** A sensible first currency from the page language (the owner can change it). */
-const LOCALE_CURRENCY: Record<string, string> = { en: 'EUR', de: 'EUR', ro: 'RON', hu: 'HUF' };
-const LOCALE_VAT: Record<string, string> = { en: '0', de: '19', ro: '21', hu: '27' };
+const LOCALE_CURRENCY: Record<string, string> = {
+  en: 'EUR',
+  de: 'EUR',
+  ro: 'RON',
+  hu: 'HUF',
+  it: 'EUR',
+  es: 'EUR',
+};
+const LOCALE_VAT: Record<string, string> = {
+  en: '0',
+  de: '19',
+  ro: '21',
+  hu: '27',
+  it: '22',
+  es: '21',
+};
 
 export interface StoreFormValue {
   name: string;

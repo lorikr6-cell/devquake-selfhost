@@ -1,5 +1,9 @@
 # Modificări — Darts
 
+## 0.7.0
+
+- Aplicația este acum și în italiană și spaniolă: alege limba în partea de sus a paginii.
+
 ## 0.6.2
 
 - Când un membru își șterge contul DevQuake, ce a adăugat la lucrurile tale (comentarii, articole, bife, fotografii…) rămâne, afișat ca „REMOVED_…” în locul numelui său.
@@ -12,7 +16,7 @@
 
 - Cardul aplicației pe DevQuake și pagina ei de start arată acum câți membri o folosesc și totalurile ei: jocuri terminate, turnee.
 
-0.5.2
+## 0.5.2
 
 - Cine nu folosește încă aplicația vede acum pe prima ei pagină ce face, cu un link spre manualul de utilizare, iar linkurile distribuite arată imaginea aplicației.
 

@@ -2,8 +2,9 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState, type MouseEvent, type ReactNode } from 'react';
-import { localizePath } from './i18n';
+import { localizePath, stripLocale } from './i18n';
 import { useLocale } from './i18n-react';
+import { DevQuakeMark } from './logo';
 
 // "Back" that really goes back (ADR 0039): every page visit in this tab and site is remembered
 // in sessionStorage with its full address (filters in the query string) and how far it was
@@ -65,6 +66,7 @@ export function NavTracker() {
   const pathname = usePathname();
 
   useEffect(() => {
+    rememberPage();
     const stack = read();
     const current = here();
     const top = stack[stack.length - 1];
@@ -166,6 +168,139 @@ export function BackLink({
   return (
     <a href={previous?.u ?? fallback} onClick={onClick} className={className}>
       {children}
+    </a>
+  );
+}
+
+const RETURN_KEY = 'dq_return';
+
+/** DevQuake's root host from this page's (store.devquake.com → devquake.com). */
+function rootHost(): string {
+  const parts = window.location.hostname.split('.');
+  return parts.length > 2 || (parts.length === 2 && parts[1] === 'localhost')
+    ? parts.slice(1).join('.')
+    : window.location.hostname;
+}
+
+/** Whether an address is one of DevQuake's (the site or one of its app subdomains). */
+function isOurs(url: URL): boolean {
+  const root = rootHost();
+  return url.hostname === root || url.hostname.endsWith(`.${root}`);
+}
+
+const PAGE_COOKIE = 'dq_page';
+
+/**
+ * The page in a first-party cookie shared by DevQuake's hosts, so a section on another host (the
+ * Store) knows the exact page the visitor came from: browsers pass only the origin to another
+ * host (Referrer-Policy strict-origin-when-cross-origin). Never sent anywhere else.
+ */
+function rememberPage() {
+  try {
+    const root = rootHost();
+    const domain = root.includes('.') && !/^[0-9.]+$/.test(root) ? `; domain=.${root}` : '';
+    const secure = window.location.protocol === 'https:' ? '; secure' : '';
+    const value = encodeURIComponent(window.location.href.slice(0, 500));
+    document.cookie = `${PAGE_COOKIE}=${value}; path=/; max-age=1800; samesite=lax${domain}${secure}`;
+  } catch {
+    // Cookies off: the back link uses the referrer.
+  }
+}
+
+/** The DevQuake page before this one (from the cookie), or null. */
+function previousPage(): URL | null {
+  try {
+    const raw = document.cookie.split('; ').find((c) => c.startsWith(`${PAGE_COOKIE}=`));
+    if (raw) return new URL(decodeURIComponent(raw.slice(PAGE_COOKIE.length + 1)));
+  } catch {
+    // Unreadable: fall back to the referrer.
+  }
+  return null;
+}
+
+/**
+ * "← Back" to the DevQuake page the visitor came from before entering this section (the Store on
+ * its subdomain, the blog): shown only when they arrived from one of DevQuake's pages outside the
+ * section, never for visitors from a search engine or a direct link. The address is remembered
+ * for this tab while they browse the section; following the link forgets it. Compact: "←" and
+ * the DevQuake mark, with "Back: devquake.com/…" as tooltip and accessible name, so it fits in a
+ * row of buttons (the Store's header, the blog's tabs).
+ */
+export function ReturnLink({
+  label,
+  section,
+  className,
+}: {
+  /** "Back" in the page's language; the tooltip adds the page ("Back: devquake.com/blog"). */
+  label: string;
+  /** Where the section is: its path prefix on this host (e.g. "/blog"), or "" for the whole host. */
+  section: string;
+  className?: string;
+}) {
+  const [target, setTarget] = useState<string | null>(null);
+  useEffect(() => {
+    const key = `${RETURN_KEY}:${section}`;
+    const inSection = (u: URL) =>
+      u.host === window.location.host &&
+      (section === '' || stripLocale(u.pathname).path.startsWith(section));
+    let remembered: string | null = null;
+    try {
+      remembered = sessionStorage.getItem(key);
+      // Runs before NavTracker (children's effects first), so this tab's visit list and the
+      // cookie still name the page before this one. The same host (the blog, reached from the
+      // home page without a page load): the visit list, as the browser keeps the referrer of the
+      // first page loaded. Another host (the Store): the cookie, trusted only when the browser
+      // says we came from DevQuake.
+      const top = read().at(-1);
+      const previous = top ? new URL(top.u, window.location.origin) : null;
+      const referrer = document.referrer ? new URL(document.referrer) : null;
+      const cookie = previousPage();
+      const from =
+        previous && previous.pathname !== window.location.pathname && !inSection(previous)
+          ? previous
+          : referrer && isOurs(referrer)
+            ? cookie && isOurs(cookie)
+              ? cookie
+              : referrer
+            : null;
+      if (from && !inSection(from)) {
+        remembered = from.toString();
+        sessionStorage.setItem(key, remembered);
+      }
+    } catch {
+      // No storage or a strange referrer: no link.
+    }
+    setTarget(remembered);
+  }, [section]);
+  if (!target) return null;
+  const page = (() => {
+    try {
+      const u = new URL(target);
+      return `${u.host.replace(/^www\./, '')}${u.pathname === '/' ? '' : u.pathname}`;
+    } catch {
+      return target;
+    }
+  })();
+  const tip = `${label}: ${page}`;
+  return (
+    <a
+      href={target}
+      title={tip}
+      aria-label={tip}
+      onClick={() => {
+        try {
+          sessionStorage.removeItem(`${RETURN_KEY}:${section}`);
+        } catch {
+          // The link still works.
+        }
+      }}
+      className={
+        className ??
+        'inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-md border border-ink/20 px-2.5 py-1.5 text-sm text-ink/70 hover:border-quake hover:text-quake dark:border-paper/20 dark:text-paper/70'
+      }
+    >
+      <span aria-hidden>←</span>
+      <DevQuakeMark size={18} title="" />
     </a>
   );
 }

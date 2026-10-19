@@ -1,5 +1,30 @@
 # Changelog — Store
 
+## 0.13.0
+
+- The app is now also in Italian and Spanish: pick the language at the top of the page (in the shop, buyers find it at the bottom).
+
+## 0.12.2
+
+- Signing in on DevQuake with another account now also changes who you are in the shop: the shop no longer keeps the previous account’s session in another tab, and signing out of DevQuake signs you out of an account connected to it.
+
+## 0.12.1
+
+- The way back to DevQuake is now a small button with the DevQuake logo at the right end of the shop’s header, after the cart; hover it to see which page it returns to.
+
+## 0.12.0
+
+- Signed in to the shop: the newsletter is one checkbox for the email address your account already has, on your account page, in the footer and on the newsletter page. It switches on or off at once and says so, with no address to type and no confirmation email. Visitors who are not signed in still sign up with their email address.
+
+## 0.11.0
+
+- Signed in on DevQuake: your account in the shop shows your name and email address from DevQuake (change them there), with counters of your favourites, purchases and cart items that open each list. Your delivery details stay in the shop. The newsletter is set in your DevQuake account, so the shop no longer asks you to sign up again. Without DevQuake, the account page is as before.
+
+## 0.10.0
+
+- Signed in on DevQuake: once you have allowed the shop to use your sign-in address, you are signed in to the shop automatically on every visit, and its header shows your name instead of “Account”. Signing out of the shop keeps you signed out.
+- Came from a DevQuake page (the platform, an app or the blog)? “← Back” at the top of the shop returns you there.
+
 ## 0.9.0
 
 - Favourites: save products with the heart on their page and find them under Favourites in the shop’s header, with the date you saved each one, today’s price and how much cheaper or dearer it is since then. Products that can no longer be bought are struck through.

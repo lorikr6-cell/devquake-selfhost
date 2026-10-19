@@ -676,6 +676,7 @@ export const growthRo: MessagesOf<typeof growthEn> = {
   },
   shop: {
     shopNav: 'Magazinul',
+    returnBack: 'Înapoi',
     account: 'Cont',
     compare: 'Compară',
     categories: 'Categorii',

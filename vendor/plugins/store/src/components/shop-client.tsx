@@ -6,6 +6,7 @@ import { LIMITS } from '../lib/model';
 import { formatCents } from '../lib/pricing';
 import { applyRules, ruleHints, ruleLabel, type PublicRule } from '../lib/rules';
 import { errorMessage } from './call-api';
+import { useAppRouter } from './use-app-router';
 import { useCart, type CartItem } from './cart';
 import { useApprox } from './currency-client';
 import { COMPARE_MAX, useCompare } from './compare';
@@ -144,6 +145,17 @@ export function CopyCode({ code }: { code: string }) {
 }
 
 /** The newsletter form (double opt-in: the email holds a link to confirm). */
+/** The account page's cart counter: the cart lives in this browser, so it is counted here. */
+export function CartStat({ slug, label }: { slug: string; label: string }) {
+  const { count } = useCart(slug);
+  return (
+    <Link href={`/s/${slug}/cart`} className={cn('block p-4', S.card)}>
+      <span className={cn('block text-2xl font-bold', S.heading)}>{count}</span>
+      <span className={cn('text-sm', S.muted)}>{label}</span>
+    </Link>
+  );
+}
+
 export function NewsletterSignup({ slug, source }: { slug: string; source: 'shop' | 'account' }) {
   const t = useT('newsletterForm');
   const tErr = useT('errors');
@@ -544,4 +556,32 @@ export function CopyLink() {
       {t('copyLink')}
     </button>
   );
+}
+
+/**
+ * A DevQuake member who already allowed shops to use their sign-in address: their account here
+ * is made or opened silently (POST …/account/connect), so they are signed in to the shop as on
+ * DevQuake (ADR 0059). Runs once per page; a failure leaves the usual "Continue with DevQuake".
+ */
+export function AutoConnect({ slug }: { slug: string }) {
+  const router = useAppRouter();
+  useEffect(() => {
+    let done = false;
+    fetch(`/api/s/${slug}/account/connect`, {
+      method: 'POST',
+      headers: { Accept: 'application/json' },
+    })
+      .then((r) => r.json().catch(() => null))
+      .then((data: { ok?: boolean } | null) => {
+        if (!done && data?.ok) {
+          trackEvent('store_buyer_connected', { auto: 1 });
+          router.refresh();
+        }
+      })
+      .catch(() => undefined);
+    return () => {
+      done = true;
+    };
+  }, [slug, router]);
+  return null;
 }

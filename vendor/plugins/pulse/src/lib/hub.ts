@@ -93,6 +93,13 @@ class Hub {
     return this.listeners.size;
   }
 
+  /** Live connections of one app in this process. */
+  openFor(appId: number): number {
+    let n = 0;
+    for (const l of this.listeners.values()) if (l.appId === appId) n++;
+    return n;
+  }
+
   /** The newest event id (start position of a new connection). */
   async latestId(db: Db): Promise<number> {
     // While ticking, lastId is current; otherwise other processes may have added events.

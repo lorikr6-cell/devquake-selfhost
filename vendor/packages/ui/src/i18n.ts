@@ -1,7 +1,7 @@
-// Languages (ADR 0011): the locale list, URL prefixes and a small message translator. Pure: used
+// Languages (ADR 0011, 0069): the locale list, URL prefixes and a small message translator. Pure: used
 // by the host's proxy and server code, by plugins and by the client components in i18n-react.
 
-export const LOCALES = ['en', 'de', 'ro', 'hu'] as const;
+export const LOCALES = ['en', 'de', 'ro', 'hu', 'it', 'es'] as const;
 export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = 'en';
 
@@ -11,6 +11,8 @@ export const LOCALE_NAMES: Record<Locale, string> = {
   de: 'Deutsch',
   ro: 'Română',
   hu: 'Magyar',
+  it: 'Italiano',
+  es: 'Español',
 };
 
 /** BCP 47 tags for Intl (dates, numbers, plurals). */
@@ -19,6 +21,8 @@ export const LOCALE_TAGS: Record<Locale, string> = {
   de: 'de-DE',
   ro: 'ro-RO',
   hu: 'hu-HU',
+  it: 'it-IT',
+  es: 'es-ES',
 };
 
 /** Cookie with the visitor's language, shared by devquake.com and every app (1 year). */

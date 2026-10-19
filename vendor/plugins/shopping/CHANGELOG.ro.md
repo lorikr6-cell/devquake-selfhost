@@ -1,5 +1,9 @@
 # Noutăți: Liste de cumpărături comune
 
+## 0.22.0
+
+- Aplicația este acum și în italiană și spaniolă: alege limba din partea de sus a paginii.
+
 ## 0.21.0
 
 - Adaugă ce ai cumpărat în Cheltuieli comune: cu cele două aplicații conectate, produsele bifate, cu preț, devin o cheltuială plătită de tine, împărțită egal între toți cei de pe listă. Aceeași listă adăugată de două ori nu schimbă nimic.
@@ -44,7 +48,7 @@
 
 - Cardul aplicației pe DevQuake și pagina ei de start arată acum câți membri o folosesc și totalurile ei: liste de cumpărături, produse.
 
-0.12.0
+## 0.12.0
 
 - Calendare între aplicații: sub calendar, „Din celelalte aplicații” arată următoarele 31 de zile din aplicațiile conectate — evenimentele familiei (inclusiv cele partajate), antrenamentele și scadențele facturilor —, fiecare deschizându-se în aplicația sa.
 - Funcționează cu planificatorul familiei, jurnalul de antrenament și aplicația de facturi; acestea pot arăta zilele tale de cumpărături (doar numele și datele listelor).

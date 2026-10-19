@@ -39,7 +39,14 @@ export default async function InfoPage({ ctx, params }: PluginPageProps) {
   const t = translator(locale, 'info');
   const s = store.seller;
   return (
-    <ShopFrame store={store} preview={preview} team={team} locale={locale} db={db}>
+    <ShopFrame
+      store={store}
+      preview={preview}
+      team={team}
+      locale={locale}
+      db={db}
+      viewer={scope.viewer}
+    >
       <h1 className={cn('text-2xl font-bold', S.heading)}>{t('title')}</h1>
       <div className="grid gap-4 md:grid-cols-2">
         <div className={cn('space-y-1 text-sm', S.panel)}>

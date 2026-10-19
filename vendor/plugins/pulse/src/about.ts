@@ -8,6 +8,8 @@ export const about: PluginAbout = {
     de: 'Eine Echtzeit-Event-API: Sende Events von deinem Server oder deiner Website, und jeder Browser im Kanal empfängt sie live.',
     ro: 'Un API de evenimente în timp real: trimite evenimente de pe serverul sau site-ul tău, iar fiecare browser abonat la canal le primește live.',
     hu: 'Valós idejű esemény-API: küldj eseményeket a szerveredről vagy weboldaladról, és a csatornát figyelő minden böngésző élőben megkapja őket.',
+    it: 'Un’API di eventi in tempo reale: invia eventi dal tuo server o sito web e ogni browser in ascolto sul canale li riceve dal vivo.',
+    es: 'Una API de eventos en tiempo real: envía eventos desde tu servidor o sitio web y cada navegador que escucha el canal los recibe en directo.',
   },
   features: {
     en: [
@@ -33,6 +35,18 @@ export const about: PluginAbout = {
       'Élő kézbesítés Server-Sent Events-szel, tartalékként lekérdezéssel',
       'Írd le az eseményeidet, és utasíts el minden mást',
       'Próbáld ki élőben két böngésző között',
+    ],
+    it: [
+      'Chiavi segrete, pubbliche e client per server, siti web e utenti',
+      'Consegna dal vivo con Server-Sent Events, polling come alternativa',
+      'Descrivi i tuoi eventi e rifiuta tutto il resto',
+      'Provalo dal vivo tra due browser',
+    ],
+    es: [
+      'Claves secretas, públicas y de cliente para servidores, sitios web y usuarios',
+      'Entrega en directo con Server-Sent Events, polling como alternativa',
+      'Describe tus eventos y rechaza todo lo demás',
+      'Pruébalo en directo entre dos navegadores',
     ],
   },
 };

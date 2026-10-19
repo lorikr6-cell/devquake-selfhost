@@ -1,5 +1,9 @@
 # Változások — Étkezéstervező
 
+## 0.5.0
+
+- Az alkalmazás mostantól olaszul és spanyolul is elérhető: a nyelvet az oldal tetején választhatod ki.
+
 ## 0.4.1
 
 - Értesítések: nagy képernyőn a lista most közvetlenül a csengő alatt nyílik meg; telefonon és tableten továbbra is a képernyő közepén. Mindig elfér a képernyőn: a cím látható marad, csak a lista görget.
@@ -28,7 +32,7 @@
 
 - Az alkalmazás kártyája a DevQuake-en és a kezdőoldala most megmutatja, hány tag használja, és a számait: megosztott étkezés, megtervezett étkezés, háztartás.
 
-0.1.0
+## 0.1.0
 
 - Tervezd meg a háztartás heti étkezéseit: reggeli, ebéd, vacsora és nasi, a szakácskönyved receptjeivel vagy beírt étkezésekkel.
 - Add meg, kik esznek, az adagjukkal: a főzendő adagok kitöltődnek, és maradék is tervezhető.

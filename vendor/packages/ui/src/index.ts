@@ -39,7 +39,7 @@ export {
   type TranslateParams,
 } from './i18n';
 export { I18nProvider, LanguagePicker, Link, useLocale, useT } from './i18n-react';
-export { BackLink, NavTracker } from './navigation';
+export { BackLink, NavTracker, ReturnLink } from './navigation';
 export { rich } from './i18n-nodes';
 export { FullscreenButton } from './fullscreen';
 export { Sheet } from './sheet';
@@ -77,3 +77,4 @@ export {
   removeOutbox,
   type OutboxEntry,
 } from './outbox';
+export { AutoCheckbox } from './auto-checkbox';

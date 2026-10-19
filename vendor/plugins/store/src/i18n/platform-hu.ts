@@ -9,6 +9,15 @@ export const platformHu: MessagesOf<typeof platformEn> = {
     connect: 'Folytatás DevQuake-kel',
     orEmail: 'Vagy lépj be bármilyen e-mail-címmel',
     linked: 'Összekapcsolva a DevQuake-fiókoddal.',
+    devquakeTitle: 'A DevQuake-fiókodból',
+    devquakeName: 'Név',
+    devquakeEmail: 'E-mail',
+    manageOnDevQuake: 'Módosítás a DevQuake-en',
+    statFavorites: 'Kedvencek',
+    statPurchases: 'Vásárlások',
+    statCart: 'A kosárban',
+    memberPrivacyNote:
+      'A neved és az e-mail-címed a DevQuake-fiókodból származik. Ez a bolt megőrzi a szállítási adataidat, az üzeneteidet és a rendeléseidet (a törvény szerint); ha itt törlöd a fiókot, a rendelések kivételével minden törlődik.',
     deliveryTitle: 'Szállítási adatok',
     deliveryHint: 'Az itteni fiókodban tárolva kitöltik helyetted a pénztárat.',
     phone: 'Telefon',
@@ -27,6 +36,11 @@ export const platformHu: MessagesOf<typeof platformEn> = {
   shop: {
     theme: { label: 'Téma', adaptive: 'Automatikus', light: 'Világos', dark: 'Sötét' },
     currency: 'Pénznem',
+    newsletterToggle: 'Kérem a bolt hírlevelét',
+    newsletterToggleHint: 'Ide: {email}. Bármikor leiratkozhatsz, ha kiveszed a pipát.',
+    newsletterOn: 'Hírlevél bekapcsolva.',
+    newsletterOff: 'Hírlevél kikapcsolva.',
+    newsletterFailed: 'A hírlevél-beállítást nem sikerült menteni. Próbáld újra.',
     fxNote:
       'A(z) {currency} árak hozzávetőlegesek, az Európai Központi Bank {date} árfolyamán. {base} pénznemben fizetsz; a bankod vagy a kártyád váltja át.',
   },

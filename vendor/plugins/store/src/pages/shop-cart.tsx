@@ -25,7 +25,14 @@ export default async function CartPage({ ctx, params }: PluginPageProps) {
   const { store, preview, team, locale, db } = scope;
   const t = translator(locale, 'cart');
   return (
-    <ShopFrame store={store} preview={preview} team={team} locale={locale} db={db}>
+    <ShopFrame
+      store={store}
+      preview={preview}
+      team={team}
+      locale={locale}
+      db={db}
+      viewer={scope.viewer}
+    >
       <h1 className={cn('text-2xl font-bold', S.heading)}>{t('title')}</h1>
       {/* In the owner's preview the photo route for buyers is closed: no pictures there. */}
       <CartView

@@ -264,7 +264,7 @@ const en: Manual = {
           steps: [
             'Under **Settings → Languages**, choose the language to translate from and **copy** the labels buyers see (or download them).',
             'Translate them in a translator or an AI, keeping the names before the colons and the words in curly brackets as they are.',
-            'Paste them back with a code (fr, es, pl…) and the language’s name, and save. The page tells you how many labels were taken, missing or refused. Use de, ro, hu or en to change the wording of a built-in language instead.',
+            'Paste them back with a code (fr, pl, nl…) and the language’s name, and save. The page tells you how many labels were taken, missing or refused. Use de, ro, hu, it, es or en to change the wording of a built-in language instead.',
           ],
         },
         {
@@ -551,7 +551,7 @@ const de: Manual = {
           steps: [
             'Unter **Einstellungen → Sprachen** wählst du die Sprache, aus der übersetzt wird, und **kopierst** die Texte, die Käufer sehen (oder lädst sie herunter).',
             'Übersetze sie mit einem Übersetzer oder einer KI und lass die Namen vor den Doppelpunkten und die Wörter in geschweiften Klammern unverändert.',
-            'Füge sie mit einem Code (fr, es, pl…) und dem Namen der Sprache wieder ein und speichere. Die Seite sagt dir, wie viele Texte übernommen wurden, fehlen oder abgelehnt wurden. Mit de, ro, hu oder en änderst du stattdessen die Formulierungen einer eingebauten Sprache.',
+            'Füge sie mit einem Code (fr, pl, nl…) und dem Namen der Sprache wieder ein und speichere. Die Seite sagt dir, wie viele Texte übernommen wurden, fehlen oder abgelehnt wurden. Mit de, ro, hu, it, es oder en änderst du stattdessen die Formulierungen einer eingebauten Sprache.',
           ],
         },
         {
@@ -838,7 +838,7 @@ const ro: Manual = {
           steps: [
             'La **Setări → Limbi**, alege limba din care traduci și **copiază** textele pe care le văd cumpărătorii (sau descarcă-le).',
             'Tradu-le cu un traducător sau un AI, păstrând neschimbate numele dinaintea celor două puncte și cuvintele dintre acolade.',
-            'Lipește-le înapoi cu un cod (fr, es, pl…) și numele limbii, apoi salvează. Pagina îți spune câte texte au fost preluate, lipsesc sau au fost respinse. Cu de, ro, hu sau en schimbi în schimb formulările unei limbi încorporate.',
+            'Lipește-le înapoi cu un cod (fr, pl, nl…) și numele limbii, apoi salvează. Pagina îți spune câte texte au fost preluate, lipsesc sau au fost respinse. Cu de, ro, hu, it, es sau en schimbi în schimb formulările unei limbi încorporate.',
           ],
         },
         {
@@ -1125,7 +1125,7 @@ const hu: Manual = {
           steps: [
             'A **Beállítások → Nyelvek** alatt válaszd ki a nyelvet, amelyből fordítasz, és **másold ki** a vásárlók által látott szövegeket (vagy töltsd le őket).',
             'Fordítsd le őket egy fordítóval vagy MI-vel úgy, hogy a kettőspont előtti nevek és a kapcsos zárójeles szavak változatlanok maradjanak.',
-            'Illeszd vissza őket egy kóddal (fr, es, pl…) és a nyelv nevével, majd ments. Az oldal megmondja, hány szöveget vett át, mennyi hiányzik és mennyit utasított el. A de, ro, hu vagy en kóddal egy beépített nyelv szövegeit módosítod.',
+            'Illeszd vissza őket egy kóddal (fr, pl, nl…) és a nyelv nevével, majd ments. Az oldal megmondja, hány szöveget vett át, mennyi hiányzik és mennyit utasított el. A de, ro, hu, it, es vagy en kóddal egy beépített nyelv szövegeit módosítod.',
           ],
         },
         {
@@ -1171,4 +1171,578 @@ const hu: Manual = {
   back: 'Vissza a boltodhoz',
 };
 
-export const MANUAL: Record<Locale, Manual> = { en, de, ro, hu };
+const it: Manual = {
+  metaTitle: 'Manuale d’uso · Negozio',
+  metaDescription:
+    'Come gestire il tuo piccolo negozio online: prodotti con varianti e saldi, carta, PayPal, bonifico o contrassegno, zone di spedizione e ordini.',
+  ogTitle: 'Negozio: manuale d’uso',
+  cta: 'Questo manuale è per il titolare del negozio. {link} per gestire il tuo negozio.',
+  ctaLink: 'Accedi',
+  kicker: 'Negozio · Manuale d’uso',
+  title: 'Come gestire il tuo negozio',
+  intro:
+    'Negozio è un piccolo negozio online sul tuo server: aggiungi i prodotti, scegli come pagano gli acquirenti e dove spedisci, e segui ogni ordine fino alla consegna. Gli acquirenti non hanno bisogno di un account.',
+  contents: 'Indice',
+  sections: [
+    {
+      id: 'start',
+      title: '1. Aprire il negozio',
+      blocks: [
+        {
+          steps: [
+            'Accedi e dai al negozio un **nome**. Il suo indirizzo web viene creato dal nome; puoi cambiarlo.',
+            'Scegli la **valuta** e l’**aliquota IVA**. I prezzi che inserisci includono l’IVA; usa 0 se non applichi l’IVA.',
+            'Segui la lista di controllo nella **Panoramica**: un prodotto, un metodo di pagamento, la spedizione, i dati del venditore, poi **apri il negozio** da Impostazioni.',
+          ],
+        },
+        {
+          tip: 'Finché il negozio è chiuso, lo vedi solo tu: aprilo dalla Panoramica per controllare come lo vedranno gli acquirenti.',
+        },
+      ],
+    },
+    {
+      id: 'products',
+      title: '2. Prodotti, varianti e saldi',
+      blocks: [
+        {
+          p: 'Un prodotto ha un nome, una descrizione breve per gli elenchi, una descrizione più lunga, una categoria e fino a otto **foto**; la prima foto è quella principale.',
+        },
+        {
+          list: [
+            '**Varianti**: taglie, colori… ognuna con il suo prezzo, codice e magazzino. Un prodotto semplice ha una variante senza nome.',
+            'Il **magazzino** viene conteggiato quando lo compili: un ordine lo scala, un ordine annullato lo restituisce, e le varianti esaurite non si possono acquistare.',
+            '**Prezzo scontato**: più basso del prezzo, da un inizio a una fine (entrambi facoltativi). Il negozio mostra il vecchio prezzo barrato.',
+            'Le **bozze** (non “in vendita”) le vedi solo tu.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'payments',
+      title: '3. Metodi di pagamento',
+      blocks: [
+        {
+          p: 'Il denaro arriva direttamente sui tuoi conti. Attiva i metodi che vuoi in **Pagamenti**:',
+        },
+        {
+          list: [
+            '**Carta (Stripe)**: incolla la tua chiave segreta e aggiungi in Stripe l’indirizzo del webhook mostrato nella pagina, con il suo segreto di firma. Gli ordini pagati vengono segnati come pagati da soli.',
+            '**PayPal**: client ID e secret della tua app; provalo prima nella sandbox, poi passa al live.',
+            '**Bonifico bancario**: il tuo IBAN e l’intestatario del conto. La pagina dell’ordine li mostra con il riferimento dell’ordine; segna l’ordine come pagato quando arriva il denaro.',
+            '**Contrassegno**: supplemento facoltativo; il corriere incassa e l’ordine conta come pagato quando lo segni come consegnato.',
+          ],
+        },
+        {
+          tip: 'Le chiavi segrete sono salvate cifrate e non vengono più mostrate. I dati della carta non arrivano mai al tuo server: gli acquirenti pagano sulla pagina di Stripe o di PayPal.',
+        },
+      ],
+    },
+    {
+      id: 'shipping',
+      title: '4. Spedizione',
+      blocks: [
+        {
+          p: 'Crea una **zona** per ogni gruppo di paesi in cui spedisci, con una tariffa fissa per ordine e, se vuoi, la spedizione gratuita da un certo importo. “Ovunque altrove” copre tutti gli altri paesi. Gli acquirenti di paesi che non sono in nessuna zona non possono ordinare.',
+        },
+      ],
+    },
+    {
+      id: 'orders',
+      title: '5. Ordini',
+      blocks: [
+        {
+          steps: [
+            'Ricevi un’**email** per ogni nuovo ordine (gli ordini con carta e PayPal quando sono pagati).',
+            'Apri l’ordine: acquirente, indirizzo, articoli, pagamento. Segnalo come **pagato** (bonifico, contanti), poi **spedito**.',
+            'Aggiungi il **corriere** e il **numero di tracciamento**: la pagina dell’acquirente rimanda alla pagina di tracciamento del pacco.',
+            'Segnalo come **consegnato**. Annullando, i prodotti tornano in magazzino; rimborsa tu il denaro.',
+          ],
+        },
+        {
+          p: 'Gli ordini con carta e PayPal non pagati entro un giorno vengono annullati da soli, così il loro magazzino torna libero.',
+        },
+      ],
+    },
+    {
+      id: 'buyers',
+      title: '6. Cosa vedono gli acquirenti',
+      blocks: [
+        {
+          list: [
+            'Il negozio, le sue categorie e i prodotti, con prezzi, campagne e saldi, senza accedere; possono **confrontare** i prodotti uno accanto all’altro e **condividerli** o scansionarne il **codice QR**.',
+            'Un **carrello** conservato nel loro browser e il checkout con indirizzo, costo di spedizione, **codice sconto** e metodo di pagamento.',
+            'La **pagina del loro ordine**, dietro un link segreto: lo stato, come pagare e il tracciamento del pacco. Quando il server può inviare email, ricevono il link anche in un’email di conferma.',
+            'Un **account** facoltativo nel tuo negozio: accedono con un link inviato alla loro email, vedono tutti i loro ordini, ti scrivono e gestiscono la newsletter. Nessuna password.',
+            'Quando l’ordine è in viaggio, possono **valutare** ciò che hanno comprato dalla pagina dell’ordine.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'legal',
+      title: '7. Dati del venditore, condizioni e motori di ricerca',
+      blocks: [
+        {
+          p: 'In **Impostazioni** indica chi vende (nome o azienda, indirizzo, numero di registrazione e partita IVA, contatti), le tue **condizioni di vendita** e i **resi**. Il negozio li mostra nella pagina “Venditore e condizioni”, con il diritto di recesso UE di 14 giorni; i negozi in Romania possono mostrare i link ANPC.',
+        },
+        {
+          p: 'I negozi aperti e i loro prodotti si possono trovare con i motori di ricerca: ogni pagina ha il suo indirizzo, la sua descrizione e i dati sul prezzo, e il negozio li elenca in una sitemap.',
+        },
+      ],
+    },
+    {
+      id: 'catalogue',
+      title: '8. Tipi di prodotto, fornitori e molti prodotti',
+      blocks: [
+        {
+          p: 'In **Prodotti → Tipi e campi** dai a ogni genere di prodotto i suoi campi: la memoria di un telefono, la composizione di una camicia, l’autore di un libro. Parti da un tipo già pronto (elettronica, abbigliamento, scarpe, libri, alimentari, cosmetici, mobili, gioielli, giocattoli, sport, fatto a mano) nella tua lingua e modificalo come vuoi. I prodotti di quel tipo compilano i campi; il negozio li mostra come **Dettagli** e nel **confronto**.',
+        },
+        {
+          list: [
+            'I **fornitori** registrano chi produce o fornisce i tuoi prodotti, con i loro contatti. Un fornitore mostrato come **marca** compare sui suoi prodotti e nei motori di ricerca.',
+            'L’elenco dei prodotti ha una **ricerca** e filtri per tipo, fornitore e stato. Spunta più prodotti per metterli in vendita, renderli bozze o eliminarli in una volta; **Copia** crea una bozza da un prodotto.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'promotions',
+      title: '9. Campagne, buoni e annunci',
+      blocks: [
+        {
+          list: [
+            'Le **campagne** applicano una percentuale di sconto su tutto, su una categoria o su prodotti scelti, da un inizio a una fine. Il negozio mostra il vecchio prezzo barrato.',
+            'I **buoni sconto** sono codici che gli acquirenti scrivono al checkout: una percentuale o un importo di sconto sui prodotti, o la spedizione gratuita; con un ordine minimo, un numero di utilizzi e una volta per acquirente, se vuoi.',
+            'Gli **annunci** mostrano una barra su ogni pagina o un banner nella prima pagina, con un codice sconto da copiare o un link a una campagna.',
+          ],
+        },
+        {
+          tip: 'Quando un prezzo scontato e una campagna si incontrano, vince il prezzo più basso. Un buono si aggiunge sopra, solo sui prodotti.',
+        },
+      ],
+    },
+    {
+      id: 'newsletter',
+      title: '10. Newsletter',
+      blocks: [
+        {
+          steps: [
+            'Gli acquirenti si iscrivono nel piè di pagina del negozio, nel loro account o al checkout, e confermano con il link in un’email.',
+            'In **Marketing → Newsletter** scrivi un oggetto e un testo, aggiungi un buono se vuoi e scegli prodotti **in offerta** o **nuovi** (oppure aggiungi in una volta tutti quelli in saldo o i più recenti).',
+            'Salva per vedere l’email come su un computer e su un telefono, invia a te stesso una **prova**, poi inviala a tutti gli iscritti.',
+          ],
+        },
+        {
+          tip: 'Ogni newsletter ha un link per disiscriversi. Il negozio invia email tramite le impostazioni SMTP del server; senza di esse non ci sono newsletter né link di accesso.',
+        },
+      ],
+    },
+    {
+      id: 'reviews',
+      title: '11. Recensioni e messaggi',
+      blocks: [
+        {
+          list: [
+            'In **Recensioni** scegli se approvare ogni recensione o lasciare che gli acquirenti verificati pubblichino subito. Pubblica, nascondi, rispondi o elimina ognuna.',
+            'In **Messaggi** leggi e rispondi agli acquirenti che ti hanno scritto dal loro account; ricevono un’email con la tua risposta. Tu ricevi un’email per ogni nuovo messaggio.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'design',
+      title: '12. Design, motori di ricerca e tracciamento',
+      blocks: [
+        {
+          p: 'In **Impostazioni → Design** aggiungi il tuo logo e un banner e scegli colori, caratteri, angoli, schede e quanti prodotti mostrare per riga; l’editor ti avvisa quando il testo è difficile da leggere.',
+        },
+        {
+          list: [
+            'In **Motori di ricerca** imposta titolo e descrizione del negozio con un’anteprima e vedi un punteggio con consigli per ogni prodotto (foto, testi, categoria, marca, codice a barre). Anche ogni prodotto ha i suoi testi per i motori di ricerca.',
+            'Il titolare può aggiungere **Google Analytics**, **Google Ads**, **Tag Manager**, il **pixel di Meta** o altro codice, e i codici di verifica per Google Search Console e Bing. Prima viene chiesto agli acquirenti; i tag si caricano solo dopo che accettano.',
+            'Ogni prodotto si può **condividere** sui social network o come **codice QR** da scaricare o stampare.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'team',
+      title: '13. Il tuo team',
+      blocks: [
+        {
+          list: [
+            'In **Impostazioni → Team** crea un link di invito con uno o più ruoli e invialo: **Responsabile** (tutto tranne pagamenti, tracciamento e team), **Prodotti** (prodotti, magazzino, tipi, fornitori, motori di ricerca), **Marketing** (promozioni, newsletter, recensioni, design, statistiche), **Assistenza** (messaggi degli acquirenti, recensioni, ordini), **Spedizione e consegna** (ordini da spedire, zone di spedizione) o **Manutenzione** (apertura, modalità manutenzione, dati del venditore, lingue, design).',
+            'La **Panoramica** di ogni membro mostra le attività dei suoi ruoli: ordini da spedire con un pulsante per segnarli come spediti, messaggi senza risposta e recensioni da pubblicare, prodotti esauriti o con scorte basse, campagne e newsletter in corso, e ciò che manca ancora al negozio. Cambia i ruoli di un membro o rimuovilo quando vuoi; i membri possono lasciare il team dalla Panoramica.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'stats',
+      title: '14. Statistiche',
+      blocks: [
+        {
+          p: 'In **Statistiche** vedi vendite, ordini, ordine medio, visualizzazioni dei prodotti e conversione per 7, 30, 90 o 365 giorni, confrontati con il periodo precedente; vendite, ordini e visualizzazioni per giorno o settimana; e i numeri di ogni prodotto, che puoi ordinare.',
+        },
+      ],
+    },
+    {
+      id: 'rules',
+      title: '15. Sconti automatici e spedizione gratuita',
+      blocks: [
+        {
+          p: 'In **Marketing → Promozioni** aggiungi regole che si applicano senza codice: **spedizione gratuita** da un importo, o una **percentuale di sconto su tutti i prodotti** da un numero di articoli (ad es. 3 articoli: −5 %, 5 articoli: −10 %) o da un importo. Quando se ne raggiungono più di una, vale la più alta.',
+        },
+        {
+          list: [
+            'Gli acquirenti vedono lo sconto nel **carrello** e al **checkout** prima di ordinare, e un suggerimento come “Aggiungi ancora 2 articoli per avere il 10 % di sconto su tutto” o “Aggiungi ancora 12 € per la spedizione gratuita”.',
+            'Un buono si aggiunge sopra, su quello che resta; l’ordine conserva entrambi gli sconti con i loro nomi.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'languages',
+      title: '16. Modalità manutenzione e lingue',
+      blocks: [
+        {
+          p: 'In **Impostazioni** attiva la **modalità manutenzione** con un messaggio: gli acquirenti lo vedono al posto del negozio e non possono ordinare, mentre il tuo team continua a vedere tutto. Disattivala dalla Panoramica con un clic.',
+        },
+        {
+          steps: [
+            'In **Impostazioni → Lingue** scegli la lingua da cui tradurre e **copia** le etichette che vedono gli acquirenti (o scaricale).',
+            'Traducile con un traduttore o un’IA, lasciando come sono i nomi prima dei due punti e le parole tra parentesi graffe.',
+            'Incollale di nuovo con un codice (fr, pl, nl…) e il nome della lingua, e salva. La pagina ti dice quante etichette sono state accettate, mancano o sono state rifiutate. Usa invece de, ro, hu, it, es o en per cambiare i testi di una lingua integrata.',
+          ],
+        },
+        {
+          tip: 'Gli acquirenti scelgono la lingua in fondo al negozio; puoi anche rendere una delle tue lingue quella che vedono per prima.',
+        },
+      ],
+    },
+    {
+      id: 'devquake',
+      title: '17. Account per i membri di DevQuake',
+      blocks: [
+        {
+          p: 'Su un sito che fa parte di DevQuake, i membri accedono al tuo negozio con **Continua con DevQuake** nella pagina dell’account: DevQuake chiede loro una volta di consentire l’uso del loro indirizzo email, e il loro account nel negozio viene compilato con il loro nome e quell’indirizzo. Gli ordini fatti con quell’indirizzo compaiono, e il negozio li riconosce nelle visite successive finché non escono.',
+        },
+        {
+          list: [
+            'Tutti gli altri aprono comunque un account con un indirizzo email qualsiasi, tramite un link.',
+            'Gli acquirenti salvano i loro **dati di consegna** nell’account e il checkout li compila; al checkout possono conservare i nuovi dati per la volta successiva.',
+            'Gli amministratori del sito decidono se i membri possono aprire negozi propri e se i visitatori vedono una breve presentazione di DevQuake sopra il piè di pagina del negozio.',
+            'Con i **prezzi indicativi in altre valute** attivi, gli acquirenti scelgono una valuta in fondo al negozio e vedono i prezzi “≈” in quella valuta; pagano comunque nella valuta del tuo negozio.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'interest',
+      title: '18. Voti di interesse prima di vendere',
+      blocks: [
+        {
+          p: 'Non sei sicuro che un prodotto si venderà? Quando gli amministratori del sito attivano i **voti di interesse**, passa un prodotto a **Chiedi voti invece di vendere** dalla sua pagina. Gli acquirenti vedono allora un voto al posto del prezzo: se lo vogliono, quanto pagherebbero e quale versione (i campi a scelta multipla del suo tipo, come colori e taglie). Nel frattempo nessuno può ordinarlo.',
+        },
+        {
+          list: [
+            'Inserisci un **costo al pezzo** e un **investimento una tantum** nella pagina del prodotto.',
+            'In **Statistiche → Voti di interesse** vedi la domanda, quanto pagherebbero i votanti, un prezzo suggerito, gli acquirenti previsti, ricavi, profitto, ritorno e pareggio, e le versioni più richieste.',
+            'Per iniziare a vendere, disattiva il voto e dai alle varianti i loro prezzi reali.',
+          ],
+        },
+      ],
+    },
+  ],
+  questions: 'Domande o idee? Scrivi a {email}.',
+  back: 'Torna al tuo negozio',
+};
+
+const es: Manual = {
+  metaTitle: 'Manual de usuario · Tienda',
+  metaDescription:
+    'Cómo llevar tu propia tienda online pequeña: productos con variantes y rebajas, tarjeta, PayPal, transferencia o contra reembolso, zonas de envío y pedidos.',
+  ogTitle: 'Tienda: manual de usuario',
+  cta: 'Este manual es para el propietario de la tienda. {link} para gestionar tu tienda.',
+  ctaLink: 'Inicia sesión',
+  kicker: 'Tienda · Manual de usuario',
+  title: 'Cómo llevar tu tienda',
+  intro:
+    'Tienda es una pequeña tienda online en tu propio servidor: añades productos, eliges cómo pagan los compradores y adónde envías, y sigues cada pedido hasta que se entrega. Los compradores no necesitan cuenta.',
+  contents: 'Contenido',
+  sections: [
+    {
+      id: 'start',
+      title: '1. Abrir la tienda',
+      blocks: [
+        {
+          steps: [
+            'Inicia sesión y ponle un **nombre** a la tienda. Su dirección web se crea a partir del nombre; puedes cambiarla.',
+            'Elige la **moneda** y el **tipo de IVA**. Los precios que escribes incluyen IVA; usa 0 si no cobras IVA.',
+            'Sigue la lista del **Resumen**: un producto, un método de pago, el envío, tus datos de vendedor y luego **abre la tienda** en Ajustes.',
+          ],
+        },
+        {
+          tip: 'Mientras la tienda está cerrada, solo tú puedes verla: ábrela desde el Resumen para comprobar cómo la verán los compradores.',
+        },
+      ],
+    },
+    {
+      id: 'products',
+      title: '2. Productos, variantes y rebajas',
+      blocks: [
+        {
+          p: 'Un producto tiene un nombre, una descripción breve para las listas, una descripción más larga, una categoría y hasta ocho **fotos**; la primera foto es la principal.',
+        },
+        {
+          list: [
+            '**Variantes**: tallas, colores… cada una con su propio precio, código y stock. Un producto simple tiene una variante sin nombre.',
+            'El **stock** se cuenta cuando lo rellenas: un pedido lo descuenta, un pedido cancelado lo devuelve y las variantes agotadas no se pueden comprar.',
+            '**Precio rebajado**: inferior al precio, desde un inicio hasta un final (ambos opcionales). La tienda muestra el precio anterior tachado.',
+            'Los **borradores** (no “a la venta”) solo los ves tú.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'payments',
+      title: '3. Métodos de pago',
+      blocks: [
+        {
+          p: 'El dinero va directamente a tus propias cuentas. Activa los métodos que quieras en **Pagos**:',
+        },
+        {
+          list: [
+            '**Tarjeta (Stripe)**: pega tu clave secreta y añade en Stripe la dirección del webhook que se muestra en la página, con su secreto de firma. Los pedidos pagados se marcan como pagados solos.',
+            '**PayPal**: el client ID y el secret de tu app; pruébalo primero en el sandbox y luego pasa a real.',
+            '**Transferencia bancaria**: tu IBAN y el titular de la cuenta. La página del pedido los muestra con la referencia del pedido; marca el pedido como pagado cuando llegue el dinero.',
+            '**Contra reembolso**: recargo opcional; la mensajería cobra y el pedido cuenta como pagado cuando lo marcas como entregado.',
+          ],
+        },
+        {
+          tip: 'Las claves secretas se guardan cifradas y no se vuelven a mostrar. Los datos de la tarjeta nunca llegan a tu servidor: los compradores pagan en la página de Stripe o de PayPal.',
+        },
+      ],
+    },
+    {
+      id: 'shipping',
+      title: '4. Envío',
+      blocks: [
+        {
+          p: 'Crea una **zona** para cada grupo de países a los que envías, con una tarifa fija por pedido y, si quieres, envío gratis a partir de un importe. “Resto del mundo” cubre todos los demás países. Los compradores de países que no están en ninguna zona no pueden pedir.',
+        },
+      ],
+    },
+    {
+      id: 'orders',
+      title: '5. Pedidos',
+      blocks: [
+        {
+          steps: [
+            'Recibes un **email** por cada pedido nuevo (los pedidos con tarjeta y PayPal, cuando se pagan).',
+            'Abre el pedido: comprador, dirección, artículos, pago. Márcalo como **pagado** (transferencia, efectivo) y luego como **enviado**.',
+            'Añade la **mensajería** y el **número de seguimiento**: la página del comprador enlaza con la página de seguimiento del paquete.',
+            'Márcalo como **entregado**. Al cancelar, los productos vuelven al stock; devuelve tú el dinero.',
+          ],
+        },
+        {
+          p: 'Los pedidos con tarjeta y PayPal que no se pagan en un día se cancelan solos, para que su stock vuelva a estar libre.',
+        },
+      ],
+    },
+    {
+      id: 'buyers',
+      title: '6. Lo que ven los compradores',
+      blocks: [
+        {
+          list: [
+            'La tienda, sus categorías y productos, con precios, campañas y rebajas, sin iniciar sesión; pueden **comparar** productos uno al lado de otro y **compartirlos** o escanear su **código QR**.',
+            'Un **carrito** guardado en su navegador y el pago con su dirección, los gastos de envío, un **código de cupón** y el método de pago.',
+            'La **página de su pedido**, tras un enlace secreto: su estado, cómo pagar y el seguimiento del paquete. Cuando el servidor puede enviar emails, también reciben el enlace en un email de confirmación.',
+            'Una **cuenta** opcional en tu tienda: inician sesión con un enlace enviado a su email, ven todos sus pedidos, te escriben y gestionan la newsletter. Sin contraseña.',
+            'Cuando el pedido está en camino, pueden **valorar** lo que compraron desde la página del pedido.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'legal',
+      title: '7. Datos del vendedor, condiciones y buscadores',
+      blocks: [
+        {
+          p: 'En **Ajustes** indica quién vende (nombre o empresa, dirección, número de registro y NIF/CIF, contacto), tus **condiciones de venta** y las **devoluciones**. La tienda los muestra en su página “Vendedor y condiciones”, con el derecho de desistimiento de 14 días de la UE; las tiendas de Rumanía pueden mostrar los enlaces de la ANPC.',
+        },
+        {
+          p: 'Las tiendas abiertas y sus productos se pueden encontrar en los buscadores: cada página tiene su propia dirección, descripción y datos de precio, y la tienda las lista en un sitemap.',
+        },
+      ],
+    },
+    {
+      id: 'catalogue',
+      title: '8. Tipos de producto, proveedores y muchos productos',
+      blocks: [
+        {
+          p: 'En **Productos → Tipos y campos** da a cada clase de producto sus propios campos: la memoria de un móvil, la composición de una camisa, el autor de un libro. Empieza con un tipo ya hecho (electrónica, ropa, calzado, libros, alimentación, cosmética, muebles, joyería, juguetes, deporte, hecho a mano) en tu idioma y cámbialo como quieras. Los productos de ese tipo rellenan los campos; la tienda los muestra como **Detalles** y en la **comparación**.',
+        },
+        {
+          list: [
+            'Los **proveedores** registran quién fabrica o suministra tus productos, con sus contactos. Un proveedor mostrado como **marca** aparece en sus productos y en los buscadores.',
+            'La lista de productos tiene una **búsqueda** y filtros por tipo, proveedor y estado. Marca varios productos para ponerlos a la venta, pasarlos a borrador o eliminarlos a la vez; **Copiar** crea un borrador a partir de un producto.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'promotions',
+      title: '9. Campañas, cupones y avisos',
+      blocks: [
+        {
+          list: [
+            'Las **campañas** aplican un porcentaje de descuento en todo, en una categoría o en productos elegidos, desde un inicio hasta un final. La tienda muestra el precio anterior tachado.',
+            'Los **cupones** son códigos que los compradores escriben al pagar: un porcentaje o un importe de descuento en los productos, o envío gratis; con un pedido mínimo, un número de usos y una vez por comprador, si quieres.',
+            'Los **avisos** muestran una barra en cada página o un banner en la portada, con un código de cupón para copiar o un enlace a una campaña.',
+          ],
+        },
+        {
+          tip: 'Cuando coinciden un precio rebajado y una campaña, gana el precio más bajo. Un cupón se suma encima, solo en los productos.',
+        },
+      ],
+    },
+    {
+      id: 'newsletter',
+      title: '10. Newsletters',
+      blocks: [
+        {
+          steps: [
+            'Los compradores se suscriben en el pie de la tienda, en su cuenta o al pagar, y confirman con el enlace de un email.',
+            'En **Marketing → Newsletters** escribe un asunto y un texto, añade un cupón si quieres y elige productos **en oferta** o **nuevos** (o añade de una vez todo lo rebajado o lo más nuevo).',
+            'Guarda para ver el email como en un ordenador y en un móvil, envíate una **prueba** y luego envíala a todos los suscriptores.',
+          ],
+        },
+        {
+          tip: 'Cada newsletter tiene un enlace para darse de baja. La tienda envía emails con los ajustes SMTP del servidor; sin ellos no hay newsletters ni enlaces de inicio de sesión.',
+        },
+      ],
+    },
+    {
+      id: 'reviews',
+      title: '11. Reseñas y mensajes',
+      blocks: [
+        {
+          list: [
+            'En **Reseñas** elige si apruebas cada reseña o dejas que los compradores verificados publiquen al momento. Publica, oculta, responde o elimina cada una.',
+            'En **Mensajes** lee y responde a los compradores que te escribieron desde su cuenta; reciben un email con tu respuesta. Tú recibes un email por cada mensaje nuevo.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'design',
+      title: '12. Diseño, buscadores y seguimiento',
+      blocks: [
+        {
+          p: 'En **Ajustes → Diseño** añade tu logo y un banner y elige colores, tipografías, esquinas, fichas y cuántos productos se muestran por fila; el editor avisa cuando el texto se lee mal.',
+        },
+        {
+          list: [
+            'En **Buscadores** define el título y la descripción de la tienda con una vista previa, y consulta una puntuación con consejos para cada producto (fotos, textos, categoría, marca, código de barras). Cada producto tiene también sus propios textos para buscadores.',
+            'El propietario puede añadir **Google Analytics**, **Google Ads**, **Tag Manager**, el **píxel de Meta** u otro código, y los códigos de verificación de Google Search Console y Bing. Primero se pregunta a los compradores; las etiquetas solo se cargan después de que acepten.',
+            'Cada producto se puede **compartir** en las redes sociales o como **código QR** para descargar o imprimir.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'team',
+      title: '13. Tu equipo',
+      blocks: [
+        {
+          list: [
+            'En **Ajustes → Equipo** crea un enlace de invitación con uno o más roles y envíalo: **Gerente** (todo menos pagos, seguimiento y el equipo), **Productos** (productos, stock, tipos, proveedores, buscadores), **Marketing** (promociones, newsletters, reseñas, diseño, estadísticas), **Atención al cliente** (mensajes de compradores, reseñas, pedidos), **Envío y entrega** (pedidos por enviar, zonas de envío) o **Mantenimiento** (apertura, modo mantenimiento, datos del vendedor, idiomas, diseño).',
+            'El **Resumen** de cada miembro muestra las tareas de sus roles: pedidos por enviar con un botón para marcarlos como enviados, mensajes sin responder y reseñas por publicar, productos agotados o con poco stock, campañas y newsletters en marcha, y lo que aún le falta a la tienda. Cambia los roles de un miembro o quítalo cuando quieras; los miembros pueden dejar el equipo desde el Resumen.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'stats',
+      title: '14. Estadísticas',
+      blocks: [
+        {
+          p: 'En **Estadísticas** consulta ventas, pedidos, pedido medio, visitas a productos y conversión de 7, 30, 90 o 365 días, comparados con el periodo anterior; ventas, pedidos y visitas por día o semana; y las cifras de cada producto, que puedes ordenar.',
+        },
+      ],
+    },
+    {
+      id: 'rules',
+      title: '15. Descuentos automáticos y envío gratis',
+      blocks: [
+        {
+          p: 'En **Marketing → Promociones** añade reglas que se aplican sin código: **envío gratis** a partir de un importe, o un **porcentaje de descuento en todos los productos** a partir de un número de artículos (p. ej. 3 artículos: −5 %, 5 artículos: −10 %) o de un importe. Cuando se alcanzan varias, cuenta la más alta.',
+        },
+        {
+          list: [
+            'Los compradores ven el descuento en el **carrito** y al **pagar** antes de hacer el pedido, y un aviso como “Añade 2 artículos más para un 10 % de descuento en todo” o “Añade 12 € más para tener envío gratis”.',
+            'Un cupón se suma encima, sobre lo que queda; el pedido conserva ambos descuentos con sus nombres.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'languages',
+      title: '16. Modo mantenimiento e idiomas',
+      blocks: [
+        {
+          p: 'En **Ajustes** activa el **modo mantenimiento** con un mensaje: los compradores lo ven en lugar de la tienda y no pueden pedir, mientras tu equipo sigue viéndolo todo. Desactívalo desde el Resumen con un clic.',
+        },
+        {
+          steps: [
+            'En **Ajustes → Idiomas** elige el idioma desde el que traducir y **copia** las etiquetas que ven los compradores (o descárgalas).',
+            'Tradúcelas con un traductor o una IA, dejando como están los nombres antes de los dos puntos y las palabras entre llaves.',
+            'Vuelve a pegarlas con un código (fr, pl, nl…) y el nombre del idioma, y guarda. La página te dice cuántas etiquetas se aceptaron, faltan o se rechazaron. Usa en cambio de, ro, hu, it, es o en para cambiar los textos de un idioma integrado.',
+          ],
+        },
+        {
+          tip: 'Los compradores eligen el idioma al pie de la tienda; también puedes hacer que uno de tus idiomas sea el que vean primero.',
+        },
+      ],
+    },
+    {
+      id: 'devquake',
+      title: '17. Cuentas para miembros de DevQuake',
+      blocks: [
+        {
+          p: 'En un sitio que forma parte de DevQuake, los miembros inician sesión en tu tienda con **Continuar con DevQuake** en la página de la cuenta: DevQuake les pide una vez permiso para usar su dirección de email, y su cuenta en la tienda se rellena con su nombre y esa dirección. Los pedidos que hicieron con ella aparecen, y la tienda los reconoce en sus siguientes visitas hasta que cierran sesión en ella.',
+        },
+        {
+          list: [
+            'Todos los demás siguen abriendo una cuenta con cualquier dirección de email, mediante un enlace.',
+            'Los compradores guardan sus **datos de entrega** en su cuenta y el pago los rellena; al pagar pueden guardar datos nuevos para la próxima vez.',
+            'Los administradores del sitio deciden si los miembros pueden abrir sus propias tiendas y si los visitantes ven una breve presentación de DevQuake encima del pie de la tienda.',
+            'Con los **precios aproximados en otras monedas** activados, los compradores eligen una moneda al pie de la tienda y ven precios “≈” en ella; siguen pagando en la moneda de tu tienda.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'interest',
+      title: '18. Votos de interés antes de vender',
+      blocks: [
+        {
+          p: '¿No sabes si un producto se venderá? Cuando los administradores del sitio activan los **votos de interés**, cambia un producto a **Pedir votos en lugar de vender** desde su página. Los compradores ven entonces una votación en lugar del precio: si lo quieren, cuánto pagarían y qué versión (los campos de opción múltiple de su tipo, como colores y tallas). Mientras tanto nadie puede pedirlo.',
+        },
+        {
+          list: [
+            'Introduce un **coste por unidad** y una **inversión única** en la página del producto.',
+            'En **Estadísticas → Votos de interés** ves la demanda, lo que pagarían los votantes, un precio sugerido, los compradores previstos, ingresos, beneficio, retorno y punto de equilibrio, y las versiones más deseadas.',
+            'Para empezar a vender, desactiva la votación y da a las variantes sus precios reales.',
+          ],
+        },
+      ],
+    },
+  ],
+  questions: '¿Preguntas o ideas? Escribe a {email}.',
+  back: 'Volver a tu tienda',
+};
+
+export const MANUAL: Record<Locale, Manual> = { en, de, ro, hu, it, es };

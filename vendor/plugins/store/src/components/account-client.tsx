@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
-import { cn, trackEvent, useT } from '@devquake/ui';
+import { AutoCheckbox, cn, trackEvent, useT } from '@devquake/ui';
 import { MESSAGE_LIMITS } from '../lib/buyers-data-limits';
 import { LIMITS } from '../lib/model';
 import { errorMessage } from './call-api';
@@ -23,6 +23,38 @@ async function post(url: string, method: string, body?: unknown) {
     ({ error?: string } & Record<string, unknown>) | null;
   if (!res.ok) throw Object.assign(new Error(data?.error ?? ''), { status: res.status });
   return data;
+}
+
+/**
+ * The newsletter for someone signed in to the shop: one checkbox for the address their account
+ * already has, saved on click (no Save button), saying whether it was switched on or off.
+ */
+export function NewsletterCheckbox({
+  slug,
+  on,
+  email,
+}: {
+  slug: string;
+  on: boolean;
+  email: string;
+}) {
+  const t = useT('shop');
+  const tErr = useT('errors');
+  return (
+    <AutoCheckbox
+      checked={on}
+      label={t('newsletterToggle')}
+      hint={t('newsletterToggleHint', { email })}
+      messages={{ on: t('newsletterOn'), off: t('newsletterOff'), failed: t('newsletterFailed') }}
+      onSave={async (next) => {
+        try {
+          await post(`/api/s/${slug}/newsletter`, 'PUT', { on: next });
+        } catch (err) {
+          return errorMessage(err, tErr);
+        }
+      }}
+    />
+  );
 }
 
 export function SignInForm({ slug }: { slug: string }) {
@@ -344,7 +376,16 @@ export function ReplyForm({ action, label }: { action: string; label: string }) 
   );
 }
 
-export function AccountActions({ slug, name }: { slug: string; name: string | null }) {
+export function AccountActions({
+  slug,
+  name,
+  editName = true,
+}: {
+  slug: string;
+  name: string | null;
+  /** False for DevQuake members: their name comes from their DevQuake account. */
+  editName?: boolean;
+}) {
   const t = useT('account');
   const tErr = useT('errors');
   const router = useAppRouter();
@@ -367,24 +408,26 @@ export function AccountActions({ slug, name }: { slug: string; name: string | nu
 
   return (
     <div className="space-y-4">
-      <form
-        className="flex max-w-md flex-wrap items-end gap-2"
-        onSubmit={(e) => {
-          e.preventDefault();
-          void run(
-            () => post(`/api/s/${slug}/account`, 'PATCH', { name: value }),
-            t('nameSaved'),
-            () => router.refresh(),
-          );
-        }}
-      >
-        <Field label={t('name')} className="min-w-48 flex-1">
-          <Input value={value} onChange={(e) => setValue(e.target.value)} maxLength={120} />
-        </Field>
-        <button type="submit" className={S.buttonSecondary} disabled={busy}>
-          {t('save')}
-        </button>
-      </form>
+      {editName ? (
+        <form
+          className="flex max-w-md flex-wrap items-end gap-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            void run(
+              () => post(`/api/s/${slug}/account`, 'PATCH', { name: value }),
+              t('nameSaved'),
+              () => router.refresh(),
+            );
+          }}
+        >
+          <Field label={t('name')} className="min-w-48 flex-1">
+            <Input value={value} onChange={(e) => setValue(e.target.value)} maxLength={120} />
+          </Field>
+          <button type="submit" className={S.buttonSecondary} disabled={busy}>
+            {t('save')}
+          </button>
+        </form>
+      ) : null}
       <div className="flex flex-wrap gap-2">
         <button
           type="button"

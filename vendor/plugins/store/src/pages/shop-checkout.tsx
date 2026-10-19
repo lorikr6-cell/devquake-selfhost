@@ -43,7 +43,14 @@ export default async function CheckoutPage({ ctx, params }: PluginPageProps) {
   if (home) countries.sort((a, b) => (a.code === home ? -1 : b.code === home ? 1 : 0));
 
   return (
-    <ShopFrame store={store} preview={preview} team={team} locale={locale} db={db}>
+    <ShopFrame
+      store={store}
+      preview={preview}
+      team={team}
+      locale={locale}
+      db={db}
+      viewer={scope.viewer}
+    >
       <h1 className={cn('text-2xl font-bold', S.heading)}>{t('title')}</h1>
       <CheckoutForm
         slug={store.slug}

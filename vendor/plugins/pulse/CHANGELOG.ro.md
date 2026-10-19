@@ -1,5 +1,13 @@
 # Noutăți — Pulse
 
+## 0.8.0
+
+- Aplicația este acum și în italiană și spaniolă: alege limba din partea de sus a paginii.
+
+## 0.7.0
+
+- Aplicațiile proprii DevQuake primesc acum actualizările live prin Pulse. Serviciile, planul și limitele tale rămân la fel; conexiunile live le rămân la dispoziție ca înainte.
+
 ## 0.6.0
 
 - Pulse poate rula acum pe propriul tău server (DevQuake găzduit de tine): acolo fiecare membru primește planul complet.
@@ -12,7 +20,7 @@
 
 - Cardul aplicației pe DevQuake și pagina ei de start arată acum câți membri o folosesc și totalurile ei: servicii API, evenimente azi.
 
-0.4.1
+## 0.4.1
 
 - Cine nu folosește încă aplicația vede acum pe prima ei pagină ce face, cu un link spre manualul de utilizare, iar linkurile distribuite arată imaginea aplicației.
 

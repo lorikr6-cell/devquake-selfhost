@@ -170,7 +170,7 @@ export const opsEn = {
   languages: {
     title: 'Languages',
     intro:
-      'The shop is in English, German, Romanian and Hungarian. Add any other language, or change the wording of a built-in one: copy the labels buyers see, translate them anywhere, and paste them back.',
+      'The shop is in English, German, Romanian, Hungarian, Italian and Spanish. Add any other language, or change the wording of a built-in one: copy the labels buyers see, translate them anywhere, and paste them back.',
     step1: '1. Copy the labels',
     step1Hint: 'Choose the language to translate from, then copy the labels or download them.',
     base: 'Translate from',
@@ -185,7 +185,7 @@ export const opsEn = {
     step2Hint: 'Give the language a code and a name, paste the translated labels and save.',
     code: 'Code',
     codeHint:
-      'Two or three letters, e.g. fr, es, pl. de, ro, hu or en change the built-in language.',
+      'Two or three letters, e.g. fr, pl, nl. de, ro, hu, it, es or en change the built-in language.',
     name: 'Name buyers see',
     nameHint: 'In the language itself, e.g. Français.',
     overrides: 'This changes the wording of {language} in your shop.',
@@ -214,7 +214,7 @@ export const opsEn = {
     maintenance: 'The shop is under maintenance. Please come back soon.',
     roles: 'Choose at least one role.',
     pieces: 'The number of items must be a whole number of 2 or more.',
-    languageCode: 'The code must be two or three letters, like fr or es.',
+    languageCode: 'The code must be two or three letters, like fr or pl.',
     labelsJson: 'This is not the copied labels (JSON). Paste the whole translated text.',
     labelsEmpty: 'No label could be taken from this text.',
     tooManyLanguages: 'A shop can have at most {max} languages of its own.',

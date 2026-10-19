@@ -119,5 +119,63 @@ export const emails = defineMessages(
           'Azért kapod ezt az e-mailt, mert a DevQuake közműszámla-alkalmazásában osztozol ezen a számlán.',
       },
     },
+    it: {
+      paymentEmail: {
+        subject: 'Pagamento confermato: {name}, {month}',
+        preheader: '{amount} ricevuti per la tua bolletta',
+        heading: 'Il tuo pagamento è confermato',
+        intro:
+          'Il gestore di “{name}” ha confermato il tuo pagamento per {month}. Ecco la bolletta completa e la tua parte.',
+        extra:
+          'Hai pagato {amount} in più della tua parte: verranno scalati dalla prossima bolletta di questa utenza.',
+        missing:
+          'Hai pagato {amount} in meno della tua parte: verranno aggiunti alla prossima bolletta di questa utenza.',
+        settled: 'La tua parte di questa bolletta è pagata per intero.',
+        pdf: 'Il PDF del fornitore si può aprire dalla bolletta.',
+        bill: 'Bolletta',
+        total: 'Totale della bolletta',
+        billConsumption: 'Consumo in bolletta',
+        unitPrice: 'Prezzo unitario',
+        yourConsumption: 'Il tuo consumo',
+        yourShare: 'La tua parte',
+        carry: 'Da bollette precedenti',
+        credit: '{amount} pagati in più prima (scalati)',
+        debt: '{amount} mancanti prima (aggiunti)',
+        due: 'Da pagare',
+        paid: 'Pagato',
+        button: 'Apri la bolletta',
+        footer:
+          'Ricevi questa email perché condividi questa bolletta nell’app delle bollette di DevQuake.',
+      },
+    },
+    es: {
+      paymentEmail: {
+        subject: 'Pago confirmado: {name}, {month}',
+        preheader: '{amount} recibidos por tu factura de suministros',
+        heading: 'Tu pago está confirmado',
+        intro:
+          'El gestor de “{name}” ha confirmado tu pago de {month}. Aquí tienes la factura completa y tu parte.',
+        extra:
+          'Has pagado {amount} más de tu parte: se descontarán de la próxima factura de este suministro.',
+        missing:
+          'Has pagado {amount} menos de tu parte: se sumarán a la próxima factura de este suministro.',
+        settled: 'Tu parte de esta factura está pagada por completo.',
+        pdf: 'El PDF del proveedor se puede abrir desde la factura.',
+        bill: 'Factura',
+        total: 'Total de la factura',
+        billConsumption: 'Consumo en la factura',
+        unitPrice: 'Precio unitario',
+        yourConsumption: 'Tu consumo',
+        yourShare: 'Tu parte',
+        carry: 'De facturas anteriores',
+        credit: '{amount} pagados de más antes (descontados)',
+        debt: '{amount} pendientes de antes (sumados)',
+        due: 'A pagar',
+        paid: 'Pagado',
+        button: 'Abrir la factura',
+        footer:
+          'Recibes este correo porque compartes esta factura en la app Facturas del hogar de DevQuake.',
+      },
+    },
   },
 );

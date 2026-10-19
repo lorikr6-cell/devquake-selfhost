@@ -1,5 +1,9 @@
 # Changelog: Shared shopping lists
 
+## 0.22.0
+
+- The app is now also in Italian and Spanish: pick the language at the top of the page.
+
 ## 0.21.0
 
 - Add what you bought to Shared expenses: with the two apps connected, the ticked items with a price become an expense paid by you, split equally between everyone on the list. Adding the same list twice changes nothing.
@@ -44,7 +48,7 @@
 
 - The app’s card on DevQuake and its front page now show how many members use it and its totals: shopping lists, items.
 
-0.12.0
+## 0.12.0
 
 - Calendars across apps: under the calendar, “From your other apps” lists the next 31 days of the apps you connected — family events (shared ones included), training sessions and bill due dates — each opening in its app.
 - Works with the family planner, the workout tracker and the utility bill manager; the family planner and the others can show your shopping days (list names and dates only).

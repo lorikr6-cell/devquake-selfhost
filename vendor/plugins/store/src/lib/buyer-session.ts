@@ -24,8 +24,19 @@ export function signedOutCookie(storeId: number, baseUrl: string): string {
 }
 
 /**
- * The buyer of this browser in a shop: their session cookie, else the account the signed-in
- * DevQuake member connected before (ADR 0059), unless they signed out of it on this browser.
+ * Whether a shop session may stand for who is signed in on DevQuake. DevQuake's sign-in is
+ * shared by all its hosts and the newest one wins, so it decides: an account connected to a
+ * member counts only while that member is signed in (not after someone else signed in or they
+ * signed out of DevQuake), and an account from an emailed link only while nobody is.
+ */
+export function sessionFits(buyer: Buyer, user: PluginUser | null | undefined): boolean {
+  return user ? buyer.platformUserId === user.id : buyer.platformUserId === null;
+}
+
+/**
+ * The buyer of this browser in a shop: their session cookie when it fits the DevQuake sign-in,
+ * else the account the signed-in DevQuake member connected before (ADR 0059), unless they
+ * signed out of it on this browser.
  */
 export async function resolveBuyer(
   db: Omit<PluginDatabase, 'transaction'>,
@@ -34,7 +45,8 @@ export async function resolveBuyer(
   user: PluginUser | null | undefined,
 ): Promise<Buyer | null> {
   const buyer = await buyerBySession(db, storeId, token);
-  if (buyer || !user || token === SIGNED_OUT) return buyer;
+  if (buyer && sessionFits(buyer, user)) return buyer;
+  if (!user || token === SIGNED_OUT) return null;
   return buyerOfMember(db, storeId, user.id);
 }
 

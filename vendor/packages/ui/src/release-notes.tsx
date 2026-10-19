@@ -44,6 +44,20 @@ const WORDS: Record<
     version: 'Verzió',
     latest: 'legújabb',
   },
+  it: {
+    whatsNew: 'Novità',
+    heading: (title) => `Novità: ${title}`,
+    close: 'Chiudi',
+    version: 'Versione',
+    latest: 'più recente',
+  },
+  es: {
+    whatsNew: 'Novedades',
+    heading: (title) => `Novedades: ${title}`,
+    close: 'Cerrar',
+    version: 'Versión',
+    latest: 'más reciente',
+  },
 };
 
 export interface ReleaseNotesEntry {

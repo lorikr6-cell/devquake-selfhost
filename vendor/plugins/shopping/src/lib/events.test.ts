@@ -48,5 +48,11 @@ describe('other languages', () => {
     );
     const hu = translator('hu', 'events');
     expect(ago('2026-09-24T11:55:00Z', hu, new Date('2026-09-24T12:00:00Z'))).toContain('5');
+    const it_ = translator('it', 'events');
+    expect(describe_({ kind: 'item_done', userName: 'Ana', itemName: 'Latte' }, it_)).toBe(
+      'Ana ha preso Latte',
+    );
+    const es = translator('es', 'events');
+    expect(ago('2026-09-24T11:55:00Z', es, new Date('2026-09-24T12:00:00Z'))).toBe('hace 5 min');
   });
 });

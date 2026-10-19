@@ -1185,4 +1185,582 @@ const hu: Manual = {
   back: '← Vissza a listáidhoz',
 };
 
-export const MANUAL: Record<Locale, Manual> = { en, de, ro, hu };
+const it: Manual = {
+  metaTitle: 'Manuale d’uso · Liste della spesa condivise',
+  metaDescription:
+    'Come pianificare liste della spesa condivise per data, aggiungere negozi, prodotti, foto e prezzi, fare la spesa insieme agli amici e leggere le statistiche dei tuoi acquisti.',
+  ogTitle: 'Liste della spesa condivise: manuale d’uso',
+  cta: 'Vuoi provarle? Le liste della spesa condivise sono gratuite per i membri di DevQuake. {link}, poi abbonati all’app.',
+  ctaLink: 'Crea un account o accedi',
+  kicker: 'Liste della spesa · Manuale d’uso',
+  title: 'Come usare le liste della spesa condivise',
+  intro:
+    'Pianifica cosa comprare, in quale negozio e in quale giorno, guarda quanto costa e fai la spesa insieme a famiglia e amici. Questo manuale ti guida passo dopo passo.',
+  contents: 'Indice',
+  sections: [
+    {
+      id: 'start',
+      title: '1. Per iniziare',
+      blocks: [
+        {
+          p: 'Liste della spesa è un’app di DevQuake e usa il tuo account DevQuake, quindi non serve una registrazione separata.',
+        },
+        {
+          steps: [
+            'Accedi su {host} (oppure crea un account e conferma la tua email).',
+            'Apri **Il tuo account → Progetti disponibili** e premi **Iscriviti** su “Liste della spesa”.',
+            'Clicca su **Apri Liste della spesa**. Arrivi qui con l’accesso già fatto. Se apri direttamente l’indirizzo dell’app senza aver effettuato l’accesso, accedi una volta e torni subito qui.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'screens',
+      title: '2. La schermata principale',
+      blocks: [
+        {
+          p: 'La schermata principale ha quattro schede. Su telefono o tablet, scorri a sinistra e a destra per passare dall’una all’altra.',
+        },
+        {
+          list: [
+            '**Oggi** (si apre per prima): tutte le liste previste per oggi, con i loro prodotti, i prezzi e i totali per negozio. Tocca **Apri la lista** per lavorarci.',
+            '**Calendario**: tutte le tue liste per data, passate e future, per settimana, mese o anno.',
+            '**Nuova lista**: pianifica una nuova lista, oppure unisciti a quella di qualcun altro con il suo codice d’invito.',
+            '**Statistiche**: cosa hai comprato, dove, a quali prezzi e chi ha fatto la spesa con te.',
+          ],
+        },
+        {
+          p: 'La barra in alto ha sempre **Liste** (per tornare a questa schermata), **Manuale** (questa pagina) e la scelta della lingua.',
+        },
+        {
+          p: 'La barra mostra il nome dell’app (toccalo per tornare all’inizio), lo schermo intero, la campanella delle notifiche e il logo di DevQuake. Il manuale e le note di versione sono in fondo a ogni pagina; lingua e tema si impostano in **Il tuo account → Profilo** su DevQuake.',
+        },
+      ],
+    },
+    {
+      id: 'create',
+      title: '3. Pianifica una lista',
+      blocks: [
+        {
+          steps: [
+            'Vai alla scheda **Nuova lista**.',
+            'Dai alla lista un **nome**, per esempio “Spesa settimanale” o “Grigliata di sabato”.',
+            'Scegli il **giorno della spesa** con il selettore di data. È oggi, a meno che tu non scelga un altro giorno; puoi pianificare con tutto l’anticipo che vuoi.',
+            'Scegli la **valuta** (RON come predefinita) e premi **Crea lista**. La lista si apre e ne sei il proprietario.',
+          ],
+        },
+        {
+          tip: 'Una lista per ogni spesa funziona meglio: una lista per la spesa di sabato e un’altra per il giro in ferramenta della settimana prossima mantengono chiari il calendario e i totali.',
+        },
+        {
+          p: '**Copia le liste in altri giorni** (nella scheda **Nuova lista**): ripeti una lista in un altro giorno, in ogni giorno di una settimana o di un mese; copia tutte le liste di una settimana nelle altre settimane del suo mese; oppure tutte le liste di un mese negli altri mesi del suo anno. Le copie hanno gli stessi prodotti, prezzi e negozi, senza niente spuntato; una lista già presente con lo stesso nome e lo stesso giorno non viene copiata due volte.',
+        },
+      ],
+    },
+    {
+      id: 'stores',
+      title: '4. Aggiungi i negozi',
+      blocks: [
+        {
+          p: 'I negozi dicono a tutti dove comprare ogni prodotto. Un negozio ha un nome, un tipo, una posizione e una descrizione, e appartiene alla lista.',
+        },
+        {
+          steps: [
+            'Nel modulo **Aggiungi al carrello**, apri il menu **Negozio** e scegli **+ Nuovo negozio…**.',
+            'Scrivi il nome del negozio. Le catene più note vengono suggerite e il loro **tipo si compila da solo** (Kaufland → Alimentari / supermercato, Dedeman → Ferramenta e fai da te, Altex → Elettronica di consumo, Catena → Farmacia). Puoi sempre scegliere un altro tipo.',
+            'Aggiungi la **posizione** (indirizzo, centro commerciale o zona) e una **descrizione** se serve (orari, parcheggio, quale ingresso).',
+          ],
+        },
+        {
+          p: 'Più veloce: **Cerca negozi nelle vicinanze** (sotto il modulo) chiede una volta la tua posizione al browser ed elenca i negozi entro 2 km da OpenStreetMap, tutti spuntati. Togli la spunta a quelli che non ti servono e premi **Aggiungi**. La tua posizione non viene salvata.',
+        },
+        { p: 'I tipi di negozio sono raggruppati così:' },
+        { storeTypes: true },
+        {
+          p: 'Per modificare o rimuovere un negozio, premi **Modifica** accanto al suo nome sulla lista. Rimuovendo un negozio i suoi prodotti restano; passano a “Qualsiasi negozio”.',
+        },
+      ],
+    },
+    {
+      id: 'items',
+      title: '5. Aggiungi prodotti (con suggerimenti e foto)',
+      blocks: [
+        { p: 'Ogni prodotto ha bisogno di un nome e di un’unità; tutto il resto è facoltativo.' },
+        {
+          list: [
+            '**Prodotto** (obbligatorio): cosa comprare, ad es. “Latte”.',
+            '**Unità** (obbligatoria): come viene venduto, ad es. l, kg, pz, confezione, bottiglia.',
+            '**Quantità** (facoltativa): quante unità. Lasciala vuota quando il prodotto dice già tutto (“Latte, 1 l”); allora conta una volta.',
+            '**Prezzo / unità** (facoltativo): si può inserire subito o più tardi da chi è in negozio. Il totale della riga è prezzo × quantità.',
+            '**Negozio** e **Descrizione** (marca, formato, “senza lattosio”).',
+          ],
+        },
+        {
+          p: 'Dopo **Aggiungi prodotto** il modulo mantiene il negozio scelto, così puoi aggiungere velocemente più prodotti per lo stesso negozio. Premi **Modifica** su un prodotto per cambiarlo o eliminarlo.',
+        },
+        { h3: 'Suggerimenti dalla tua spesa abituale' },
+        {
+          list: [
+            'Inizia a scrivere il nome di un prodotto: compaiono i prodotti delle tue liste precedenti, prima i più frequenti, con unità, ultimo prezzo e negozio. Gli accenti non contano (“paine” trova “Pâine”). Scegline uno con un tocco, oppure con le frecce e Invio.',
+            'Con **Compila tutta la riga come l’ultima volta** attivo, scegliendo un prodotto si compilano unità, quantità, ultimo prezzo noto, descrizione, negozio (aggiunto alla lista se serve) e la sua foto. Disattivalo per compilare solo nome e unità. L’app ricorda la tua scelta su questo dispositivo.',
+            '**Prodotti abituali** sopra il modulo elenca ciò che compri più spesso e non è ancora sulla lista: un tocco lo aggiunge con tutto quello dell’ultima volta.',
+          ],
+        },
+        { h3: 'Foto' },
+        {
+          list: [
+            'Usa **Aggiungi una foto** nel modulo, oppure **Modifica → Aggiungi una foto** su un prodotto. Sul telefono puoi scattare la foto subito.',
+            'Le foto vengono rimpicciolite sul tuo dispositivo prima del caricamento, quindi è veloce anche con i dati mobili. Solo le persone della lista possono vederle. Tocca una foto per vederla in grande.',
+            'Un prodotto scelto dai suggerimenti porta con sé la sua ultima foto.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'shopping',
+      title: '6. Fai la spesa (e “non serve”)',
+      blocks: [
+        {
+          tip: 'Spesa condivisa? Con **Spese condivise** collegata, usa **Aggiungi ciò che è stato comprato** sotto la lista: i prodotti spuntati con un prezzo diventano una spesa pagata da te, divisa in parti uguali tra tutti quelli della lista.',
+        },
+        {
+          steps: [
+            'Apri la lista (da **Oggi** o dal calendario) e premi **Vai a fare la spesa**: caselle più grandi, niente distrazioni di modifica.',
+            'Spunta ogni prodotto quando finisce nel carrello. Si sposta in fondo al suo negozio.',
+            'Manca un prezzo? Esci dalla modalità spesa, premi **Modifica** sul prodotto e inserisci quanto costa in negozio.',
+            'Tieni d’occhio i totali: **Ancora da comprare**, **Lista intera** e il totale per negozio. I prodotti senza prezzo vengono contati a parte.',
+            'Alla fine, **Togli … finiti** rimuove i prodotti spuntati, oppure tienili per le tue statistiche.',
+          ],
+        },
+        { h3: 'Non serve più' },
+        {
+          p: 'Premi **Non serve** su un prodotto per cancellarlo dalla lista: si sposta in fondo al suo negozio e non conta più in **Ancora da comprare** né nel totale della lista. **Serve di nuovo** lo riporta indietro.',
+        },
+        {
+          p: 'Se il prodotto era già stato comprato, i soldi sono comunque spesi: resta nei totali e prende uno sfondo più scuro con un 🙃 (“comprato, ma alla fine non serviva”). La scheda Statistiche li conta, con i soldi spesi per loro, così puoi capire cosa tendi a comprare inutilmente.',
+        },
+        {
+          p: 'In modalità spesa, **Aggiungi un prodotto** (chiuso in alto) aggiunge qualcosa che ti viene in mente in negozio. **Correggi il prezzo** sotto un prodotto salva il prezzo sullo scaffale: il prezzo previsto resta accanto, ed entrambi entrano nella tua cronologia dei prezzi.',
+        },
+      ],
+    },
+    {
+      id: 'alone',
+      title: '7. Usarla da solo',
+      blocks: [
+        {
+          p: 'Le tue liste sono private: solo tu e le persone di una lista (che si sono unite con il suo invito o che il proprietario ha aggiunto) possono vederla. Oggi, il calendario, le statistiche e i suggerimenti usano sempre e solo le liste di cui fai parte.',
+        },
+        { p: 'Non ti serve nessun altro: una lista con solo te funziona allo stesso modo.' },
+        {
+          steps: [
+            'Pianifica le liste per i giorni in cui fai la spesa.',
+            'Ogni giorno apri l’app: la scheda Oggi mostra esattamente cosa comprare.',
+            'Spunta i prodotti e inserisci i prezzi; la scheda Statistiche costruisce la tua cronologia dei prezzi.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'friends',
+      title: '8. Fare la spesa con gli amici',
+      blocks: [
+        {
+          p: 'Tutti quelli di una lista possono aggiungere prodotti e negozi, inserire prezzi e spuntare le cose. Solo il proprietario può invitare, togliere persone, cambiare le impostazioni o eliminare la lista.',
+        },
+        { h3: 'Invita qualcuno' },
+        {
+          steps: [
+            'Apri la lista e premi **Condivisione e impostazioni**.',
+            '**I tuoi amici su DevQuake**: le persone che hai invitato su DevQuake (e chi ha invitato te) si aggiungono premendo una volta **Aggiungi alla lista**.',
+            'Chiunque altro: manda il **link d’invito**, detta il **codice di 8 caratteri** o fagli scansionare il **codice QR**. Serve un account DevQuake e un abbonamento a questa app.',
+            '**Nuovo link** crea un link e un codice nuovi; quelli vecchi smettono di funzionare.',
+          ],
+        },
+        { h3: 'Unisciti alla lista di qualcuno' },
+        {
+          steps: [
+            'Apri il suo link o scansiona il suo codice QR, oppure scrivi il codice in **Nuova lista → Unisciti a una lista**.',
+            'Controlla il nome della lista e il proprietario, poi premi **Unisciti a questa lista**.',
+          ],
+        },
+        { h3: 'Fare la spesa insieme' },
+        {
+          p: 'Le modifiche compaiono per tutti in pochi secondi, senza ricaricare: su una lista aperta e nelle schede Oggi, Calendario e Statistiche. Dividetevi per negozio: ognuno spunta ciò che ha preso, e la lista mostra chi ha aggiunto e chi ha preso ogni prodotto.',
+        },
+      ],
+    },
+    {
+      id: 'calendar',
+      title: '9. Calendario',
+      blocks: [
+        {
+          list: [
+            '**Settimana**: i sette giorni con ogni lista, cosa resta da comprare e il suo totale.',
+            '**Mese**: una griglia del mese; ogni giorno mostra le sue liste. Le liste finite sono barrate.',
+            '**Anno**: dodici piccoli mesi con i giorni di spesa segnati; premi un mese per aprirlo.',
+          ],
+        },
+        {
+          p: 'Usa ‹ e › per spostarti e **Oggi** per tornare indietro. Premi una lista per aprirla. Una lista compare solo nel calendario delle persone che ne fanno parte.',
+        },
+      ],
+    },
+    {
+      id: 'stats',
+      title: '10. Statistiche',
+      blocks: [
+        {
+          list: [
+            '**Totali**: liste, prodotti e ciò che è stato comprato rispetto a ciò che era previsto, per valuta.',
+            '**Amici sulle tue liste**: per ogni persona, su quante delle tue liste è stata, una fila di pallini per le tue liste più recenti (pieni quando c’era), quanti prodotti ha aggiunto e preso, e quando si è unita l’ultima volta.',
+            '**Negozi**: dove fai la spesa più spesso e quanto ci hai speso.',
+            '**Spesa al mese** per giorno della spesa.',
+            '**Prodotti comprati più spesso** con prezzo medio, minimo, massimo e ultimo per unità, utile per riconoscere un buon affare.',
+          ],
+        },
+        {
+          p: '**Prezzi nel tempo** confronta il primo e l’ultimo prezzo di ogni prodotto che hai comprato in giorni diversi (la tua inflazione personale), e quanto i prezzi previsti erano lontani da quelli pagati.',
+        },
+      ],
+    },
+    {
+      id: 'manage',
+      title: '11. Modificare, lasciare o eliminare una lista',
+      blocks: [
+        {
+          list: [
+            '**Cambiare nome, data o valuta**: Condivisione e impostazioni → Impostazioni (proprietario).',
+            '**Togliere qualcuno**: Condivisione e impostazioni → Membri → Togli (proprietario).',
+            '**Lasciare una lista**: Membri → Lascia la lista (membri).',
+            '**Eliminare una lista** (proprietario): Condivisione e impostazioni → Elimina lista. La lista sparisce per tutti quelli che ne fanno parte, insieme ai suoi link d’invito, alle notifiche e alle foto dei prodotti. I prezzi e i prodotti restano nelle **Statistiche** di tutti quelli che c’erano, quindi la tua cronologia di spesa non cambia.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'notifications',
+      title: '12. Notifiche',
+      blocks: [
+        {
+          list: [
+            'La **campanella** nella barra mostra cosa hanno fatto i tuoi amici sulle liste di cui fai parte (“Ana ha preso Latte”, “Bob ha cancellato Patatine”). Un numero indica quante sono nuove; tocca una voce per aprire quella lista.',
+            'Mentre l’app è aperta, le nuove modifiche compaiono anche per un attimo nell’angolo.',
+            'Nella campanella, spunta **Avvisami anche quando questa scheda è in background** e consenti le notifiche: il dispositivo le mostra mentre l’app è aperta in un’altra scheda o in background.',
+            'Quando l’app è chiusa non viene inviato nulla. Aprila e la campanella mostra cosa ti sei perso (fino a 30 giorni).',
+          ],
+        },
+        {
+          p: '**Cancella tutto** svuota la campanella; **✕** accanto a una notifica rimuove solo quella. Entrambi valgono su tutti i tuoi dispositivi.',
+        },
+      ],
+    },
+    {
+      id: 'tips',
+      title: '13. Consigli e domande',
+      blocks: [
+        {
+          list: [
+            '**Prezzi diversi in ogni negozio?** Metti il prodotto sulla lista una volta per negozio; le statistiche poi confrontano i prezzi.',
+            '**Niente in Oggi?** La scheda mostra la prossima lista prevista; pianificane una per oggi in **Nuova lista**.',
+            '**Un amico non riesce ad aprire la lista?** Deve essere abbonato a Liste della spesa su DevQuake; la pagina di condivisione ti dice quando è così.',
+            '**Eliminando il tuo account DevQuake** le tue liste passano al membro che si è unito per primo (o vengono eliminate se eri da solo) e il tuo nome viene tolto dai prodotti.',
+          ],
+        },
+      ],
+    },
+  ],
+  questions: 'Domande o idee? Scrivi a {email}.',
+  back: '← Torna alle tue liste',
+};
+
+const es: Manual = {
+  metaTitle: 'Manual de uso · Listas de la compra compartidas',
+  metaDescription:
+    'Cómo planificar listas de la compra compartidas por fecha, añadir tiendas, productos, fotos y precios, hacer la compra con amigos y leer las estadísticas de tus compras.',
+  ogTitle: 'Listas de la compra compartidas: manual de uso',
+  cta: '¿Quieres probarlas? Las listas de la compra compartidas son gratis para los miembros de DevQuake. {link} y suscríbete a la app.',
+  ctaLink: 'Crea una cuenta o inicia sesión',
+  kicker: 'Listas de la compra · Manual de uso',
+  title: 'Cómo usar las listas de la compra compartidas',
+  intro:
+    'Planifica qué comprar, en qué tienda y qué día, mira cuánto cuesta y haz la compra junto con tu familia y tus amigos. Este manual te guía paso a paso.',
+  contents: 'Índice',
+  sections: [
+    {
+      id: 'start',
+      title: '1. Primeros pasos',
+      blocks: [
+        {
+          p: 'Listas de la compra es una app de DevQuake y usa tu cuenta de DevQuake, así que no hace falta registrarse aparte.',
+        },
+        {
+          steps: [
+            'Inicia sesión en {host} (o crea una cuenta y confirma tu correo).',
+            'Abre **Tu cuenta → Proyectos disponibles** y pulsa **Suscribirse** en “Listas de la compra”.',
+            'Haz clic en **Abrir Listas de la compra**. Llegas aquí con la sesión ya iniciada. Si abres directamente la dirección de la app sin haber iniciado sesión, inicia sesión una vez y vuelves enseguida.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'screens',
+      title: '2. La pantalla principal',
+      blocks: [
+        {
+          p: 'La pantalla principal tiene cuatro pestañas. En el móvil o la tablet, desliza a izquierda y derecha para pasar de una a otra.',
+        },
+        {
+          list: [
+            '**Hoy** (se abre primero): todas las listas previstas para hoy, con sus productos, precios y totales por tienda. Toca **Abrir la lista** para trabajar en ella.',
+            '**Calendario**: todas tus listas por fecha, pasadas y futuras, por semana, mes o año.',
+            '**Nueva lista**: planifica una nueva lista o únete a la de otra persona con su código de invitación.',
+            '**Estadísticas**: qué compraste, dónde, a qué precios y quién hizo la compra contigo.',
+          ],
+        },
+        {
+          p: 'La barra de arriba siempre tiene **Listas** (para volver a esta pantalla), **Manual** (esta página) y el selector de idioma.',
+        },
+        {
+          p: 'La barra muestra el nombre de la app (tócalo para volver al inicio), la pantalla completa, la campana de notificaciones y el logotipo de DevQuake. El manual y las notas de versión están al pie de cada página; el idioma y el tema se configuran en **Tu cuenta → Perfil** en DevQuake.',
+        },
+      ],
+    },
+    {
+      id: 'create',
+      title: '3. Planifica una lista',
+      blocks: [
+        {
+          steps: [
+            'Ve a la pestaña **Nueva lista**.',
+            'Ponle un **nombre** a la lista, por ejemplo “Compra semanal” o “Barbacoa del sábado”.',
+            'Elige el **día de la compra** con el selector de fecha. Es hoy, salvo que elijas otro día; planifica con tanta antelación como quieras.',
+            'Elige la **moneda** (RON por defecto) y pulsa **Crear lista**. La lista se abre y tú eres su propietario.',
+          ],
+        },
+        {
+          tip: 'Una lista por cada compra funciona mejor: una lista para la compra del sábado y otra para la visita a la ferretería de la semana que viene mantienen claros el calendario y los totales.',
+        },
+        {
+          p: '**Copiar listas a otros días** (en la pestaña **Nueva lista**): repite una lista otro día, cada día de una semana o de un mes; copia todas las listas de una semana a las otras semanas de su mes; o todas las listas de un mes a los otros meses de su año. Las copias tienen los mismos productos, precios y tiendas, sin nada marcado; una lista que ya existe con el mismo nombre y día no se copia dos veces.',
+        },
+      ],
+    },
+    {
+      id: 'stores',
+      title: '4. Añade tiendas',
+      blocks: [
+        {
+          p: 'Las tiendas indican a todos dónde comprar cada producto. Una tienda tiene un nombre, un tipo, una ubicación y una descripción, y pertenece a la lista.',
+        },
+        {
+          steps: [
+            'En el formulario **Añadir al carrito**, abre el menú **Tienda** y elige **+ Nueva tienda…**.',
+            'Escribe el nombre de la tienda. Se sugieren las cadenas conocidas, y su **tipo se rellena solo** (Kaufland → Tienda de alimentación / supermercado, Dedeman → Ferretería y bricolaje, Altex → Electrónica de consumo, Catena → Farmacia). Siempre puedes elegir otro tipo.',
+            'Añade la **ubicación** (dirección, centro comercial o zona) y una **descripción** si ayuda (horario, aparcamiento, qué entrada).',
+          ],
+        },
+        {
+          p: 'Más rápido: **Buscar tiendas cercanas** (debajo del formulario) pide una vez tu ubicación al navegador y muestra las tiendas a menos de 2 km según OpenStreetMap, todas marcadas. Desmarca las que no necesites y pulsa **Añadir**. Tu ubicación no se guarda.',
+        },
+        { p: 'Los tipos de tienda se agrupan así:' },
+        { storeTypes: true },
+        {
+          p: 'Para cambiar o quitar una tienda, pulsa **Editar** junto a su nombre en la lista. Al quitar una tienda se conservan sus productos; pasan a “Cualquier tienda”.',
+        },
+      ],
+    },
+    {
+      id: 'items',
+      title: '5. Añade productos (con sugerencias y fotos)',
+      blocks: [
+        { p: 'Cada producto necesita un nombre y una unidad; todo lo demás es opcional.' },
+        {
+          list: [
+            '**Producto** (obligatorio): lo que hay que comprar, p. ej. “Leche”.',
+            '**Unidad** (obligatoria): cómo se vende, p. ej. l, kg, ud., paquete, botella.',
+            '**Cantidad** (opcional): cuántas unidades. Déjala vacía cuando el propio producto lo dice todo (“Leche, 1 l”); entonces cuenta una vez.',
+            '**Precio / unidad** (opcional): puede ponerse ahora o más tarde, por quien esté en la tienda. El total de la línea es precio × cantidad.',
+            '**Tienda** y **Descripción** (marca, tamaño, “sin lactosa”).',
+          ],
+        },
+        {
+          p: 'Después de **Añadir producto**, el formulario mantiene la tienda elegida, así que puedes añadir rápido varios productos para la misma tienda. Pulsa **Editar** en un producto para cambiarlo o eliminarlo.',
+        },
+        { h3: 'Sugerencias de tu compra habitual' },
+        {
+          list: [
+            'Empieza a escribir el nombre de un producto: aparecen productos de tus listas anteriores, primero los más frecuentes, con su unidad, último precio y tienda. Los acentos no importan (“paine” encuentra “Pâine”). Elige uno con un toque, o con las flechas e Intro.',
+            'Con **Rellenar toda la fila como la última vez** activado, al elegir un producto se rellenan la unidad, la cantidad, el último precio conocido, la descripción, la tienda (se añade a la lista si hace falta) y su foto. Desactívalo para rellenar solo el nombre y la unidad. La app recuerda tu elección en este dispositivo.',
+            '**Productos habituales**, encima del formulario, muestra lo que más compras y todavía no está en la lista: un toque lo añade con todo lo de la última vez.',
+          ],
+        },
+        { h3: 'Fotos' },
+        {
+          list: [
+            'Usa **Añadir una foto** en el formulario, o **Editar → Añadir una foto** en un producto. En el móvil puedes hacer la foto en el momento.',
+            'Las fotos se reducen en tu dispositivo antes de subirlas, así que es rápido incluso con datos móviles. Solo las personas de la lista pueden verlas. Toca una foto para verla en grande.',
+            'Un producto elegido de las sugerencias trae consigo su última foto.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'shopping',
+      title: '6. Ve a comprar (y “no hace falta”)',
+      blocks: [
+        {
+          tip: '¿Compra compartida? Con **Gastos compartidos** conectado, usa **Añadir lo comprado** debajo de la lista: los productos marcados con precio se convierten en un gasto pagado por ti, repartido a partes iguales entre todos los de la lista.',
+        },
+        {
+          steps: [
+            'Abre la lista (desde **Hoy** o el calendario) y pulsa **Ir a comprar**: casillas más grandes, sin botones de edición que estorben.',
+            'Marca cada producto cuando entre en el carrito. Se mueve al final de su tienda.',
+            '¿Falta un precio? Sal del modo compra, pulsa **Editar** en el producto e introduce lo que cuesta en la tienda.',
+            'Vigila los totales: **Falta por comprar**, **Lista completa** y el total por tienda. Los productos sin precio se cuentan aparte.',
+            'Al terminar, **Quitar … terminados** quita los productos marcados, o guárdalos para tus estadísticas.',
+          ],
+        },
+        { h3: 'Ya no hace falta' },
+        {
+          p: 'Pulsa **No hace falta** en un producto para tacharlo: se mueve al final de su tienda y ya no cuenta en **Falta por comprar** ni en el total de la lista. **Vuelve a hacer falta** lo recupera.',
+        },
+        {
+          p: 'Si el producto ya se había comprado, el dinero está gastado de todos modos: sigue en los totales y recibe un fondo más oscuro con un 🙃 (“comprado, pero al final no hacía falta”). La pestaña Estadísticas los cuenta, con el dinero gastado en ellos, para que veas qué sueles comprar para nada.',
+        },
+        {
+          p: 'En el modo compra, **Añadir un producto** (plegado arriba) añade algo que recuerdes en la tienda. **Corregir precio**, debajo de un producto, guarda el precio de la estantería: el precio previsto se mantiene al lado, y ambos pasan a tu historial de precios.',
+        },
+      ],
+    },
+    {
+      id: 'alone',
+      title: '7. Usarla tú solo',
+      blocks: [
+        {
+          p: 'Tus listas son privadas: solo tú y las personas de una lista (que se unieron con su invitación o a las que añadió su propietario) pueden verla. Hoy, el calendario, las estadísticas y las sugerencias solo usan las listas en las que estás.',
+        },
+        { p: 'No necesitas a nadie más: una lista solo contigo funciona igual.' },
+        {
+          steps: [
+            'Planifica listas para los días en que haces la compra.',
+            'Cada día, abre la app: la pestaña Hoy muestra exactamente qué comprar.',
+            'Marca los productos e introduce los precios; la pestaña Estadísticas va formando tu historial de precios.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'friends',
+      title: '8. Comprar con amigos',
+      blocks: [
+        {
+          p: 'Todos los de una lista pueden añadir productos y tiendas, introducir precios y marcar cosas. Solo el propietario puede invitar, quitar a personas, cambiar los ajustes o eliminar la lista.',
+        },
+        { h3: 'Invitar a alguien' },
+        {
+          steps: [
+            'Abre la lista y pulsa **Compartir y ajustes**.',
+            '**Tus amigos en DevQuake**: las personas que invitaste a DevQuake (y quien te invitó a ti) se añaden pulsando una vez **Añadir a la lista**.',
+            'Cualquier otra persona: envía el **enlace de invitación**, dicta el **código de 8 caracteres** o deja que escanee el **código QR**. Necesita una cuenta de DevQuake y una suscripción a esta app.',
+            '**Nuevo enlace** crea un enlace y un código nuevos; los antiguos dejan de funcionar.',
+          ],
+        },
+        { h3: 'Unirse a la lista de otra persona' },
+        {
+          steps: [
+            'Abre su enlace o escanea su código QR, o escribe el código en **Nueva lista → Unirse a una lista**.',
+            'Comprueba el nombre de la lista y el propietario y pulsa **Unirme a esta lista**.',
+          ],
+        },
+        { h3: 'Comprar juntos' },
+        {
+          p: 'Los cambios aparecen para todos en pocos segundos, sin recargar: en una lista abierta y en las pestañas Hoy, Calendario y Estadísticas. Repartíos por tiendas: cada uno marca lo que ha cogido, y la lista muestra quién añadió y quién cogió cada producto.',
+        },
+      ],
+    },
+    {
+      id: 'calendar',
+      title: '9. Calendario',
+      blocks: [
+        {
+          list: [
+            '**Semana**: los siete días con cada lista, lo que falta por comprar y su total.',
+            '**Mes**: una cuadrícula del mes; cada día muestra sus listas. Las listas terminadas aparecen tachadas.',
+            '**Año**: doce meses pequeños con los días de compra marcados; pulsa un mes para abrirlo.',
+          ],
+        },
+        {
+          p: 'Usa ‹ y › para moverte, y **Hoy** para volver. Pulsa una lista para abrirla. Una lista solo aparece en el calendario de las personas que están en ella.',
+        },
+      ],
+    },
+    {
+      id: 'stats',
+      title: '10. Estadísticas',
+      blocks: [
+        {
+          list: [
+            '**Totales**: listas, productos y lo comprado frente a lo previsto, por moneda.',
+            '**Amigos en tus listas**: para cada persona, en cuántas de tus listas ha estado, una fila de puntos para tus listas más recientes (rellenos cuando estaba), cuántos productos añadió y cogió, y cuándo se unió por última vez.',
+            '**Tiendas**: dónde compras más y cuánto has gastado allí.',
+            '**Gasto por mes** según el día de la compra.',
+            '**Productos más comprados** con precio medio, mínimo, máximo y último por unidad, útil para detectar una buena oferta.',
+          ],
+        },
+        {
+          p: '**Precios a lo largo del tiempo** compara el primer y el último precio de cada producto que compraste en días distintos (tu propia inflación), y cuánto se alejaban los precios previstos de los pagados.',
+        },
+      ],
+    },
+    {
+      id: 'manage',
+      title: '11. Cambiar, salir de o eliminar una lista',
+      blocks: [
+        {
+          list: [
+            '**Cambiar el nombre, la fecha o la moneda**: Compartir y ajustes → Ajustes (propietario).',
+            '**Quitar a alguien**: Compartir y ajustes → Miembros → Quitar (propietario).',
+            '**Salir de una lista**: Miembros → Salir de la lista (miembros).',
+            '**Eliminar una lista** (propietario): Compartir y ajustes → Eliminar lista. La lista desaparece para todos los que están en ella, junto con sus enlaces de invitación, notificaciones y fotos de productos. Los precios y productos se quedan en las **Estadísticas** de todos los que estaban, así que tu historial de gastos no cambia.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'notifications',
+      title: '12. Notificaciones',
+      blocks: [
+        {
+          list: [
+            'La **campana** de la barra muestra lo que han hecho tus amigos en las listas en las que estás (“Ana ha cogido Leche”, “Bob ha tachado Patatas fritas”). Un número indica cuántas son nuevas; toca una entrada para abrir esa lista.',
+            'Mientras la app está abierta, los cambios nuevos también aparecen un momento en la esquina.',
+            'En la campana, marca **Avisarme también cuando esta pestaña esté en segundo plano** y permite las notificaciones: tu dispositivo las mostrará mientras la app esté abierta en otra pestaña o en segundo plano.',
+            'Cuando la app está cerrada, no se envía nada. Ábrela y la campana te muestra lo que te perdiste (hasta 30 días).',
+          ],
+        },
+        {
+          p: '**Borrar todo** vacía la campana; **✕** junto a una notificación quita solo esa. Ambos se aplican en todos tus dispositivos.',
+        },
+      ],
+    },
+    {
+      id: 'tips',
+      title: '13. Consejos y preguntas',
+      blocks: [
+        {
+          list: [
+            '**¿Precios distintos en cada tienda?** Pon el producto en la lista una vez por tienda; las estadísticas comparan luego los precios.',
+            '**¿Nada en Hoy?** La pestaña muestra la próxima lista prevista; planifica una para hoy en **Nueva lista**.',
+            '**¿Un amigo no puede abrir la lista?** Tiene que estar suscrito a Listas de la compra en DevQuake; la página de compartir te avisa cuando es así.',
+            '**Al eliminar tu cuenta de DevQuake** tus listas pasan al miembro que se unió primero (o se eliminan si estabas solo) y tu nombre se quita de los productos.',
+          ],
+        },
+      ],
+    },
+  ],
+  questions: '¿Preguntas o ideas? Escribe a {email}.',
+  back: '← Volver a tus listas',
+};
+
+export const MANUAL: Record<Locale, Manual> = { en, de, ro, hu, it, es };

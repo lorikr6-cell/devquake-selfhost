@@ -68,8 +68,8 @@ with `docker compose up -d` after a change.
 | `SMTP_USER` | — | SMTP user name. |
 | `SMTP_PASSWORD` | — | SMTP password. |
 | `SMTP_FROM` | — | Sender, e.g. "Pulse <no-reply@example.com>". Empty: SMTP_USER. |
-| `DEFAULT_LOCALE` | `en` | Language of emails: en, de, ro or hu. |
-| `SHOW_POWERED_BY` | `true` | false hides the "powered by DevQuake" line at the bottom of every page. |
+| `DEFAULT_LOCALE` | `en` | Language of emails: en, de, ro, hu, it or es. |
+| `SHOW_POWERED_BY` | `true` | false hides the "Powered by DevQuake" footer at the bottom of every page (see "The DevQuake footer"). |
 | `APP_SECRET` | — | Instance secret. Made on first start and kept in the data volume; set it to manage it yourself. |
 | `APP_VERSION` | `latest` | Image tag to run, e.g. a version number. |
 
@@ -92,8 +92,16 @@ node scripts/setup.mjs darts   # asks for the database, tests it, creates it, wr
 pnpm build && pnpm start
 ```
 
+## The DevQuake footer
+
+Every page ends with a small footer: "Self-hosted Darts club · Powered by" and the DevQuake logo,
+which links to devquake.com. We would appreciate it if you kept it: it is how other people find
+DevQuake, and it keeps these apps free. You are free to remove it, though: set
+`SHOW_POWERED_BY=false`, or change the code. The MIT licence does not require the footer; it
+only asks that the licence and copyright notice stay with copies of the code.
+
 ## About
 
-Darts club is a [DevQuake](https://devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=darts) app (darts 0.6.2),
+Darts club is a [DevQuake](https://devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=darts) app (darts 0.7.0),
 packaged to run on its own. Licence: [MIT](../../LICENSE). Problems and ideas:
 [GitHub issues](https://github.com/lorikr6-cell/devquake-selfhost/issues).

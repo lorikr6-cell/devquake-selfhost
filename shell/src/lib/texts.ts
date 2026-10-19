@@ -1,6 +1,6 @@
 import type { PluginLocale } from '@devquake/plugin-sdk';
 
-// The shell's own words (setup, sign-in, members, footer) in DevQuake's four languages. The app
+// The shell's own words (setup, sign-in, members, footer) in DevQuake's six languages. The app
 // itself brings its own catalogs.
 
 const en = {
@@ -70,7 +70,8 @@ const en = {
     'Each app has its own address. Set DOMAIN to your domain and point it and its subdomains ({names}) at this server, or set PUBLIC_IP to this server’s IP address to use free sslip.io addresses. Then restart.',
   homeSignIn: 'Sign in to open the apps',
   open: 'Open',
-  poweredBy: 'Self-hosted {app} · powered by DevQuake',
+  selfHosted: 'Self-hosted {app}',
+  poweredBy: 'Powered by {logo}',
   tryHosted: 'Try the hosted version',
   readyTitle: '{app} is ready',
   readyBody:
@@ -153,7 +154,8 @@ const de: ShellTexts = {
     'Jede App hat ihre eigene Adresse. Setze DOMAIN auf deine Domain und richte sie und ihre Subdomains ({names}) auf diesen Server, oder setze PUBLIC_IP auf die IP-Adresse dieses Servers, um kostenlose sslip.io-Adressen zu nutzen. Dann neu starten.',
   homeSignIn: 'Melde dich an, um die Apps zu öffnen',
   open: 'Öffnen',
-  poweredBy: '{app} selbst gehostet · bereitgestellt von DevQuake',
+  selfHosted: '{app} selbst gehostet',
+  poweredBy: 'Bereitgestellt von {logo}',
   tryHosted: 'Gehostete Version ausprobieren',
   readyTitle: '{app} ist bereit',
   readyBody:
@@ -233,7 +235,8 @@ const ro: ShellTexts = {
     'Fiecare aplicație are propria adresă. Setează DOMAIN la domeniul tău și îndreaptă-l, împreună cu subdomeniile ({names}), spre acest server, sau setează PUBLIC_IP la adresa IP a serverului ca să folosești adrese sslip.io gratuite. Apoi repornește.',
   homeSignIn: 'Autentifică-te ca să deschizi aplicațiile',
   open: 'Deschide',
-  poweredBy: '{app} găzduit de tine · realizat cu DevQuake',
+  selfHosted: '{app} găzduit de tine',
+  poweredBy: 'Realizat cu {logo}',
   tryHosted: 'Încearcă versiunea găzduită',
   readyTitle: '{app} este gata',
   readyBody:
@@ -314,7 +317,8 @@ const hu: ShellTexts = {
     'Minden alkalmazásnak saját címe van. Állítsd a DOMAIN változót a domainedre, és irányítsd azt és az aldomainjeit ({names}) erre a szerverre, vagy állítsd a PUBLIC_IP változót a szerver IP-címére az ingyenes sslip.io-címekhez. Utána indítsd újra.',
   homeSignIn: 'Jelentkezz be az alkalmazások megnyitásához',
   open: 'Megnyitás',
-  poweredBy: 'Saját üzemeltetésű {app} · DevQuake alapokon',
+  selfHosted: 'Saját üzemeltetésű {app}',
+  poweredBy: '{logo} alapokon',
   tryHosted: 'Próbáld ki az üzemeltetett változatot',
   readyTitle: 'A(z) {app} kész',
   readyBody:
@@ -326,7 +330,168 @@ const hu: ShellTexts = {
     'Az adatbázis nem érhető el, vagy nem sikerült előkészíteni. Ellenőrizd a DB_* beállításokat és az adatbázis-konténert, majd indítsd újra.',
 };
 
-export const SHELL_TEXTS: Record<PluginLocale, ShellTexts> = { en, de, ro, hu };
+const it: ShellTexts = {
+  setupTitle: 'Configura {app}',
+  setupIntro:
+    'Questo server fa funzionare {app} per te e per le persone che inviti. Per iniziare crea l’account amministratore: gestisce i membri di questa istanza.',
+  setupDone: 'L’account amministratore esiste già. Accedi.',
+  name: 'Il tuo nome',
+  email: 'Email',
+  password: 'Password',
+  passwordHint: 'Almeno {min} caratteri.',
+  passwordRepeat: 'Ripeti la password',
+  createAdmin: 'Crea l’account amministratore',
+  signInTitle: 'Accedi a {app}',
+  signIn: 'Accedi',
+  signOut: 'Esci',
+  wrongSignIn: 'Email o password non corrette.',
+  tooMany: 'Troppi tentativi. Aspetta qualche minuto e riprova.',
+  invalidName: 'Inserisci un nome (al massimo 80 caratteri).',
+  invalidEmail: 'Inserisci un indirizzo email valido.',
+  invalidPassword: 'La password deve avere almeno {min} caratteri.',
+  passwordsDiffer: 'Le due password non coincidono.',
+  emailTaken: 'Esiste già un account con questa email.',
+  noAccount: 'Non hai un account? Chiedi all’amministratore di questo server un link di invito.',
+  joinTitle: 'Unisciti a {app}',
+  joinIntro: 'Sei stato invitato a usare {app} su questo server. Crea il tuo account.',
+  joinButton: 'Crea il mio account',
+  inviteGone: 'Questo link di invito è già stato usato o è scaduto. Chiedine uno nuovo.',
+  instanceTitle: 'Questa istanza',
+  members: 'Membri',
+  admin: 'Amministratore',
+  you: 'tu',
+  lastSeen: 'Ultima attività',
+  never: 'mai',
+  remove: 'Rimuovi',
+  removeTitle: 'Rimuovere {name}?',
+  removeBody:
+    'Non potrà più accedere. Ciò che è solo suo in {app} viene eliminato; ciò che ha aggiunto a cose che altri usano ancora resta con un nome rimosso.',
+  removed: '{name} è stato rimosso.',
+  cancel: 'Annulla',
+  invite: 'Invita qualcuno',
+  inviteHint:
+    'Invia questo link alla persona che vuoi invitare. Funziona una sola volta e per 7 giorni. Viene mostrato solo ora: copialo.',
+  newInvite: 'Crea un link di invito',
+  copy: 'Copia',
+  copied: 'Copiato',
+  configTitle: 'Configurazione',
+  configHint:
+    'Tutto ciò che riguarda questo server si imposta con le variabili d’ambiente (vedi .env.example): l’indirizzo, l’email (SMTP) e le impostazioni dell’app. Dopo averle cambiate, riavvia l’app.',
+  address: 'Indirizzo',
+  emailSending: 'Email',
+  emailOn: 'attiva (SMTP)',
+  emailOff: 'disattivata: imposta SMTP_HOST per inviare i promemoria via email',
+  version: 'Versione',
+  moreTitle: 'Altro da DevQuake',
+  moreBody:
+    'DevQuake ha altre app gratuite, ospitate per te: allenamenti, ricette, organizzazione della famiglia, liste della spesa condivise e altro.',
+  moreLink: 'Scopri le app su DevQuake',
+  bugs: 'Segnala un problema',
+  openApp: 'Apri {app}',
+  allApps: 'Tutte le app di {app}',
+  backTo: 'Torna a {app}',
+  homeTitle: '{app}',
+  homeIntro: 'Le app della tua casa, sul tuo server. Accedi una volta e aprile tutte.',
+  homeSetupTitle: 'Un ultimo passo: gli indirizzi delle app',
+  homeSetupBody:
+    'Ogni app ha il suo indirizzo. Imposta DOMAIN sul tuo dominio e fai puntare il dominio e i suoi sottodomini ({names}) a questo server, oppure imposta PUBLIC_IP sull’indirizzo IP di questo server per usare gli indirizzi gratuiti di sslip.io. Poi riavvia.',
+  homeSignIn: 'Accedi per aprire le app',
+  open: 'Apri',
+  selfHosted: '{app} sul tuo server',
+  poweredBy: 'Realizzato con {logo}',
+  tryHosted: 'Prova la versione ospitata',
+  readyTitle: '{app} è pronto',
+  readyBody:
+    'Invita le persone che devono usarlo dalla pagina dell’istanza. Per la prossima preferisci non gestire un server? Ogni app di DevQuake è gratuita anche su devquake.com.',
+  notReadyTitle: 'Non ancora pronto',
+  noDatabase:
+    'Nessun database impostato. Imposta DB_NAME, DB_USER e DB_PASSWORD (vedi .env.example) e riavvia.',
+  databaseError:
+    'Non è stato possibile raggiungere o preparare il database. Controlla le impostazioni DB_* e il container del database, poi riavvia.',
+};
+
+const es: ShellTexts = {
+  setupTitle: 'Configura {app}',
+  setupIntro:
+    'Este servidor ejecuta {app} para ti y las personas que invites. Para empezar, crea la cuenta de administrador: gestiona los miembros de esta instancia.',
+  setupDone: 'La cuenta de administrador ya existe. Inicia sesión.',
+  name: 'Tu nombre',
+  email: 'Correo electrónico',
+  password: 'Contraseña',
+  passwordHint: 'Al menos {min} caracteres.',
+  passwordRepeat: 'Repite la contraseña',
+  createAdmin: 'Crear la cuenta de administrador',
+  signInTitle: 'Inicia sesión en {app}',
+  signIn: 'Iniciar sesión',
+  signOut: 'Cerrar sesión',
+  wrongSignIn: 'El correo o la contraseña no son correctos.',
+  tooMany: 'Demasiados intentos. Espera unos minutos y vuelve a intentarlo.',
+  invalidName: 'Escribe un nombre (como máximo 80 caracteres).',
+  invalidEmail: 'Escribe una dirección de correo válida.',
+  invalidPassword: 'La contraseña necesita al menos {min} caracteres.',
+  passwordsDiffer: 'Las dos contraseñas no coinciden.',
+  emailTaken: 'Ya existe una cuenta con este correo.',
+  noAccount: '¿No tienes cuenta? Pide al administrador de este servidor un enlace de invitación.',
+  joinTitle: 'Únete a {app}',
+  joinIntro: 'Te han invitado a usar {app} en este servidor. Crea tu cuenta.',
+  joinButton: 'Crear mi cuenta',
+  inviteGone: 'Este enlace de invitación ya se usó o ha caducado. Pide uno nuevo.',
+  instanceTitle: 'Esta instancia',
+  members: 'Miembros',
+  admin: 'Administrador',
+  you: 'tú',
+  lastSeen: 'Última actividad',
+  never: 'nunca',
+  remove: 'Quitar',
+  removeTitle: '¿Quitar a {name}?',
+  removeBody:
+    'Ya no podrá iniciar sesión. Lo que es solo suyo en {app} se elimina; lo que añadió a cosas que otros siguen usando se conserva con un nombre de cuenta eliminada.',
+  removed: 'Se ha quitado a {name}.',
+  cancel: 'Cancelar',
+  invite: 'Invitar a alguien',
+  inviteHint:
+    'Envía este enlace a la persona que quieres invitar. Funciona una sola vez y durante 7 días. Solo se muestra ahora: cópialo.',
+  newInvite: 'Crear un enlace de invitación',
+  copy: 'Copiar',
+  copied: 'Copiado',
+  configTitle: 'Configuración',
+  configHint:
+    'Todo lo de este servidor se configura con variables de entorno (consulta .env.example): la dirección, el correo (SMTP) y los ajustes de la app. Reinicia la app después de cambiarlas.',
+  address: 'Dirección',
+  emailSending: 'Correo',
+  emailOn: 'activado (SMTP)',
+  emailOff: 'desactivado: configura SMTP_HOST para enviar recordatorios por correo',
+  version: 'Versión',
+  moreTitle: 'Más de DevQuake',
+  moreBody:
+    'DevQuake tiene más apps gratuitas, alojadas para ti: entrenamientos, recetas, organización familiar, listas de la compra compartidas y más.',
+  moreLink: 'Ver las apps en DevQuake',
+  bugs: 'Informar de un problema',
+  openApp: 'Abrir {app}',
+  allApps: 'Todas las apps de {app}',
+  backTo: 'Volver a {app}',
+  homeTitle: '{app}',
+  homeIntro:
+    'Las apps de tu hogar, en tu propio servidor. Inicia sesión una vez y abre cualquiera.',
+  homeSetupTitle: 'Un último paso: las direcciones de las apps',
+  homeSetupBody:
+    'Cada app tiene su propia dirección. Configura DOMAIN con tu dominio y apunta el dominio y sus subdominios ({names}) a este servidor, o configura PUBLIC_IP con la dirección IP de este servidor para usar direcciones gratuitas de sslip.io. Después, reinicia.',
+  homeSignIn: 'Inicia sesión para abrir las apps',
+  open: 'Abrir',
+  selfHosted: '{app} en tu propio servidor',
+  poweredBy: 'Desarrollado con {logo}',
+  tryHosted: 'Prueba la versión alojada',
+  readyTitle: '{app} está listo',
+  readyBody:
+    'Invita desde la página de la instancia a las personas que deben usarlo. ¿Prefieres no mantener un servidor para la próxima? Todas las apps de DevQuake son gratuitas también en devquake.com.',
+  notReadyTitle: 'Aún no está listo',
+  noDatabase:
+    'No hay ninguna base de datos configurada. Configura DB_NAME, DB_USER y DB_PASSWORD (consulta .env.example) y reinicia.',
+  databaseError:
+    'No se pudo acceder a la base de datos ni prepararla. Revisa los ajustes DB_* y el contenedor de la base de datos, y reinicia.',
+};
+
+export const SHELL_TEXTS: Record<PluginLocale, ShellTexts> = { en, de, ro, hu, it, es };
 
 export type ShellKey = keyof ShellTexts;
 

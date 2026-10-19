@@ -170,7 +170,7 @@ export const opsDe: MessagesOf<typeof opsEn> = {
   languages: {
     title: 'Sprachen',
     intro:
-      'Der Shop ist auf Englisch, Deutsch, Rumänisch und Ungarisch. Füge jede andere Sprache hinzu oder ändere die Formulierungen einer eingebauten: kopiere die Texte, die Käufer sehen, übersetze sie irgendwo und füge sie wieder ein.',
+      'Der Shop ist auf Englisch, Deutsch, Rumänisch, Ungarisch, Italienisch und Spanisch. Füge jede andere Sprache hinzu oder ändere die Formulierungen einer eingebauten: kopiere die Texte, die Käufer sehen, übersetze sie irgendwo und füge sie wieder ein.',
     step1: '1. Texte kopieren',
     step1Hint:
       'Wähle die Sprache, aus der übersetzt wird, und kopiere oder lade die Texte herunter.',
@@ -187,7 +187,7 @@ export const opsDe: MessagesOf<typeof opsEn> = {
       'Gib der Sprache einen Code und einen Namen, füge die übersetzten Texte ein und speichere.',
     code: 'Code',
     codeHint:
-      'Zwei oder drei Buchstaben, z. B. fr, es, pl. de, ro, hu oder en ändern die eingebaute Sprache.',
+      'Zwei oder drei Buchstaben, z. B. fr, pl, nl. de, ro, hu, it, es oder en ändern die eingebaute Sprache.',
     name: 'Name für Käufer',
     nameHint: 'In der Sprache selbst, z. B. Français.',
     overrides: 'Das ändert die Formulierungen von {language} in deinem Shop.',
@@ -216,7 +216,7 @@ export const opsDe: MessagesOf<typeof opsEn> = {
     maintenance: 'Der Shop wird gerade gewartet. Bitte komm bald wieder.',
     roles: 'Wähle mindestens eine Rolle.',
     pieces: 'Die Stückzahl muss eine ganze Zahl ab 2 sein.',
-    languageCode: 'Der Code muss aus zwei oder drei Buchstaben bestehen, z. B. fr oder es.',
+    languageCode: 'Der Code muss aus zwei oder drei Buchstaben bestehen, z. B. fr oder pl.',
     labelsJson: 'Das sind nicht die kopierten Texte (JSON). Füge den ganzen übersetzten Text ein.',
     labelsEmpty: 'Aus diesem Text ließ sich kein Text übernehmen.',
     tooManyLanguages: 'Ein Shop kann höchstens {max} eigene Sprachen haben.',

@@ -131,12 +131,26 @@ export const getHighlights: PluginPlatformModule['getHighlights'] = async ({ db 
   return [
     {
       value: LIBRARY.length + n(row?.public_recipes),
-      label: { en: 'Recipes', de: 'Rezepte', ro: 'Rețete', hu: 'Recept' },
+      label: {
+        en: 'Recipes',
+        de: 'Rezepte',
+        ro: 'Rețete',
+        hu: 'Recept',
+        it: 'Ricette',
+        es: 'Recetas',
+      },
       icon: '📖',
     },
     {
       value: n(row?.recommendations),
-      label: { en: 'Recommendations', de: 'Empfehlungen', ro: 'Recomandări', hu: 'Ajánlás' },
+      label: {
+        en: 'Recommendations',
+        de: 'Empfehlungen',
+        ro: 'Recomandări',
+        hu: 'Ajánlás',
+        it: 'Consigli',
+        es: 'Recomendaciones',
+      },
       icon: '👍',
     },
   ];

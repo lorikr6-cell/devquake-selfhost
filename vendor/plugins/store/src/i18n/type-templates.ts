@@ -6,7 +6,14 @@ import type { FieldKind } from '../lib/fields';
 // A test checks that every language has every text.
 
 type L = Record<Locale, string>;
-const l = (en: string, de: string, ro: string, hu: string): L => ({ en, de, ro, hu });
+const l = (en: string, de: string, ro: string, hu: string, it: string, es: string): L => ({
+  en,
+  de,
+  ro,
+  hu,
+  it,
+  es,
+});
 
 export interface TemplateField {
   kind: FieldKind;
@@ -25,29 +32,29 @@ export interface TypeTemplate {
 
 const yes = (label: L): TemplateField => ({ kind: 'boolean', label });
 
-const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((s) => l(s, s, s, s));
+const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((s) => l(s, s, s, s, s, s));
 
 const COLOURS = [
-  l('Black', 'Schwarz', 'Negru', 'Fekete'),
-  l('White', 'Weiß', 'Alb', 'Fehér'),
-  l('Grey', 'Grau', 'Gri', 'Szürke'),
-  l('Blue', 'Blau', 'Albastru', 'Kék'),
-  l('Red', 'Rot', 'Roșu', 'Piros'),
-  l('Green', 'Grün', 'Verde', 'Zöld'),
-  l('Beige', 'Beige', 'Bej', 'Bézs'),
-  l('Brown', 'Braun', 'Maro', 'Barna'),
-  l('Multicolour', 'Mehrfarbig', 'Multicolor', 'Többszínű'),
+  l('Black', 'Schwarz', 'Negru', 'Fekete', 'Nero', 'Negro'),
+  l('White', 'Weiß', 'Alb', 'Fehér', 'Bianco', 'Blanco'),
+  l('Grey', 'Grau', 'Gri', 'Szürke', 'Grigio', 'Gris'),
+  l('Blue', 'Blau', 'Albastru', 'Kék', 'Blu', 'Azul'),
+  l('Red', 'Rot', 'Roșu', 'Piros', 'Rosso', 'Rojo'),
+  l('Green', 'Grün', 'Verde', 'Zöld', 'Verde', 'Verde'),
+  l('Beige', 'Beige', 'Bej', 'Bézs', 'Beige', 'Beis'),
+  l('Brown', 'Braun', 'Maro', 'Barna', 'Marrone', 'Marrón'),
+  l('Multicolour', 'Mehrfarbig', 'Multicolor', 'Többszínű', 'Multicolore', 'Multicolor'),
 ];
 
 const COLOUR: TemplateField = {
   kind: 'select',
-  label: l('Colour', 'Farbe', 'Culoare', 'Szín'),
+  label: l('Colour', 'Farbe', 'Culoare', 'Szín', 'Colore', 'Color'),
   choices: COLOURS,
 };
 
 const MATERIAL: TemplateField = {
   kind: 'text',
-  label: l('Material', 'Material', 'Material', 'Anyag'),
+  label: l('Material', 'Material', 'Material', 'Anyag', 'Materiale', 'Material'),
 };
 
 const DIMENSIONS: TemplateField = {
@@ -57,58 +64,106 @@ const DIMENSIONS: TemplateField = {
     'Maße (B × H × T)',
     'Dimensiuni (L × Î × A)',
     'Méretek (Sz × M × M)',
+    'Dimensioni (L × A × P)',
+    'Medidas (An × Al × F)',
   ),
   unit: 'cm',
 };
 
 const WEIGHT: TemplateField = {
   kind: 'number',
-  label: l('Weight', 'Gewicht', 'Greutate', 'Tömeg'),
+  label: l('Weight', 'Gewicht', 'Greutate', 'Tömeg', 'Peso', 'Peso'),
   unit: 'kg',
 };
 
 const WARRANTY: TemplateField = {
   kind: 'number',
-  label: l('Warranty', 'Garantie', 'Garanție', 'Garancia'),
-  unit: l('months', 'Monate', 'luni', 'hónap'),
+  label: l('Warranty', 'Garantie', 'Garanție', 'Garancia', 'Garanzia', 'Garantía'),
+  unit: l('months', 'Monate', 'luni', 'hónap', 'mesi', 'meses'),
 };
 
-const DAYS = l('days', 'Tage', 'zile', 'nap');
+const DAYS = l('days', 'Tage', 'zile', 'nap', 'giorni', 'días');
 
 const ORIGIN: TemplateField = {
   kind: 'text',
-  label: l('Made in', 'Hergestellt in', 'Fabricat în', 'Gyártás helye'),
+  label: l(
+    'Made in',
+    'Hergestellt in',
+    'Fabricat în',
+    'Gyártás helye',
+    'Prodotto in',
+    'Fabricado en',
+  ),
 };
 
 export const TYPE_TEMPLATES = {
   electronics: {
     icon: '💻',
-    name: l('Electronics', 'Elektronik', 'Electronice', 'Elektronika'),
+    name: l(
+      'Electronics',
+      'Elektronik',
+      'Electronice',
+      'Elektronika',
+      'Elettronica',
+      'Electrónica',
+    ),
     fields: [
-      { kind: 'text', label: l('Model', 'Modell', 'Model', 'Modell') },
+      { kind: 'text', label: l('Model', 'Modell', 'Model', 'Modell', 'Modello', 'Modelo') },
       {
         kind: 'number',
-        label: l('Screen size', 'Bildschirmdiagonale', 'Diagonală ecran', 'Képátló'),
+        label: l(
+          'Screen size',
+          'Bildschirmdiagonale',
+          'Diagonală ecran',
+          'Képátló',
+          'Dimensione dello schermo',
+          'Tamaño de pantalla',
+        ),
         unit: '″',
       },
-      { kind: 'text', label: l('Processor', 'Prozessor', 'Procesor', 'Processzor') },
+      {
+        kind: 'text',
+        label: l('Processor', 'Prozessor', 'Procesor', 'Processzor', 'Processore', 'Procesador'),
+      },
       {
         kind: 'number',
-        label: l('Memory (RAM)', 'Arbeitsspeicher (RAM)', 'Memorie (RAM)', 'Memória (RAM)'),
+        label: l(
+          'Memory (RAM)',
+          'Arbeitsspeicher (RAM)',
+          'Memorie (RAM)',
+          'Memória (RAM)',
+          'Memoria (RAM)',
+          'Memoria (RAM)',
+        ),
         unit: 'GB',
       },
-      { kind: 'number', label: l('Storage', 'Speicher', 'Stocare', 'Tárhely'), unit: 'GB' },
-      { kind: 'number', label: l('Battery', 'Akku', 'Baterie', 'Akkumulátor'), unit: 'mAh' },
+      {
+        kind: 'number',
+        label: l('Storage', 'Speicher', 'Stocare', 'Tárhely', 'Archiviazione', 'Almacenamiento'),
+        unit: 'GB',
+      },
+      {
+        kind: 'number',
+        label: l('Battery', 'Akku', 'Baterie', 'Akkumulátor', 'Batteria', 'Batería'),
+        unit: 'mAh',
+      },
       {
         kind: 'multiselect',
-        label: l('Connectivity', 'Verbindungen', 'Conectivitate', 'Csatlakozás'),
+        label: l(
+          'Connectivity',
+          'Verbindungen',
+          'Conectivitate',
+          'Csatlakozás',
+          'Connettività',
+          'Conectividad',
+        ),
         choices: [
-          l('Wi-Fi', 'WLAN', 'Wi-Fi', 'Wi-Fi'),
-          l('Bluetooth', 'Bluetooth', 'Bluetooth', 'Bluetooth'),
-          l('5G', '5G', '5G', '5G'),
-          l('USB-C', 'USB-C', 'USB-C', 'USB-C'),
-          l('NFC', 'NFC', 'NFC', 'NFC'),
-          l('HDMI', 'HDMI', 'HDMI', 'HDMI'),
+          l('Wi-Fi', 'WLAN', 'Wi-Fi', 'Wi-Fi', 'Wi-Fi', 'Wi-Fi'),
+          l('Bluetooth', 'Bluetooth', 'Bluetooth', 'Bluetooth', 'Bluetooth', 'Bluetooth'),
+          l('5G', '5G', '5G', '5G', '5G', '5G'),
+          l('USB-C', 'USB-C', 'USB-C', 'USB-C', 'USB-C', 'USB-C'),
+          l('NFC', 'NFC', 'NFC', 'NFC', 'NFC', 'NFC'),
+          l('HDMI', 'HDMI', 'HDMI', 'HDMI', 'HDMI', 'HDMI'),
         ],
       },
       { ...COLOUR },
@@ -123,73 +178,110 @@ export const TYPE_TEMPLATES = {
       'Kleidung und Textilien',
       'Îmbrăcăminte și textile',
       'Ruházat és textil',
+      'Abbigliamento e tessili',
+      'Ropa y textiles',
     ),
     fields: [
-      { kind: 'multiselect', label: l('Sizes', 'Größen', 'Mărimi', 'Méretek'), choices: SIZES },
+      {
+        kind: 'multiselect',
+        label: l('Sizes', 'Größen', 'Mărimi', 'Méretek', 'Taglie', 'Tallas'),
+        choices: SIZES,
+      },
       { ...COLOUR },
       {
         kind: 'text',
-        label: l('Composition', 'Zusammensetzung', 'Compoziție', 'Összetétel'),
+        label: l(
+          'Composition',
+          'Zusammensetzung',
+          'Compoziție',
+          'Összetétel',
+          'Composizione',
+          'Composición',
+        ),
         required: true,
       },
       {
         kind: 'select',
-        label: l('Fit', 'Passform', 'Croială', 'Szabás'),
+        label: l('Fit', 'Passform', 'Croială', 'Szabás', 'Vestibilità', 'Corte'),
         choices: [
-          l('Slim', 'Schmal', 'Slim', 'Karcsúsított'),
-          l('Regular', 'Normal', 'Regular', 'Normál'),
-          l('Loose', 'Weit', 'Lejer', 'Bő'),
-          l('Oversized', 'Oversized', 'Oversized', 'Oversized'),
+          l('Slim', 'Schmal', 'Slim', 'Karcsúsított', 'Slim', 'Entallado'),
+          l('Regular', 'Normal', 'Regular', 'Normál', 'Regular', 'Regular'),
+          l('Loose', 'Weit', 'Lejer', 'Bő', 'Ampia', 'Holgado'),
+          l('Oversized', 'Oversized', 'Oversized', 'Oversized', 'Oversize', 'Oversize'),
         ],
       },
       {
         kind: 'select',
-        label: l('For', 'Für', 'Pentru', 'Kinek'),
+        label: l('For', 'Für', 'Pentru', 'Kinek', 'Per', 'Para'),
         choices: [
-          l('Women', 'Damen', 'Femei', 'Nők'),
-          l('Men', 'Herren', 'Bărbați', 'Férfiak'),
-          l('Unisex', 'Unisex', 'Unisex', 'Uniszex'),
-          l('Children', 'Kinder', 'Copii', 'Gyerekek'),
+          l('Women', 'Damen', 'Femei', 'Nők', 'Donna', 'Mujer'),
+          l('Men', 'Herren', 'Bărbați', 'Férfiak', 'Uomo', 'Hombre'),
+          l('Unisex', 'Unisex', 'Unisex', 'Uniszex', 'Unisex', 'Unisex'),
+          l('Children', 'Kinder', 'Copii', 'Gyerekek', 'Bambini', 'Niños'),
         ],
       },
       {
         kind: 'textarea',
-        label: l('Care', 'Pflege', 'Întreținere', 'Ápolás'),
+        label: l('Care', 'Pflege', 'Întreținere', 'Ápolás', 'Cura', 'Cuidados'),
       },
       { ...ORIGIN },
     ],
   },
   shoes: {
     icon: '👟',
-    name: l('Shoes', 'Schuhe', 'Încălțăminte', 'Cipők'),
+    name: l('Shoes', 'Schuhe', 'Încălțăminte', 'Cipők', 'Scarpe', 'Calzado'),
     fields: [
-      { kind: 'text', label: l('Sizes (EU)', 'Größen (EU)', 'Mărimi (EU)', 'Méretek (EU)') },
+      {
+        kind: 'text',
+        label: l(
+          'Sizes (EU)',
+          'Größen (EU)',
+          'Mărimi (EU)',
+          'Méretek (EU)',
+          'Taglie (EU)',
+          'Tallas (UE)',
+        ),
+      },
       { ...COLOUR },
-      { kind: 'text', label: l('Upper', 'Obermaterial', 'Material exterior', 'Felsőrész') },
-      { kind: 'text', label: l('Sole', 'Sohle', 'Talpă', 'Talp') },
-      yes(l('Waterproof', 'Wasserdicht', 'Impermeabil', 'Vízálló')),
+      {
+        kind: 'text',
+        label: l(
+          'Upper',
+          'Obermaterial',
+          'Material exterior',
+          'Felsőrész',
+          'Tomaia',
+          'Parte superior',
+        ),
+      },
+      { kind: 'text', label: l('Sole', 'Sohle', 'Talpă', 'Talp', 'Suola', 'Suela') },
+      yes(l('Waterproof', 'Wasserdicht', 'Impermeabil', 'Vízálló', 'Impermeabile', 'Impermeable')),
       { ...ORIGIN },
     ],
   },
   books: {
     icon: '📚',
-    name: l('Books', 'Bücher', 'Cărți', 'Könyvek'),
+    name: l('Books', 'Bücher', 'Cărți', 'Könyvek', 'Libri', 'Libros'),
     fields: [
-      { kind: 'text', label: l('Author', 'Autor', 'Autor', 'Szerző'), required: true },
-      { kind: 'text', label: l('Publisher', 'Verlag', 'Editură', 'Kiadó') },
-      { kind: 'text', label: l('ISBN', 'ISBN', 'ISBN', 'ISBN') },
-      { kind: 'number', label: l('Pages', 'Seiten', 'Pagini', 'Oldalak') },
-      { kind: 'text', label: l('Language', 'Sprache', 'Limbă', 'Nyelv') },
+      {
+        kind: 'text',
+        label: l('Author', 'Autor', 'Autor', 'Szerző', 'Autore', 'Autor'),
+        required: true,
+      },
+      { kind: 'text', label: l('Publisher', 'Verlag', 'Editură', 'Kiadó', 'Editore', 'Editorial') },
+      { kind: 'text', label: l('ISBN', 'ISBN', 'ISBN', 'ISBN', 'ISBN', 'ISBN') },
+      { kind: 'number', label: l('Pages', 'Seiten', 'Pagini', 'Oldalak', 'Pagine', 'Páginas') },
+      { kind: 'text', label: l('Language', 'Sprache', 'Limbă', 'Nyelv', 'Lingua', 'Idioma') },
       {
         kind: 'select',
-        label: l('Binding', 'Einband', 'Copertă', 'Kötés'),
+        label: l('Binding', 'Einband', 'Copertă', 'Kötés', 'Rilegatura', 'Encuadernación'),
         choices: [
-          l('Paperback', 'Taschenbuch', 'Broșată', 'Puhatáblás'),
-          l('Hardcover', 'Gebunden', 'Cartonată', 'Keménytáblás'),
-          l('E-book', 'E-Book', 'E-book', 'E-könyv'),
+          l('Paperback', 'Taschenbuch', 'Broșată', 'Puhatáblás', 'Tascabile', 'Tapa blanda'),
+          l('Hardcover', 'Gebunden', 'Cartonată', 'Keménytáblás', 'Copertina rigida', 'Tapa dura'),
+          l('E-book', 'E-Book', 'E-book', 'E-könyv', 'E-book', 'E-book'),
         ],
       },
-      { kind: 'number', label: l('Year', 'Jahr', 'An', 'Év') },
+      { kind: 'number', label: l('Year', 'Jahr', 'An', 'Év', 'Anno', 'Año') },
     ],
   },
   food: {
@@ -199,30 +291,53 @@ export const TYPE_TEMPLATES = {
       'Lebensmittel und Getränke',
       'Alimente și băuturi',
       'Élelmiszer és ital',
+      'Alimenti e bevande',
+      'Alimentación y bebidas',
     ),
     fields: [
       {
         kind: 'text',
-        label: l('Net quantity', 'Nettofüllmenge', 'Cantitate netă', 'Nettó mennyiség'),
+        label: l(
+          'Net quantity',
+          'Nettofüllmenge',
+          'Cantitate netă',
+          'Nettó mennyiség',
+          'Quantità netta',
+          'Cantidad neta',
+        ),
         required: true,
       },
       {
         kind: 'textarea',
-        label: l('Ingredients', 'Zutaten', 'Ingrediente', 'Összetevők'),
+        label: l(
+          'Ingredients',
+          'Zutaten',
+          'Ingrediente',
+          'Összetevők',
+          'Ingredienti',
+          'Ingredientes',
+        ),
         required: true,
       },
       {
         kind: 'multiselect',
-        label: l('Allergens', 'Allergene', 'Alergeni', 'Allergének'),
+        label: l('Allergens', 'Allergene', 'Alergeni', 'Allergének', 'Allergeni', 'Alérgenos'),
         choices: [
-          l('Gluten', 'Gluten', 'Gluten', 'Glutén'),
-          l('Milk', 'Milch', 'Lapte', 'Tej'),
-          l('Eggs', 'Eier', 'Ouă', 'Tojás'),
-          l('Nuts', 'Schalenfrüchte', 'Fructe cu coajă', 'Diófélék'),
-          l('Peanuts', 'Erdnüsse', 'Arahide', 'Földimogyoró'),
-          l('Soy', 'Soja', 'Soia', 'Szója'),
-          l('Sesame', 'Sesam', 'Susan', 'Szezám'),
-          l('Fish', 'Fisch', 'Pește', 'Hal'),
+          l('Gluten', 'Gluten', 'Gluten', 'Glutén', 'Glutine', 'Gluten'),
+          l('Milk', 'Milch', 'Lapte', 'Tej', 'Latte', 'Leche'),
+          l('Eggs', 'Eier', 'Ouă', 'Tojás', 'Uova', 'Huevos'),
+          l(
+            'Nuts',
+            'Schalenfrüchte',
+            'Fructe cu coajă',
+            'Diófélék',
+            'Frutta a guscio',
+            'Frutos de cáscara',
+          ),
+          l('Peanuts', 'Erdnüsse', 'Arahide', 'Földimogyoró', 'Arachidi', 'Cacahuetes'),
+          l('Soy', 'Soja', 'Soia', 'Szója', 'Soia', 'Soja'),
+          l('Sesame', 'Sesam', 'Susan', 'Szezám', 'Sesamo', 'Sésamo'),
+          l('Fish', 'Fisch', 'Pește', 'Hal', 'Pesce', 'Pescado'),
         ],
       },
       {
@@ -232,9 +347,14 @@ export const TYPE_TEMPLATES = {
           'Nährwerte je 100 g',
           'Valori nutriționale la 100 g',
           'Tápérték 100 g-ban',
+          'Valori nutrizionali per 100 g',
+          'Información nutricional por 100 g',
         ),
       },
-      { kind: 'text', label: l('Storage', 'Lagerung', 'Păstrare', 'Tárolás') },
+      {
+        kind: 'text',
+        label: l('Storage', 'Lagerung', 'Păstrare', 'Tárolás', 'Conservazione', 'Conservación'),
+      },
       {
         kind: 'number',
         label: l(
@@ -242,10 +362,12 @@ export const TYPE_TEMPLATES = {
           'Mindestens haltbar',
           'Termen de valabilitate',
           'Minőségét megőrzi',
+          'Da consumarsi preferibilmente entro',
+          'Consumo preferente',
         ),
         unit: DAYS,
       },
-      yes(l('Organic', 'Bio', 'Bio', 'Bio')),
+      yes(l('Organic', 'Bio', 'Bio', 'Bio', 'Bio', 'Ecológico')),
       { ...ORIGIN },
     ],
   },
@@ -256,18 +378,24 @@ export const TYPE_TEMPLATES = {
       'Kosmetik und Pflege',
       'Cosmetice și îngrijire',
       'Kozmetikum és ápolás',
+      'Cosmetici e cura',
+      'Cosmética y cuidado',
     ),
     fields: [
-      { kind: 'text', label: l('Volume', 'Inhalt', 'Volum', 'Kiszerelés'), unit: 'ml' },
+      {
+        kind: 'text',
+        label: l('Volume', 'Inhalt', 'Volum', 'Kiszerelés', 'Contenuto', 'Contenido'),
+        unit: 'ml',
+      },
       {
         kind: 'select',
-        label: l('Skin type', 'Hauttyp', 'Tip de ten', 'Bőrtípus'),
+        label: l('Skin type', 'Hauttyp', 'Tip de ten', 'Bőrtípus', 'Tipo di pelle', 'Tipo de piel'),
         choices: [
-          l('All', 'Alle', 'Toate', 'Minden'),
-          l('Dry', 'Trocken', 'Uscat', 'Száraz'),
-          l('Oily', 'Fettig', 'Gras', 'Zsíros'),
-          l('Combination', 'Mischhaut', 'Mixt', 'Vegyes'),
-          l('Sensitive', 'Empfindlich', 'Sensibil', 'Érzékeny'),
+          l('All', 'Alle', 'Toate', 'Minden', 'Tutti', 'Todas'),
+          l('Dry', 'Trocken', 'Uscat', 'Száraz', 'Secca', 'Seca'),
+          l('Oily', 'Fettig', 'Gras', 'Zsíros', 'Grassa', 'Grasa'),
+          l('Combination', 'Mischhaut', 'Mixt', 'Vegyes', 'Mista', 'Mixta'),
+          l('Sensitive', 'Empfindlich', 'Sensibil', 'Érzékeny', 'Sensibile', 'Sensible'),
         ],
       },
       {
@@ -277,21 +405,56 @@ export const TYPE_TEMPLATES = {
           'Inhaltsstoffe (INCI)',
           'Ingrediente (INCI)',
           'Összetevők (INCI)',
+          'Ingredienti (INCI)',
+          'Ingredientes (INCI)',
         ),
       },
-      { kind: 'textarea', label: l('How to use', 'Anwendung', 'Mod de utilizare', 'Használat') },
-      yes(l('Vegan', 'Vegan', 'Vegan', 'Vegán')),
-      yes(l('Cruelty free', 'Tierversuchsfrei', 'Netestat pe animale', 'Állatkísérletmentes')),
+      {
+        kind: 'textarea',
+        label: l(
+          'How to use',
+          'Anwendung',
+          'Mod de utilizare',
+          'Használat',
+          'Modo d’uso',
+          'Modo de empleo',
+        ),
+      },
+      yes(l('Vegan', 'Vegan', 'Vegan', 'Vegán', 'Vegano', 'Vegano')),
+      yes(
+        l(
+          'Cruelty free',
+          'Tierversuchsfrei',
+          'Netestat pe animale',
+          'Állatkísérletmentes',
+          'Non testato su animali',
+          'No testado en animales',
+        ),
+      ),
       {
         kind: 'number',
-        label: l('After opening', 'Nach dem Öffnen', 'După deschidere', 'Felbontás után'),
-        unit: l('months', 'Monate', 'luni', 'hónap'),
+        label: l(
+          'After opening',
+          'Nach dem Öffnen',
+          'După deschidere',
+          'Felbontás után',
+          'Dopo l’apertura',
+          'Tras la apertura',
+        ),
+        unit: l('months', 'Monate', 'luni', 'hónap', 'mesi', 'meses'),
       },
     ],
   },
   furniture: {
     icon: '🛋️',
-    name: l('Furniture and home', 'Möbel und Wohnen', 'Mobilă și casă', 'Bútor és otthon'),
+    name: l(
+      'Furniture and home',
+      'Möbel und Wohnen',
+      'Mobilă și casă',
+      'Bútor és otthon',
+      'Mobili e casa',
+      'Muebles y hogar',
+    ),
     fields: [
       { ...DIMENSIONS, required: true },
       { ...MATERIAL },
@@ -299,10 +462,26 @@ export const TYPE_TEMPLATES = {
       { ...WEIGHT },
       {
         kind: 'number',
-        label: l('Max. load', 'Max. Belastung', 'Sarcină max.', 'Max. terhelés'),
+        label: l(
+          'Max. load',
+          'Max. Belastung',
+          'Sarcină max.',
+          'Max. terhelés',
+          'Carico max.',
+          'Carga máx.',
+        ),
         unit: 'kg',
       },
-      yes(l('Assembly needed', 'Montage nötig', 'Necesită montaj', 'Összeszerelést igényel')),
+      yes(
+        l(
+          'Assembly needed',
+          'Montage nötig',
+          'Necesită montaj',
+          'Összeszerelést igényel',
+          'Montaggio necessario',
+          'Requiere montaje',
+        ),
+      ),
       { ...WARRANTY },
     ],
   },
@@ -313,67 +492,131 @@ export const TYPE_TEMPLATES = {
       'Schmuck und Accessoires',
       'Bijuterii și accesorii',
       'Ékszer és kiegészítő',
+      'Gioielli e accessori',
+      'Joyería y accesorios',
     ),
     fields: [
       {
         kind: 'select',
-        label: l('Metal', 'Metall', 'Metal', 'Fém'),
+        label: l('Metal', 'Metall', 'Metal', 'Fém', 'Metallo', 'Metal'),
         choices: [
-          l('Gold', 'Gold', 'Aur', 'Arany'),
-          l('Silver 925', 'Silber 925', 'Argint 925', 'Ezüst 925'),
-          l('Stainless steel', 'Edelstahl', 'Oțel inoxidabil', 'Nemesacél'),
-          l('Brass', 'Messing', 'Alamă', 'Sárgaréz'),
-          l('Other', 'Andere', 'Altul', 'Egyéb'),
+          l('Gold', 'Gold', 'Aur', 'Arany', 'Oro', 'Oro'),
+          l('Silver 925', 'Silber 925', 'Argint 925', 'Ezüst 925', 'Argento 925', 'Plata 925'),
+          l(
+            'Stainless steel',
+            'Edelstahl',
+            'Oțel inoxidabil',
+            'Nemesacél',
+            'Acciaio inossidabile',
+            'Acero inoxidable',
+          ),
+          l('Brass', 'Messing', 'Alamă', 'Sárgaréz', 'Ottone', 'Latón'),
+          l('Other', 'Andere', 'Altul', 'Egyéb', 'Altro', 'Otro'),
         ],
       },
-      { kind: 'text', label: l('Stone', 'Stein', 'Piatră', 'Kő') },
+      { kind: 'text', label: l('Stone', 'Stein', 'Piatră', 'Kő', 'Pietra', 'Piedra') },
       {
         kind: 'text',
-        label: l('Size or length', 'Größe oder Länge', 'Mărime sau lungime', 'Méret vagy hossz'),
+        label: l(
+          'Size or length',
+          'Größe oder Länge',
+          'Mărime sau lungime',
+          'Méret vagy hossz',
+          'Misura o lunghezza',
+          'Talla o longitud',
+        ),
       },
-      { kind: 'number', label: l('Weight', 'Gewicht', 'Greutate', 'Tömeg'), unit: 'g' },
-      yes(l('Nickel free', 'Nickelfrei', 'Fără nichel', 'Nikkelmentes')),
-      yes(l('Gift box included', 'Mit Geschenkbox', 'Cutie cadou inclusă', 'Díszdobozzal')),
+      {
+        kind: 'number',
+        label: l('Weight', 'Gewicht', 'Greutate', 'Tömeg', 'Peso', 'Peso'),
+        unit: 'g',
+      },
+      yes(
+        l('Nickel free', 'Nickelfrei', 'Fără nichel', 'Nikkelmentes', 'Senza nichel', 'Sin níquel'),
+      ),
+      yes(
+        l(
+          'Gift box included',
+          'Mit Geschenkbox',
+          'Cutie cadou inclusă',
+          'Díszdobozzal',
+          'Confezione regalo inclusa',
+          'Caja de regalo incluida',
+        ),
+      ),
     ],
   },
   toys: {
     icon: '🧸',
-    name: l('Toys and games', 'Spielzeug und Spiele', 'Jucării și jocuri', 'Játékok'),
+    name: l(
+      'Toys and games',
+      'Spielzeug und Spiele',
+      'Jucării și jocuri',
+      'Játékok',
+      'Giocattoli e giochi',
+      'Juguetes y juegos',
+    ),
     fields: [
       {
         kind: 'number',
-        label: l('Age from', 'Alter ab', 'Vârsta de la', 'Életkor'),
+        label: l('Age from', 'Alter ab', 'Vârsta de la', 'Életkor', 'Età da', 'Edad desde'),
         unit: '+',
         required: true,
       },
-      { kind: 'text', label: l('Players', 'Spieler', 'Jucători', 'Játékosok') },
-      { ...MATERIAL },
-      yes(l('Batteries needed', 'Batterien nötig', 'Necesită baterii', 'Elem szükséges')),
       {
         kind: 'text',
-        label: l('Safety warnings', 'Warnhinweise', 'Avertismente', 'Figyelmeztetések'),
+        label: l('Players', 'Spieler', 'Jucători', 'Játékosok', 'Giocatori', 'Jugadores'),
+      },
+      { ...MATERIAL },
+      yes(
+        l(
+          'Batteries needed',
+          'Batterien nötig',
+          'Necesită baterii',
+          'Elem szükséges',
+          'Batterie necessarie',
+          'Requiere pilas',
+        ),
+      ),
+      {
+        kind: 'text',
+        label: l(
+          'Safety warnings',
+          'Warnhinweise',
+          'Avertismente',
+          'Figyelmeztetések',
+          'Avvertenze',
+          'Advertencias',
+        ),
       },
       { ...DIMENSIONS },
     ],
   },
   sports: {
     icon: '⚽',
-    name: l('Sports and outdoor', 'Sport und Outdoor', 'Sport și outdoor', 'Sport és szabadidő'),
+    name: l(
+      'Sports and outdoor',
+      'Sport und Outdoor',
+      'Sport și outdoor',
+      'Sport és szabadidő',
+      'Sport e outdoor',
+      'Deporte y aire libre',
+    ),
     fields: [
-      { kind: 'text', label: l('Sport', 'Sportart', 'Sport', 'Sportág') },
-      { kind: 'text', label: l('Size', 'Größe', 'Mărime', 'Méret') },
+      { kind: 'text', label: l('Sport', 'Sportart', 'Sport', 'Sportág', 'Sport', 'Deporte') },
+      { kind: 'text', label: l('Size', 'Größe', 'Mărime', 'Méret', 'Misura', 'Talla') },
       { ...MATERIAL },
       { ...WEIGHT },
       {
         kind: 'select',
-        label: l('Level', 'Niveau', 'Nivel', 'Szint'),
+        label: l('Level', 'Niveau', 'Nivel', 'Szint', 'Livello', 'Nivel'),
         choices: [
-          l('Beginner', 'Einsteiger', 'Începător', 'Kezdő'),
-          l('Intermediate', 'Fortgeschritten', 'Intermediar', 'Haladó'),
-          l('Professional', 'Profi', 'Profesionist', 'Profi'),
+          l('Beginner', 'Einsteiger', 'Începător', 'Kezdő', 'Principiante', 'Principiante'),
+          l('Intermediate', 'Fortgeschritten', 'Intermediar', 'Haladó', 'Intermedio', 'Intermedio'),
+          l('Professional', 'Profi', 'Profesionist', 'Profi', 'Professionista', 'Profesional'),
         ],
       },
-      yes(l('Waterproof', 'Wasserdicht', 'Impermeabil', 'Vízálló')),
+      yes(l('Waterproof', 'Wasserdicht', 'Impermeabil', 'Vízálló', 'Impermeabile', 'Impermeable')),
     ],
   },
   handmade: {
@@ -383,12 +626,19 @@ export const TYPE_TEMPLATES = {
       'Handgemacht und Kunst',
       'Handmade și artă',
       'Kézműves és művészet',
+      'Fatto a mano e arte',
+      'Hecho a mano y arte',
     ),
     fields: [
-      { kind: 'text', label: l('Technique', 'Technik', 'Tehnică', 'Technika') },
+      {
+        kind: 'text',
+        label: l('Technique', 'Technik', 'Tehnică', 'Technika', 'Tecnica', 'Técnica'),
+      },
       { ...MATERIAL },
       { ...DIMENSIONS },
-      yes(l('One of a kind', 'Einzelstück', 'Unicat', 'Egyedi darab')),
+      yes(
+        l('One of a kind', 'Einzelstück', 'Unicat', 'Egyedi darab', 'Pezzo unico', 'Pieza única'),
+      ),
       {
         kind: 'number',
         label: l(
@@ -396,10 +646,12 @@ export const TYPE_TEMPLATES = {
           'Auf Bestellung in',
           'Realizat la comandă în',
           'Rendelésre elkészül',
+          'Realizzato su ordinazione in',
+          'Hecho por encargo en',
         ),
         unit: DAYS,
       },
-      { kind: 'textarea', label: l('Care', 'Pflege', 'Întreținere', 'Ápolás') },
+      { kind: 'textarea', label: l('Care', 'Pflege', 'Întreținere', 'Ápolás', 'Cura', 'Cuidados') },
     ],
   },
 } satisfies Record<string, TypeTemplate>;

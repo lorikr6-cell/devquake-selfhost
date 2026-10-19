@@ -34,7 +34,14 @@ export default async function ThreadPage({ ctx, params }: PluginPageProps) {
   if (!thread) notFound();
 
   return (
-    <ShopFrame store={store} preview={preview} team={team} locale={locale} db={db}>
+    <ShopFrame
+      store={store}
+      preview={preview}
+      team={team}
+      locale={locale}
+      db={db}
+      viewer={scope.viewer}
+    >
       <div className="space-y-1">
         <Link href={`/s/${store.slug}/account`} className="text-sm underline">
           ← {t('back')}

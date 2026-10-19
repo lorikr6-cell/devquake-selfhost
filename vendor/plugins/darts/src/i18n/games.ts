@@ -896,5 +896,447 @@ export const gameTexts = defineMessages(
         removeBody: 'A statisztikádból bármikor készíthetsz új gyakorlatokat.',
       },
     },
+    it: {
+      games: {
+        names: {
+          x01: '501 / 301',
+          cricket: 'Cricket',
+          shanghai: 'Shanghai',
+          atc: 'Giro dell’orologio',
+          killer: 'Killer',
+          countup: 'Count-Up',
+          targets: 'Esercizio sui bersagli',
+          checkout: 'Esercizio di chiusura',
+        },
+        short: {
+          x01: 'Scendi fino a zero',
+          cricket: 'Chiudi 15–20 e il bull',
+          shanghai: 'Un numero per giro',
+          atc: 'Da 1 a 20, poi il bull',
+          killer: 'Togli le vite agli altri',
+          countup: 'Vince chi fa più punti',
+          targets: 'Colpisci i bersagli scelti',
+          checkout: 'Allena le chiusure',
+        },
+        rules: {
+          x01: 'Tutti partono dallo stesso punteggio (301, 501, 701 o 1001) e sottraggono quanto fanno in ogni turno. Devi arrivare esattamente a zero, con l’ultima freccetta in un doppio o nel bull (double-out). Scendere sotto zero, a 1 o a zero senza un doppio è un bust: il punteggio torna a quello di inizio turno.',
+          cricket:
+            'Contano solo i numeri dal 15 al 20 e il bull. Tre segni chiudono un numero (il singolo vale un segno, il doppio due, il triplo tre). Quando hai chiuso un numero, colpirlo ti dà punti finché un avversario lo ha ancora aperto. Chiudi tutto con almeno tanti punti quanti gli altri per vincere. Nel cut-throat i tuoi punti vanno agli avversari e vince il punteggio più basso.',
+          shanghai:
+            'Nel giro 1 conta solo l’1, nel giro 2 solo il 2 e così via (7 o 20 giri). Colpire singolo, doppio e triplo del numero del giro in un solo turno è uno Shanghai e fa vincere subito. Altrimenti vince il punteggio più alto; in caso di parità si decide sul bull.',
+          atc: 'Colpisci 1, 2, 3 … fino a 20 in ordine, poi il bull. Vince chi colpisce per primo il bull. In modalità doppi conta solo il doppio di ogni numero (e il bull interno).',
+          killer:
+            'Ogni giocatore riceve un numero a caso. Colpisci il doppio del tuo numero per diventare killer, poi colpisci i doppi dei numeri degli altri per togliere loro le vite. Chi resta senza vite è fuori; vince l’ultimo rimasto.',
+          countup:
+            'Ogni freccetta vale quello che colpisce, per un numero fisso di giri. Vince chi fa più punti. Utile per allenare il punteggio e la costanza.',
+          targets:
+            'Un esercizio: un certo numero di freccette su ogni bersaglio scelto (un doppio, un triplo, un numero o il bull). Ogni colpo conta e le statistiche imparano quanto sei preciso su ciascuno.',
+          checkout:
+            'Un esercizio: chiudi ogni punteggio (per esempio 40, 81, 100) finendo su un doppio, con qualche turno per punteggio. Un bust chiude il turno; una chiusura esatta passa al punteggio successivo.',
+        },
+        options: {
+          start: 'Punteggio iniziale',
+          inLabel: 'Inizio',
+          in: { straight: 'Straight in', double: 'Double in' },
+          inDouble: 'Double in',
+          outLabel: 'Chiusura',
+          out: { double: 'Double out', single: 'Single out', master: 'Master out' },
+          legs: 'Leg',
+          firstTo: {
+            one: 'Vince chi arriva prima a {count} leg',
+            other: 'Vince chi arriva prima a {count} leg',
+          },
+          variantLabel: 'Variante',
+          variant: { standard: 'Standard', cutthroat: 'Cut-throat' },
+          rounds: 'Giri',
+          roundsCount: { one: '{count} giro', other: '{count} giri' },
+          hitLabel: 'Cosa conta',
+          hit: { any: 'Qualsiasi parte del numero', doubles: 'Solo doppi' },
+          lives: 'Vite',
+          livesCount: { one: '{count} vita', other: '{count} vite' },
+          dartsEach: { one: '{count} freccetta a testa', other: '{count} freccette a testa' },
+          dartsPerTarget: 'Freccette per bersaglio',
+          dartsPerFinish: 'Freccette per chiusura',
+          finishes: 'Punteggi da chiudere',
+          finishesHint: 'Tra 2 e 170, separati da virgole (fino a 10).',
+          targets: 'Bersagli (tocca per rimuovere)',
+          removeTarget: 'Rimuovi {target}',
+          ring: 'Anello',
+          ringAny: 'Qualsiasi parte',
+          ringSingle: 'Singolo',
+          ringDouble: 'Doppio',
+          ringTreble: 'Triplo',
+          number: 'Numero',
+          bull: 'Bull',
+          addTarget: 'Aggiungi bersaglio',
+          help: {
+            start: {
+              '301': 'Una partita breve: ideale per chi inizia o per un incontro veloce.',
+              '501': 'La classica partita da incontro, come nei tornei in TV.',
+              '701': 'Una partita più lunga, spesso giocata a coppie o a squadre.',
+              '1001': 'Una partita lunga a squadre, dove conta soprattutto fare punti.',
+            },
+            in: {
+              straight: 'Ogni freccetta conta fin dalla prima.',
+              double:
+                'Il tuo punteggio inizia a scendere solo quando colpisci un doppio (o il bull); le freccette prima non valgono nulla.',
+            },
+            out: {
+              double:
+                'L’ultima freccetta deve essere un doppio (o il bull) che ti porta esattamente a zero. È la regola abituale.',
+              single:
+                'Vince qualsiasi freccetta che ti porta esattamente a zero. La chiusura più facile, ideale per chi inizia.',
+              master:
+                'L’ultima freccetta deve essere un doppio o un triplo (o il bull) che ti porta esattamente a zero.',
+            },
+            legs: {
+              one: 'Un leg: chi chiude per primo vince l’incontro.',
+              other:
+                'Un leg è una partita giocata fino alla fine. Chi vince per primo {count} leg vince l’incontro; chi tira per primo cambia a ogni leg.',
+            },
+            variant: {
+              standard:
+                'Quando hai chiuso un numero, i tuoi colpi su di esso ti danno punti finché un avversario lo ha ancora aperto. Vince chi fa più punti.',
+              cutthroat:
+                'I tuoi colpi su un numero che hai chiuso danno punti a ogni avversario che non l’ha ancora chiuso. Vince chi ha meno punti.',
+            },
+            shanghaiRounds: {
+              '7': 'I numeri da 1 a 7, uno per giro: una partita veloce.',
+              '20': 'Tutti i numeri da 1 a 20, uno per giro: una partita lunga.',
+            },
+            hit: {
+              any: 'Singolo, doppio e triplo del numero contano tutti. Alla fine conta qualsiasi bull.',
+              doubles:
+                'Conta solo il doppio di ogni numero e, alla fine, il bull interno. Molto più difficile: ottimo allenamento per le chiusure.',
+            },
+            lives: {
+              one: 'Ogni giocatore ha {count} vita: un solo colpo di un killer sul suo doppio lo elimina.',
+              other:
+                'Ogni giocatore ha {count} vite; ogni colpo di un killer sul suo doppio gliene toglie una. Più vite rendono la partita più lunga.',
+            },
+            countupRounds: {
+              one: 'Ogni giocatore tira {count} turno di tre freccette; vince il totale più alto.',
+              other:
+                'Ogni giocatore tira {count} turni di tre freccette; vince il totale più alto.',
+            },
+            dartsPerFinish:
+              'Hai {count} freccette ({visits} turni) per chiudere ogni punteggio; se non ci riesci, arriva il punteggio successivo.',
+            dartsPerTarget:
+              'Tiri {count} freccette ({visits} turni) su ogni bersaglio, poi passi al successivo. Totale: {total} freccette.',
+            targets:
+              'Ogni bersaglio è un numero con un anello. I tuoi colpi vengono contati, così vedi quanto sei preciso su ciascuno.',
+            ring: {
+              '0': 'Qualsiasi parte: singolo, doppio e triplo del numero contano tutti come colpo.',
+              '1': 'Singolo: contano solo le zone singole del numero, non l’anello del doppio o del triplo.',
+              '2': 'Doppio: conta solo l’anello esterno del numero, quello su cui si chiude.',
+              '3': 'Triplo: conta solo lo stretto anello interno del numero.',
+            },
+          },
+        },
+      },
+      events: {
+        bust: 'Bust!',
+        leg: 'Leg vinto!',
+        win: 'Partita vinta!',
+        shanghai: 'Shanghai!',
+        killer: 'Killer!',
+        eliminated: 'Giocatore eliminato!',
+        checkout: 'Chiuso!',
+        missed: 'Prossimo punteggio',
+        tiebreak: 'Spareggio',
+      },
+      suggest: {
+        title: 'Dove mirare adesso',
+        intro:
+          'Suggerimenti per le freccette che restano in questo turno. Il primo si illumina anche sul bersaglio.',
+        option: 'Opzione {n}',
+        bull: 'il bull',
+        explain: {
+          checkout: {
+            one: 'Chiude il tuo {score} con una freccetta.',
+            other: 'Chiude il tuo {score} con {count} freccette, tirate in quest’ordine.',
+          },
+          setup:
+            'Con le freccette rimaste non puoi chiudere. Così resti a {left}, che puoi chiudere nel prossimo turno.',
+          far: '{left} è troppo lontano per chiudere in questo turno: fai più punti che puoi.',
+          doubleIn: 'Double in: il tuo punteggio inizia a contare solo quando colpisci un doppio.',
+          close: 'Chiudi il {n}: un avversario ci sta già facendo punti.',
+          scoreOn: 'Hai chiuso il {n} e un avversario no: ogni colpo in più fa punti.',
+          stillOpen: 'Il {n} è ancora aperto per te: tre segni lo chiudono.',
+          shanghai:
+            'In questo giro conta solo il {n}. Colpisci singolo, doppio e triplo in questo turno, in qualsiasi ordine, per vincere subito.',
+          tiebreak: 'Spareggio: conta solo il bull.',
+          sequence:
+            'Colpisci i numeri in ordine; vale qualsiasi anello. Il tuo prossimo numero è {target}.',
+          sequenceDoubles:
+            'Colpisci solo i doppi, in ordine (il bull interno per ultimo). Il tuo prossimo bersaglio è {target}.',
+          becomeKiller: 'Il tuo numero è il {n}: colpisci il suo doppio per diventare killer.',
+          takeLife: 'Il doppio {n} toglie una vita a {name} (vite rimaste: {lives}).',
+          lastLife: '{name} ha un’ultima vita: il doppio {n} lo elimina.',
+          points: 'Count-Up: questo vale {points} punti.',
+          drill: 'Il bersaglio attuale di questo esercizio.',
+        },
+        none: 'Nessun suggerimento per questa freccetta.',
+      },
+      skills: {
+        scoring: 'Punteggio',
+        doubles: 'Doppi',
+        trebles: 'Tripli',
+        bull: 'Bull',
+        accuracy: 'Precisione',
+        consistency: 'Costanza',
+        starter: 'Per iniziare',
+      },
+      drills: {
+        none: 'Ancora nessun esercizio. Creane qualcuno: si basano sulle tue statistiche e li vedi solo tu.',
+        titles: {
+          x01: 'Allenamento X01',
+          cricket: 'Allenamento Cricket',
+          shanghai: 'Allenamento Shanghai',
+          atc: 'Giro dell’orologio',
+          killer: 'Allenamento Killer',
+          countup: 'Punteggio Count-Up',
+          targets: 'Esercizio sui bersagli',
+          checkout: 'Esercizio di chiusura',
+        },
+        why: {
+          doubles: 'Sono i doppi che sbagli di più: mira a loro finché non diventano facili.',
+          scoring: 'Raggruppa le freccette nel triplo 20 e 19 per alzare la tua media.',
+          trebles: 'I tripli fanno i punteggi alti: allena la parte alta del bersaglio.',
+          bull: 'Il bull chiude il 50 e vince gli spareggi.',
+          accuracy: 'Colpire il numero a cui miri: la base di ogni gioco.',
+          consistency: 'Turni regolari, giro dopo giro.',
+          starter: 'Una prima serie per capire dove vanno le tue freccette.',
+        },
+        played: { one: 'Giocato {count} volta', other: 'Giocato {count} volte' },
+        play: 'Gioca',
+        remove: 'Rimuovi',
+        removeConfirm: 'Rimuovere questo esercizio?',
+        generate: 'Crea esercizi per me',
+        regenerate: 'Crea nuovi esercizi',
+        removeBody: 'Puoi creare nuovi esercizi in qualsiasi momento dalle tue statistiche.',
+      },
+    },
+    es: {
+      games: {
+        names: {
+          x01: '501 / 301',
+          cricket: 'Cricket',
+          shanghai: 'Shanghai',
+          atc: 'Vuelta al reloj',
+          killer: 'Killer',
+          countup: 'Count-Up',
+          targets: 'Ejercicio de objetivos',
+          checkout: 'Ejercicio de cierre',
+        },
+        short: {
+          x01: 'Baja hasta cero',
+          cricket: 'Cierra del 15 al 20 y el bull',
+          shanghai: 'Un número por ronda',
+          atc: 'Del 1 al 20, luego el bull',
+          killer: 'Quita vidas a los demás',
+          countup: 'Gana quien más puntos hace',
+          targets: 'Acierta los objetivos elegidos',
+          checkout: 'Practica los cierres',
+        },
+        rules: {
+          x01: 'Todos empiezan con la misma puntuación (301, 501, 701 o 1001) y restan lo que consiguen en cada tirada. Tienes que llegar exactamente a cero, con el último dardo en un doble o en el bull (double-out). Bajar de cero, quedarte en 1 o llegar a cero sin doble es un bust: la puntuación vuelve a la del inicio de la tirada.',
+          cricket:
+            'Solo cuentan del 15 al 20 y el bull. Tres marcas cierran un número (un simple es una marca, un doble dos, un triple tres). Cuando has cerrado un número, acertarlo te da puntos mientras un rival lo tenga aún abierto. Cierra todo con al menos tantos puntos como los demás para ganar. En cut-throat, tus puntos van a los rivales y gana la puntuación más baja.',
+          shanghai:
+            'En la ronda 1 solo cuenta el 1, en la ronda 2 solo el 2, y así sucesivamente (7 o 20 rondas). Acertar el simple, el doble y el triple del número de la ronda en una sola tirada es un Shanghai y gana al instante. Si no, gana la puntuación más alta; un empate se decide en el bull.',
+          atc: 'Acierta el 1, 2, 3 … hasta el 20 en orden, y luego el bull. Gana el primero que acierte el bull. En el modo dobles solo cuenta el doble de cada número (y el bull interior).',
+          killer:
+            'Cada jugador recibe un número al azar. Acierta el doble de tu número para convertirte en killer y luego acierta los dobles de los números de los demás para quitarles vidas. Quien se queda sin vidas queda eliminado; gana el último que queda.',
+          countup:
+            'Cada dardo vale lo que acierta, durante un número fijo de rondas. Gana quien más puntos hace. Ideal para practicar la puntuación y la regularidad.',
+          targets:
+            'Un ejercicio: un número de dardos a cada objetivo elegido (un doble, un triple, un número o el bull). Cada acierto cuenta y las estadísticas aprenden lo preciso que eres en cada uno.',
+          checkout:
+            'Un ejercicio: cierra cada puntuación (por ejemplo 40, 81, 100) terminando en un doble, con unas cuantas tiradas por puntuación. Un bust termina la tirada; un cierre exacto pasa a la siguiente puntuación.',
+        },
+        options: {
+          start: 'Puntuación inicial',
+          inLabel: 'Inicio',
+          in: { straight: 'Straight in', double: 'Double in' },
+          inDouble: 'Double in',
+          outLabel: 'Cierre',
+          out: { double: 'Double out', single: 'Single out', master: 'Master out' },
+          legs: 'Legs',
+          firstTo: {
+            one: 'Gana quien llegue antes a {count} leg',
+            other: 'Gana quien llegue antes a {count} legs',
+          },
+          variantLabel: 'Variante',
+          variant: { standard: 'Estándar', cutthroat: 'Cut-throat' },
+          rounds: 'Rondas',
+          roundsCount: { one: '{count} ronda', other: '{count} rondas' },
+          hitLabel: 'Qué cuenta',
+          hit: { any: 'Cualquier parte del número', doubles: 'Solo dobles' },
+          lives: 'Vidas',
+          livesCount: { one: '{count} vida', other: '{count} vidas' },
+          dartsEach: { one: '{count} dardo cada uno', other: '{count} dardos cada uno' },
+          dartsPerTarget: 'Dardos por objetivo',
+          dartsPerFinish: 'Dardos por cierre',
+          finishes: 'Puntuaciones que cerrar',
+          finishesHint: 'Entre 2 y 170, separadas por comas (hasta 10).',
+          targets: 'Objetivos (toca uno para quitarlo)',
+          removeTarget: 'Quitar {target}',
+          ring: 'Anillo',
+          ringAny: 'Cualquier parte',
+          ringSingle: 'Simple',
+          ringDouble: 'Doble',
+          ringTreble: 'Triple',
+          number: 'Número',
+          bull: 'Bull',
+          addTarget: 'Añadir objetivo',
+          help: {
+            start: {
+              '301': 'Una partida corta: buena para principiantes o para un enfrentamiento rápido.',
+              '501': 'La partida de competición habitual, como en los torneos de la tele.',
+              '701': 'Una partida más larga, que se suele jugar por parejas o por equipos.',
+              '1001': 'Una partida larga por equipos, donde lo que más cuenta es puntuar.',
+            },
+            in: {
+              straight: 'Cada dardo cuenta desde el primero.',
+              double:
+                'Tu puntuación solo empieza a bajar cuando aciertas un doble (o el bull); los dardos anteriores no valen nada.',
+            },
+            out: {
+              double:
+                'El último dardo debe ser un doble (o el bull) que te deje exactamente en cero. Es la regla habitual.',
+              single:
+                'Gana cualquier dardo que te deje exactamente en cero. El cierre más fácil, bueno para principiantes.',
+              master:
+                'El último dardo debe ser un doble o un triple (o el bull) que te deje exactamente en cero.',
+            },
+            legs: {
+              one: 'Un leg: quien cierre primero gana el enfrentamiento.',
+              other:
+                'Un leg es una partida jugada hasta el final. El primero en ganar {count} legs gana el enfrentamiento; quien tira primero cambia en cada leg.',
+            },
+            variant: {
+              standard:
+                'Cuando has cerrado un número, tus aciertos en él te dan puntos mientras un rival lo tenga aún abierto. Gana quien más puntos hace.',
+              cutthroat:
+                'Tus aciertos en un número que has cerrado dan puntos a cada rival que no lo ha cerrado. Gana quien menos puntos tiene.',
+            },
+            shanghaiRounds: {
+              '7': 'Los números del 1 al 7, uno por ronda: una partida rápida.',
+              '20': 'Todos los números del 1 al 20, uno por ronda: una partida larga.',
+            },
+            hit: {
+              any: 'El simple, el doble y el triple del número cuentan todos. Al final, cuenta cualquier bull.',
+              doubles:
+                'Solo cuenta el doble de cada número y, al final, el bull interior. Mucho más difícil: buena práctica para los cierres.',
+            },
+            lives: {
+              one: 'Cada jugador tiene {count} vida: un solo acierto de un killer en su doble lo elimina.',
+              other:
+                'Cada jugador tiene {count} vidas; cada acierto de un killer en su doble le quita una. Más vidas hacen la partida más larga.',
+            },
+            countupRounds: {
+              one: 'Cada jugador lanza {count} tirada de tres dardos; gana el total más alto.',
+              other: 'Cada jugador lanza {count} tiradas de tres dardos; gana el total más alto.',
+            },
+            dartsPerFinish:
+              'Tienes {count} dardos ({visits} tiradas) para cerrar cada puntuación; si no lo consigues, llega la siguiente.',
+            dartsPerTarget:
+              'Lanzas {count} dardos ({visits} tiradas) a cada objetivo y luego pasas al siguiente. Total: {total} dardos.',
+            targets:
+              'Cada objetivo es un número con un anillo. Se cuentan tus aciertos, así ves lo preciso que eres en cada uno.',
+            ring: {
+              '0': 'Cualquier parte: el simple, el doble y el triple del número cuentan como acierto.',
+              '1': 'Simple: solo cuentan las zonas simples del número, no su anillo de doble ni de triple.',
+              '2': 'Doble: solo cuenta el anillo exterior del número, el que usas para cerrar.',
+              '3': 'Triple: solo cuenta el estrecho anillo interior del número.',
+            },
+          },
+        },
+      },
+      events: {
+        bust: '¡Bust!',
+        leg: '¡Leg ganado!',
+        win: '¡Partida ganada!',
+        shanghai: '¡Shanghai!',
+        killer: '¡Killer!',
+        eliminated: '¡Jugador eliminado!',
+        checkout: '¡Cerrado!',
+        missed: 'Siguiente puntuación',
+        tiebreak: 'Desempate',
+      },
+      suggest: {
+        title: 'Dónde apuntar ahora',
+        intro:
+          'Sugerencias para los dardos que quedan en esta tirada. La primera también se ilumina en la diana.',
+        option: 'Opción {n}',
+        bull: 'el bull',
+        explain: {
+          checkout: {
+            one: 'Cierra tus {score} con un dardo.',
+            other: 'Cierra tus {score} con {count} dardos, lanzados en este orden.',
+          },
+          setup:
+            'No puedes cerrar con los dardos que quedan. Así te quedas en {left}, que puedes cerrar en la siguiente tirada.',
+          far: '{left} está demasiado lejos para cerrar en esta tirada: haz todos los puntos que puedas.',
+          doubleIn: 'Double in: tu puntuación solo empieza a contar cuando aciertas un doble.',
+          close: 'Cierra el {n}: un rival ya está puntuando en él.',
+          scoreOn: 'Has cerrado el {n} y un rival no: cada acierto más suma puntos.',
+          stillOpen: 'El {n} sigue abierto para ti: tres marcas lo cierran.',
+          shanghai:
+            'En esta ronda solo cuenta el {n}. Acierta su simple, doble y triple en esta tirada, en cualquier orden, para ganar al instante.',
+          tiebreak: 'Desempate: solo cuenta el bull.',
+          sequence:
+            'Acierta los números en orden; vale cualquier anillo. Tu siguiente número es {target}.',
+          sequenceDoubles:
+            'Acierta solo los dobles, en orden (el bull interior al final). Tu siguiente objetivo es {target}.',
+          becomeKiller: 'Tu número es el {n}: acierta su doble para convertirte en killer.',
+          takeLife: 'El doble {n} le quita una vida a {name} (vidas restantes: {lives}).',
+          lastLife: 'A {name} le queda una vida: el doble {n} lo elimina.',
+          points: 'Count-Up: esto vale {points} puntos.',
+          drill: 'El objetivo actual de este ejercicio.',
+        },
+        none: 'No hay sugerencia para este dardo.',
+      },
+      skills: {
+        scoring: 'Puntuación',
+        doubles: 'Dobles',
+        trebles: 'Triples',
+        bull: 'Bull',
+        accuracy: 'Precisión',
+        consistency: 'Regularidad',
+        starter: 'Primeros pasos',
+      },
+      drills: {
+        none: 'Aún no hay ejercicios. Crea algunos: se basan en tus estadísticas y solo los ves tú.',
+        titles: {
+          x01: 'Práctica de X01',
+          cricket: 'Práctica de Cricket',
+          shanghai: 'Práctica de Shanghai',
+          atc: 'Vuelta al reloj',
+          killer: 'Práctica de Killer',
+          countup: 'Puntuación Count-Up',
+          targets: 'Ejercicio de objetivos',
+          checkout: 'Ejercicio de cierre',
+        },
+        why: {
+          doubles: 'Son los dobles que más fallas: apunta a ellos hasta que te resulten fáciles.',
+          scoring: 'Agrupa tus dardos en el triple 20 y el 19 para subir tu media.',
+          trebles: 'Los triples dan las grandes puntuaciones: practica la parte alta de la diana.',
+          bull: 'El bull cierra el 50 y gana los desempates.',
+          accuracy: 'Acertar el número al que apuntas: la base de cualquier juego.',
+          consistency: 'Tiradas regulares, ronda tras ronda.',
+          starter: 'Una primera serie para ver adónde van tus dardos.',
+        },
+        played: { one: 'Jugado {count} vez', other: 'Jugado {count} veces' },
+        play: 'Jugar',
+        remove: 'Quitar',
+        removeConfirm: '¿Quitar este ejercicio?',
+        generate: 'Crea ejercicios para mí',
+        regenerate: 'Crear nuevos ejercicios',
+        removeBody:
+          'Puedes crear nuevos ejercicios en cualquier momento a partir de tus estadísticas.',
+      },
+    },
   },
 );

@@ -1,5 +1,30 @@
 # Jurnal de modificări — Magazin
 
+## 0.13.0
+
+- Aplicația este acum și în italiană și spaniolă: alege limba din partea de sus a paginii (în magazin, cumpărătorii o găsesc jos).
+
+## 0.12.2
+
+- Când te conectezi pe DevQuake cu alt cont, se schimbă acum și cine ești în magazin: magazinul nu mai păstrează într-o altă filă sesiunea contului anterior, iar deconectarea de pe DevQuake te deconectează și de la contul legat de el.
+
+## 0.12.1
+
+- Drumul înapoi spre DevQuake este acum un buton mic cu sigla DevQuake în capătul din dreapta al antetului magazinului, după coș; treci cu mouse-ul peste el ca să vezi la ce pagină te întoarce.
+
+## 0.12.0
+
+- Conectat în magazin: newsletterul este o singură bifă pentru adresa de e-mail pe care contul tău o are deja, pe pagina contului, în subsol și pe pagina newsletterului. Se activează sau se dezactivează imediat și îți spune, fără să scrii adresa și fără e-mail de confirmare. Vizitatorii neconectați se abonează în continuare cu adresa lor de e-mail.
+
+## 0.11.0
+
+- Conectat pe DevQuake: contul tău din magazin arată numele și adresa ta de e-mail din DevQuake (le schimbi acolo), cu contoare pentru favorite, cumpărături și produsele din coș, care deschid fiecare listă. Datele de livrare rămân în magazin. Newsletterul se setează în contul tău DevQuake, așa că magazinul nu îți mai cere să te abonezi din nou. Fără DevQuake, pagina contului rămâne ca înainte.
+
+## 0.10.0
+
+- Conectat pe DevQuake: după ce ai permis magazinului să folosească adresa ta de conectare, ești conectat automat în magazin la fiecare vizită, iar în antet apare numele tău în loc de „Cont”. Dacă te deconectezi din magazin, rămâi deconectat.
+- Ai venit de pe o pagină DevQuake (platforma, o aplicație sau blogul)? „← Înapoi” din partea de sus a magazinului te duce înapoi acolo.
+
 ## 0.9.0
 
 - Favorite: salvează produse cu inimioara de pe pagina lor și găsește-le la „Favorite” în antetul magazinului, cu data la care le-ai salvat, prețul de azi și cu cât sunt mai ieftine sau mai scumpe de atunci. Produsele care nu se mai pot cumpăra sunt tăiate.

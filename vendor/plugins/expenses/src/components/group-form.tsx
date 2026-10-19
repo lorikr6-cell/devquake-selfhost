@@ -21,7 +21,14 @@ export function useMoney(currency: string) {
 }
 
 /** A sensible first currency from the page language (the owner can change it). */
-const LOCALE_CURRENCY: Record<string, string> = { en: 'EUR', de: 'EUR', ro: 'RON', hu: 'HUF' };
+const LOCALE_CURRENCY: Record<string, string> = {
+  en: 'EUR',
+  de: 'EUR',
+  ro: 'RON',
+  hu: 'HUF',
+  it: 'EUR',
+  es: 'EUR',
+};
 
 /** New group (home page) or the group's settings (owner, members page). */
 export function GroupForm({

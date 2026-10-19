@@ -8,6 +8,8 @@ export const about: PluginAbout = {
     de: 'Plane die Mahlzeiten der Woche für deinen Haushalt aus deinem Kochbuch, mit Nährwerten pro Tag und einer Einkaufsliste.',
     ro: 'Planifică mesele săptămânii pentru casa ta din cartea de bucate, cu valori pe zi și o singură listă de cumpărături.',
     hu: 'Tervezd meg a háztartás heti étkezéseit a szakácskönyvből, napi tápértékkel és egyetlen bevásárlólistával.',
+    it: 'Pianifica i pasti della settimana per la tua casa dal tuo ricettario, con i valori nutrizionali al giorno e un’unica lista della spesa.',
+    es: 'Planifica las comidas de la semana para tu hogar desde tu recetario, con los valores nutricionales por día y una sola lista de la compra.',
   },
   features: {
     en: [
@@ -33,6 +35,18 @@ export const about: PluginAbout = {
       'Javasolt hét az étrendetekhez, allergének és nem kedvelt ételek nélkül',
       'Napi tápérték egyszerű célokhoz mérve',
       'Az egész hét egyetlen bevásárlólistán, és emlékeztető előző este',
+    ],
+    it: [
+      'Una settimana di colazioni, pranzi, cene e spuntini per chi mangia',
+      'Suggerisci una settimana adatta alla tua dieta, senza allergeni né cibi sgraditi',
+      'Valori nutrizionali al giorno rispetto a obiettivi semplici',
+      'Tutta la settimana in un’unica lista della spesa e promemoria la sera prima',
+    ],
+    es: [
+      'Una semana de desayunos, comidas, cenas y tentempiés para quienes comen',
+      'Sugiere una semana para tu dieta, sin tus alérgenos ni lo que no te gusta',
+      'Valores nutricionales por día frente a objetivos sencillos',
+      'Toda la semana en una sola lista de la compra y recordatorios la noche anterior',
     ],
   },
 };

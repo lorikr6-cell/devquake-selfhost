@@ -11,6 +11,8 @@ export const about: PluginAbout = {
     de: 'Dein eigener kleiner Onlineshop: Produkte mit Varianten und Rabatten, Karte, PayPal, Überweisung oder Nachnahme und Versand nach Land.',
     ro: 'Propriul tău magazin online: produse cu variante și reduceri, card, PayPal, transfer bancar sau ramburs, și livrare pe țări.',
     hu: 'Saját kis webáruház: termékek változatokkal és akciókkal, kártya, PayPal, átutalás vagy utánvét, és szállítás országonként.',
+    it: 'Il tuo piccolo negozio online: prodotti con varianti e saldi, carta, PayPal, bonifico o contrassegno, e spedizione per paese.',
+    es: 'Tu propia tienda online pequeña: productos con variantes y rebajas, tarjeta, PayPal, transferencia o contra reembolso, y envío por país.',
   },
   features: {
     en: [
@@ -44,6 +46,22 @@ export const about: PluginAbout = {
       'Keresőmotorok által indexelhető bolt- és termékoldalak árral és elérhetőséggel',
       'Terméktípusok saját mezőkkel, beszállítók, kampányok, kuponok és hírlevelek',
       'Értékelések, termék-összehasonlítás, QR-kódok, vásárlói fiókok és a boltod saját megjelenése',
+    ],
+    it: [
+      'Prodotti con varianti, foto, magazzino e prezzi scontati con inizio e fine',
+      'Pagamenti con carta tramite Stripe, PayPal, bonifico e contrassegno',
+      'Zone di spedizione con tariffe fisse e spedizione gratuita da un importo',
+      'Pagine del negozio e dei prodotti indicizzabili dai motori di ricerca, con prezzi e disponibilità',
+      'Tipi di prodotto con campi propri, fornitori, campagne, buoni sconto e newsletter',
+      'Recensioni, confronto prodotti, codici QR, account acquirente e il design del tuo negozio',
+    ],
+    es: [
+      'Productos con variantes, fotos, stock y precios rebajados con inicio y fin',
+      'Pagos con tarjeta mediante Stripe, PayPal, transferencia bancaria y contra reembolso',
+      'Zonas de envío con tarifa fija y envío gratis a partir de un importe',
+      'Páginas de tienda y de producto que los buscadores pueden indexar, con precio y disponibilidad',
+      'Tipos de producto con campos propios, proveedores, campañas, cupones y newsletters',
+      'Reseñas, comparación de productos, códigos QR, cuentas de comprador y el diseño propio de tu tienda',
     ],
   },
 };

@@ -181,7 +181,7 @@ export const opsRo: MessagesOf<typeof opsEn> = {
   languages: {
     title: 'Limbi',
     intro:
-      'Magazinul e în engleză, germană, română și maghiară. Adaugă orice altă limbă sau schimbă formulările uneia dintre ele: copiază textele pe care le văd cumpărătorii, traduce-le oriunde și lipește-le înapoi.',
+      'Magazinul e în engleză, germană, română, maghiară, italiană și spaniolă. Adaugă orice altă limbă sau schimbă formulările uneia dintre ele: copiază textele pe care le văd cumpărătorii, traduce-le oriunde și lipește-le înapoi.',
     step1: '1. Copiază textele',
     step1Hint: 'Alege limba din care traduci, apoi copiază sau descarcă textele.',
     base: 'Tradu din',
@@ -196,7 +196,7 @@ export const opsRo: MessagesOf<typeof opsEn> = {
     step2Hint: 'Dă limbii un cod și un nume, lipește textele traduse și salvează.',
     code: 'Cod',
     codeHint:
-      'Două sau trei litere, de ex. fr, es, pl. de, ro, hu sau en schimbă limba încorporată.',
+      'Două sau trei litere, de ex. fr, pl, nl. de, ro, hu, it, es sau en schimbă limba încorporată.',
     name: 'Numele pentru cumpărători',
     nameHint: 'În limba respectivă, de ex. Français.',
     overrides: 'Asta schimbă formulările în {language} din magazinul tău.',
@@ -224,7 +224,7 @@ export const opsRo: MessagesOf<typeof opsEn> = {
     maintenance: 'Magazinul e în mentenanță. Te rugăm să revii curând.',
     roles: 'Alege cel puțin un rol.',
     pieces: 'Numărul de bucăți trebuie să fie un număr întreg de cel puțin 2.',
-    languageCode: 'Codul trebuie să aibă două sau trei litere, de ex. fr sau es.',
+    languageCode: 'Codul trebuie să aibă două sau trei litere, de ex. fr sau pl.',
     labelsJson: 'Acestea nu sunt textele copiate (JSON). Lipește tot textul tradus.',
     labelsEmpty: 'Niciun text nu a putut fi preluat.',
     tooManyLanguages: 'Un magazin poate avea cel mult {max} limbi proprii.',

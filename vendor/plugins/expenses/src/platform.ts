@@ -34,7 +34,14 @@ export const getHighlights: PluginPlatformModule['getHighlights'] = async ({ db 
   return [
     {
       value: n(row?.groups),
-      label: { en: 'Groups', de: 'Gruppen', ro: 'Grupuri', hu: 'Csoport' },
+      label: {
+        en: 'Groups',
+        de: 'Gruppen',
+        ro: 'Grupuri',
+        hu: 'Csoport',
+        it: 'Gruppi',
+        es: 'Grupos',
+      },
       icon: '👥',
     },
     {
@@ -44,6 +51,8 @@ export const getHighlights: PluginPlatformModule['getHighlights'] = async ({ db 
         de: 'Geteilte Ausgaben',
         ro: 'Cheltuieli împărțite',
         hu: 'Megosztott kiadás',
+        it: 'Spese condivise',
+        es: 'Gastos compartidos',
       },
       icon: '🧾',
     },

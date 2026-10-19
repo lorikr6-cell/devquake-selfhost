@@ -5,7 +5,7 @@ import type {
   PluginUser,
 } from '@devquake/plugin-sdk';
 import { localeOf, translator } from '../i18n';
-import { accountPlan } from './data';
+import { accountPlan, syncStaffPlan } from './data';
 import { HttpError } from './http';
 import { masterKey } from './keys';
 import { LIMITS, planOf, type Limits, type Plan } from './limits';
@@ -38,7 +38,11 @@ export function api(fn: (scope: ApiScope) => Promise<unknown>): PluginApiHandler
       const level = ctx.accessOf
         ? ((await ctx.accessOf([ctx.user.id]))[ctx.user.id] ?? 'none')
         : 'member';
-      const plan = planOf(level, await accountPlan(ctx.db, ctx.user.id)) ?? 'trial';
+      const plan =
+        planOf(
+          level,
+          await syncStaffPlan(ctx.db, ctx.user).catch(() => accountPlan(ctx.db!, ctx.user!.id)),
+        ) ?? 'trial';
       const result = await fn({
         request,
         params,

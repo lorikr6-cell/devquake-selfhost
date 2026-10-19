@@ -39,7 +39,7 @@ export function stepUses(step: Step, ingredients: Pick<Ingredient, 'name'>[]): n
 /** Minutes a step's text mentions ("simmer 20 minutes", "1 óra", "10–12 min"), for a timer. */
 export function suggestedTimerMin(text: string): number | null {
   const t = fold(text);
-  const hours = /(\d+(?:[.,]\d+)?)\s*(?:h\b|hours?|stunden?|ore|ora\b|orak?\b)/.exec(t);
+  const hours = /(\d+(?:[.,]\d+)?)\s*(?:h\b|hours?|horas?\b|stunden?|ore|ora\b|orak?\b)/.exec(t);
   const minutes =
     /(\d+)(?:\s*[-–]\s*\d+)?\s*(?:min\b|mins?\b|minutes?|minuten?|minute|minut|perc)/.exec(t);
   const total =

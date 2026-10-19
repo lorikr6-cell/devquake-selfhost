@@ -3,7 +3,7 @@ import type { PluginContext, PluginPageProps } from '@devquake/plugin-sdk';
 import { Link, cn, type Locale } from '@devquake/ui';
 import { translator } from '../i18n';
 import { AnnouncementView } from '../components/announcement-view';
-import { shopScope } from '../components/guard';
+import { shopScope, shopViewer } from '../components/guard';
 import { assetUrl, Paragraphs, ProductCard, ShopFrame, shopIcons } from '../components/shop';
 import { SortSelect } from '../components/shop-browse';
 import { S } from '../components/shop-style';
@@ -88,6 +88,8 @@ export async function StoreFront({
 }) {
   const t = translator(locale, 'shop');
   const db = ctx.db!;
+  // Also at the site's root (home.tsx), where there is no shop scope.
+  const viewer = await shopViewer(ctx, store);
   const [products, categories, announcements] = await Promise.all([
     listProducts(db, store.id, { publishedOnly: true, category, campaignId, sort }),
     categoriesOf(db, store.id, true),
@@ -116,7 +118,7 @@ export async function StoreFront({
   };
 
   return (
-    <ShopFrame store={store} preview={preview} team={team} locale={locale} db={db}>
+    <ShopFrame store={store} preview={preview} team={team} locale={locale} db={db} viewer={viewer}>
       <script
         type="application/ld+json"
         // JSON.stringify escapes everything but "<", which could end the script early.

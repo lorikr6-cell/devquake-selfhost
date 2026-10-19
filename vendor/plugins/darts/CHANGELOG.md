@@ -1,5 +1,9 @@
 # Changelog — Darts
 
+## 0.7.0
+
+- The app is now also in Italian and Spanish: pick the language at the top of the page.
+
 ## 0.6.2
 
 - When a member removes their DevQuake account, what they added to your things (comments, items, ticks, photos…) stays, shown as “REMOVED_…” instead of their name.
@@ -12,7 +16,7 @@
 
 - The app’s card on DevQuake and its front page now show how many members use it and its totals: finished games, tournaments.
 
-0.5.2
+## 0.5.2
 
 - People who do not use the app yet now see what it does on its front page, with a link to the user manual, and shared links show the app’s own picture.
 

@@ -1,5 +1,9 @@
 # Változások — Darts
 
+## 0.7.0
+
+- Az alkalmazás mostantól olaszul és spanyolul is elérhető: a nyelvet az oldal tetején választhatod ki.
+
 ## 0.6.2
 
 - Ha egy tag törli a DevQuake-fiókját, amit a te dolgaidhoz hozzáadott (hozzászólások, elemek, pipák, fotók…), megmarad, a neve helyett „REMOVED_…” jelöléssel.
@@ -12,7 +16,7 @@
 
 - Az alkalmazás kártyája a DevQuake-en és a kezdőoldala most megmutatja, hány tag használja, és a számait: befejezett játék, verseny.
 
-0.5.2
+## 0.5.2
 
 - Aki még nem használja az alkalmazást, most a kezdőlapján látja, mire jó, a felhasználói kézikönyv linkjével, a megosztott linkek pedig az alkalmazás saját képét mutatják.
 

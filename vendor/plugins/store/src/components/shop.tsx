@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import type { CSSProperties, ReactNode } from 'react';
 import type { PluginDatabase } from '@devquake/plugin-sdk';
-import { I18nProvider, LOCALE_TAGS, Link, cn, type Locale } from '@devquake/ui';
+import { I18nProvider, LOCALE_TAGS, Link, ReturnLink, cn, type Locale } from '@devquake/ui';
 import { FALLBACK_MESSAGES, shopLanguageState, translator } from '../i18n';
 import { cookies } from 'next/headers';
 import { DevQuakePromo } from './devquake-promo';
@@ -15,7 +15,9 @@ import { shopMailConfigured } from '../lib/mailer';
 import { liveAnnouncements, type Announcement } from '../lib/marketing-data';
 import { themeVars } from '../lib/theme';
 import { AnnouncementView } from './announcement-view';
-import { CartLink, CompareLink, CompareToggle, NewsletterSignup } from './shop-client';
+import { AutoConnect, CartLink, CompareLink, CompareToggle, NewsletterSignup } from './shop-client';
+import { NewsletterCheckbox } from './account-client';
+import type { ShopViewer } from './guard';
 import { moneyIn } from './guard';
 import { S, SHOP_ROOT } from './shop-style';
 import { CookieSettingsLink, ShopTracking } from './shop-tracking';
@@ -68,6 +70,7 @@ export async function ShopFrame({
   children,
   db,
   team = false,
+  viewer = null,
 }: {
   store: Store;
   preview: boolean;
@@ -77,6 +80,8 @@ export async function ShopFrame({
   db?: PluginDatabase;
   /** The owner or their team is looking: their visits load no tracking tags. */
   team?: boolean;
+  /** The signed-in buyer or member (their name instead of "Account"). */
+  viewer?: ShopViewer | null;
 }) {
   const t = translator(locale, 'shop');
   const tInfo = translator(locale, 'info');
@@ -138,21 +143,41 @@ export async function ShopFrame({
           {theme ? null : <ThemeSwitch initial={siteTheme} />}
           {/* The buyer's display currency, before the account and the cart (ADR 0061). */}
           <CurrencyPicker compact />
-          <Link href={`/s/${store.slug}/account`} className={S.buttonSecondary}>
-            {t('account')}
+          {/* Signed in on DevQuake or here: their name, so they see they are signed in. */}
+          <Link
+            href={`/s/${store.slug}/account`}
+            className={cn(S.buttonSecondary, 'max-w-48 truncate')}
+            title={viewer ? `${t('account')}: ${viewer.name}` : undefined}
+          >
+            {viewer ? viewer.name : t('account')}
           </Link>
+          {viewer?.autoConnect && !preview ? <AutoConnect slug={store.slug} /> : null}
           <Link href={`/s/${store.slug}/favorites`} className={S.buttonSecondary}>
             {t('favorites')}
           </Link>
           <CompareLink slug={store.slug} label={t('compare')} />
           <CartLink slug={store.slug} label={t('cart')} />
+          {/* In the corner: back to the DevQuake page (the platform, an app, the blog) the buyer
+              came from, if any. */}
+          <ReturnLink
+            label={t('returnBack')}
+            section=""
+            className={cn(S.buttonSecondary, 'px-3')}
+          />
         </nav>
       </header>
       {children}
       <FxNote className={cn('text-xs', S.muted)} />
       {preview || team ? null : <DevQuakePromo locale={locale} />}
       <footer className={cn('space-y-4 border-t pt-6 text-xs', S.line, S.muted)}>
-        {shopMailConfigured() && !preview ? (
+        {shopMailConfigured() && !preview && viewer?.newsletter ? (
+          // Signed in: their address is known, so a checkbox instead of the email field.
+          <NewsletterCheckbox
+            slug={store.slug}
+            on={viewer.newsletter.on}
+            email={viewer.newsletter.email}
+          />
+        ) : shopMailConfigured() && !preview ? (
           <NewsletterSignup slug={store.slug} source="shop" />
         ) : null}
         <p>{t('vatIncluded')}</p>

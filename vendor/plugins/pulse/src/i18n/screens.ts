@@ -53,6 +53,7 @@ export const screens = defineMessages(
       how2: 'Add your website and prove it is yours with one DNS record, so only your site can use the public key.',
       how3: 'Send events from your server (or, if you allow it, from browsers) and listen to them in every open page.',
       howLink: 'Try it in 5 minutes: the live test scenario',
+      platformLink: 'DevQuake platform service (admins)',
       demoTitle: 'Check it live',
       demoBody:
         'Open the demo in two browsers and watch a message travel from one to the other through the real Pulse API, with timings.',
@@ -64,6 +65,7 @@ export const screens = defineMessages(
         trial: 'Trial',
         standard: 'Subscribed',
         full: 'Full access',
+        platform: 'DevQuake platform',
       },
       about: {
         trial:
@@ -71,6 +73,7 @@ export const screens = defineMessages(
         standard:
           'Everyday limits that keep the service fast for everybody. Need more? Ask us for full access.',
         full: 'Full access: much higher limits for production use.',
+        platform: 'No quotas: for DevQuake’s own apps, its admins and its owner.',
       },
       limits: {
         apps: { one: '{n} API service', other: '{n} API services' },
@@ -265,6 +268,44 @@ export const screens = defineMessages(
       duration: 'Time taken',
       ms: '{n} ms',
       sources: { server: 'server', browser: 'browser', token: 'client token', unknown: '—' },
+    },
+    platform: {
+      metaTitle: 'DevQuake platform service',
+      title: 'DevQuake platform service',
+      intro:
+        "DevQuake's own apps and website get their live updates through this service. It belongs to DevQuake, is never listed for members and has no quotas. Only DevQuake admins see this page.",
+      migration:
+        'The platform service needs migration 0004_pulse_platform.sql in the Pulse database (and PULSE_MASTER_KEY).',
+      keysTitle: 'Keys',
+      publicKey: 'Public key',
+      secretHint: 'Secret key: …{hint} (since {date})',
+      website: {
+        current:
+          'The website has the current secret key (PULSE_PLATFORM_SECRET): live updates are on.',
+        previous:
+          'The website still has the previous secret key. It works for 24 hours after a new one was made: put the new key into PULSE_PLATFORM_SECRET and restart the app subdomains.',
+        other:
+          'PULSE_PLATFORM_SECRET is not a key of this service: live updates are off. Make a new key below and set it.',
+        missing:
+          'PULSE_PLATFORM_SECRET is not set yet: live updates are off. Make a new key below, then add it in hPanel → Environment variables and in devquake.env, and restart the app subdomains.',
+      },
+      useTitle: 'Use',
+      eventsToday: 'Events today',
+      openStreams: 'Open live connections',
+      slots: 'Kept free per process',
+      slotsValue: '{reserved} of {max}',
+      slotsHelp:
+        "Every server process holds a limited number of live connections for everybody (PULSE_MAX_STREAMS). Members' services leave these free for the platform service; when they are taken, apps fall back to polling.",
+      rotateTitle: 'New secret key',
+      rotateBody:
+        "The secret key signs the apps' tokens and lets the website publish. A new key is shown once; the current one keeps working for 24 hours.",
+      rotate: 'Make a new secret key',
+      rotateConfirm: 'Yes, make a new key',
+      cancel: 'Cancel',
+      newSecret: 'New secret key',
+      newSecretOnce:
+        'Copy it now: it is not shown again. Put it into PULSE_PLATFORM_SECRET (hPanel and devquake.env) and restart the app subdomains.',
+      created: 'Service created {date}',
     },
     admin: {
       title: 'API calls: all services (admins)',
@@ -490,6 +531,7 @@ export const screens = defineMessages(
         how2: 'Füge deine Website hinzu und beweise mit einem DNS-Eintrag, dass sie dir gehört, damit nur deine Seite den öffentlichen Schlüssel nutzen kann.',
         how3: 'Sende Events von deinem Server (oder, wenn du es erlaubst, aus Browsern) und empfange sie in jeder offenen Seite.',
         howLink: 'In 5 Minuten ausprobieren: das Live-Test-Szenario',
+        platformLink: 'DevQuake-Plattformdienst (Admins)',
         demoTitle: 'Live ausprobieren',
         demoBody:
           'Öffne die Demo in zwei Browsern und sieh zu, wie eine Nachricht über die echte Pulse-API vom einen zum anderen gelangt, mit Zeitmessung.',
@@ -501,6 +543,7 @@ export const screens = defineMessages(
           trial: 'Test',
           standard: 'Abonniert',
           full: 'Voller Zugang',
+          platform: 'DevQuake-Plattform',
         },
         about: {
           trial:
@@ -508,6 +551,8 @@ export const screens = defineMessages(
           standard:
             'Alltagsgrenzen, die den Dienst für alle schnell halten. Brauchst du mehr? Frag uns nach vollem Zugang.',
           full: 'Voller Zugang: viel höhere Grenzen für den Produktivbetrieb.',
+          platform:
+            'Ohne Kontingente: für die eigenen Apps von DevQuake, seine Admins und seinen Inhaber.',
         },
         limits: {
           apps: { one: '{n} API-Dienst', other: '{n} API-Dienste' },
@@ -706,6 +751,44 @@ export const screens = defineMessages(
         duration: 'Dauer',
         ms: '{n} ms',
         sources: { server: 'Server', browser: 'Browser', token: 'Client-Token', unknown: '—' },
+      },
+      platform: {
+        metaTitle: 'DevQuake-Plattformdienst',
+        title: 'DevQuake-Plattformdienst',
+        intro:
+          'Die eigenen Apps und die Website von DevQuake erhalten ihre Live-Updates über diesen Dienst. Er gehört DevQuake, wird Mitgliedern nie angezeigt und hat keine Kontingente. Nur DevQuake-Admins sehen diese Seite.',
+        migration:
+          'Der Plattformdienst braucht die Migration 0004_pulse_platform.sql in der Pulse-Datenbank (und PULSE_MASTER_KEY).',
+        keysTitle: 'Schlüssel',
+        publicKey: 'Öffentlicher Schlüssel',
+        secretHint: 'Geheimer Schlüssel: …{hint} (seit {date})',
+        website: {
+          current:
+            'Die Website hat den aktuellen geheimen Schlüssel (PULSE_PLATFORM_SECRET): Live-Updates sind an.',
+          previous:
+            'Die Website hat noch den vorherigen geheimen Schlüssel. Er funktioniert 24 Stunden nach dem neuen: trage den neuen Schlüssel in PULSE_PLATFORM_SECRET ein und starte die App-Subdomains neu.',
+          other:
+            'PULSE_PLATFORM_SECRET ist kein Schlüssel dieses Dienstes: Live-Updates sind aus. Erstelle unten einen neuen Schlüssel und trage ihn ein.',
+          missing:
+            'PULSE_PLATFORM_SECRET ist noch nicht gesetzt: Live-Updates sind aus. Erstelle unten einen neuen Schlüssel, trage ihn in hPanel → Umgebungsvariablen und in devquake.env ein und starte die App-Subdomains neu.',
+        },
+        useTitle: 'Nutzung',
+        eventsToday: 'Events heute',
+        openStreams: 'Offene Live-Verbindungen',
+        slots: 'Pro Prozess freigehalten',
+        slotsValue: '{reserved} von {max}',
+        slotsHelp:
+          'Jeder Serverprozess hält nur eine begrenzte Zahl von Live-Verbindungen für alle (PULSE_MAX_STREAMS). Die Dienste der Mitglieder lassen diese für den Plattformdienst frei; sind sie belegt, fragen die Apps regelmäßig ab.',
+        rotateTitle: 'Neuer geheimer Schlüssel',
+        rotateBody:
+          'Der geheime Schlüssel signiert die Tokens der Apps und erlaubt der Website zu senden. Ein neuer Schlüssel wird einmal angezeigt; der aktuelle funktioniert noch 24 Stunden.',
+        rotate: 'Neuen geheimen Schlüssel erstellen',
+        rotateConfirm: 'Ja, neuen Schlüssel erstellen',
+        cancel: 'Abbrechen',
+        newSecret: 'Neuer geheimer Schlüssel',
+        newSecretOnce:
+          'Kopiere ihn jetzt: Er wird nicht noch einmal angezeigt. Trage ihn in PULSE_PLATFORM_SECRET ein (hPanel und devquake.env) und starte die App-Subdomains neu.',
+        created: 'Dienst erstellt am {date}',
       },
       admin: {
         title: 'API-Aufrufe: alle Dienste (Admins)',
@@ -934,6 +1017,7 @@ export const screens = defineMessages(
         how2: 'Adaugă site-ul tău și dovedește cu o înregistrare DNS că îți aparține, ca doar site-ul tău să poată folosi cheia publică.',
         how3: 'Trimite evenimente de pe server (sau, dacă permiți, din browsere) și ascultă-le în fiecare pagină deschisă.',
         howLink: 'Încearcă în 5 minute: scenariul de test live',
+        platformLink: 'Serviciul platformei DevQuake (administratori)',
         demoTitle: 'Încearcă live',
         demoBody:
           'Deschide demo-ul în două browsere și urmărește cum un mesaj ajunge de la unul la altul prin API-ul Pulse real, cu timpi măsurați.',
@@ -945,6 +1029,7 @@ export const screens = defineMessages(
           trial: 'Probă',
           standard: 'Abonat',
           full: 'Acces complet',
+          platform: 'Platforma DevQuake',
         },
         about: {
           trial:
@@ -952,6 +1037,8 @@ export const screens = defineMessages(
           standard:
             'Limite de zi cu zi care păstrează serviciul rapid pentru toți. Ai nevoie de mai mult? Cere-ne acces complet.',
           full: 'Acces complet: limite mult mai mari pentru producție.',
+          platform:
+            'Fără cote: pentru aplicațiile proprii DevQuake, administratorii și proprietarul său.',
         },
         limits: {
           apps: { one: '{n} serviciu API', few: '{n} servicii API', other: '{n} de servicii API' },
@@ -1166,6 +1253,44 @@ export const screens = defineMessages(
         duration: 'Durată',
         ms: '{n} ms',
         sources: { server: 'server', browser: 'browser', token: 'token client', unknown: '—' },
+      },
+      platform: {
+        metaTitle: 'Serviciul platformei DevQuake',
+        title: 'Serviciul platformei DevQuake',
+        intro:
+          'Aplicațiile proprii și site-ul DevQuake primesc actualizările live prin acest serviciu. Aparține DevQuake, nu este afișat niciodată membrilor și nu are cote. Doar administratorii DevQuake văd această pagină.',
+        migration:
+          'Serviciul platformei are nevoie de migrarea 0004_pulse_platform.sql în baza de date Pulse (și de PULSE_MASTER_KEY).',
+        keysTitle: 'Chei',
+        publicKey: 'Cheie publică',
+        secretHint: 'Cheie secretă: …{hint} (din {date})',
+        website: {
+          current:
+            'Site-ul are cheia secretă actuală (PULSE_PLATFORM_SECRET): actualizările live sunt pornite.',
+          previous:
+            'Site-ul are încă cheia secretă anterioară. Funcționează 24 de ore după crearea uneia noi: pune cheia nouă în PULSE_PLATFORM_SECRET și repornește subdomeniile aplicațiilor.',
+          other:
+            'PULSE_PLATFORM_SECRET nu este o cheie a acestui serviciu: actualizările live sunt oprite. Creează mai jos o cheie nouă și seteaz-o.',
+          missing:
+            'PULSE_PLATFORM_SECRET nu este încă setată: actualizările live sunt oprite. Creează mai jos o cheie nouă, adaug-o în hPanel → Variabile de mediu și în devquake.env, apoi repornește subdomeniile aplicațiilor.',
+        },
+        useTitle: 'Utilizare',
+        eventsToday: 'Evenimente azi',
+        openStreams: 'Conexiuni live deschise',
+        slots: 'Păstrate libere per proces',
+        slotsValue: '{reserved} din {max}',
+        slotsHelp:
+          'Fiecare proces de server ține un număr limitat de conexiuni live pentru toți (PULSE_MAX_STREAMS). Serviciile membrilor le lasă libere pentru serviciul platformei; când sunt ocupate, aplicațiile trec la interogare periodică.',
+        rotateTitle: 'Cheie secretă nouă',
+        rotateBody:
+          'Cheia secretă semnează tokenurile aplicațiilor și permite site-ului să publice. O cheie nouă se afișează o singură dată; cea actuală mai funcționează 24 de ore.',
+        rotate: 'Creează o cheie secretă nouă',
+        rotateConfirm: 'Da, creează o cheie nouă',
+        cancel: 'Anulează',
+        newSecret: 'Cheie secretă nouă',
+        newSecretOnce:
+          'Copiaz-o acum: nu mai este afișată. Pune-o în PULSE_PLATFORM_SECRET (hPanel și devquake.env) și repornește subdomeniile aplicațiilor.',
+        created: 'Serviciu creat la {date}',
       },
       admin: {
         title: 'Apeluri API: toate serviciile (administratori)',
@@ -1405,6 +1530,7 @@ export const screens = defineMessages(
         how2: 'Add hozzá a weboldaladat, és egy DNS-rekorddal igazold, hogy a tiéd, így csak a te oldalad használhatja a nyilvános kulcsot.',
         how3: 'Küldj eseményeket a szerveredről (vagy ha engeded, böngészőkből), és fogadd őket minden megnyitott oldalon.',
         howLink: 'Próbáld ki 5 perc alatt: az élő teszt forgatókönyve',
+        platformLink: 'A DevQuake platformszolgáltatása (adminok)',
         demoTitle: 'Próbáld ki élőben',
         demoBody:
           'Nyisd meg a bemutatót két böngészőben, és nézd, ahogy egy üzenet a valódi Pulse API-n át az egyikből a másikba jut, időméréssel.',
@@ -1416,6 +1542,7 @@ export const screens = defineMessages(
           trial: 'Próba',
           standard: 'Előfizetve',
           full: 'Teljes hozzáférés',
+          platform: 'DevQuake platform',
         },
         about: {
           trial:
@@ -1423,6 +1550,8 @@ export const screens = defineMessages(
           standard:
             'Hétköznapi keretek, amelyek mindenkinek gyorsan tartják a szolgáltatást. Többre van szükséged? Kérj tőlünk teljes hozzáférést.',
           full: 'Teljes hozzáférés: sokkal magasabb keretek éles használatra.',
+          platform:
+            'Korlátok nélkül: a DevQuake saját alkalmazásainak, adminjainak és tulajdonosának.',
         },
         limits: {
           apps: { one: '{n} API-szolgáltatás', other: '{n} API-szolgáltatás' },
@@ -1622,6 +1751,44 @@ export const screens = defineMessages(
         ms: '{n} ms',
         sources: { server: 'szerver', browser: 'böngésző', token: 'klienstoken', unknown: '—' },
       },
+      platform: {
+        metaTitle: 'A DevQuake platformszolgáltatása',
+        title: 'A DevQuake platformszolgáltatása',
+        intro:
+          'A DevQuake saját alkalmazásai és weboldala ezen a szolgáltatáson keresztül kapják az élő frissítéseket. A DevQuake-é, tagoknak sosem jelenik meg, és nincsenek korlátai. Ezt az oldalt csak a DevQuake adminjai látják.',
+        migration:
+          'A platformszolgáltatáshoz a 0004_pulse_platform.sql migráció kell a Pulse adatbázisában (és a PULSE_MASTER_KEY).',
+        keysTitle: 'Kulcsok',
+        publicKey: 'Nyilvános kulcs',
+        secretHint: 'Titkos kulcs: …{hint} ({date} óta)',
+        website: {
+          current:
+            'A weboldalon a jelenlegi titkos kulcs van (PULSE_PLATFORM_SECRET): az élő frissítések be vannak kapcsolva.',
+          previous:
+            'A weboldalon még az előző titkos kulcs van. Az új kulcs után még 24 óráig működik: írd az új kulcsot a PULSE_PLATFORM_SECRET-be, és indítsd újra az alkalmazások aldomainjeit.',
+          other:
+            'A PULSE_PLATFORM_SECRET nem ennek a szolgáltatásnak a kulcsa: az élő frissítések ki vannak kapcsolva. Készíts lent új kulcsot, és állítsd be.',
+          missing:
+            'A PULSE_PLATFORM_SECRET még nincs beállítva: az élő frissítések ki vannak kapcsolva. Készíts lent új kulcsot, add meg a hPanel → Környezeti változók között és a devquake.env-ben, majd indítsd újra az alkalmazások aldomainjeit.',
+        },
+        useTitle: 'Használat',
+        eventsToday: 'Mai események',
+        openStreams: 'Nyitott élő kapcsolatok',
+        slots: 'Folyamatonként szabadon tartva',
+        slotsValue: '{reserved} / {max}',
+        slotsHelp:
+          'Minden szerverfolyamat csak korlátozott számú élő kapcsolatot tart mindenkinek (PULSE_MAX_STREAMS). A tagok szolgáltatásai ezeket szabadon hagyják a platformszolgáltatásnak; ha foglaltak, az alkalmazások időnkénti lekérdezésre váltanak.',
+        rotateTitle: 'Új titkos kulcs',
+        rotateBody:
+          'A titkos kulcs írja alá az alkalmazások tokenjeit, és ezzel küldhet a weboldal. Az új kulcs csak egyszer jelenik meg; a jelenlegi még 24 óráig működik.',
+        rotate: 'Új titkos kulcs készítése',
+        rotateConfirm: 'Igen, új kulcs készítése',
+        cancel: 'Mégse',
+        newSecret: 'Új titkos kulcs',
+        newSecretOnce:
+          'Másold most: többé nem jelenik meg. Írd a PULSE_PLATFORM_SECRET-be (hPanel és devquake.env), és indítsd újra az alkalmazások aldomainjeit.',
+        created: 'A szolgáltatás létrehozva: {date}',
+      },
       admin: {
         title: 'API-hívások: minden szolgáltatás (adminok)',
         intro:
@@ -1794,6 +1961,1049 @@ export const screens = defineMessages(
         addPair: '+ Kulcs hozzáadása',
         sendButton: 'Esemény küldése',
         sent: 'Elküldve ({id}. esemény)',
+      },
+    },
+    it: {
+      appName: 'Pulse',
+      meta: {
+        home: 'Pulse · API di eventi in tempo reale',
+        app: 'Servizio API',
+        test: 'Test dal vivo',
+        demo: 'Provalo dal vivo',
+      },
+      nav: {
+        fullscreen: 'Schermo intero',
+        exitFullscreen: 'Esci da schermo intero',
+        language: 'Lingua',
+        devquake: 'DevQuake',
+        manual: 'Manuale',
+      },
+      guard: {
+        signInTitle: 'Accedi per usare Pulse',
+        signInBody: 'Pulse usa il tuo account DevQuake. {link} e torna qui.',
+        signInLink: 'Accedi su DevQuake',
+        unavailableTitle: 'Non disponibile al momento',
+        unavailableBody: 'Pulse è in fase di configurazione. Riprova più tardi.',
+        adminTitle: 'Per gli amministratori: cosa manca',
+        adminNoDb:
+          'Le impostazioni del database dell’app non sono configurate: PULSE_DB_NAME, PULSE_DB_USER e PULSE_DB_PWD.',
+        adminNoKey: 'PULSE_MASTER_KEY non è impostata.',
+        adminBadKey:
+          "PULSE_MASTER_KEY è impostata ma non è di 32 byte in base64. Creane una con: node -e \"console.log(require('crypto').randomBytes(32).toString('base64'))\"",
+        adminWhere:
+          'Su Hostinger i sottodomini delle app leggono le impostazioni solo da devquake.env (guida al deployment, “Shared settings file”): aggiungile anche lì, poi riavvia le app (tmp/restart.txt).',
+      },
+      common: {
+        copy: 'Copia',
+        copied: 'Copiato',
+      },
+      home: {
+        title: 'Pulse',
+        intro:
+          'Invia eventi dal tuo sito web o dal tuo server e ogni browser connesso li riceve dal vivo: ordini, messaggi di chat, punteggi, cambi di stato. I dati li decidi tu (le tue chiavi e i tuoi valori); Pulse li consegna in modo sicuro.',
+        apps: 'I tuoi servizi API',
+        empty: 'Ancora nessun servizio API. Creane uno per ottenere le tue chiavi.',
+        paused: 'In pausa',
+        eventsToday: {
+          one: '{n} evento oggi',
+          many: '{n} eventi oggi',
+          other: '{n} eventi oggi',
+        },
+        newTitle: 'Nuovo servizio API',
+        howTitle: 'Come funziona',
+        how1: 'Crea un servizio API: ottieni una chiave pubblica (per le pagine web) e una chiave segreta (per il tuo server).',
+        how2: 'Aggiungi il tuo sito web e dimostra che è tuo con un record DNS, così solo il tuo sito può usare la chiave pubblica.',
+        how3: 'Invia eventi dal tuo server (o, se lo consenti, dai browser) e ascoltali in ogni pagina aperta.',
+        howLink: 'Provalo in 5 minuti: lo scenario del test dal vivo',
+        platformLink: 'Servizio della piattaforma DevQuake (amministratori)',
+        demoTitle: 'Provalo dal vivo',
+        demoBody:
+          'Apri la demo in due browser e guarda un messaggio viaggiare dall’uno all’altro attraverso la vera API di Pulse, con i tempi.',
+        demoOpen: 'Prova la demo',
+      },
+      plan: {
+        title: 'Il tuo piano',
+        names: {
+          trial: 'Prova',
+          standard: 'Abbonato',
+          full: 'Accesso completo',
+          platform: 'Piattaforma DevQuake',
+        },
+        about: {
+          trial:
+            'Stai provando Pulse per 24 ore. Funziona come la versione vera, ma di proposito più lento e più limitato. Iscriviti per usarlo davvero.',
+          standard:
+            'Limiti quotidiani che mantengono il servizio veloce per tutti. Ti serve di più? Chiedici l’accesso completo.',
+          full: 'Accesso completo: limiti molto più alti per l’uso in produzione.',
+          platform:
+            'Nessuna quota: per le app di DevQuake, i suoi amministratori e il suo proprietario.',
+        },
+        limits: {
+          apps: { one: '{n} servizio API', many: '{n} servizi API', other: '{n} servizi API' },
+          connections: {
+            one: '{n} connessione dal vivo per servizio',
+            many: '{n} connessioni dal vivo per servizio',
+            other: '{n} connessioni dal vivo per servizio',
+          },
+          eventsPerDay: {
+            one: '{n} evento al giorno per servizio',
+            many: '{n} eventi al giorno per servizio',
+            other: '{n} eventi al giorno per servizio',
+          },
+          eventsPerMinute: {
+            one: '{n} evento al minuto per servizio',
+            many: '{n} eventi al minuto per servizio',
+            other: '{n} eventi al minuto per servizio',
+          },
+          payloadBytes: {
+            one: 'Dati fino a {n} byte per evento',
+            many: 'Dati fino a {n} byte per evento',
+            other: 'Dati fino a {n} byte per evento',
+          },
+          instant: 'Gli eventi arrivano subito',
+          delayed: {
+            one: 'Gli eventi arrivano con {n} secondo di ritardo',
+            many: 'Gli eventi arrivano con {n} secondi di ritardo',
+            other: 'Gli eventi arrivano con {n} secondi di ritardo',
+          },
+          historyMinutes: {
+            one: 'Eventi persi conservati per {n} minuto',
+            many: 'Eventi persi conservati per {n} minuti',
+            other: 'Eventi persi conservati per {n} minuti',
+          },
+          historyHours: {
+            one: 'Eventi persi conservati per {n} ora',
+            many: 'Eventi persi conservati per {n} ore',
+            other: 'Eventi persi conservati per {n} ore',
+          },
+        },
+        more: 'Stai costruendo qualcosa di più grande? {link} per l’accesso completo.',
+        moreLink: 'Contattaci',
+      },
+      newApp: {
+        name: 'Nome',
+        placeholder: 'es. Ordini del mio negozio',
+        create: 'Crea',
+        creating: 'Creazione…',
+        atLimit: {
+          one: 'Il tuo piano consente {count} servizio API. Eliminane uno o chiedici di più.',
+          many: 'Il tuo piano consente {count} servizi API. Eliminane uno o chiedici di più.',
+          other: 'Il tuo piano consente {count} servizi API. Eliminane uno o chiedici di più.',
+        },
+      },
+      secret: {
+        title: 'La tua chiave segreta',
+        body: 'Copiala ora e tienila solo sul tuo server (mai in una pagina web o in un’app). Viene mostrata solo questa volta; se la perdi, creane una nuova.',
+        done: 'L’ho salvata',
+      },
+      keys: {
+        publicKey: 'Chiave pubblica',
+        publicKeyHint:
+          'Per le tue pagine web. Funziona solo dai tuoi siti web verificati, può solo ascoltare i canali pubblici e, se lo consenti, inviare su di essi.',
+        secretKey: 'Chiave segreta',
+        secretKeyHint:
+          'Solo per il tuo server: può inviare su ogni canale e creare token client. Non la salviamo, quindi non può essere mostrata di nuovo.',
+        rotate: 'Crea una nuova chiave segreta',
+        rotateConfirm:
+          'Creare una nuova chiave segreta? Quella attuale continua a funzionare per 24 ore, così hai il tempo di aggiornare il tuo server.',
+      },
+      origins: {
+        intro:
+          'Solo questi siti web possono usare la tua chiave pubblica. Un sito funziona quando un record DNS dimostra che è tuo, quindi una chiave copiata è inutile sul sito di qualcun altro.',
+        empty: 'Ancora nessun sito web.',
+        verified: 'Verificato',
+        pending: 'In attesa del record DNS',
+        remove: 'Rimuovi',
+        recordIntro:
+          'Aggiungi questo record presso il provider DNS del tuo dominio, poi verificalo qui:',
+        recordType: 'Tipo',
+        recordName: 'Nome',
+        recordValue: 'Valore',
+        recordHint:
+          'Le modifiche DNS possono richiedere qualche minuto (a volte un’ora) per comparire.',
+        check: 'Verifica ora',
+        checking: 'Verifica in corso…',
+        add: 'Aggiungi un sito web',
+        addButton: 'Aggiungi',
+        localhost: 'Consenti localhost (sviluppo)',
+        localhostHint:
+          'Le pagine su http://localhost possono usare la chiave pubblica, per i test sul tuo computer. Disattivalo quando vai online.',
+      },
+      settings: {
+        name: 'Nome',
+        save: 'Salva',
+        browserPublish: 'I browser possono inviare eventi',
+        browserPublishHint:
+          'Le pagine dei tuoi siti web possono inviare eventi ai canali pubblici con la chiave pubblica (chat, voti, presenza). Disattivato: possono inviare solo il tuo server e i token client che lo consentono.',
+        strict: 'Solo eventi descritti',
+        strictHint:
+          'Rifiuta eventi e chiavi che non sono descritti in “La tua struttura dati”. Consigliato quando la tua app è pronta.',
+        paused: 'In pausa',
+        pausedHint: 'Mentre è in pausa non viene inviato né ricevuto nulla.',
+        serverIps: 'Indirizzi dei server (facoltativo)',
+        serverIpsHint:
+          'Se elenchi degli indirizzi IP (uno per riga), la chiave segreta funziona solo da quelli. Lascia vuoto per consentire qualsiasi indirizzo.',
+        deleteTitle: 'Elimina questo servizio API',
+        deleteBody:
+          'Le chiavi smettono subito di funzionare e tutti i suoi eventi, le impostazioni e l’utilizzo vengono eliminati. L’operazione non può essere annullata.',
+        deleteConfirm: 'Scrivi “{name}” per confermare',
+        deleteButton: 'Elimina definitivamente',
+      },
+      types: {
+        intro:
+          'Descrivi i dati di ogni evento: le sue chiavi, se sono testo, numero o sì/no, e quali sono obbligatorie. Pulse controlla poi ogni evento prima di consegnarlo.',
+        empty: 'Ancora nessun evento descritto: qualsiasi chiave è accettata.',
+        name: 'Nome dell’evento',
+        remove: 'Rimuovi evento',
+        fields: 'Chiavi',
+        key: 'Chiave',
+        type: 'Tipo',
+        typeNames: {
+          string: 'Testo',
+          number: 'Numero',
+          boolean: 'Sì/no',
+        },
+        required: 'Obbligatoria',
+        removeField: 'Rimuovi chiave',
+        addField: '+ Aggiungi una chiave',
+        add: 'Descrivi un evento',
+        atLimit: {
+          one: 'Il tuo piano consente {count} evento descritto.',
+          many: 'Il tuo piano consente {count} eventi descritti.',
+          other: 'Il tuo piano consente {count} eventi descritti.',
+        },
+        save: 'Salva',
+        saved: 'Salvato',
+      },
+      app: {
+        back: '← I tuoi servizi API',
+        notFoundTitle: 'Questo servizio API non esiste',
+        paused: 'In pausa',
+        test: 'Test dal vivo',
+        keysTitle: 'Chiavi',
+        originsTitle: 'I tuoi siti web',
+        typesTitle: 'La tua struttura dati',
+        settingsTitle: 'Impostazioni',
+      },
+      quick: {
+        title: 'Usalo nel tuo codice',
+        intro: 'Copia questi esempi; la tua chiave pubblica è già inserita.',
+        browser: 'Pagina web: ascolta (e invia)',
+        server: 'Il tuo server: invia un evento',
+        token: 'Il tuo server: un token client per i canali privati',
+        tokenNote:
+          'I canali che iniziano con “private-” richiedono un token client. Il tuo server ne crea uno per ciascuno dei tuoi utenti (valido fino a un’ora) e la tua pagina lo passa al posto della chiave pubblica.',
+        received: 'Cosa riceve ogni ascoltatore',
+      },
+      usage: {
+        title: 'Utilizzo e sicurezza',
+        openNow: {
+          one: '{count} connessione dal vivo ora (su {max})',
+          many: '{count} connessioni dal vivo ora (su {max})',
+          other: '{count} connessioni dal vivo ora (su {max})',
+        },
+        addresses: {
+          one: 'chiave segreta usata da {count} indirizzo oggi',
+          many: 'chiave segreta usata da {count} indirizzi oggi',
+          other: 'chiave segreta usata da {count} indirizzi oggi',
+        },
+        addressesWarn: {
+          one: 'Oggi la tua chiave segreta è stata usata da {count} indirizzo diverso. Se sono più server di quelli che gestisci, qualcun altro potrebbe averla: crea una nuova chiave segreta.',
+          many: 'Oggi la tua chiave segreta è stata usata da {count} indirizzi diversi. Se sono più server di quelli che gestisci, qualcun altro potrebbe averla: crea una nuova chiave segreta.',
+          other:
+            'Oggi la tua chiave segreta è stata usata da {count} indirizzi diversi. Se sono più server di quelli che gestisci, qualcun altro potrebbe averla: crea una nuova chiave segreta.',
+        },
+        day: 'Giorno',
+        events: 'Eventi',
+        rejected: 'Rifiutati',
+        streams: 'Connessioni',
+        polls: 'Polling',
+        utcNote: 'I giorni sono contati in UTC.',
+        securityTitle: 'Registro di sicurezza',
+        securityEmpty: 'Niente da segnalare.',
+        kinds: {
+          bad_secret: 'È stata usata una chiave segreta errata',
+          bad_token: 'È stato usato un token client non valido',
+          origin_rejected: 'Un sito web che non è tuo ha provato a usare la chiave pubblica',
+          secret_in_browser: 'La chiave segreta è stata usata in una pagina web (rifiutata)',
+          ip_not_allowed:
+            'La chiave segreta è stata usata da un indirizzo che non è nel tuo elenco',
+          secret_rotated: 'È stata creata una nuova chiave segreta',
+        },
+      },
+      calls: {
+        count: { one: '{n} chiamata API', many: '{n} chiamate API', other: '{n} chiamate API' },
+        title: 'Chiamate API',
+        total: {
+          one: '{n} chiamata in totale',
+          many: '{n} chiamate in totale',
+          other: '{n} chiamate in totale',
+        },
+        refused: { one: '{n} rifiutata', many: '{n} rifiutate', other: '{n} rifiutate' },
+        since: 'contate dal {date}',
+        last: 'ultima chiamata {date}',
+        none: 'Ancora nessuna chiamata.',
+        recentTitle: 'Ultime chiamate',
+        recentEmpty:
+          'Il registro delle chiamate è vuoto (viene pulito di tanto in tanto; i totali qui sopra restano).',
+        time: 'Ora',
+        request: 'Richiesta',
+        status: 'Risposta',
+        source: 'Da',
+        duration: 'Durata',
+        ms: '{n} ms',
+        sources: { server: 'server', browser: 'browser', token: 'token client', unknown: '—' },
+      },
+      platform: {
+        metaTitle: 'Servizio della piattaforma DevQuake',
+        title: 'Servizio della piattaforma DevQuake',
+        intro:
+          'Le app e il sito web di DevQuake ricevono i loro aggiornamenti dal vivo tramite questo servizio. Appartiene a DevQuake, non viene mai mostrato ai membri e non ha quote. Solo gli amministratori di DevQuake vedono questa pagina.',
+        migration:
+          'Il servizio della piattaforma richiede la migrazione 0004_pulse_platform.sql nel database di Pulse (e PULSE_MASTER_KEY).',
+        keysTitle: 'Chiavi',
+        publicKey: 'Chiave pubblica',
+        secretHint: 'Chiave segreta: …{hint} (dal {date})',
+        website: {
+          current:
+            'Il sito web ha la chiave segreta attuale (PULSE_PLATFORM_SECRET): gli aggiornamenti dal vivo sono attivi.',
+          previous:
+            'Il sito web ha ancora la chiave segreta precedente. Funziona per 24 ore dopo la creazione di una nuova: inserisci la nuova chiave in PULSE_PLATFORM_SECRET e riavvia i sottodomini delle app.',
+          other:
+            'PULSE_PLATFORM_SECRET non è una chiave di questo servizio: gli aggiornamenti dal vivo sono disattivati. Crea una nuova chiave qui sotto e impostala.',
+          missing:
+            'PULSE_PLATFORM_SECRET non è ancora impostata: gli aggiornamenti dal vivo sono disattivati. Crea una nuova chiave qui sotto, poi aggiungila in hPanel → Variabili d’ambiente e in devquake.env, e riavvia i sottodomini delle app.',
+        },
+        useTitle: 'Utilizzo',
+        eventsToday: 'Eventi oggi',
+        openStreams: 'Connessioni dal vivo aperte',
+        slots: 'Riservate per processo',
+        slotsValue: '{reserved} su {max}',
+        slotsHelp:
+          'Ogni processo del server gestisce un numero limitato di connessioni dal vivo per tutti (PULSE_MAX_STREAMS). I servizi dei membri lasciano queste libere per il servizio della piattaforma; quando sono occupate, le app passano al polling.',
+        rotateTitle: 'Nuova chiave segreta',
+        rotateBody:
+          'La chiave segreta firma i token delle app e permette al sito web di pubblicare. Una nuova chiave viene mostrata una sola volta; quella attuale continua a funzionare per 24 ore.',
+        rotate: 'Crea una nuova chiave segreta',
+        rotateConfirm: 'Sì, crea una nuova chiave',
+        cancel: 'Annulla',
+        newSecret: 'Nuova chiave segreta',
+        newSecretOnce:
+          'Copiala ora: non verrà mostrata di nuovo. Inseriscila in PULSE_PLATFORM_SECRET (hPanel e devquake.env) e riavvia i sottodomini delle app.',
+        created: 'Servizio creato il {date}',
+      },
+      admin: {
+        title: 'Chiamate API: tutti i servizi (amministratori)',
+        intro:
+          'Ogni chiamata all’API per sviluppatori viene registrata e contata. I totali sono tenuti a parte: pulire il registro non li cambia mai.',
+        total: {
+          one: '{n} chiamata in totale',
+          many: '{n} chiamate in totale',
+          other: '{n} chiamate in totale',
+        },
+        refused: { one: '{n} rifiutata', many: '{n} rifiutate', other: '{n} rifiutate' },
+        since: 'dal {date}',
+        entries: {
+          one: '{n} voce nel registro',
+          many: '{n} voci nel registro',
+          other: '{n} voci nel registro',
+        },
+        oldest: 'la più vecchia {date}',
+        autoTitle: 'Pulizia automatica',
+        autoLabel: 'Rimuovi le voci del registro più vecchie di',
+        off: 'Mai (solo pulizia manuale)',
+        days: { one: '{count} giorno', many: '{count} giorni', other: '{count} giorni' },
+        save: 'Salva',
+        saved: 'Salvato.',
+        cleanTitle: 'Pulisci ora',
+        cleanLabel: 'Rimuovi',
+        all: 'L’intero registro',
+        olderThan: {
+          one: 'Voci più vecchie di {count} giorno',
+          many: 'Voci più vecchie di {count} giorni',
+          other: 'Voci più vecchie di {count} giorni',
+        },
+        cleanButton: 'Pulisci il registro…',
+        confirm:
+          'Rimuovere queste voci del registro? L’operazione non può essere annullata; i totali restano.',
+        confirmButton: 'Sì, rimuovi',
+        cancel: 'Annulla',
+        removed: {
+          one: '{count} voce rimossa.',
+          many: '{count} voci rimosse.',
+          other: '{count} voci rimosse.',
+        },
+        lastCleanup: 'Ultima pulizia {date}: {removed} ({how}).',
+        auto: 'automaticamente',
+        manual: 'a mano',
+      },
+      demo: {
+        back: '← Pulse',
+        title: 'Provalo dal vivo',
+        intro:
+          'Un vero giro attraverso Pulse: questa pagina ascolta e invia con la stessa API che userebbe il tuo sito web. Aprila in un secondo browser e invia un messaggio o il tuo JSON dall’uno all’altro.',
+        howTitle: 'Come provarlo',
+        how1: 'Apri questa pagina in un secondo browser (un altro browser su questo computer, una finestra privata o il tuo telefono).',
+        how2: 'Accedi lì allo stesso account DevQuake. Entrambi i browser condividono così il tuo canale demo privato; nessun altro può ascoltare.',
+        how3: 'Invia da uno dei due: l’altro mostra cosa è arrivato e quanto è durato ogni passaggio.',
+        copy: 'Copia il link',
+        copied: 'Copiato!',
+        thisBrowser: 'Questo browser:',
+        status: {
+          starting: 'Connessione…',
+          live: 'Dal vivo (Server-Sent Events)',
+          polling: 'Connesso tramite polling',
+          error: 'Non connesso: {reason}',
+        },
+        otherBrowsers: 'Altri browser visti: {names}',
+        waitingOther: 'In attesa di un messaggio dal tuo altro browser…',
+        sendTitle: 'Invia',
+        modeLabel: 'Cosa inviare',
+        modes: {
+          message: 'Un messaggio',
+          json: 'Il tuo JSON',
+        },
+        message: 'Messaggio',
+        messagePlaceholder: 'Ciao dal mio primo browser!',
+        json: 'Oggetto JSON',
+        jsonHint:
+          'I dati di Pulse sono piatti: chiavi con testo, numeri, true/false o null (niente oggetti o liste all’interno).',
+        problems: {
+          notJson: 'Questo non è ancora un JSON valido.',
+          notObject: 'Incolla un oggetto JSON: { "key": value }.',
+          empty: 'L’oggetto deve avere almeno una chiave.',
+          tooManyKeys: 'Al massimo {max} chiavi.',
+          badKey:
+            'La chiave “{key}” non è consentita: lettere, cifre e _, iniziando con una lettera o _.',
+          reservedKey: '“{key}” viene aggiunta dalla demo; usa un’altra chiave.',
+          nested:
+            '“{key}” contiene un oggetto o una lista. I dati di Pulse sono piatti: usa testo, un numero, true/false o null.',
+          tooLong: 'Il testo di “{key}” supera i {max} caratteri.',
+        },
+        frameTitle: 'Cosa viene inviato',
+        frameHint: 'Le parti bloccate sono fisse; il tuo contenuto va in data.',
+        send: 'Invia al mio altro browser',
+        sending: 'Invio…',
+        sent: 'Inviato come evento #{id} (richiesta {ms} ms).',
+        statsTitle: 'Tempi',
+        stats: {
+          fromOthers: 'Ricevuti dall’altro browser',
+          average: 'Media',
+          endToEnd: 'end-to-end, ms',
+          minMax: 'Più veloce / più lento',
+          msUnit: 'end-to-end, ms',
+          toServer: 'Mittente → server',
+          toHere: 'Server → questo browser',
+          averageShort: 'media',
+          sent: 'Inviati da qui',
+          request: 'richiesta circa {ms} ms',
+          ownRoundTrip: 'Ritorno a questo browser',
+          ownRoundTripHint: 'i tuoi eventi, end-to-end',
+          transport: 'Connessione',
+          sse: 'Dal vivo',
+          polling: 'Polling',
+          lastSize: 'Dimensione dell’ultimo evento',
+        },
+        ms: '{ms} ms',
+        bytes: '{bytes} byte',
+        clockNote:
+          'I tempi sono sull’orologio del server: ogni browser misura prima la sua differenza rispetto al server, così due dispositivi diversi vengono confrontati in modo equo (con pochi millisecondi di scarto).',
+        receivedTitle: 'Ricevuti',
+        receivedEmpty: 'Ancora niente. Invia qualcosa dal tuo altro browser.',
+        fromHere: 'Da questo browser',
+        fromBrowser: 'Dal browser {name}',
+        timing: '→ server {toServer} ms · → qui {toHere} ms · totale {total} ms',
+        chartLabel:
+          'Tempi end-to-end degli ultimi eventi: media {average} ms, il più lento {max} ms',
+        chartAverage: 'media {ms} ms',
+        chartCaption: {
+          one: 'l’ultimo evento, end-to-end',
+          many: 'gli ultimi {count} eventi, end-to-end',
+          other: 'gli ultimi {count} eventi, end-to-end',
+        },
+      },
+      test: {
+        back: '← {name}',
+        title: 'Test dal vivo',
+        intro:
+          'Ascolta i canali qui come farebbe una pagina del tuo sito web e invia eventi con i tuoi dati. Apri questa pagina su un secondo dispositivo per vederli arrivare.',
+        trialNote:
+          'Prova: gli eventi arrivano con {seconds} secondi di ritardo e le connessioni dal vivo sono più brevi. È voluto; gli abbonati li ricevono subito.',
+        secondTitle: 'Provalo con due dispositivi',
+        second1:
+          'Apri questa pagina sul telefono o in una seconda finestra del browser (con l’accesso a DevQuake) e premi Connetti su entrambi.',
+        second2:
+          'Invia un evento da uno: compare sull’altro entro un secondo, con il tempo impiegato.',
+        second3:
+          'Inviane uno dal terminale con la chiave segreta (qui sotto): entrambe le pagine lo ricevono.',
+        curlTitle: 'Terminale (sostituisci $PULSE_SECRET_KEY con la tua chiave segreta)',
+        listen: 'Ascolta',
+        channels: 'Canali',
+        channelsHint:
+          'Separati da virgole, al massimo {max}. I nomi che iniziano con “private-” richiedono il token client.',
+        useToken: 'Usa un token client',
+        useTokenHint:
+          'Come i tuoi utenti con un token del tuo server: consente i canali privati. Viene creato per te un token di prova di 10 minuti.',
+        connect: 'Connetti',
+        disconnect: 'Disconnetti',
+        status: {
+          idle: 'Non connesso',
+          connecting: 'Connessione…',
+          live: 'Dal vivo',
+          polling: 'Connesso (polling)',
+          closed: 'Disconnesso',
+          error: 'Rifiutato: {reason}',
+        },
+        received: 'Ricevuti',
+        receivedEmpty: 'Ancora niente. Connettiti, poi invia un evento.',
+        sources: {
+          server: 'da un server',
+          browser: 'da una pagina web',
+          token: 'da un token client',
+          console: 'dal test dal vivo',
+        },
+        latency: 'dopo {ms} ms',
+        send: 'Invia',
+        channel: 'Canale',
+        event: 'Nome dell’evento',
+        data: 'Dati (le tue chiavi e i tuoi valori)',
+        key: 'Chiave',
+        valueType: 'Tipo',
+        types: {
+          string: 'Testo',
+          number: 'Numero',
+          boolean: 'Sì/no',
+        },
+        value: 'Valore',
+        removePair: 'Rimuovi',
+        addPair: '+ Aggiungi una chiave',
+        sendButton: 'Invia evento',
+        sent: 'Inviato (evento {id})',
+      },
+    },
+    es: {
+      appName: 'Pulse',
+      meta: {
+        home: 'Pulse · API de eventos en tiempo real',
+        app: 'Servicio API',
+        test: 'Prueba en directo',
+        demo: 'Pruébalo en directo',
+      },
+      nav: {
+        fullscreen: 'Pantalla completa',
+        exitFullscreen: 'Salir de pantalla completa',
+        language: 'Idioma',
+        devquake: 'DevQuake',
+        manual: 'Manual',
+      },
+      guard: {
+        signInTitle: 'Inicia sesión para usar Pulse',
+        signInBody: 'Pulse usa tu cuenta de DevQuake. {link} y vuelve aquí.',
+        signInLink: 'Inicia sesión en DevQuake',
+        unavailableTitle: 'No disponible ahora mismo',
+        unavailableBody: 'Pulse se está configurando. Inténtalo de nuevo más tarde.',
+        adminTitle: 'Para administradores: qué falta',
+        adminNoDb:
+          'Los ajustes de la base de datos de la app no están definidos: PULSE_DB_NAME, PULSE_DB_USER y PULSE_DB_PWD.',
+        adminNoKey: 'PULSE_MASTER_KEY no está definida.',
+        adminBadKey:
+          "PULSE_MASTER_KEY está definida pero no tiene 32 bytes en base64. Crea una con: node -e \"console.log(require('crypto').randomBytes(32).toString('base64'))\"",
+        adminWhere:
+          'En Hostinger, los subdominios de las apps leen sus ajustes solo de devquake.env (guía de despliegue, “Shared settings file”): añádelos también allí y reinicia las apps (tmp/restart.txt).',
+      },
+      common: {
+        copy: 'Copiar',
+        copied: 'Copiado',
+      },
+      home: {
+        title: 'Pulse',
+        intro:
+          'Envía eventos desde tu sitio web o tu servidor y cada navegador conectado los recibe en directo: pedidos, mensajes de chat, puntuaciones, cambios de estado. Tú decides los datos (tus propias claves y valores); Pulse los entrega de forma segura.',
+        apps: 'Tus servicios API',
+        empty: 'Aún no hay ningún servicio API. Crea uno para obtener tus claves.',
+        paused: 'En pausa',
+        eventsToday: {
+          one: '{n} evento hoy',
+          many: '{n} eventos hoy',
+          other: '{n} eventos hoy',
+        },
+        newTitle: 'Nuevo servicio API',
+        howTitle: 'Cómo funciona',
+        how1: 'Crea un servicio API: obtienes una clave pública (para páginas web) y una clave secreta (para tu servidor).',
+        how2: 'Añade tu sitio web y demuestra que es tuyo con un registro DNS, para que solo tu sitio pueda usar la clave pública.',
+        how3: 'Envía eventos desde tu servidor (o, si lo permites, desde los navegadores) y escúchalos en cada página abierta.',
+        howLink: 'Pruébalo en 5 minutos: el escenario de la prueba en directo',
+        platformLink: 'Servicio de la plataforma DevQuake (administradores)',
+        demoTitle: 'Pruébalo en directo',
+        demoBody:
+          'Abre la demo en dos navegadores y mira cómo un mensaje viaja de uno a otro a través de la API real de Pulse, con los tiempos.',
+        demoOpen: 'Probar la demo',
+      },
+      plan: {
+        title: 'Tu plan',
+        names: {
+          trial: 'Prueba',
+          standard: 'Suscrito',
+          full: 'Acceso completo',
+          platform: 'Plataforma DevQuake',
+        },
+        about: {
+          trial:
+            'Estás probando Pulse durante 24 horas. Funciona como la versión real, pero más lento y más limitado a propósito. Suscríbete para usarlo de verdad.',
+          standard:
+            'Límites diarios que mantienen el servicio rápido para todos. ¿Necesitas más? Pídenos acceso completo.',
+          full: 'Acceso completo: límites mucho más altos para uso en producción.',
+          platform:
+            'Sin cuotas: para las apps propias de DevQuake, sus administradores y su propietario.',
+        },
+        limits: {
+          apps: { one: '{n} servicio API', many: '{n} servicios API', other: '{n} servicios API' },
+          connections: {
+            one: '{n} conexión en directo por servicio',
+            many: '{n} conexiones en directo por servicio',
+            other: '{n} conexiones en directo por servicio',
+          },
+          eventsPerDay: {
+            one: '{n} evento al día por servicio',
+            many: '{n} eventos al día por servicio',
+            other: '{n} eventos al día por servicio',
+          },
+          eventsPerMinute: {
+            one: '{n} evento por minuto por servicio',
+            many: '{n} eventos por minuto por servicio',
+            other: '{n} eventos por minuto por servicio',
+          },
+          payloadBytes: {
+            one: 'Datos de hasta {n} byte por evento',
+            many: 'Datos de hasta {n} bytes por evento',
+            other: 'Datos de hasta {n} bytes por evento',
+          },
+          instant: 'Los eventos llegan al instante',
+          delayed: {
+            one: 'Los eventos llegan con {n} segundo de retraso',
+            many: 'Los eventos llegan con {n} segundos de retraso',
+            other: 'Los eventos llegan con {n} segundos de retraso',
+          },
+          historyMinutes: {
+            one: 'Eventos perdidos guardados {n} minuto',
+            many: 'Eventos perdidos guardados {n} minutos',
+            other: 'Eventos perdidos guardados {n} minutos',
+          },
+          historyHours: {
+            one: 'Eventos perdidos guardados {n} hora',
+            many: 'Eventos perdidos guardados {n} horas',
+            other: 'Eventos perdidos guardados {n} horas',
+          },
+        },
+        more: '¿Estás creando algo más grande? {link} para obtener acceso completo.',
+        moreLink: 'Contáctanos',
+      },
+      newApp: {
+        name: 'Nombre',
+        placeholder: 'p. ej. Pedidos de mi tienda',
+        create: 'Crear',
+        creating: 'Creando…',
+        atLimit: {
+          one: 'Tu plan permite {count} servicio API. Elimina uno o pídenos más.',
+          many: 'Tu plan permite {count} servicios API. Elimina uno o pídenos más.',
+          other: 'Tu plan permite {count} servicios API. Elimina uno o pídenos más.',
+        },
+      },
+      secret: {
+        title: 'Tu clave secreta',
+        body: 'Cópiala ahora y guárdala solo en tu servidor (nunca en una página web ni en una app). Solo se muestra esta vez; si la pierdes, crea una nueva.',
+        done: 'Ya la he guardado',
+      },
+      keys: {
+        publicKey: 'Clave pública',
+        publicKeyHint:
+          'Para tus páginas web. Solo funciona desde tus sitios web verificados, solo puede escuchar canales públicos y, si lo permites, enviar a ellos.',
+        secretKey: 'Clave secreta',
+        secretKeyHint:
+          'Solo para tu servidor: puede enviar a cualquier canal y crear tokens de cliente. No la guardamos, así que no se puede volver a mostrar.',
+        rotate: 'Crear una nueva clave secreta',
+        rotateConfirm:
+          '¿Crear una nueva clave secreta? La actual sigue funcionando 24 horas, para que puedas actualizar tu servidor a tiempo.',
+      },
+      origins: {
+        intro:
+          'Solo estos sitios web pueden usar tu clave pública. Un sitio funciona cuando un registro DNS demuestra que es tuyo, así que una clave copiada no sirve de nada en el sitio de otra persona.',
+        empty: 'Aún no hay ningún sitio web.',
+        verified: 'Verificado',
+        pending: 'Esperando el registro DNS',
+        remove: 'Quitar',
+        recordIntro: 'Añade este registro en el proveedor DNS de tu dominio y compruébalo aquí:',
+        recordType: 'Tipo',
+        recordName: 'Nombre',
+        recordValue: 'Valor',
+        recordHint: 'Los cambios de DNS pueden tardar unos minutos (a veces una hora) en aparecer.',
+        check: 'Comprobar ahora',
+        checking: 'Comprobando…',
+        add: 'Añadir un sitio web',
+        addButton: 'Añadir',
+        localhost: 'Permitir localhost (desarrollo)',
+        localhostHint:
+          'Las páginas en http://localhost pueden usar la clave pública, para probar en tu ordenador. Desactívalo cuando pases a producción.',
+      },
+      settings: {
+        name: 'Nombre',
+        save: 'Guardar',
+        browserPublish: 'Los navegadores pueden enviar eventos',
+        browserPublishHint:
+          'Las páginas de tus sitios web pueden enviar eventos a canales públicos con la clave pública (chat, votaciones, presencia). Desactivado: solo pueden enviar tu servidor y los tokens de cliente que lo permitan.',
+        strict: 'Solo eventos descritos',
+        strictHint:
+          'Rechaza eventos y claves que no estén descritos en “Tu estructura de datos”. Recomendado cuando tu app esté lista.',
+        paused: 'En pausa',
+        pausedHint: 'Mientras está en pausa no se envía ni se recibe nada.',
+        serverIps: 'Direcciones de servidor (opcional)',
+        serverIpsHint:
+          'Si indicas direcciones IP (una por línea), la clave secreta solo funciona desde ellas. Déjalo vacío para permitir cualquier dirección.',
+        deleteTitle: 'Eliminar este servicio API',
+        deleteBody:
+          'Las claves dejan de funcionar al instante y se eliminan todos sus eventos, ajustes y datos de uso. No se puede deshacer.',
+        deleteConfirm: 'Escribe “{name}” para confirmar',
+        deleteButton: 'Eliminar definitivamente',
+      },
+      types: {
+        intro:
+          'Describe los datos de cada evento: sus claves, si son texto, número o sí/no, y cuáles son obligatorias. Pulse comprueba cada evento antes de entregarlo.',
+        empty: 'Aún no hay ningún evento descrito: se acepta cualquier clave.',
+        name: 'Nombre del evento',
+        remove: 'Quitar evento',
+        fields: 'Claves',
+        key: 'Clave',
+        type: 'Tipo',
+        typeNames: {
+          string: 'Texto',
+          number: 'Número',
+          boolean: 'Sí/no',
+        },
+        required: 'Obligatoria',
+        removeField: 'Quitar clave',
+        addField: '+ Añadir una clave',
+        add: 'Describir un evento',
+        atLimit: {
+          one: 'Tu plan permite {count} evento descrito.',
+          many: 'Tu plan permite {count} eventos descritos.',
+          other: 'Tu plan permite {count} eventos descritos.',
+        },
+        save: 'Guardar',
+        saved: 'Guardado',
+      },
+      app: {
+        back: '← Tus servicios API',
+        notFoundTitle: 'Este servicio API no existe',
+        paused: 'En pausa',
+        test: 'Prueba en directo',
+        keysTitle: 'Claves',
+        originsTitle: 'Tus sitios web',
+        typesTitle: 'Tu estructura de datos',
+        settingsTitle: 'Ajustes',
+      },
+      quick: {
+        title: 'Úsalo en tu código',
+        intro: 'Copia estos ejemplos; tu clave pública ya está puesta.',
+        browser: 'Página web: escuchar (y enviar)',
+        server: 'Tu servidor: enviar un evento',
+        token: 'Tu servidor: un token de cliente para canales privados',
+        tokenNote:
+          'Los canales que empiezan por “private-” necesitan un token de cliente. Tu servidor crea uno para cada uno de tus usuarios (válido hasta una hora) y tu página lo pasa en lugar de la clave pública.',
+        received: 'Lo que recibe cada oyente',
+      },
+      usage: {
+        title: 'Uso y seguridad',
+        openNow: {
+          one: '{count} conexión en directo ahora (de {max})',
+          many: '{count} conexiones en directo ahora (de {max})',
+          other: '{count} conexiones en directo ahora (de {max})',
+        },
+        addresses: {
+          one: 'clave secreta usada desde {count} dirección hoy',
+          many: 'clave secreta usada desde {count} direcciones hoy',
+          other: 'clave secreta usada desde {count} direcciones hoy',
+        },
+        addressesWarn: {
+          one: 'Hoy tu clave secreta se ha usado desde {count} dirección distinta. Si son más servidores de los que tienes, puede que otra persona la tenga: crea una nueva clave secreta.',
+          many: 'Hoy tu clave secreta se ha usado desde {count} direcciones distintas. Si son más servidores de los que tienes, puede que otra persona la tenga: crea una nueva clave secreta.',
+          other:
+            'Hoy tu clave secreta se ha usado desde {count} direcciones distintas. Si son más servidores de los que tienes, puede que otra persona la tenga: crea una nueva clave secreta.',
+        },
+        day: 'Día',
+        events: 'Eventos',
+        rejected: 'Rechazados',
+        streams: 'Conexiones',
+        polls: 'Consultas',
+        utcNote: 'Los días se cuentan en UTC.',
+        securityTitle: 'Registro de seguridad',
+        securityEmpty: 'Nada que informar.',
+        kinds: {
+          bad_secret: 'Se ha usado una clave secreta incorrecta',
+          bad_token: 'Se ha usado un token de cliente no válido',
+          origin_rejected: 'Un sitio web que no es tuyo ha intentado usar la clave pública',
+          secret_in_browser: 'Se ha usado la clave secreta en una página web (rechazada)',
+          ip_not_allowed:
+            'Se ha usado la clave secreta desde una dirección que no está en tu lista',
+          secret_rotated: 'Se ha creado una nueva clave secreta',
+        },
+      },
+      calls: {
+        count: {
+          one: '{n} llamada a la API',
+          many: '{n} llamadas a la API',
+          other: '{n} llamadas a la API',
+        },
+        title: 'Llamadas a la API',
+        total: {
+          one: '{n} llamada en total',
+          many: '{n} llamadas en total',
+          other: '{n} llamadas en total',
+        },
+        refused: { one: '{n} rechazada', many: '{n} rechazadas', other: '{n} rechazadas' },
+        since: 'contadas desde el {date}',
+        last: 'última llamada {date}',
+        none: 'Aún no hay llamadas.',
+        recentTitle: 'Últimas llamadas',
+        recentEmpty:
+          'El registro de llamadas está vacío (se limpia de vez en cuando; los totales de arriba se mantienen).',
+        time: 'Hora',
+        request: 'Solicitud',
+        status: 'Respuesta',
+        source: 'Desde',
+        duration: 'Duración',
+        ms: '{n} ms',
+        sources: {
+          server: 'servidor',
+          browser: 'navegador',
+          token: 'token de cliente',
+          unknown: '—',
+        },
+      },
+      platform: {
+        metaTitle: 'Servicio de la plataforma DevQuake',
+        title: 'Servicio de la plataforma DevQuake',
+        intro:
+          'Las apps y el sitio web propios de DevQuake reciben sus actualizaciones en directo a través de este servicio. Pertenece a DevQuake, nunca se muestra a los miembros y no tiene cuotas. Solo los administradores de DevQuake ven esta página.',
+        migration:
+          'El servicio de la plataforma necesita la migración 0004_pulse_platform.sql en la base de datos de Pulse (y PULSE_MASTER_KEY).',
+        keysTitle: 'Claves',
+        publicKey: 'Clave pública',
+        secretHint: 'Clave secreta: …{hint} (desde el {date})',
+        website: {
+          current:
+            'El sitio web tiene la clave secreta actual (PULSE_PLATFORM_SECRET): las actualizaciones en directo están activadas.',
+          previous:
+            'El sitio web todavía tiene la clave secreta anterior. Funciona durante 24 horas después de crear una nueva: pon la nueva clave en PULSE_PLATFORM_SECRET y reinicia los subdominios de las apps.',
+          other:
+            'PULSE_PLATFORM_SECRET no es una clave de este servicio: las actualizaciones en directo están desactivadas. Crea una nueva clave abajo y defínela.',
+          missing:
+            'PULSE_PLATFORM_SECRET aún no está definida: las actualizaciones en directo están desactivadas. Crea una nueva clave abajo, añádela en hPanel → Variables de entorno y en devquake.env, y reinicia los subdominios de las apps.',
+        },
+        useTitle: 'Uso',
+        eventsToday: 'Eventos hoy',
+        openStreams: 'Conexiones en directo abiertas',
+        slots: 'Reservadas por proceso',
+        slotsValue: '{reserved} de {max}',
+        slotsHelp:
+          'Cada proceso del servidor mantiene un número limitado de conexiones en directo para todos (PULSE_MAX_STREAMS). Los servicios de los miembros dejan estas libres para el servicio de la plataforma; cuando están ocupadas, las apps pasan a usar polling.',
+        rotateTitle: 'Nueva clave secreta',
+        rotateBody:
+          'La clave secreta firma los tokens de las apps y permite que el sitio web publique. Una clave nueva se muestra una sola vez; la actual sigue funcionando 24 horas.',
+        rotate: 'Crear una nueva clave secreta',
+        rotateConfirm: 'Sí, crear una nueva clave',
+        cancel: 'Cancelar',
+        newSecret: 'Nueva clave secreta',
+        newSecretOnce:
+          'Cópiala ahora: no se volverá a mostrar. Ponla en PULSE_PLATFORM_SECRET (hPanel y devquake.env) y reinicia los subdominios de las apps.',
+        created: 'Servicio creado el {date}',
+      },
+      admin: {
+        title: 'Llamadas a la API: todos los servicios (administradores)',
+        intro:
+          'Cada llamada a la API para desarrolladores se registra y se cuenta. Los totales se guardan aparte: limpiar el registro nunca los cambia.',
+        total: {
+          one: '{n} llamada en total',
+          many: '{n} llamadas en total',
+          other: '{n} llamadas en total',
+        },
+        refused: { one: '{n} rechazada', many: '{n} rechazadas', other: '{n} rechazadas' },
+        since: 'desde el {date}',
+        entries: {
+          one: '{n} entrada en el registro',
+          many: '{n} entradas en el registro',
+          other: '{n} entradas en el registro',
+        },
+        oldest: 'la más antigua {date}',
+        autoTitle: 'Limpiar automáticamente',
+        autoLabel: 'Quitar las entradas del registro de más de',
+        off: 'Nunca (solo limpieza manual)',
+        days: { one: '{count} día', many: '{count} días', other: '{count} días' },
+        save: 'Guardar',
+        saved: 'Guardado.',
+        cleanTitle: 'Limpiar ahora',
+        cleanLabel: 'Quitar',
+        all: 'Todo el registro',
+        olderThan: {
+          one: 'Entradas de más de {count} día',
+          many: 'Entradas de más de {count} días',
+          other: 'Entradas de más de {count} días',
+        },
+        cleanButton: 'Limpiar el registro…',
+        confirm:
+          '¿Quitar estas entradas del registro? No se puede deshacer; los totales se mantienen.',
+        confirmButton: 'Sí, quitar',
+        cancel: 'Cancelar',
+        removed: {
+          one: '{count} entrada quitada.',
+          many: '{count} entradas quitadas.',
+          other: '{count} entradas quitadas.',
+        },
+        lastCleanup: 'Última limpieza {date}: {removed} ({how}).',
+        auto: 'automáticamente',
+        manual: 'a mano',
+      },
+      demo: {
+        back: '← Pulse',
+        title: 'Pruébalo en directo',
+        intro:
+          'Un recorrido real por Pulse: esta página escucha y envía con la misma API que usaría tu sitio web. Ábrela en un segundo navegador y envía un mensaje o tu propio JSON de uno a otro.',
+        howTitle: 'Cómo probarlo',
+        how1: 'Abre esta página en un segundo navegador (otro navegador en este ordenador, una ventana privada o tu móvil).',
+        how2: 'Inicia sesión allí con la misma cuenta de DevQuake. Así ambos navegadores comparten tu propio canal de demo privado; nadie más puede escuchar.',
+        how3: 'Envía desde cualquiera de los dos: el otro muestra lo que ha llegado y cuánto ha tardado cada paso.',
+        copy: 'Copiar el enlace',
+        copied: '¡Copiado!',
+        thisBrowser: 'Este navegador:',
+        status: {
+          starting: 'Conectando…',
+          live: 'En directo (Server-Sent Events)',
+          polling: 'Conectado por polling',
+          error: 'No conectado: {reason}',
+        },
+        otherBrowsers: 'Otros navegadores vistos: {names}',
+        waitingOther: 'Esperando un mensaje de tu otro navegador…',
+        sendTitle: 'Enviar',
+        modeLabel: 'Qué enviar',
+        modes: {
+          message: 'Un mensaje',
+          json: 'Tu propio JSON',
+        },
+        message: 'Mensaje',
+        messagePlaceholder: '¡Hola desde mi primer navegador!',
+        json: 'Objeto JSON',
+        jsonHint:
+          'Los datos de Pulse son planos: claves con texto, números, true/false o null (sin objetos ni listas dentro).',
+        problems: {
+          notJson: 'Esto todavía no es un JSON válido.',
+          notObject: 'Pega un objeto JSON: { "key": value }.',
+          empty: 'El objeto necesita al menos una clave.',
+          tooManyKeys: 'Como máximo {max} claves.',
+          badKey:
+            'La clave “{key}” no está permitida: letras, dígitos y _, empezando por una letra o _.',
+          reservedKey: '“{key}” la añade la demo; usa otra clave.',
+          nested:
+            '“{key}” contiene un objeto o una lista. Los datos de Pulse son planos: usa texto, un número, true/false o null.',
+          tooLong: 'El texto de “{key}” supera los {max} caracteres.',
+        },
+        frameTitle: 'Qué se envía',
+        frameHint: 'Las partes bloqueadas son fijas; tu contenido va en data.',
+        send: 'Enviar a mi otro navegador',
+        sending: 'Enviando…',
+        sent: 'Enviado como evento #{id} (solicitud {ms} ms).',
+        statsTitle: 'Tiempos',
+        stats: {
+          fromOthers: 'Recibidos del otro navegador',
+          average: 'Media',
+          endToEnd: 'de extremo a extremo, ms',
+          minMax: 'Más rápido / más lento',
+          msUnit: 'de extremo a extremo, ms',
+          toServer: 'Remitente → servidor',
+          toHere: 'Servidor → este navegador',
+          averageShort: 'media',
+          sent: 'Enviados desde aquí',
+          request: 'solicitud de unos {ms} ms',
+          ownRoundTrip: 'De vuelta a este navegador',
+          ownRoundTripHint: 'tus propios eventos, de extremo a extremo',
+          transport: 'Conexión',
+          sse: 'En directo',
+          polling: 'Polling',
+          lastSize: 'Tamaño del último evento',
+        },
+        ms: '{ms} ms',
+        bytes: '{bytes} bytes',
+        clockNote:
+          'Los tiempos van con el reloj del servidor: cada navegador mide primero su diferencia con el servidor, así que dos dispositivos distintos se comparan de forma justa (con un margen de pocos milisegundos).',
+        receivedTitle: 'Recibidos',
+        receivedEmpty: 'Nada todavía. Envía algo desde tu otro navegador.',
+        fromHere: 'Desde este navegador',
+        fromBrowser: 'Desde el navegador {name}',
+        timing: '→ servidor {toServer} ms · → aquí {toHere} ms · total {total} ms',
+        chartLabel:
+          'Tiempos de extremo a extremo de los últimos eventos: media {average} ms, el más lento {max} ms',
+        chartAverage: 'media {ms} ms',
+        chartCaption: {
+          one: 'el último evento, de extremo a extremo',
+          many: 'los últimos {count} eventos, de extremo a extremo',
+          other: 'los últimos {count} eventos, de extremo a extremo',
+        },
+      },
+      test: {
+        back: '← {name}',
+        title: 'Prueba en directo',
+        intro:
+          'Escucha canales aquí como lo haría una página de tu sitio web y envía eventos con tus propios datos. Abre esta página en un segundo dispositivo para verlos llegar.',
+        trialNote:
+          'Prueba: los eventos llegan con {seconds} segundos de retraso y las conexiones en directo son más cortas. Es a propósito; los suscriptores los reciben al instante.',
+        secondTitle: 'Pruébalo con dos dispositivos',
+        second1:
+          'Abre esta página en tu móvil o en una segunda ventana del navegador (con la sesión de DevQuake iniciada) y pulsa Conectar en ambos.',
+        second2:
+          'Envía un evento desde uno: aparece en el otro en menos de un segundo, con lo que ha tardado.',
+        second3:
+          'Envía uno desde tu terminal con la clave secreta (abajo): ambas páginas lo reciben.',
+        curlTitle: 'Terminal (sustituye $PULSE_SECRET_KEY por tu clave secreta)',
+        listen: 'Escuchar',
+        channels: 'Canales',
+        channelsHint:
+          'Separados por comas, como máximo {max}. Los nombres que empiezan por “private-” necesitan el token de cliente.',
+        useToken: 'Usar un token de cliente',
+        useTokenHint:
+          'Como tus usuarios con un token de tu servidor: permite canales privados. Se crea para ti un token de prueba de 10 minutos.',
+        connect: 'Conectar',
+        disconnect: 'Desconectar',
+        status: {
+          idle: 'No conectado',
+          connecting: 'Conectando…',
+          live: 'En directo',
+          polling: 'Conectado (polling)',
+          closed: 'Desconectado',
+          error: 'Rechazado: {reason}',
+        },
+        received: 'Recibidos',
+        receivedEmpty: 'Nada todavía. Conéctate y envía un evento.',
+        sources: {
+          server: 'desde un servidor',
+          browser: 'desde una página web',
+          token: 'desde un token de cliente',
+          console: 'desde la prueba en directo',
+        },
+        latency: 'tras {ms} ms',
+        send: 'Enviar',
+        channel: 'Canal',
+        event: 'Nombre del evento',
+        data: 'Datos (tus claves y valores)',
+        key: 'Clave',
+        valueType: 'Tipo',
+        types: {
+          string: 'Texto',
+          number: 'Número',
+          boolean: 'Sí/no',
+        },
+        value: 'Valor',
+        removePair: 'Quitar',
+        addPair: '+ Añadir una clave',
+        sendButton: 'Enviar evento',
+        sent: 'Enviado (evento {id})',
       },
     },
   },

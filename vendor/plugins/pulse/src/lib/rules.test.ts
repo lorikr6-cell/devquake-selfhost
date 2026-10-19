@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { flush, route, type EventRow, type Listener } from './hub';
-import { LIMITS, maxStreamsPerProcess, planOf } from './limits';
+import {
+  LIMITS,
+  maxStreamsPerProcess,
+  planOf,
+  platformReservedStreams,
+  streamSlotFree,
+} from './limits';
 import { isLocalOrigin, normaliseOrigin, proofRecordName } from './origins';
 import { Buckets, Once, WindowCounter } from './rate';
 import { serverIps } from './validate';
@@ -39,6 +45,39 @@ describe('plans', () => {
     expect(maxStreamsPerProcess(undefined)).toBe(30);
     expect(maxStreamsPerProcess('80')).toBe(80);
     expect(maxStreamsPerProcess('-1')).toBe(30);
+  });
+
+  it('gives the platform service no quotas and never makes it a member plan (ADR 0063)', () => {
+    const { full, platform } = LIMITS;
+    for (const k of ['connections', 'eventsPerDay', 'eventsPerMinute', 'burst'] as const) {
+      expect(platform[k]).toBeGreaterThanOrEqual(full[k] * 100);
+    }
+    expect(platform.deliveryDelayMs).toBe(0);
+    for (const access of ['member', 'trial', 'none'] as const) {
+      for (const row of [null, 'full', 'platform']) {
+        expect(planOf(access, row, 'platform')).not.toBe('platform');
+      }
+    }
+  });
+
+  it('gives DevQuake staff the platform plan, and only them (ADR 0063)', () => {
+    expect(planOf('member', 'staff')).toBe('platform');
+    expect(planOf('none', 'staff')).toBeNull();
+    expect(planOf('member', 'standard')).toBe('standard');
+    expect(planOf('member', 'full')).toBe('full');
+    expect(planOf('trial', null)).toBe('trial');
+  });
+
+  it('keeps a third of the connection slots free for the platform service', () => {
+    expect(platformReservedStreams(30)).toBe(10);
+    // Members may use 20 of 30 slots while the platform service uses none...
+    expect(streamSlotFree({ open: 19, platformOpen: 0, isPlatform: false, max: 30 })).toBe(true);
+    expect(streamSlotFree({ open: 20, platformOpen: 0, isPlatform: false, max: 30 })).toBe(false);
+    // ...and more once it uses its reserved slots itself.
+    expect(streamSlotFree({ open: 25, platformOpen: 10, isPlatform: false, max: 30 })).toBe(true);
+    // The platform service may use every slot; nobody goes above the process cap.
+    expect(streamSlotFree({ open: 29, platformOpen: 0, isPlatform: true, max: 30 })).toBe(true);
+    expect(streamSlotFree({ open: 30, platformOpen: 30, isPlatform: true, max: 30 })).toBe(false);
   });
 });
 

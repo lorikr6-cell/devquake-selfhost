@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'store',
     name: 'Store',
-    version: '0.9.0',
+    version: '0.13.0',
     description:
       'A lightweight shop: products of any type with their own fields, vendors, campaigns, vouchers, announcements and newsletters, reviews, product comparison, QR codes and sharing, the shop’s own design, automatic discounts, a team with several roles per member and a task board, maintenance mode, the shop in any language, buyer accounts with messages and order history, statistics, card (Stripe), PayPal, bank transfer or cash on delivery, and pages search engines can index.',
     status: 'active',
@@ -78,6 +78,8 @@ export default definePlugin({
           de: 'Um dein Konto im Shop mit deiner E-Mail-Adresse anzulegen, damit dich Bestellungen, Nachrichten und Bestell-E-Mails erreichen, ohne dass du dich neu registrierst.',
           ro: 'Ca să-ți facă un cont în magazin cu adresa ta de e-mail, ca să primești comenzile, mesajele și e-mailurile despre comenzi fără să te înregistrezi din nou.',
           hu: 'Hogy az e-mail-címeddel hozza létre a fiókodat a boltban, így a rendeléseid, üzeneteid és a rendelési e-mailek újabb regisztráció nélkül eljutnak hozzád.',
+          it: 'Per creare il tuo account nel negozio con il tuo indirizzo email, così ordini, messaggi ed email sugli ordini ti raggiungono senza doverti registrare di nuovo.',
+          es: 'Para crear tu cuenta en la tienda con tu dirección de email, de modo que tus pedidos, mensajes y emails de pedidos te lleguen sin volver a registrarte.',
         },
       },
     ],

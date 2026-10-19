@@ -1,5 +1,9 @@
 # Änderungen — Darts
 
+## 0.7.0
+
+- Die App gibt es jetzt auch auf Italienisch und Spanisch: Wähle die Sprache oben auf der Seite.
+
 ## 0.6.2
 
 - Wenn ein Mitglied sein DevQuake-Konto entfernt, bleibt, was es zu deinen Dingen beigetragen hat (Kommentare, Einträge, Häkchen, Fotos …), statt mit seinem Namen als „REMOVED_…“.
@@ -12,7 +16,7 @@
 
 - Die Karte der App auf DevQuake und ihre Startseite zeigen jetzt, wie viele Mitglieder sie nutzen, und ihre Zahlen: Beendete Spiele, Turniere.
 
-0.5.2
+## 0.5.2
 
 - Wer die App noch nicht nutzt, sieht jetzt auf ihrer Startseite, was sie kann, mit einem Link zum Benutzerhandbuch, und geteilte Links zeigen das eigene Bild der App.
 

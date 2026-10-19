@@ -112,6 +112,14 @@ export default async function Home({ ctx }: PluginPageProps) {
         <CallLogAdmin totals={adminData[0]} log={adminData[1]} timeZone={ctx.timeZone ?? 'UTC'} />
       ) : null}
 
+      {user.isAdmin ? (
+        <p className="text-sm">
+          <Link href="/platform" className="font-medium text-quake underline">
+            {t('platformLink')}
+          </Link>
+        </p>
+      ) : null}
+
       <Panel title={t('howTitle')}>
         <ol className="list-decimal space-y-2 pl-5 text-sm">
           <li>{t('how1')}</li>

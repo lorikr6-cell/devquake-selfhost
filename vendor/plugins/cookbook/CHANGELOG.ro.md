@@ -1,5 +1,9 @@
 # Modificări — Carte de bucate
 
+## 0.7.0
+
+- Aplicația este acum și în italiană și spaniolă: alege limba din partea de sus a paginii.
+
 ## 0.6.1
 
 - Notificări: pe ecranele mari lista se deschide acum chiar sub clopoțel; pe telefoane și tablete rămâne în centrul ecranului. Încape mereu pe ecran: titlul rămâne vizibil și doar lista se derulează.
@@ -31,7 +35,7 @@
 
 - Cardul aplicației pe DevQuake și pagina ei de start arată acum câți membri o folosesc și totalurile ei: rețete, recomandări.
 
-0.1.0
+## 0.1.0
 
 - O bibliotecă de început cu rețete scrise pentru DevQuake, în engleză, germană, română și maghiară, de la shakshuka la supa gulaș.
 - Alegi porțiile și fiecare cantitate se recalculează: ouăle rămân întregi, condimentele cresc mai puțin, cantitățile se rotunjesc pentru bucătărie. Metric sau imperial.

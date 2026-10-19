@@ -211,7 +211,7 @@ export function ViewOnlySwitch({
   viewOnly: boolean;
 }) {
   const t = useT('share');
-  const { busy, error, act } = useAction();
+  const { busy, error, act, toast } = useAction();
   return (
     <div className="mt-2 space-y-1">
       <label className="flex items-start gap-2 text-sm">
@@ -220,13 +220,15 @@ export function ViewOnlySwitch({
           className="mt-0.5 size-4 accent-quake"
           checked={viewOnly}
           disabled={busy}
-          onChange={(e) =>
-            act(() =>
-              callApi(`/utilities/${utilityId}/members/${userId}`, 'PATCH', {
-                viewOnly: e.target.checked,
-              }),
-            )
-          }
+          onChange={(e) => {
+            // Saved at once, and said so (DevQuake's rule for standalone checkboxes).
+            const on = e.target.checked;
+            void act(() =>
+              callApi(`/utilities/${utilityId}/members/${userId}`, 'PATCH', { viewOnly: on }),
+            ).then((ok) => {
+              if (ok) toast(t(on ? 'viewOnlyOn' : 'viewOnlyOff'));
+            });
+          }}
         />
         <span>
           <span className="block font-medium">{t('viewOnly')}</span>

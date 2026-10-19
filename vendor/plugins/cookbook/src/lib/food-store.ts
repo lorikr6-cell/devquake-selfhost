@@ -31,6 +31,9 @@ export interface FoodRow {
   name_de: string;
   name_ro: string;
   name_hu: string;
+  /** Migration 0007; NULL until the app fills them for built-in foods, absent before 0007. */
+  name_it?: string | null;
+  name_es?: string | null;
   kcal: number | string;
   protein: number | string;
   carbs: number | string;
@@ -57,6 +60,8 @@ export const FOOD_COLUMNS = [
   'name_de',
   'name_ro',
   'name_hu',
+  'name_it',
+  'name_es',
   'kcal',
   'protein',
   'carbs',
@@ -73,6 +78,10 @@ export const FOOD_COLUMNS = [
 const COLUMNS = FOOD_COLUMNS.join(', ');
 /** Read with the chosen picture (written separately: lib/food-photos.ts). */
 const READ_COLUMNS = `${COLUMNS}, photo_id`;
+/** The columns before migration 0007 (no Italian or Spanish name yet). */
+const OLD_COLUMNS = FOOD_COLUMNS.filter((c) => c !== 'name_it' && c !== 'name_es').join(', ');
+
+const BUILT_IN = new Map(FOODS.map((f) => [f.id, f]));
 
 /** A database row as a food; null when it is not usable (unknown kind, icon or origin). */
 export function foodFromRow(r: FoodRow): Food | null {
@@ -92,11 +101,21 @@ export function foodFromRow(r: FoodRow): Food | null {
     grams = undefined;
   }
   const allergens = (r.allergens ?? '').split(',').filter(isAllergen);
+  // Italian and Spanish names that are not in the table yet (before migration 0007, or until the
+  // app fills them) come from the built-in list; English for foods staff added.
+  const builtIn = BUILT_IN.get(r.id);
   const food: Food = {
     id: r.id,
     kind: r.kind as FoodKind,
     icon: r.icon as FoodIcon,
-    name: { en: r.name_en, de: r.name_de, ro: r.name_ro, hu: r.name_hu },
+    name: {
+      en: r.name_en,
+      de: r.name_de,
+      ro: r.name_ro,
+      hu: r.name_hu,
+      it: r.name_it || builtIn?.name.it || r.name_en,
+      es: r.name_es || builtIn?.name.es || r.name_en,
+    },
     per100: {
       kcal: Number(r.kcal),
       protein: Number(r.protein),
@@ -128,6 +147,8 @@ export function rowValues(f: Food): unknown[] {
     f.name.de,
     f.name.ro,
     f.name.hu,
+    f.name.it,
+    f.name.es,
     f.per100.kcal,
     f.per100.protein,
     f.per100.carbs,
@@ -156,11 +177,13 @@ export async function loadFoods(db: PluginDatabase | null | undefined, fresh = f
   if (loading) return loading;
   loading = (async () => {
     try {
-      // Without migration 0004 there is no photo_id yet: read the rest.
+      // Without migration 0004 there is no photo_id yet, without 0007 no name_it/name_es: read
+      // the rest.
       const read = () =>
         db
           .query<FoodRow>(`SELECT ${READ_COLUMNS} FROM foods`)
-          .catch(() => db.query<FoodRow>(`SELECT ${COLUMNS} FROM foods`));
+          .catch(() => db.query<FoodRow>(`SELECT ${OLD_COLUMNS}, photo_id FROM foods`))
+          .catch(() => db.query<FoodRow>(`SELECT ${OLD_COLUMNS} FROM foods`));
       let rows = await read();
       const have = new Set(rows.map((r) => r.id));
       const missing = FOODS.filter((f) => !have.has(f.id));
@@ -169,6 +192,15 @@ export async function loadFoods(db: PluginDatabase | null | undefined, fresh = f
           await db.execute(`INSERT IGNORE INTO foods (${COLUMNS}) VALUES (${MARKS})`, rowValues(f));
         }
         rows = await read();
+      }
+      // Built-in foods from before migration 0007 get their Italian and Spanish names once.
+      for (const r of rows) {
+        const f = BUILT_IN.get(r.id);
+        if (!f || (r.name_it !== null && r.name_es !== null)) continue;
+        await db.execute(
+          'UPDATE foods SET name_it = COALESCE(name_it, ?), name_es = COALESCE(name_es, ?) WHERE id = ?',
+          [f.name.it, f.name.es, f.id],
+        );
       }
       setFoodCatalogue(rows.flatMap((r) => foodFromRow(r) ?? []));
       loadedAt = Date.now();
@@ -200,6 +232,7 @@ export async function updateFood(db: PluginDatabase, food: Food): Promise<void> 
   await db.execute(
     `UPDATE foods
         SET kind = ?, icon = ?, colour = ?, name_en = ?, name_de = ?, name_ro = ?, name_hu = ?,
+            name_it = ?, name_es = ?,
             kcal = ?, protein = ?, carbs = ?, fat = ?, fibre = ?, salt = ?, grams = ?,
             density = ?, allergens = ?, origin = ?, is_spice = ?, is_active = ?
       WHERE id = ?`,

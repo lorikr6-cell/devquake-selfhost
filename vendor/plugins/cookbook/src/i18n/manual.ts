@@ -643,4 +643,314 @@ const hu: Manual = {
   back: '← Vissza a receptekhez',
 };
 
-export const MANUAL: Record<Locale, Manual> = { en, de, ro, hu };
+const it: Manual = {
+  metaTitle: 'Manuale d’uso · Ricettario',
+  metaDescription:
+    'Come usare il Ricettario: adatta le ricette a qualsiasi numero di persone, leggi valori nutrizionali e allergeni, cucina passo dopo passo con timer e una voce, e scrivi e condividi le tue ricette.',
+  ogTitle: 'Ricettario: manuale d’uso',
+  cta: 'Vuoi provarlo? Il Ricettario è un’app per i membri di DevQuake. {link}, poi abbonati all’app.',
+  ctaLink: 'Crea un account o accedi',
+  kicker: 'Ricettario · Manuale d’uso',
+  title: 'Come cucinare con il Ricettario',
+  intro:
+    'Il Ricettario ha ricette che si adattano alle persone a tavola: scegli le porzioni e ogni quantità e i valori nutrizionali per porzione si aggiornano. Questo manuale ti guida passo dopo passo.',
+  contents: 'Indice',
+  sections: [
+    {
+      id: 'start',
+      title: '1. Per iniziare',
+      blocks: [
+        {
+          steps: [
+            'Accedi su {host} (oppure crea un account e conferma la tua email).',
+            'Apri **Il tuo account → Progetti disponibili** e **abbonati** a “Ricettario”.',
+            'Apri l’app: la **Raccolta** contiene le ricette di base di DevQuake; **Le mie ricette**, **Condivise con me** e **Preferiti** sono tuoi.',
+          ],
+        },
+        {
+          p: 'Cerca per nome e filtra per **dieta** e **tempo** (per esempio piatti vegetariani pronti in 30 minuti).',
+        },
+      ],
+    },
+    {
+      id: 'servings',
+      title: '2. Porzioni e unità',
+      blocks: [
+        {
+          p: 'In una ricetta, tocca **−** e **+** per scegliere le porzioni. Ogni quantità viene ricalcolata con buon senso da cucina:',
+        },
+        {
+          list: [
+            '**Uova, pezzi e lattine restano interi**: mai mezzo uovo.',
+            '**Sale e spezie aumentano meno** del resto, così una pentola grande non risulta troppo saporita.',
+            'Alcuni ingredienti **restano uguali** (una foglia di alloro, l’olio per la padella).',
+            'Le quantità vengono arrotondate: i grammi a 5 sopra i 100, i cucchiai ai quarti.',
+          ],
+        },
+        {
+          p: 'Passa da **Metrico** a **Imperiale** (once, libbre, once liquide); l’app ricorda la tua scelta.',
+        },
+      ],
+    },
+    {
+      id: 'nutrition',
+      title: '3. Valori nutrizionali, diete e allergeni',
+      blocks: [
+        {
+          p: 'Il riquadro **Per porzione** mostra energia, proteine, carboidrati, grassi, fibre e sale, calcolati dagli ingredienti (valori approssimativi da banche dati alimentari aperte).',
+        },
+        {
+          list: [
+            '**Adatta a** mostra le diete con il motivo, per esempio “28 g di proteine per porzione (almeno 25 g)”. Ricco di proteine, meno carboidrati e veloce sono calcolati dai numeri.',
+            'Le diete indicate dall’autore vengono mostrate solo se gli ingredienti lo confermano: un piatto “vegetariano” con il pollo perde l’etichetta.',
+            '**Allergeni** elenca i 14 allergeni UE trovati negli ingredienti.',
+          ],
+        },
+        {
+          tip: 'Le etichette delle diete non sono consigli medici. In caso di allergia o di una condizione medica, controlla ogni ingrediente e la confezione.',
+        },
+      ],
+    },
+    {
+      id: 'cook',
+      title: '4. Modalità cucina',
+      blocks: [
+        {
+          p: 'Tocca **Inizia a cucinare**: un passaggio per schermata a caratteri grandi, e lo schermo resta acceso.',
+        },
+        {
+          list: [
+            'I passaggi con un tempo hanno un **timer**: avvia, metti in pausa, azzera; suona e vibra quando il tempo è scaduto.',
+            'Tocca **Leggi i passaggi ad alta voce** e ogni passaggio viene letto nella tua lingua quando vai avanti.',
+            'Usa **Avanti** e **Indietro**, o i tasti freccia della tastiera.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'own',
+      title: '5. Le tue ricette',
+      blocks: [
+        {
+          p: 'Scrivere una ricetta richiede quattro brevi passaggi, e l’editor ti aiuta in ognuno:',
+        },
+        {
+          list: [
+            '**Base**: il nome, per quante persone, i tempi di preparazione e cottura, e l’**attrezzatura** (tocca un suggerimento come padella o forno).',
+            '**Ingredienti**: quantità, unità e nome, e **come prepararlo** (tritato, grattugiato). L’editor propone di collegare ognuno alla tabella nutrizionale.',
+            '**Passaggi**: un’azione per passaggio, con la sua **fase** (preparazione, cottura, servizio). Gli ingredienti usati in un passaggio vengono trovati nel testo (tocca per cambiarli), e un tempo nel testo (“20 minuti”) propone un timer.',
+            '**Controllo**: una lista di ciò che serve agli altri per cucinarla. Le voci obbligatorie permettono di renderla pubblica; le altre sono consigli.',
+          ],
+        },
+        {
+          p: 'Le tue ricette sono **private**. Un **link di condivisione** ne mostra una alle persone che scegli; una ricetta **pubblica** è per tutti quelli che usano il Ricettario.',
+        },
+        {
+          p: 'Un **link pubblico** (nella pagina della ricetta) permette a chiunque di aprire la ricetta, anche senza un account DevQuake: condividilo su Facebook, WhatsApp, Pinterest e altri. Mostra la ricetta, la sua foto e il tuo nome, i motori di ricerca non lo elencano, e **Disattiva il link pubblico** lo spegne.',
+        },
+      ],
+    },
+    {
+      id: 'community',
+      title: '6. Ricette pubbliche, consigli e commenti',
+      blocks: [
+        {
+          p: 'Rendi **pubblica** una ricetta dalla sua pagina (o quando la salvi) dopo aver completato le voci obbligatorie della lista. Compare sotto **Community** per tutti quelli che usano il Ricettario, prima le più consigliate.',
+        },
+        {
+          list: [
+            '**Consiglia** una ricetta che ti è piaciuta, come un “mi piace”; tocca di nuovo per ritirarlo. Non puoi consigliare le tue.',
+            'Lascia un **commento** se vuoi. L’autore riceve una notifica e lo trova tra i suoi **messaggi** su DevQuake (Account → Messaggi), con la ricetta, la data e le tue parole; lo vede anche sotto **Commenti** nell’app.',
+            'Ogni **100 consigli** di una ricetta pubblica fanno guadagnare al suo autore **un punto NPS**.',
+          ],
+        },
+        {
+          tip: '**Rendi privata** nasconde di nuovo la ricetta; i suoi consigli e commenti restano per quando tornerà pubblica.',
+        },
+      ],
+    },
+    {
+      id: 'apps',
+      title: '7. Con le tue altre app',
+      blocks: [
+        {
+          list: [
+            '**Liste della spesa**: una volta collegate, spunta ciò che hai già e metti il resto degli ingredienti, per le porzioni scelte, in una lista della spesa in un solo passaggio.',
+            '**Pianificatore dei pasti**: pianifica la tua settimana con le ricette del tuo ricettario e le trasforma in un’unica lista della spesa.',
+          ],
+        },
+        {
+          p: 'I collegamenti si fanno una volta su DevQuake (**Funziona con** in fondo a ogni pagina) e si possono rimuovere in **Account → App collegate**.',
+        },
+      ],
+    },
+    {
+      id: 'privacy',
+      title: '8. I tuoi dati',
+      blocks: [
+        {
+          p: 'Se elimini il tuo account o annulli l’abbonamento, le tue ricette, foto, link di condivisione e preferiti vengono eliminati.',
+        },
+      ],
+    },
+  ],
+  questions: 'Domande o idee? Scrivi a {email}.',
+  back: '← Torna alle ricette',
+};
+
+const es: Manual = {
+  metaTitle: 'Manual de uso · Recetario',
+  metaDescription:
+    'Cómo usar el Recetario: adapta recetas a cualquier número de personas, consulta valores nutricionales y alérgenos, cocina paso a paso con temporizadores y una voz, y escribe y comparte tus propias recetas.',
+  ogTitle: 'Recetario: manual de uso',
+  cta: '¿Quieres probarlo? El Recetario es una app para miembros de DevQuake. {link} y luego suscríbete a la app.',
+  ctaLink: 'Crea una cuenta o inicia sesión',
+  kicker: 'Recetario · Manual de uso',
+  title: 'Cómo cocinar con el Recetario',
+  intro:
+    'El Recetario tiene recetas que se adaptan a las personas que se sientan a la mesa: elige las raciones y cada cantidad y los valores nutricionales por ración se ajustan. Este manual te guía paso a paso.',
+  contents: 'Contenido',
+  sections: [
+    {
+      id: 'start',
+      title: '1. Primeros pasos',
+      blocks: [
+        {
+          steps: [
+            'Inicia sesión en {host} (o crea una cuenta y confirma tu correo electrónico).',
+            'Abre **Tu cuenta → Proyectos disponibles** y **suscríbete** a “Recetario”.',
+            'Abre la app: la **Biblioteca** tiene las recetas de inicio de DevQuake; **Mis recetas**, **Compartidas conmigo** y **Favoritas** son tuyas.',
+          ],
+        },
+        {
+          p: 'Busca por nombre y filtra por **dieta** y **tiempo** (por ejemplo, platos vegetarianos listos en 30 minutos).',
+        },
+      ],
+    },
+    {
+      id: 'servings',
+      title: '2. Raciones y unidades',
+      blocks: [
+        {
+          p: 'En una receta, toca **−** y **+** para elegir las raciones. Cada cantidad se recalcula con sentido común de cocina:',
+        },
+        {
+          list: [
+            '**Los huevos, las piezas y las latas siguen enteros**: nunca medio huevo.',
+            '**La sal y las especias aumentan menos** que el resto, para que una olla grande no quede demasiado sazonada.',
+            'Algunos ingredientes **no cambian** (una hoja de laurel, el aceite para la sartén).',
+            'Las cantidades se redondean: los gramos de 5 en 5 por encima de 100, las cucharadas a cuartos.',
+          ],
+        },
+        {
+          p: 'Cambia entre **Métrico** e **Imperial** (onzas, libras, onzas líquidas); la app recuerda tu elección.',
+        },
+      ],
+    },
+    {
+      id: 'nutrition',
+      title: '3. Valores nutricionales, dietas y alérgenos',
+      blocks: [
+        {
+          p: 'El panel **Por ración** muestra energía, proteínas, hidratos de carbono, grasas, fibra y sal, calculados a partir de los ingredientes (valores aproximados de bases de datos de alimentos abiertas).',
+        },
+        {
+          list: [
+            '**Encaja con** muestra las dietas con el motivo, por ejemplo “28 g de proteína por ración (al menos 25 g)”. Alto en proteínas, menos hidratos y rápido se calculan a partir de los números.',
+            'Las dietas que marcó el autor solo se muestran si los ingredientes coinciden: un plato “vegetariano” con pollo pierde la etiqueta.',
+            '**Alérgenos** enumera los 14 alérgenos de la UE encontrados en los ingredientes.',
+          ],
+        },
+        {
+          tip: 'Las etiquetas de dieta no son consejo médico. Si tienes una alergia o una enfermedad, revisa cada ingrediente y el envase.',
+        },
+      ],
+    },
+    {
+      id: 'cook',
+      title: '4. Modo cocina',
+      blocks: [
+        {
+          p: 'Toca **Empezar a cocinar**: un paso por pantalla en letra grande, y la pantalla no se apaga.',
+        },
+        {
+          list: [
+            'Los pasos con un tiempo tienen un **temporizador**: iniciar, pausar, reiniciar; pita y vibra cuando se acaba el tiempo.',
+            'Toca **Leer los pasos en voz alta** y cada paso se lee en tu idioma cuando avanzas.',
+            'Usa **Siguiente** y **Atrás**, o las teclas de flecha del teclado.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'own',
+      title: '5. Tus propias recetas',
+      blocks: [
+        {
+          p: 'Escribir una receta lleva cuatro pasos cortos, y el editor te ayuda en cada uno:',
+        },
+        {
+          list: [
+            '**Básicos**: el nombre, para cuántas personas, el tiempo de preparación y de cocción, y los **utensilios** (toca una sugerencia como sartén u horno).',
+            '**Ingredientes**: cantidad, unidad y nombre, y **cómo prepararlo** (picado, rallado). El editor ofrece vincular cada uno a la tabla nutricional.',
+            '**Pasos**: una acción por paso, con su **fase** (preparar, cocinar, servir). Los ingredientes que usa un paso se detectan en su texto (toca para cambiarlos), y un tiempo en el texto (“20 minutos”) ofrece un temporizador.',
+            '**Revisión**: una lista de lo que otros necesitan para cocinarla. Los puntos obligatorios permiten hacerla pública; el resto son consejos.',
+          ],
+        },
+        {
+          p: 'Tus recetas son **privadas**. Un **enlace para compartir** muestra una a las personas que elijas; una receta **pública** es para todos los que usan el Recetario.',
+        },
+        {
+          p: 'Un **enlace público** (en la página de la receta) permite a cualquiera abrir la receta, también sin cuenta de DevQuake: compártelo en Facebook, WhatsApp, Pinterest y más. Muestra la receta, su foto y tu nombre, los buscadores no lo indexan, y **Desactivar el enlace público** lo apaga.',
+        },
+      ],
+    },
+    {
+      id: 'community',
+      title: '6. Recetas públicas, recomendaciones y comentarios',
+      blocks: [
+        {
+          p: 'Haz **pública** una receta desde su página (o al guardarla) cuando los puntos obligatorios de la lista estén hechos. Aparece en **Comunidad** para todos los que usan el Recetario, primero las más recomendadas.',
+        },
+        {
+          list: [
+            '**Recomienda** una receta que te haya gustado, como un “me gusta”; toca otra vez para retirarlo. No puedes recomendar las tuyas.',
+            'Deja un **comentario** si quieres. El autor recibe una notificación y lo encuentra en sus **mensajes** de DevQuake (Cuenta → Mensajes), con la receta, la fecha y tus palabras; también lo ve en **Comentarios** dentro de la app.',
+            'Cada **100 recomendaciones** de una receta pública le dan a su autor **un punto NPS**.',
+          ],
+        },
+        {
+          tip: '**Hacer privada** vuelve a ocultar la receta; sus recomendaciones y comentarios se conservan para cuando vuelva a ser pública.',
+        },
+      ],
+    },
+    {
+      id: 'apps',
+      title: '7. Con tus otras apps',
+      blocks: [
+        {
+          list: [
+            '**Listas de la compra**: una vez conectadas, marca lo que ya tienes y pon el resto de los ingredientes, para las raciones elegidas, en una lista de la compra en un solo paso.',
+            '**Planificador de comidas**: planifica tu semana con recetas de tu recetario y las convierte en una sola lista de la compra.',
+          ],
+        },
+        {
+          p: 'Las conexiones se hacen una vez en DevQuake (**Funciona con** al pie de cada página) y se pueden quitar en **Cuenta → Apps conectadas**.',
+        },
+      ],
+    },
+    {
+      id: 'privacy',
+      title: '8. Tus datos',
+      blocks: [
+        {
+          p: 'Si eliminas tu cuenta o cancelas la suscripción, se eliminan tus recetas, fotos, enlaces para compartir y favoritas.',
+        },
+      ],
+    },
+  ],
+  questions: '¿Preguntas o ideas? Escribe a {email}.',
+  back: '← Volver a las recetas',
+};
+
+export const MANUAL: Record<Locale, Manual> = { en, de, ro, hu, it, es };

@@ -133,7 +133,14 @@ describe('loading from the database', () => {
 
 describe('what staff save', () => {
   const body = {
-    name: { en: 'quail eggs', de: 'Wachteleier', ro: 'ouă de prepeliță', hu: 'fürjtojás' },
+    name: {
+      en: 'quail eggs',
+      de: 'Wachteleier',
+      ro: 'ouă de prepeliță',
+      hu: 'fürjtojás',
+      it: 'uova di quaglia',
+      es: 'huevos de codorniz',
+    },
     kind: 'egg',
     icon: 'egg',
     colour: '#E8D8C0',

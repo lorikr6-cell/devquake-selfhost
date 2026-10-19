@@ -25,6 +25,7 @@ WORKDIR /app
 RUN addgroup -S app && adduser -S app -G app && mkdir -p /data && chown app:app /data
 COPY --from=build --chown=app:app /repo/shell/.next/standalone ./
 COPY --from=build --chown=app:app /repo/shell/.next/static ./shell/.next/static
+COPY --from=build --chown=app:app /repo/shell/public ./shell/public
 USER app
 EXPOSE 3000
 VOLUME ["/data"]

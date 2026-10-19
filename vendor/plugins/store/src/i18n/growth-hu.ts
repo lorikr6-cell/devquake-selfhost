@@ -634,6 +634,7 @@ export const growthHu: MessagesOf<typeof growthEn> = {
   },
   shop: {
     shopNav: 'A bolt',
+    returnBack: 'Vissza',
     account: 'Fiók',
     compare: 'Összehasonlítás',
     categories: 'Kategóriák',

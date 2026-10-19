@@ -1,5 +1,9 @@
 # Jurnal de modificări — Cheltuieli comune
 
+## 0.3.0
+
+- Aplicația este acum și în italiană și spaniolă: alege limba din partea de sus a paginii.
+
 ## 0.2.0
 
 - Facturile de utilități și listele de cumpărături pot adăuga acum cheltuieli în grupurile tale: o factură cu partea exactă a fiecăruia sau ce s-a cumpărat de pe o listă, împărțit egal. Aceeași factură sau listă adăugată de două ori nu schimbă nimic, iar cheltuiala arată de unde vine, cu un link înapoi.

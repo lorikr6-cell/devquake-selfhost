@@ -4,7 +4,7 @@ import { ApiError, corsHeaders, mayListen, preflight } from '../../lib/gateway';
 import { hub, type Listener } from '../../lib/hub';
 import { randomId } from '../../lib/keys';
 import { keyApi } from '../../lib/key-api';
-import { maxStreamsPerProcess } from '../../lib/limits';
+import { streamSlotFree } from '../../lib/limits';
 
 // GET https://pulse.devquake.com/api/v1/stream?key=pk_…&channels=a,b[&token=…] — live events as
 // Server-Sent Events (key route, ADR 0023). Every message is one event envelope (JSON), with its
@@ -15,14 +15,32 @@ export const OPTIONS = preflight;
 
 const HEARTBEAT_MS = 15_000;
 
+/** The platform service's live connections in this process (its id is cached). */
+let platformId: number | null | undefined;
+async function platformStreams(db: Parameters<typeof hub.latestId>[0]): Promise<number> {
+  if (platformId === undefined) {
+    const rows = await db
+      .query<{ id: number }>('SELECT id FROM apps WHERE platform = 1 ORDER BY id LIMIT 1')
+      .catch(() => []); // before migration 0004
+    platformId = rows[0]?.id ?? null;
+    if (platformId === null) platformId = undefined; // look again next time
+  }
+  return platformId ? hub.openFor(platformId) : 0;
+}
+
 export const GET = keyApi(async ({ request, db, caller, query }) => {
   const { entry, limits } = caller;
   const channels = parseChannels(query.get('channels'), limits.channelsPerConnection);
   if (!channels) throw new ApiError(400, 'invalid_channels');
   if (!channels.every((c) => mayListen(caller, c))) throw new ApiError(403, 'channel_not_allowed');
 
-  // The site's connection slots are shared: never more than this per process.
-  if (hub.size >= maxStreamsPerProcess()) throw new ApiError(503, 'busy', 15);
+  // The site's connection slots are shared: never more than this per process, and members'
+  // services leave a few free for DevQuake's platform service (ADR 0063).
+  const isPlatform = entry.app.platform === 1;
+  const platformOpen = isPlatform ? 0 : await platformStreams(db);
+  if (!streamSlotFree({ open: hub.size, platformOpen, isPlatform })) {
+    throw new ApiError(503, 'busy', 15);
+  }
   const [open] = await db.query<{ n: number }>(
     'SELECT COUNT(*) AS n FROM streams WHERE app_id = ? AND seen_at > UTC_TIMESTAMP() - INTERVAL 90 SECOND',
     [entry.app.id],

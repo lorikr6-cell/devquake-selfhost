@@ -64,6 +64,25 @@ const WORDS: Record<
       'Nyisd meg a böngésző menüjét, és válaszd a „Hozzáadás a kezdőképernyőhöz” vagy a „Telepítés” lehetőséget.',
     close: 'Bezárás',
   },
+  it: {
+    button: 'Aggiungi alla schermata Home',
+    title: 'Aggiungi l’app alla schermata Home',
+    intro: 'Così si apre come un’app, con la sua icona.',
+    ios: ['Tocca Condividi', 'nella barra del browser,', 'poi “Aggiungi alla schermata Home”.'],
+    android: 'Apri il menu del browser (⋮) e scegli “Aggiungi a schermata Home” o “Installa app”.',
+    other: 'Apri il menu del browser e scegli “Aggiungi alla schermata Home” o “Installa”.',
+    close: 'Chiudi',
+  },
+  es: {
+    button: 'Añadir a la pantalla de inicio',
+    title: 'Añade la app a tu pantalla de inicio',
+    intro: 'Así se abre como una app, con su propio icono.',
+    ios: ['Toca Compartir', 'en la barra del navegador', 'y luego “Añadir a pantalla de inicio”.'],
+    android:
+      'Abre el menú del navegador (⋮) y elige “Añadir a pantalla de inicio” o “Instalar aplicación”.',
+    other: 'Abre el menú del navegador y elige “Añadir a pantalla de inicio” o “Instalar”.',
+    close: 'Cerrar',
+  },
 };
 
 interface InstallPromptEvent extends Event {

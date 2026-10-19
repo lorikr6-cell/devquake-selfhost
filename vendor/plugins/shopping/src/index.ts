@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'shopping',
     name: 'Shared shopping lists',
-    version: '0.21.0',
+    version: '0.22.0',
     description:
       'Shared shopping carts planned by date: a calendar, items grouped by store (type, location, description), prices, totals and statistics, shared with invite links or your DevQuake referrals.',
     status: 'active',
@@ -26,6 +26,8 @@ export default definePlugin({
             de: 'Die Namen und Daten deiner Einkaufslisten sehen',
             ro: 'Să vadă numele și datele listelor tale de cumpărături',
             hu: 'Lássa a bevásárlólistáid nevét és dátumát',
+            it: 'Vedere i nomi e le date delle tue liste della spesa',
+            es: 'Ver los nombres y las fechas de tus listas de la compra',
           },
         },
         {
@@ -36,6 +38,8 @@ export default definePlugin({
             de: 'Deine nächsten Einkaufslisten sehen und wie viele Artikel noch offen sind',
             ro: 'Să vadă următoarele tale liste de cumpărături și câte produse mai sunt',
             hu: 'Lássa a következő bevásárlólistáidat, és hogy hány tétel van még hátra',
+            it: 'Vedere le tue prossime liste della spesa e quanti prodotti restano da comprare',
+            es: 'Ver tus próximas listas de la compra y cuántos productos quedan por comprar',
           },
         },
         {
@@ -46,6 +50,8 @@ export default definePlugin({
             de: 'Artikel zu deinen Einkaufslisten hinzufügen',
             ro: 'Să adauge produse în listele tale de cumpărături',
             hu: 'Tételeket adjon a bevásárlólistáidhoz',
+            it: 'Aggiungere prodotti alle tue liste della spesa',
+            es: 'Añadir productos a tus listas de la compra',
           },
         },
       ],
@@ -58,6 +64,8 @@ export default definePlugin({
             de: 'eine Einkaufsliste',
             ro: 'o listă de cumpărături',
             hu: 'egy bevásárlólista',
+            it: 'una lista della spesa',
+            es: 'una lista de la compra',
           },
         },
       ],
@@ -71,6 +79,8 @@ export default definePlugin({
             de: 'Familientermine erscheinen neben deinen Einkaufslisten, damit du den Einkauf danach planen kannst.',
             ro: 'Evenimentele familiei apar lângă listele tale de cumpărături, ca să-ți planifici cumpărăturile în funcție de ele.',
             hu: 'A családi események megjelennek a bevásárlólistáid mellett, így ahhoz igazíthatod a bevásárlást.',
+            it: 'Gli eventi di famiglia compaiono accanto alle tue liste della spesa, così puoi organizzare la spesa in base a loro.',
+            es: 'Los eventos familiares aparecen junto a tus listas de la compra, para que puedas planificar la compra en torno a ellos.',
           },
         },
         {
@@ -82,6 +92,8 @@ export default definePlugin({
             de: 'Deine Trainings erscheinen neben deinen Einkaufslisten.',
             ro: 'Antrenamentele tale apar lângă listele tale de cumpărături.',
             hu: 'Az edzéseid megjelennek a bevásárlólistáid mellett.',
+            it: 'I tuoi allenamenti compaiono accanto alle tue liste della spesa.',
+            es: 'Tus entrenamientos aparecen junto a tus listas de la compra.',
           },
         },
         {
@@ -93,6 +105,8 @@ export default definePlugin({
             de: 'Fälligkeitstermine deiner Nebenkostenrechnungen erscheinen neben deinen Einkaufslisten.',
             ro: 'Scadențele facturilor de utilități apar lângă listele tale de cumpărături.',
             hu: 'A rezsiszámláid esedékessége megjelenik a bevásárlólistáid mellett.',
+            it: 'Le scadenze delle tue bollette compaiono accanto alle tue liste della spesa.',
+            es: 'Los vencimientos de tus facturas de suministros aparecen junto a tus listas de la compra.',
           },
         },
         {
@@ -104,6 +118,8 @@ export default definePlugin({
             de: 'Was du auf einer geteilten Liste gekauft hast, wird eine Ausgabe, gleich geteilt unter den Leuten der Liste.',
             ro: 'Ce ai cumpărat de pe o listă comună devine o cheltuială, împărțită egal între oamenii listei.',
             hu: 'Amit egy közös listáról vettél, abból a lista résztvevői között egyenlően megosztott kiadás lesz.',
+            it: 'Ciò che hai comprato da una lista condivisa diventa una spesa, divisa in parti uguali tra le persone della lista.',
+            es: 'Lo que compraste de una lista compartida se convierte en un gasto, repartido a partes iguales entre las personas de la lista.',
           },
         },
       ],

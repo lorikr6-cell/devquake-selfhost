@@ -495,4 +495,240 @@ const hu: Manual = {
   back: 'Vissza a csoportjaidhoz',
 };
 
-export const MANUAL: Record<Locale, Manual> = { en, de, ro, hu };
+const it: Manual = {
+  metaTitle: 'Manuale d’uso · Spese condivise',
+  metaDescription:
+    'Come dividere le spese in viaggio, in una casa condivisa o in coppia: crea un gruppo, invita gli altri, aggiungi spese divise come vuoi e salda i conti con il minor numero di trasferimenti.',
+  ogTitle: 'Spese condivise: manuale d’uso',
+  cta: 'Vuoi provarla? Spese condivise è un’app per i membri di DevQuake. {link}, poi abbonati all’app.',
+  ctaLink: 'Crea un account o accedi',
+  kicker: 'Spese condivise · Manuale d’uso',
+  title: 'Come dividere le spese e saldare i conti',
+  intro:
+    'Spese condivise tiene traccia di chi ha pagato cosa in un gruppo, di chi deve quanto a chi e di come saldare i conti con il minor numero possibile di trasferimenti. Questo manuale ti guida passo dopo passo.',
+  contents: 'Indice',
+  sections: [
+    {
+      id: 'start',
+      title: '1. Per iniziare',
+      blocks: [
+        {
+          steps: [
+            'Accedi su {host} (oppure crea un account e conferma la tua email).',
+            'Apri **Il tuo account → Progetti disponibili** e **abbonati** a “Spese condivise”.',
+            'Apri l’app e crea un **Nuovo gruppo**: un nome, il tipo (viaggio, casa condivisa, coppia, evento) e la valuta.',
+          ],
+        },
+        {
+          p: 'La pagina iniziale elenca i tuoi gruppi con quanto è stato speso e **il tuo saldo** in ognuno: verde quando ti spettano soldi, rosso quando devi qualcosa.',
+        },
+      ],
+    },
+    {
+      id: 'invite',
+      title: '2. Invitare persone',
+      blocks: [
+        {
+          p: 'Nella scheda **Membri** del gruppo, manda il **link di invito** o fai scansionare il suo **codice QR**. Con l’accesso a DevQuake, le persone entrano subito e ricevono l’app **gratis**: non devono abbonarsi.',
+        },
+        {
+          list: [
+            'Il proprietario può anche aggiungere per nome **qualcuno senza account**, per un amico che non usa DevQuake, e inserire le sue spese al posto suo.',
+            'Le persone arrivate su DevQuake grazie a te (o che ti hanno invitato) si aggiungono con un tocco.',
+            'Un **Nuovo link** fa smettere di funzionare il vecchio link e il vecchio codice; chi è già nel gruppo resta.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'expenses',
+      title: '3. Aggiungere spese',
+      blocks: [
+        {
+          tip: 'Bollette e acquisti arrivano da soli: collega **Bollette** e **Liste della spesa** e aggiungi una bolletta o quello che hai comprato direttamente da lì. La spesa mostra da dove arriva e apre la bolletta o la lista.',
+        },
+        {
+          p: 'Tocca **Aggiungi una spesa**: per cosa era, l’importo, chi ha pagato, il giorno e una categoria. Spunta tutti quelli che la dividono.',
+        },
+        {
+          list: [
+            '**In parti uguali**: lo stesso per tutte le persone spuntate; i centesimi che non si dividono vanno a chi ha pagato.',
+            '**Per quote**: per esempio 2 per una coppia e 1 per un single.',
+            '**In percentuale**: le percentuali devono fare 100 in totale.',
+            '**Importi esatti**: gli importi devono dare in totale la spesa.',
+          ],
+        },
+        {
+          p: 'La parte di ognuno appare mentre scrivi e viene salvata esatta al centesimo. Apri una spesa per vedere chi paga cosa, **commentarla**, **correggerla** o **eliminarla**.',
+        },
+      ],
+    },
+    {
+      id: 'balances',
+      title: '4. Saldi e saldare i conti',
+      blocks: [
+        {
+          p: 'La scheda **Saldi** mostra quanto spetta o quanto deve ognuno. **Saldare i conti** elenca il minor numero di trasferimenti che mette tutti in pari.',
+        },
+        {
+          steps: [
+            'Paga la persona fuori dall’app (contanti, bonifico…).',
+            'Tocca **Segna come pagato** accanto al trasferimento, oppure **Registra un pagamento** per qualsiasi altro importo.',
+            'I saldi si aggiornano subito; un pagamento sbagliato si può eliminare dall’elenco.',
+          ],
+        },
+        {
+          tip: 'Spese condivise non sposta denaro: tiene solo il conto di chi deve quanto a chi.',
+        },
+      ],
+    },
+    {
+      id: 'activity',
+      title: '5. Attività e statistiche',
+      blocks: [
+        {
+          p: 'La scheda **Attività** mostra ogni spesa, modifica, pagamento, commento e ogni membro che entra o esce, con chi è stato e quando.',
+        },
+        {
+          p: 'La scheda **Statistiche** mostra dove sono finiti i soldi: per categoria, per mese, e quanto ha pagato ogni persona e a quanto ammontava la sua quota.',
+        },
+      ],
+    },
+    {
+      id: 'leaving',
+      title: '6. Lasciare un gruppo e i tuoi dati',
+      blocks: [
+        {
+          list: [
+            'Puoi **lasciare** un gruppo, e il proprietario può **rimuovere** qualcuno, quando il suo saldo è in pari. La persona resta nelle spese condivise come ex membro, così i saldi degli altri restano giusti.',
+            'Il proprietario può cambiare il nome e il tipo del gruppo; la valuta solo fino alla prima spesa.',
+            'Il proprietario può **eliminare il gruppo** con tutte le sue spese, i pagamenti e i commenti.',
+            'Quando annulli l’abbonamento o elimini il tuo account DevQuake, i gruppi usati solo da te vengono eliminati. Nei gruppi condivisi il tuo nome viene rimosso e appari come “Ex membro”.',
+          ],
+        },
+      ],
+    },
+  ],
+  questions: 'Domande o idee? Scrivi a {email}.',
+  back: 'Torna ai tuoi gruppi',
+};
+
+const es: Manual = {
+  metaTitle: 'Manual de uso · Gastos compartidos',
+  metaDescription:
+    'Cómo compartir gastos en un viaje, en un piso compartido o en pareja: crea un grupo, invita a los demás, añade gastos divididos a tu manera y saldad cuentas con las menos transferencias.',
+  ogTitle: 'Gastos compartidos: manual de uso',
+  cta: '¿Quieres probarla? Gastos compartidos es una app para los miembros de DevQuake. {link} y luego suscríbete a la app.',
+  ctaLink: 'Crea una cuenta o inicia sesión',
+  kicker: 'Gastos compartidos · Manual de uso',
+  title: 'Cómo compartir gastos y saldar cuentas',
+  intro:
+    'Gastos compartidos lleva la cuenta de quién pagó qué en un grupo, quién debe a quién y cómo saldar cuentas con las menos transferencias posibles. Este manual te guía paso a paso.',
+  contents: 'Índice',
+  sections: [
+    {
+      id: 'start',
+      title: '1. Primeros pasos',
+      blocks: [
+        {
+          steps: [
+            'Inicia sesión en {host} (o crea una cuenta y confirma tu correo).',
+            'Abre **Tu cuenta → Proyectos disponibles** y **suscríbete** a “Gastos compartidos”.',
+            'Abre la app y crea un **Nuevo grupo**: un nombre, el tipo (viaje, piso compartido, pareja, evento) y la moneda.',
+          ],
+        },
+        {
+          p: 'La página de inicio muestra tus grupos con lo que se ha gastado y **tu saldo** en cada uno: verde cuando te deben dinero, rojo cuando debes.',
+        },
+      ],
+    },
+    {
+      id: 'invite',
+      title: '2. Invitar a personas',
+      blocks: [
+        {
+          p: 'En la pestaña **Miembros** del grupo, envía el **enlace de invitación** o deja que escaneen su **código QR**. Con la sesión iniciada en DevQuake, se unen al instante y reciben la app **gratis**: no tienen que suscribirse.',
+        },
+        {
+          list: [
+            'El propietario también puede añadir por su nombre a **alguien sin cuenta**, para un amigo que no usa DevQuake, e introducir sus gastos por él.',
+            'Las personas que llegaron a DevQuake gracias a ti (o que te invitaron) se añaden con un toque.',
+            'Un **Nuevo enlace** hace que el enlace y el código antiguos dejen de funcionar; quienes ya están en el grupo se quedan.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'expenses',
+      title: '3. Añadir gastos',
+      blocks: [
+        {
+          tip: 'Las facturas y las compras llegan solas: conecta **Facturas del hogar** y **Listas de la compra** y añade una factura o lo que se compró directamente desde allí. El gasto indica de dónde viene y abre la factura o la lista.',
+        },
+        {
+          p: 'Toca **Añadir un gasto**: para qué fue, el importe, quién pagó, el día y una categoría. Marca a todos los que lo comparten.',
+        },
+        {
+          list: [
+            '**A partes iguales**: lo mismo para todas las personas marcadas; los céntimos que no se pueden dividir son para quien pagó.',
+            '**Por partes**: por ejemplo, 2 para una pareja y 1 para una persona sola.',
+            '**Por porcentaje**: los porcentajes deben sumar 100.',
+            '**Importes exactos**: los importes deben sumar el total del gasto.',
+          ],
+        },
+        {
+          p: 'La parte de cada persona aparece mientras escribes y se guarda exacta al céntimo. Abre un gasto para ver quién paga qué, **comentarlo**, **corregirlo** o **eliminarlo**.',
+        },
+      ],
+    },
+    {
+      id: 'balances',
+      title: '4. Saldos y saldar cuentas',
+      blocks: [
+        {
+          p: 'La pestaña **Saldos** muestra lo que le deben a cada uno o lo que debe. **Saldar cuentas** enumera las menos transferencias que dejan a todos al día.',
+        },
+        {
+          steps: [
+            'Paga a la persona fuera de la app (efectivo, transferencia bancaria…).',
+            'Toca **Marcar como pagado** junto a la transferencia, o **Registrar un pago** para cualquier otro importe.',
+            'Los saldos se actualizan al instante; un pago equivocado se puede eliminar de la lista.',
+          ],
+        },
+        {
+          tip: 'Gastos compartidos no mueve dinero: solo lleva la cuenta de quién debe a quién.',
+        },
+      ],
+    },
+    {
+      id: 'activity',
+      title: '5. Actividad y estadísticas',
+      blocks: [
+        {
+          p: 'La pestaña **Actividad** muestra cada gasto, cambio, pago, comentario y cada miembro que entra o sale, con quién lo hizo y cuándo.',
+        },
+        {
+          p: 'La pestaña **Estadísticas** muestra adónde fue el dinero: por categoría, por mes, y lo que pagó cada persona y lo que le tocaba.',
+        },
+      ],
+    },
+    {
+      id: 'leaving',
+      title: '6. Salir de un grupo y tus datos',
+      blocks: [
+        {
+          list: [
+            'Puedes **salir** de un grupo, y el propietario puede **quitar** a alguien, cuando su saldo esté al día. La persona sigue en los gastos que compartió, como antiguo miembro, para que los saldos de los demás sigan siendo correctos.',
+            'El propietario puede cambiar el nombre y el tipo del grupo; la moneda solo hasta el primer gasto.',
+            'El propietario puede **eliminar el grupo** con todos sus gastos, pagos y comentarios.',
+            'Cuando cancelas la suscripción o eliminas tu cuenta de DevQuake, los grupos que solo usas tú se eliminan. En los grupos compartidos se quita tu nombre y apareces como “Antiguo miembro”.',
+          ],
+        },
+      ],
+    },
+  ],
+  questions: '¿Preguntas o ideas? Escribe a {email}.',
+  back: 'Volver a tus grupos',
+};
+
+export const MANUAL: Record<Locale, Manual> = { en, de, ro, hu, it, es };

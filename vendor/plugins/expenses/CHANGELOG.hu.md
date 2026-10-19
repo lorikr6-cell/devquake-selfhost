@@ -1,5 +1,9 @@
 # Változásnapló — Közös kiadások
 
+## 0.3.0
+
+- Az alkalmazás mostantól olaszul és spanyolul is elérhető: a nyelvet az oldal tetején választhatod ki.
+
 ## 0.2.0
 
 - A közműszámlák és a bevásárlólisták mostantól kiadásokat adhatnak a csoportjaidhoz: egy számlát mindenki pontos részével, vagy amit egy listáról vettetek, egyenlően elosztva. Ugyanazt a számlát vagy listát kétszer hozzáadni nem változtat semmit, és a kiadás egy linkkel mutatja, honnan jött.

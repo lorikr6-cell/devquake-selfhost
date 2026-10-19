@@ -1,5 +1,13 @@
 # Modificări — Facturi utilități
 
+## 0.12.0
+
+- Aplicația este acum și în italiană și spaniolă: alege limba din partea de sus a paginii.
+
+## 0.11.1
+
+- Partajare: când bifezi sau debifezi „Doar vizualizare” pentru cineva, un mesaj confirmă acum că a fost pornit sau oprit.
+
 ## 0.11.0
 
 - Adaugă o factură în Cheltuieli comune: cu cele două aplicații conectate, administratorul pune factura într-un grup de cheltuieli, cu partea exactă a fiecăruia, plătită de el, și o deschide de acolo. Dacă o adaugi de două ori, nu se schimbă nimic.
@@ -30,7 +38,7 @@
 
 - Cardul aplicației pe DevQuake și pagina ei de start arată acum câți membri o folosesc și totalurile ei: facturi, citiri de contor.
 
-0.5.0
+## 0.5.0
 
 - Funcționează cu planificatorul familiei, aplicația Liste de cumpărături și jurnalul de antrenament: conectează-le pe DevQuake („Funcționează cu” jos pe pagină) și deconectează-le de acolo oricând.
 - Calendare între aplicații: sub calendar, „Din celelalte aplicații” arată următoarele 31 de zile din aplicațiile conectate — evenimentele familiei (inclusiv cele partajate), zilele de cumpărături și antrenamentele —, fiecare deschizându-se în aplicația sa. Aplicațiile conectate pot arăta scadențele facturilor neplătite (doar numele, fără sume).

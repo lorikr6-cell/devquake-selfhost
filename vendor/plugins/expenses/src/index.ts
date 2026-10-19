@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'expenses',
     name: 'Shared expenses',
-    version: '0.2.0',
+    version: '0.3.0',
     description:
       'Who paid what on a trip, in a flat, for a couple or an event, who owes whom, and the fewest transfers to settle up. Split equally, by shares, by percent or exact amounts; friends join by link or QR.',
     status: 'active',
@@ -28,6 +28,8 @@ export default definePlugin({
             de: 'Die Namen und Währungen deiner Ausgabengruppen sehen und wer darin ist',
             ro: 'Să vadă numele și monedele grupurilor tale de cheltuieli și cine e în ele',
             hu: 'Lássa a kiadáscsoportjaid nevét, pénznemét, és hogy kik vannak bennük',
+            it: 'Vedere i nomi e le valute dei tuoi gruppi di spese e chi ne fa parte',
+            es: 'Ver los nombres y las monedas de tus grupos de gastos y quién está en ellos',
           },
         },
         {
@@ -39,6 +41,8 @@ export default definePlugin({
             de: 'Ausgaben, die du bezahlt hast, zu deinen Gruppen hinzufügen',
             ro: 'Să adauge în grupurile tale cheltuieli plătite de tine',
             hu: 'Az általad fizetett kiadásokat hozzáadja a csoportjaidhoz',
+            it: 'Aggiungere ai tuoi gruppi le spese che hai pagato',
+            es: 'Añadir a tus grupos los gastos que has pagado',
           },
         },
       ],
@@ -51,6 +55,8 @@ export default definePlugin({
             de: 'eine Ausgabengruppe',
             ro: 'un grup de cheltuieli',
             hu: 'egy kiadáscsoportot',
+            it: 'un gruppo di spese',
+            es: 'un grupo de gastos',
           },
         },
         {
@@ -61,6 +67,8 @@ export default definePlugin({
             de: 'eine geteilte Ausgabe',
             ro: 'o cheltuială comună',
             hu: 'egy közös kiadást',
+            it: 'una spesa condivisa',
+            es: 'un gasto compartido',
           },
         },
       ],
@@ -73,6 +81,8 @@ export default definePlugin({
             de: 'Eine Nebenkostenrechnung mit dem genauen Anteil aller zu einer Gruppe hinzufügen und die Rechnung von der Ausgabe aus öffnen.',
             ro: 'Adaugi o factură de utilități într-un grup comun, cu partea exactă a fiecăruia, și deschizi factura din cheltuială.',
             hu: 'Egy rezsiszámlát mindenki pontos részével közös csoportba teszel, és a kiadásból megnyitod a számlát.',
+            it: 'Aggiungi una bolletta a un gruppo condiviso con la quota esatta di ognuno e apri la bolletta dalla spesa.',
+            es: 'Añade una factura a un grupo compartido con la parte exacta de cada uno y abre la factura desde el gasto.',
           },
         },
         {
@@ -83,6 +93,8 @@ export default definePlugin({
             de: 'Was du auf einer geteilten Einkaufsliste gekauft hast, wird eine Ausgabe, geteilt unter den Leuten der Liste.',
             ro: 'Ce ai cumpărat de pe o listă comună devine o cheltuială împărțită între oamenii listei.',
             hu: 'Amit egy közös bevásárlólistáról vettél, abból a lista résztvevői között megosztott kiadás lesz.',
+            it: 'Quello che hai comprato da una lista della spesa condivisa diventa una spesa divisa tra le persone della lista.',
+            es: 'Lo que compraste de una lista de la compra compartida se convierte en un gasto dividido entre las personas de la lista.',
           },
         },
       ],

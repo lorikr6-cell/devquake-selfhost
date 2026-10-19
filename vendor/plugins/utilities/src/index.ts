@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'utilities',
     name: 'Utility bill manager',
-    version: '0.11.0',
+    version: '0.12.0',
     description:
       'Shared utility bills: upload the provider’s PDF, send meter readings with a photo, split the bill by consumption or equally, record who paid what with carry-over, and follow consumption, payments and prices in a calendar and statistics.',
     status: 'active',
@@ -26,6 +26,8 @@ export default definePlugin({
             de: 'Die Fälligkeitstermine deiner Nebenkostenrechnungen sehen',
             ro: 'Să vadă scadențele facturilor tale de utilități',
             hu: 'Lássa a rezsiszámláid esedékességét',
+            it: 'Vedere le scadenze delle tue bollette',
+            es: 'Ver los vencimientos de tus facturas de suministros',
           },
         },
       ],
@@ -38,6 +40,8 @@ export default definePlugin({
             de: 'eine Nebenkostenrechnung',
             ro: 'o factură de utilități',
             hu: 'egy rezsiszámla',
+            it: 'una bolletta',
+            es: 'una factura de suministros',
           },
         },
       ],
@@ -51,6 +55,8 @@ export default definePlugin({
             de: 'Familientermine erscheinen unter deinem Rechnungskalender.',
             ro: 'Evenimentele familiei apar sub calendarul facturilor.',
             hu: 'A családi események megjelennek a számlanaptárad alatt.',
+            it: 'Gli eventi di famiglia compaiono sotto il calendario delle bollette.',
+            es: 'Los eventos familiares aparecen bajo tu calendario de facturas.',
           },
         },
         {
@@ -62,6 +68,8 @@ export default definePlugin({
             de: 'Deine Einkaufstage erscheinen unter deinem Rechnungskalender.',
             ro: 'Zilele tale de cumpărături apar sub calendarul facturilor.',
             hu: 'A bevásárlónapjaid megjelennek a számlanaptárad alatt.',
+            it: 'I tuoi giorni della spesa compaiono sotto il calendario delle bollette.',
+            es: 'Tus días de compra aparecen bajo tu calendario de facturas.',
           },
         },
         {
@@ -73,6 +81,8 @@ export default definePlugin({
             de: 'Deine Trainings erscheinen unter deinem Rechnungskalender.',
             ro: 'Antrenamentele tale apar sub calendarul facturilor.',
             hu: 'Az edzéseid megjelennek a számlanaptárad alatt.',
+            it: 'I tuoi allenamenti compaiono sotto il calendario delle bollette.',
+            es: 'Tus entrenamientos aparecen bajo tu calendario de facturas.',
           },
         },
         {
@@ -84,6 +94,8 @@ export default definePlugin({
             de: 'Eine Rechnung mit dem genauen Anteil aller in eine Ausgabengruppe legen, neben eure anderen geteilten Kosten.',
             ro: 'Pui o factură într-un grup de cheltuieli comune, cu partea exactă a fiecăruia, lângă celelalte costuri împărțite.',
             hu: 'Egy számlát mindenki pontos részével közös kiadáscsoportba teszel, a többi megosztott költség mellé.',
+            it: 'Metti una bolletta in un gruppo di spese condivise con la parte esatta di ognuno, accanto alle altre spese condivise.',
+            es: 'Pon una factura en un grupo de gastos compartidos con la parte exacta de cada uno, junto a tus otros gastos compartidos.',
           },
         },
       ],

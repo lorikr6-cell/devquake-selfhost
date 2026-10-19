@@ -1,5 +1,9 @@
 # Modificări — Planificator de mese
 
+## 0.5.0
+
+- Aplicația este acum și în italiană și spaniolă: alege limba în partea de sus a paginii.
+
 ## 0.4.1
 
 - Notificări: pe ecranele mari lista se deschide acum chiar sub clopoțel; pe telefoane și tablete rămâne în centrul ecranului. Încape mereu pe ecran: titlul rămâne vizibil și doar lista se derulează.
@@ -28,7 +32,7 @@
 
 - Cardul aplicației pe DevQuake și pagina ei de start arată acum câți membri o folosesc și totalurile ei: mese publice, mese planificate, gospodării.
 
-0.1.0
+## 0.1.0
 
 - Planifică mesele săptămânii pentru gospodăria ta: mic dejun, prânz, cină și gustări, cu rețete din cartea de bucate sau mese scrise de mână.
 - Adaugă cine mănâncă, cu porția fiecăruia: porțiile de gătit se completează, iar resturile se pot planifica intenționat.

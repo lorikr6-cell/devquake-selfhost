@@ -1,5 +1,9 @@
 # Änderungen — Essensplaner
 
+## 0.5.0
+
+- Die App gibt es jetzt auch auf Italienisch und Spanisch: Wähle die Sprache oben auf der Seite.
+
 ## 0.4.1
 
 - Benachrichtigungen: Auf großen Bildschirmen öffnet sich die Liste jetzt direkt unter der Glocke; auf Handys und Tablets bleibt sie in der Bildschirmmitte. Sie passt immer auf den Bildschirm: Die Überschrift bleibt sichtbar, nur die Liste scrollt.
@@ -28,7 +32,7 @@
 
 - Die Karte der App auf DevQuake und ihre Startseite zeigen jetzt, wie viele Mitglieder sie nutzen, und ihre Zahlen: Geteilte Mahlzeiten, Geplante Mahlzeiten, Haushalte.
 
-0.1.0
+## 0.1.0
 
 - Plane die Mahlzeiten der Woche für deinen Haushalt: Frühstück, Mittag- und Abendessen und Snacks, mit Rezepten aus deinem Kochbuch oder eingetippten Mahlzeiten.
 - Trage ein, wer mitisst, mit der jeweiligen Portion: Die zu kochenden Portionen werden ausgefüllt, und Reste lassen sich bewusst einplanen.

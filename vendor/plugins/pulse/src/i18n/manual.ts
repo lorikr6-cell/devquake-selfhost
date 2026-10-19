@@ -916,4 +916,446 @@ const hu: Manual = {
   back: '← Vissza a Pulse-hoz',
 };
 
-export const MANUAL: Record<Locale, Manual> = { en, de, ro, hu };
+const it: Manual = {
+  metaTitle: 'Manuale d’uso · Pulse, API di eventi in tempo reale',
+  metaDescription:
+    'Invia eventi dal tuo sito web o dal tuo server e ricevili dal vivo in ogni browser: chiavi, siti web verificati, la tua struttura dati, un test dal vivo e l’API.',
+  ogTitle: 'Pulse: manuale d’uso',
+  cta: 'Vuoi provarlo? Pulse è un’app per i membri di DevQuake. {link}, poi provalo gratis per 24 ore o abbonati.',
+  ctaLink: 'Crea un account o accedi',
+  kicker: 'Pulse · Manuale d’uso',
+  title: 'Eventi in tempo reale per la tua app',
+  intro:
+    'Pulse porta gli eventi da un punto a molti: il tuo server (o il browser di un visitatore) invia un evento e ogni pagina in ascolto lo riceve entro un secondo. Decidi tu cosa contiene un evento; Pulse lo mantiene sicuro ed equo.',
+  contents: 'Indice',
+  sections: [
+    {
+      id: 'start',
+      title: '1. Per iniziare',
+      blocks: [
+        {
+          steps: [
+            'Accedi su {host} e apri **Pulse** dal tuo account (provalo gratis per 24 ore o abbonati).',
+            'Crea un **servizio API**. Copia subito la **chiave segreta**: viene mostrata una sola volta.',
+            'In **I tuoi siti web**, aggiungi il tuo sito e il suo record DNS (oppure attiva **Consenti localhost** per fare prove sul tuo computer).',
+            'Apri il **Test dal vivo** e invia il tuo primo evento.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'uses',
+      title: '2. A cosa serve',
+      blocks: [
+        {
+          p: 'A tutto ciò in cui una pagina deve cambiare nel momento in cui succede qualcosa altrove, senza ricaricare:',
+        },
+        {
+          list: [
+            '**Notifiche**: “Il tuo ordine è stato spedito”, “Nuovo messaggio”, un badge che conta.',
+            '**Dashboard dal vivo**: vendite, iscrizioni, letture di sensori o stato dei server mentre accadono.',
+            '**Chat e commenti**: messaggi che compaiono per tutti nella stanza.',
+            '**Punteggi e giochi**: risultati dal vivo, turni, un tabellone su una TV e sui telefoni allo stesso tempo.',
+            '**Collaborazione**: una lista o una bacheca condivisa in cui ognuno vede le modifiche degli altri.',
+            '**Stato di un’operazione**: “in elaborazione… fatto” per caricamenti, pagamenti o esportazioni.',
+            '**Presenza**: chi è online o sta scrivendo in questo momento.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'format',
+      title: '3. Il formato degli eventi',
+      blocks: [
+        {
+          p: 'Ogni evento ha la stessa cornice fissa e, al suo interno, **i tuoi dati** come chiavi e valori:',
+        },
+        {
+          list: [
+            '`channel`: dove va, ad es. `orders` o `room-42`. Chi ascolta sceglie i canali che vuole.',
+            '`event`: cosa è successo, ad es. `order.created`.',
+            '`data`: le tue chiavi e i tuoi valori, ad es. `orderId: "A-17"`, `total: 42.5`, `paid: true`. I valori sono testo, numeri, sì/no (true/false) o vuoti (null).',
+            'Pulse aggiunge `id`, `app` (la tua chiave pubblica), `source` (server, pagina web, token client o test dal vivo), `sender` (da un token client) e `at` (l’ora, in UTC).',
+          ],
+        },
+        {
+          tip: 'I canali il cui nome inizia con `private-` si possono usare solo con un token client o con la chiave segreta, mai con la sola chiave pubblica.',
+        },
+      ],
+    },
+    {
+      id: 'security',
+      title: '4. Chiavi e sicurezza',
+      blocks: [
+        {
+          list: [
+            '**Chiave pubblica** (`pk_…`): va nelle tue pagine web. Funziona solo dai tuoi **siti web verificati**, può solo ascoltare i canali pubblici e, se lo consenti, inviare su di essi.',
+            '**Chiave segreta** (`sk_…`): resta sul tuo server. Può inviare su qualsiasi canale e creare token client. Pulse la rifiuta quando arriva da una pagina web, perché un segreto in un browser non è più segreto.',
+            '**Token client**: il tuo server ne crea uno per ciascuno dei tuoi utenti, valido fino a un’ora, con i canali che quell’utente può usare e se può inviare. È il modo sicuro per i canali privati e per gli utenti che hanno effettuato l’accesso.',
+            '**Solo tu**: un servizio API appartiene solo al tuo account DevQuake. Non può essere condiviso con altri membri.',
+            '**Indirizzi dei server**: facoltativamente, consenti la chiave segreta solo dagli indirizzi IP dei tuoi server.',
+            '**Controllo delle fughe**: Pulse conta gli indirizzi da cui viene usata la tua chiave segreta e registra le chiamate rifiutate. Se la chiave compare in troppi posti, vieni avvisato: creane una nuova (la vecchia continua a funzionare per 24 ore).',
+          ],
+        },
+        {
+          tip: 'Perché una chiave copiata non serve a nessuno: la chiave pubblica funziona solo sui siti web che hanno dimostrato con il DNS di essere tuoi; la chiave segreta viene rifiutata nelle pagine web e può essere legata ai tuoi server; e ogni servizio ha dei limiti, quindi nemmeno una chiave rubata può fare più di quanto consente il tuo piano.',
+        },
+      ],
+    },
+    {
+      id: 'websites',
+      title: '5. Verificare il tuo sito web',
+      blocks: [
+        {
+          steps: [
+            'In **I tuoi siti web**, inserisci l’indirizzo, ad es. `https://shop.example.com`.',
+            'Pulse mostra un **record TXT**: un nome come `_devquake-pulse.shop.example.com` e un valore come `devquake-pulse=…`.',
+            'Aggiungilo dove gestisci il DNS del tuo dominio (il tuo hosting o il provider del dominio).',
+            'Premi **Verifica ora**. Dopo qualche minuto (a volte un’ora) il sito web risulta **Verificato** e funziona.',
+          ],
+        },
+        {
+          tip: 'Per fare prove sul tuo computer, attiva **Consenti localhost**: le pagine su `http://localhost` funzionano senza record DNS. Disattivalo quando vai online.',
+        },
+      ],
+    },
+    {
+      id: 'structure',
+      title: '6. La tua struttura dati',
+      blocks: [
+        {
+          p: 'In **La tua struttura dati** descrivi ogni evento che usi: le sue chiavi, il loro tipo (testo, numero o sì/no) e quali sono obbligatorie. Ad esempio `order.created` con `orderId` (testo, obbligatoria), `total` (numero) e `paid` (sì/no).',
+        },
+        {
+          list: [
+            'Gli eventi descritti vengono controllati: una chiave obbligatoria mancante o un tipo sbagliato viene rifiutato con un errore chiaro.',
+            'Gli eventi che non hai descritto sono comunque accettati, a meno che tu non attivi **Solo eventi descritti**.',
+            'Con **Solo eventi descritti** attivo, vengono rifiutati anche eventi e chiavi sconosciuti: consigliato in produzione.',
+          ],
+        },
+        {
+          tip: 'Le chiavi iniziano con una lettera o `_` e contengono lettere, cifre e `_`. Al massimo 20 chiavi per evento; valori di testo fino a 500 caratteri.',
+        },
+      ],
+    },
+    {
+      id: 'test',
+      title: '7. Scenario del test dal vivo (5 minuti)',
+      blocks: [
+        {
+          p: 'Ti servono: il tuo servizio API, un computer con un terminale e un telefono (o una seconda finestra del browser). Non ti serve ancora un sito web.',
+        },
+        {
+          steps: [
+            'Apri il tuo servizio API e premi **Test dal vivo**. Lascia il canale `demo` e premi **Connetti**: il punto diventa verde, **Dal vivo**.',
+            'Apri la stessa pagina sul telefono (con l’accesso a DevQuake) e premi **Connetti** anche lì.',
+            'Sul computer, in **Invia**, lascia l’evento `hello` con la chiave `text` = `Hello` e premi **Invia evento**. Il telefono lo mostra entro un secondo, con il tempo impiegato.',
+            'Invia dal telefono: il computer lo riceve. Entrambi ascoltano `demo`.',
+            'In un terminale, esegui l’esempio `curl` della pagina con la tua chiave segreta al posto di `$PULSE_SECRET_KEY`. Entrambe le pagine ricevono un evento da un server.',
+            'Prova le regole: aggiungi un evento descritto in **La tua struttura dati**, attiva **Solo eventi descritti** e inviane uno con un tipo sbagliato: viene rifiutato con il motivo.',
+            'Prova i canali privati: disconnettiti, attiva **Usa un token client**, imposta i canali su `private-demo`, connettiti su entrambi i dispositivi e invia di nuovo.',
+          ],
+        },
+        {
+          tip: 'Durante la prova gratuita gli eventi arrivano con 3 secondi di ritardo e le connessioni sono più brevi: è voluto. Se una pagina mostra “Connesso (polling)”, le connessioni dal vivo sono bloccate su quella rete; gli eventi arrivano comunque, ogni pochi secondi.',
+        },
+      ],
+    },
+    {
+      id: 'api',
+      title: '8. L’API in breve',
+      blocks: [
+        {
+          list: [
+            '`POST /api/v1/events`: invia un evento. Corpo: `{ "channel", "event", "data" }`. Autenticazione: `Authorization: Bearer sk_…` (server), `Authorization: Bearer <client token>` oppure `X-Pulse-Key: pk_…` (pagina web su un sito verificato). Risponde `202 { id, at }`.',
+            '`GET /api/v1/stream?key=pk_…&channels=a,b`: eventi dal vivo (Server-Sent Events). Usa `token=` invece di `key=` per un token client. I client che si riconnettono recuperano dal loro ultimo evento (`Last-Event-ID`).',
+            '`GET /api/v1/poll?key=…&channels=…&after=<id>`: gli stessi eventi chiedendo ogni pochi secondi, per i posti in cui le connessioni dal vivo non funzionano. Risponde `{ events, next, retryAfterMs }`.',
+            '`GET /api/v1/client`: una piccola libreria per browser che si connette, si riconnette, rinnova i token e passa al polling da sola.',
+            'Gli errori arrivano come `{ "error": { "code", "message" } }` con lo stato HTTP (401 chiave, 403 non consentito, 402 nessun abbonamento, 429 troppe richieste, con `Retry-After`).',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'limits',
+      title: '9. Prova, abbonamento e accesso completo',
+      blocks: [
+        {
+          p: 'Pulse funziona accanto a tutte le altre app di DevQuake, quindi ogni account ha limiti equi. Il tuo piano attuale e i suoi numeri sono mostrati nella pagina iniziale dell’app.',
+        },
+        {
+          list: [
+            '**Prova gratuita (24 ore)**: 1 servizio API, 3 connessioni dal vivo, 300 eventi al giorno, eventi piccoli, e gli eventi arrivano con 3 secondi di ritardo.',
+            '**Abbonato**: 3 servizi API, 25 connessioni dal vivo e 10.000 eventi al giorno ciascuno, eventi immediati.',
+            '**Accesso completo**: limiti molto più alti per l’uso in produzione. {contact} e raccontaci cosa stai costruendo.',
+          ],
+        },
+        {
+          tip: 'Quando il tuo abbonamento finisce, i tuoi servizi API smettono di rispondere (le tue app ricevono “subscription required”). Quando annulli l’abbonamento o elimini il tuo account, vengono eliminati con tutti i loro dati.',
+        },
+      ],
+    },
+    {
+      id: 'data',
+      title: '10. I tuoi dati',
+      blocks: [
+        {
+          p: 'Gli eventi vengono conservati solo per il tempo necessario ai client che si riconnettono per recuperarli (al massimo un giorno, una settimana con l’accesso completo), i dati di utilizzo per 35 giorni e il registro di sicurezza per 30 giorni. Le chiavi segrete non vengono mai salvate e gli indirizzi solo come hash anonimi. Eliminare un servizio API, annullare l’abbonamento o eliminare il tuo account DevQuake rimuove tutto.',
+        },
+      ],
+    },
+    {
+      id: 'demo',
+      title: '11. Provalo dal vivo',
+      blocks: [
+        {
+          p: 'Vuoi vedere Pulse in azione prima di scrivere codice? La demo **Provalo dal vivo** (nella pagina iniziale dell’app) invia eventi tra due dei tuoi browser attraverso la vera API.',
+        },
+        {
+          steps: [
+            'Apri **Provalo dal vivo** e premi **Copia il link**.',
+            'Apri il link in un secondo browser (un altro browser, una finestra privata o il tuo telefono) e accedi allo stesso account DevQuake.',
+            'Scegli **Un messaggio** e scrivi qualcosa, oppure **Il tuo JSON** e incolla un oggetto piatto come `{ "order": 42, "paid": true }`.',
+            'Premi **Invia al mio altro browser**. L’altro browser mostra cosa è arrivato e quanto ci è voluto: dal mittente al server, dal server al browser ed end-to-end, con la media, il più veloce e il più lento.',
+          ],
+        },
+        {
+          tip: 'La cornice dell’evento (canale, nome dell’evento e i timbri `demo_from` e `demo_sent_at`) è fissa; il tuo contenuto va in `data`. La demo usa un tuo canale privato, è gratuita con ogni piano, non conta nei tuoi limiti, consente 30 eventi al minuto ed elimina gli eventi demo dopo un’ora.',
+        },
+      ],
+    },
+  ],
+  contactLink: 'Contattaci',
+  codeTitle: 'Esempi di codice',
+  codeIntro:
+    'Sostituisci la chiave di esempio con la tua chiave pubblica (il tuo servizio API mostra questi esempi con la tua chiave già inserita).',
+  codeBrowser: 'Pagina web: ascolta (e invia)',
+  codeServer: 'Il tuo server: invia un evento',
+  codeToken: 'Il tuo server: un token client per i canali privati',
+  codeReceived: 'Cosa riceve ogni ascoltatore',
+  questions: 'Domande o idee? Scrivi a {email}.',
+  back: '← Torna a Pulse',
+};
+
+const es: Manual = {
+  metaTitle: 'Manual de uso · Pulse, API de eventos en tiempo real',
+  metaDescription:
+    'Envía eventos desde tu sitio web o tu servidor y recíbelos en directo en cada navegador: claves, sitios web verificados, tu propia estructura de datos, una prueba en directo y la API.',
+  ogTitle: 'Pulse: manual de uso',
+  cta: '¿Quieres probarlo? Pulse es una app para los miembros de DevQuake. {link} y pruébalo gratis 24 horas o suscríbete.',
+  ctaLink: 'Crea una cuenta o inicia sesión',
+  kicker: 'Pulse · Manual de uso',
+  title: 'Eventos en tiempo real para tu app',
+  intro:
+    'Pulse lleva eventos de un sitio a muchos: tu servidor (o el navegador de un visitante) envía un evento y cada página que escucha lo recibe en menos de un segundo. Tú decides qué lleva un evento; Pulse lo mantiene seguro y justo.',
+  contents: 'Contenido',
+  sections: [
+    {
+      id: 'start',
+      title: '1. Primeros pasos',
+      blocks: [
+        {
+          steps: [
+            'Inicia sesión en {host} y abre **Pulse** desde tu cuenta (pruébalo gratis 24 horas o suscríbete).',
+            'Crea un **servicio API**. Copia la **clave secreta** enseguida: solo se muestra una vez.',
+            'En **Tus sitios web**, añade tu sitio y su registro DNS (o activa **Permitir localhost** para probar en tu ordenador).',
+            'Abre la **Prueba en directo** y envía tu primer evento.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'uses',
+      title: '2. Para qué se usa',
+      blocks: [
+        {
+          p: 'Para todo aquello en lo que una página debe cambiar en cuanto pasa algo en otro lugar, sin recargar:',
+        },
+        {
+          list: [
+            '**Notificaciones**: “Tu pedido ha sido enviado”, “Nuevo mensaje”, un contador que sube.',
+            '**Paneles en directo**: ventas, registros, lecturas de sensores o el estado de los servidores en el momento.',
+            '**Chat y comentarios**: mensajes que aparecen para todos en la sala.',
+            '**Puntuaciones y juegos**: resultados en directo, turnos, un marcador en una tele y en los móviles a la vez.',
+            '**Colaboración**: una lista o un tablero compartido donde todos ven los cambios de los demás.',
+            '**Estado de una tarea**: “procesando… listo” para subidas, pagos o exportaciones.',
+            '**Presencia**: quién está conectado o escribiendo ahora mismo.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'format',
+      title: '3. El formato de los eventos',
+      blocks: [
+        {
+          p: 'Cada evento tiene el mismo marco fijo y, dentro, **tus propios datos** como claves y valores:',
+        },
+        {
+          list: [
+            '`channel`: adónde va, p. ej. `orders` o `room-42`. Quien escucha elige los canales que quiere.',
+            '`event`: qué ha pasado, p. ej. `order.created`.',
+            '`data`: tus claves y valores, p. ej. `orderId: "A-17"`, `total: 42.5`, `paid: true`. Los valores son texto, números, sí/no (true/false) o vacíos (null).',
+            'Pulse añade `id`, `app` (tu clave pública), `source` (servidor, página web, token de cliente o prueba en directo), `sender` (de un token de cliente) y `at` (la hora, en UTC).',
+          ],
+        },
+        {
+          tip: 'Los canales cuyo nombre empieza por `private-` solo se pueden usar con un token de cliente o con la clave secreta, nunca solo con la clave pública.',
+        },
+      ],
+    },
+    {
+      id: 'security',
+      title: '4. Claves y seguridad',
+      blocks: [
+        {
+          list: [
+            '**Clave pública** (`pk_…`): va en tus páginas web. Solo funciona desde tus **sitios web verificados**, solo puede escuchar canales públicos y, si lo permites, enviar a ellos.',
+            '**Clave secreta** (`sk_…`): se queda en tu servidor. Puede enviar a cualquier canal y crear tokens de cliente. Pulse la rechaza cuando llega desde una página web, porque un secreto en un navegador ya no es secreto.',
+            '**Tokens de cliente**: tu servidor crea uno para cada uno de tus usuarios, válido hasta una hora, con los canales que ese usuario puede usar y si puede enviar. Es la forma segura para canales privados y para usuarios con sesión iniciada.',
+            '**Solo tú**: un servicio API pertenece únicamente a tu cuenta de DevQuake. No se puede compartir con otros miembros.',
+            '**Direcciones de servidor**: si quieres, permite la clave secreta solo desde las direcciones IP de tus servidores.',
+            '**Vigilancia de filtraciones**: Pulse cuenta las direcciones desde las que se usa tu clave secreta y registra las llamadas rechazadas. Si la clave aparece en demasiados sitios, te avisa: crea una nueva (la antigua sigue funcionando 24 horas).',
+          ],
+        },
+        {
+          tip: 'Por qué una clave copiada no le sirve a nadie: la clave pública solo funciona en sitios web que han demostrado con DNS que son tuyos; la clave secreta se rechaza en las páginas web y puede vincularse a tus servidores; y cada servicio tiene límites, así que ni siquiera una clave robada puede hacer más de lo que permite tu plan.',
+        },
+      ],
+    },
+    {
+      id: 'websites',
+      title: '5. Verificar tu sitio web',
+      blocks: [
+        {
+          steps: [
+            'En **Tus sitios web**, introduce la dirección, p. ej. `https://shop.example.com`.',
+            'Pulse muestra un **registro TXT**: un nombre como `_devquake-pulse.shop.example.com` y un valor como `devquake-pulse=…`.',
+            'Añádelo donde gestionas el DNS de tu dominio (tu hosting o tu proveedor de dominio).',
+            'Pulsa **Comprobar ahora**. Tras unos minutos (a veces una hora) el sitio web aparece como **Verificado** y funciona.',
+          ],
+        },
+        {
+          tip: 'Para probar en tu propio ordenador, activa **Permitir localhost**: las páginas en `http://localhost` funcionan sin registro DNS. Desactívalo cuando pases a producción.',
+        },
+      ],
+    },
+    {
+      id: 'structure',
+      title: '6. Tu propia estructura de datos',
+      blocks: [
+        {
+          p: 'En **Tu estructura de datos** describes cada evento que usas: sus claves, su tipo (texto, número o sí/no) y cuáles son obligatorias. Por ejemplo `order.created` con `orderId` (texto, obligatoria), `total` (número) y `paid` (sí/no).',
+        },
+        {
+          list: [
+            'Los eventos descritos se comprueban: si falta una clave obligatoria o un tipo es incorrecto, se rechaza con un error claro.',
+            'Los eventos que no has descrito se siguen aceptando, salvo que actives **Solo eventos descritos**.',
+            'Con **Solo eventos descritos** activado, también se rechazan los eventos y las claves desconocidos: recomendado en producción.',
+          ],
+        },
+        {
+          tip: 'Las claves empiezan por una letra o `_` y contienen letras, dígitos y `_`. Como máximo 20 claves por evento; valores de texto de hasta 500 caracteres.',
+        },
+      ],
+    },
+    {
+      id: 'test',
+      title: '7. Escenario de prueba en directo (5 minutos)',
+      blocks: [
+        {
+          p: 'Necesitas: tu servicio API, un ordenador con terminal y un móvil (o una segunda ventana del navegador). Todavía no necesitas un sitio web.',
+        },
+        {
+          steps: [
+            'Abre tu servicio API y pulsa **Prueba en directo**. Deja el canal `demo` y pulsa **Conectar**: el punto se pone verde, **En directo**.',
+            'Abre la misma página en tu móvil (con la sesión de DevQuake iniciada) y pulsa **Conectar** también allí.',
+            'En el ordenador, en **Enviar**, deja el evento `hello` con la clave `text` = `Hello` y pulsa **Enviar evento**. El móvil lo muestra en menos de un segundo, con lo que ha tardado.',
+            'Envía desde el móvil: el ordenador lo recibe. Ambos escuchan `demo`.',
+            'En un terminal, ejecuta el ejemplo `curl` de la página con tu clave secreta en lugar de `$PULSE_SECRET_KEY`. Ambas páginas reciben un evento de un servidor.',
+            'Prueba las reglas: añade un evento descrito en **Tu estructura de datos**, activa **Solo eventos descritos** y envía uno con un tipo incorrecto: se rechaza indicando el motivo.',
+            'Prueba los canales privados: desconecta, activa **Usar un token de cliente**, pon los canales en `private-demo`, conecta en ambos dispositivos y vuelve a enviar.',
+          ],
+        },
+        {
+          tip: 'Durante la prueba gratuita los eventos llegan con 3 segundos de retraso y las conexiones son más cortas: es a propósito. Si una página muestra “Conectado (polling)”, las conexiones en directo están bloqueadas en esa red; los eventos siguen llegando, cada pocos segundos.',
+        },
+      ],
+    },
+    {
+      id: 'api',
+      title: '8. La API en resumen',
+      blocks: [
+        {
+          list: [
+            '`POST /api/v1/events`: envía un evento. Cuerpo: `{ "channel", "event", "data" }`. Autenticación: `Authorization: Bearer sk_…` (servidor), `Authorization: Bearer <client token>` o `X-Pulse-Key: pk_…` (página web en un sitio verificado). Responde `202 { id, at }`.',
+            '`GET /api/v1/stream?key=pk_…&channels=a,b`: eventos en directo (Server-Sent Events). Usa `token=` en lugar de `key=` para un token de cliente. Los clientes que se reconectan se ponen al día desde su último evento (`Last-Event-ID`).',
+            '`GET /api/v1/poll?key=…&channels=…&after=<id>`: los mismos eventos preguntando cada pocos segundos, para lugares donde las conexiones en directo no funcionan. Responde `{ events, next, retryAfterMs }`.',
+            '`GET /api/v1/client`: una pequeña biblioteca para navegador que se conecta, se reconecta, renueva los tokens y pasa a polling por sí sola.',
+            'Los errores llegan como `{ "error": { "code", "message" } }` con el estado HTTP (401 clave, 403 no permitido, 402 sin suscripción, 429 demasiadas, con `Retry-After`).',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'limits',
+      title: '9. Prueba, suscripción y acceso completo',
+      blocks: [
+        {
+          p: 'Pulse funciona junto a todas las demás apps de DevQuake, así que cada cuenta tiene límites justos. Tu plan actual y sus cifras se muestran en la página de inicio de la app.',
+        },
+        {
+          list: [
+            '**Prueba gratuita (24 horas)**: 1 servicio API, 3 conexiones en directo, 300 eventos al día, eventos pequeños, y los eventos llegan con 3 segundos de retraso.',
+            '**Suscrito**: 3 servicios API, 25 conexiones en directo y 10.000 eventos al día cada uno, eventos al instante.',
+            '**Acceso completo**: límites mucho más altos para uso en producción. {contact} y cuéntanos qué estás creando.',
+          ],
+        },
+        {
+          tip: 'Cuando termina tu suscripción, tus servicios API dejan de responder (tus apps reciben “subscription required”). Cuando cancelas la suscripción o eliminas tu cuenta, se eliminan con todos sus datos.',
+        },
+      ],
+    },
+    {
+      id: 'data',
+      title: '10. Tus datos',
+      blocks: [
+        {
+          p: 'Los eventos se guardan solo el tiempo necesario para que los clientes que se reconectan se pongan al día (como máximo un día, una semana con acceso completo), las cifras de uso 35 días y el registro de seguridad 30 días. Las claves secretas nunca se guardan, y las direcciones solo como hashes anónimos. Eliminar un servicio API, cancelar la suscripción o eliminar tu cuenta de DevQuake lo borra todo.',
+        },
+      ],
+    },
+    {
+      id: 'demo',
+      title: '11. Pruébalo en directo',
+      blocks: [
+        {
+          p: '¿Quieres ver Pulse funcionando antes de escribir código? La demo **Pruébalo en directo** (en la página de inicio de la app) envía eventos entre dos de tus navegadores a través de la API real.',
+        },
+        {
+          steps: [
+            'Abre **Pruébalo en directo** y pulsa **Copiar el enlace**.',
+            'Abre el enlace en un segundo navegador (otro navegador, una ventana privada o tu móvil) e inicia sesión con la misma cuenta de DevQuake.',
+            'Elige **Un mensaje** y escribe algo, o **Tu propio JSON** y pega un objeto plano como `{ "order": 42, "paid": true }`.',
+            'Pulsa **Enviar a mi otro navegador**. El otro navegador muestra lo que ha llegado y cuánto ha tardado: del remitente al servidor, del servidor al navegador y de extremo a extremo, con la media, el más rápido y el más lento.',
+          ],
+        },
+        {
+          tip: 'El marco del evento (canal, nombre del evento y las marcas `demo_from` y `demo_sent_at`) es fijo; tu contenido va en `data`. La demo usa un canal privado tuyo, es gratuita en todos los planes, no cuenta para tus límites, permite 30 eventos por minuto y borra los eventos de demo al cabo de una hora.',
+        },
+      ],
+    },
+  ],
+  contactLink: 'Contáctanos',
+  codeTitle: 'Ejemplos de código',
+  codeIntro:
+    'Sustituye la clave de ejemplo por tu propia clave pública (tu servicio API muestra estos ejemplos con tu clave ya puesta).',
+  codeBrowser: 'Página web: escuchar (y enviar)',
+  codeServer: 'Tu servidor: enviar un evento',
+  codeToken: 'Tu servidor: un token de cliente para canales privados',
+  codeReceived: 'Lo que recibe cada oyente',
+  questions: '¿Preguntas o ideas? Escribe a {email}.',
+  back: '← Volver a Pulse',
+};
+
+export const MANUAL: Record<Locale, Manual> = { en, de, ro, hu, it, es };

@@ -1,5 +1,9 @@
 # Changelog — Shared expenses
 
+## 0.3.0
+
+- The app is now also in Italian and Spanish: pick the language at the top of the page.
+
 ## 0.2.0
 
 - Utility bills and shopping lists can now add expenses to your groups: a bill with everyone’s exact share, or what was bought on a list, split equally. Adding the same bill or list twice changes nothing, and the expense shows where it came from with a link back.

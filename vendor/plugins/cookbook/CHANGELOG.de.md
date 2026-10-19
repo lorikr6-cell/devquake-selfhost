@@ -1,5 +1,9 @@
 # Änderungen — Kochbuch
 
+## 0.7.0
+
+- Die App gibt es jetzt auch auf Italienisch und Spanisch: Wähle die Sprache oben auf der Seite.
+
 ## 0.6.1
 
 - Benachrichtigungen: Auf großen Bildschirmen öffnet sich die Liste jetzt direkt unter der Glocke; auf Handys und Tablets bleibt sie in der Bildschirmmitte. Sie passt immer auf den Bildschirm: Die Überschrift bleibt sichtbar, nur die Liste scrollt.
@@ -31,7 +35,7 @@
 
 - Die Karte der App auf DevQuake und ihre Startseite zeigen jetzt, wie viele Mitglieder sie nutzen, und ihre Zahlen: Rezepte, Empfehlungen.
 
-0.1.0
+## 0.1.0
 
 - Eine Startbibliothek mit für DevQuake geschriebenen Rezepten, auf Englisch, Deutsch, Rumänisch und Ungarisch, von Shakshuka bis Gulaschsuppe.
 - Portionen wählen, und jede Menge wird neu berechnet: Eier bleiben ganz, Gewürze wachsen weniger, Mengen werden küchengerecht gerundet. Metrisch oder imperial.

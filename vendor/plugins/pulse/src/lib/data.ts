@@ -24,6 +24,8 @@ export interface AppRow {
   paused: number;
   /** DevQuake's live demo service (ADR 0029); undefined before migration 0003. */
   demo?: number;
+  /** DevQuake's platform service (ADR 0063); undefined before migration 0004. */
+  platform?: number;
   created_at: Date;
 }
 
@@ -70,6 +72,33 @@ export async function accountPlan(db: Db, userId: number): Promise<string | null
     userId,
   ]);
   return row?.plan ?? null;
+}
+
+/**
+ * DevQuake's admins and owner use Pulse without quotas (ADR 0063): while they are staff their
+ * account row says 'staff'; once they are not, it goes back to 'standard'. Called whenever they
+ * use the dashboard, which is where Pulse learns who is staff. Returns the account plan now.
+ */
+export async function syncStaffPlan(
+  db: Db,
+  user: { id: number; isAdmin: boolean },
+): Promise<string | null> {
+  const current = await accountPlan(db, user.id);
+  if (user.isAdmin && current !== 'staff') {
+    await db.execute(
+      `INSERT INTO accounts (user_id, plan, note) VALUES (?, 'staff', 'DevQuake staff')
+         ON DUPLICATE KEY UPDATE plan = 'staff', note = 'DevQuake staff'`,
+      [user.id],
+    );
+    return 'staff';
+  }
+  if (!user.isAdmin && current === 'staff') {
+    await db.execute(`UPDATE accounts SET plan = 'standard', note = NULL WHERE user_id = ?`, [
+      user.id,
+    ]);
+    return 'standard';
+  }
+  return current;
 }
 
 export async function listApps(db: Db, userId: number): Promise<AppSummary[]> {
@@ -142,6 +171,21 @@ export async function demoApp(db: PluginDatabase, master: Buffer): Promise<AppRo
   if (existing) return existing;
   const { id } = await createApp(db, 0, 'DevQuake live demo', master);
   await db.execute('UPDATE apps SET demo = 1 WHERE id = ?', [id]);
+  return (await find())!;
+}
+
+/**
+ * DevQuake's platform service (ADR 0063): the website and DevQuake's native apps get their live
+ * updates through it. Owned by nobody (user_id 0), so it is never listed as a member's service;
+ * made on first use, like the demo service.
+ */
+export async function platformApp(db: PluginDatabase, master: Buffer): Promise<AppRow> {
+  const find = async () =>
+    (await db.query<AppRow>('SELECT * FROM apps WHERE platform = 1 ORDER BY id LIMIT 1'))[0];
+  const existing = await find();
+  if (existing) return existing;
+  const { id } = await createApp(db, 0, 'DevQuake platform', master);
+  await db.execute('UPDATE apps SET platform = 1 WHERE id = ?', [id]);
   return (await find())!;
 }
 

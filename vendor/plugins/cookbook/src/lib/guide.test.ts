@@ -62,6 +62,8 @@ describe('timers, preparation and stages', () => {
     expect(suggestedTimerMin('Simmer for 20 minutes.')).toBe(20);
     expect(suggestedTimerMin('Bake 10–12 min')).toBe(10);
     expect(suggestedTimerMin('Főzd 1 óra 30 percig')).toBe(90);
+    expect(suggestedTimerMin('Cuece 1 hora y 30 minutos')).toBe(90);
+    expect(suggestedTimerMin('Cuoci per 1 ora e 20 minuti')).toBe(80);
     expect(suggestedTimerMin('Serve hot.')).toBeNull();
   });
 

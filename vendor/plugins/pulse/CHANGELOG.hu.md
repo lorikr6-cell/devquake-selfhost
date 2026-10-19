@@ -1,5 +1,13 @@
 # Változások — Pulse
 
+## 0.8.0
+
+- Az alkalmazás mostantól olaszul és spanyolul is elérhető: a nyelvet az oldal tetején választhatod ki.
+
+## 0.7.0
+
+- A DevQuake saját alkalmazásai mostantól a Pulse-on keresztül kapják az élő frissítéseket. A szolgáltatásaid, a csomagod és a korlátaid változatlanok; az élő kapcsolatok továbbra is rendelkezésükre állnak.
+
 ## 0.6.0
 
 - A Pulse mostantól a saját szervereden is futhat (saját üzemeltetésű DevQuake): ott minden tag a teljes csomagot kapja.
@@ -12,7 +20,7 @@
 
 - Az alkalmazás kártyája a DevQuake-en és a kezdőoldala most megmutatja, hány tag használja, és a számait: API-szolgáltatás, mai esemény.
 
-0.4.1
+## 0.4.1
 
 - Aki még nem használja az alkalmazást, most a kezdőlapján látja, mire jó, a felhasználói kézikönyv linkjével, a megosztott linkek pedig az alkalmazás saját képét mutatják.
 

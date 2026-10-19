@@ -40,17 +40,19 @@ export function PlanPanel({
         </span>
       </div>
       <p className="mt-1 text-sm text-ink/70 dark:text-paper/70">{t(`about.${plan}`)}</p>
-      <ul className="mt-3 grid gap-x-6 gap-y-1 text-sm sm:grid-cols-2">
-        {SHOWN_LIMITS.map((key) => (
-          <li key={key} className="flex gap-2">
-            <span aria-hidden className="text-quake">
-              •
-            </span>
-            {limitText(locale, plan, key)}
-          </li>
-        ))}
-      </ul>
-      {plan !== 'full' ? (
+      {plan === 'platform' ? null : (
+        <ul className="mt-3 grid gap-x-6 gap-y-1 text-sm sm:grid-cols-2">
+          {SHOWN_LIMITS.map((key) => (
+            <li key={key} className="flex gap-2">
+              <span aria-hidden className="text-quake">
+                •
+              </span>
+              {limitText(locale, plan, key)}
+            </li>
+          ))}
+        </ul>
+      )}
+      {plan !== 'full' && plan !== 'platform' ? (
         <p className="mt-3 text-sm">
           {rich(t('more'), {
             link: (

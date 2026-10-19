@@ -94,7 +94,14 @@ export const getHighlights: PluginPlatformModule['getHighlights'] = async ({ db 
   return [
     {
       value: n(row?.apps),
-      label: { en: 'API services', de: 'API-Dienste', ro: 'Servicii API', hu: 'API-szolgáltatás' },
+      label: {
+        en: 'API services',
+        de: 'API-Dienste',
+        ro: 'Servicii API',
+        hu: 'API-szolgáltatás',
+        it: 'Servizi API',
+        es: 'Servicios API',
+      },
       icon: '📡',
     },
     {
@@ -104,6 +111,8 @@ export const getHighlights: PluginPlatformModule['getHighlights'] = async ({ db 
         de: 'Ereignisse heute',
         ro: 'Evenimente azi',
         hu: 'Mai esemény',
+        it: 'Eventi oggi',
+        es: 'Eventos hoy',
       },
       icon: '⚡',
     },

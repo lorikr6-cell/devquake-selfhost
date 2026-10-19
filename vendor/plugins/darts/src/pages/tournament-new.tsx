@@ -9,7 +9,14 @@ export function generateMetadata({ ctx }: PluginPageProps) {
   return { title: translator(localeOf(ctx))('meta.newTournament') };
 }
 
-const CURRENCY_BY_LOCALE = { en: 'EUR', de: 'EUR', ro: 'RON', hu: 'HUF' } as const;
+const CURRENCY_BY_LOCALE = {
+  en: 'EUR',
+  de: 'EUR',
+  ro: 'RON',
+  hu: 'HUF',
+  it: 'EUR',
+  es: 'EUR',
+} as const;
 
 export default async function NewTournament({ ctx }: PluginPageProps) {
   const scope = await pageScope(ctx);

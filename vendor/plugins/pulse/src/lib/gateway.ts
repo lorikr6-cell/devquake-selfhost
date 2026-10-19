@@ -165,6 +165,8 @@ async function planFor(ctx: PluginContext, entry: AppEntry, now: number): Promis
   // The demo service belongs to DevQuake: its own fixed plan, shared by every member trying it
   // (each member's sending is limited separately, see /v1/events).
   if (entry.app.demo === 1) return 'full';
+  // DevQuake's platform service (ADR 0063): no quotas, no owner to look up.
+  if (entry.app.platform === 1) return 'platform';
   const userId = entry.app.user_id;
   let level: 'member' | 'trial' | 'none' = 'member'; // local development without the platform
   if (ctx.accessOf) {

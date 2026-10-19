@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'darts',
     name: 'Darts',
-    version: '0.6.2',
+    version: '0.7.0',
     description:
       'Darts on your phone: practise alone with drills made from your weak spots, play casual games with friends who join by QR code, or run tournaments on your boards with a knock-out bracket, entry fees and live scores. 501/301, Cricket, Shanghai, Around the Clock, Killer and more, with finishing suggestions.',
     status: 'active',

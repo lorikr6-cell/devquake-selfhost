@@ -603,4 +603,294 @@ const hu: Manual = {
   back: '← Vissza az alkalmazáshoz',
 };
 
-export const MANUAL: Record<Locale, Manual> = { en, de, ro, hu };
+const it: Manual = {
+  metaTitle: 'Manuale · Darts',
+  metaDescription:
+    'Tieni il punteggio delle freccette sul telefono: allenati da solo con esercizi fatti per te, gioca partite amichevoli con gli amici o organizza tornei con tabellone in diretta. 501, 301, Cricket, Shanghai, Giro dell’orologio e Killer.',
+  ogTitle: 'Darts: manuale',
+  cta: 'Vuoi provarla? Darts è un’app per i membri di DevQuake. {link}, poi iscriviti all’app.',
+  ctaLink: 'Crea un account o accedi',
+  kicker: 'Darts · Manuale',
+  title: 'Come giocare a freccette con l’app',
+  intro:
+    'L’app tiene il punteggio di ogni freccetta, controlla le regole, suggerisce le chiusure migliori e impara come giochi. Allenati da solo, gioca con gli amici o organizza un torneo su più bersagli.',
+  contents: 'Indice',
+  sections: [
+    {
+      id: 'start',
+      title: '1. Per iniziare',
+      blocks: [
+        {
+          steps: [
+            'Accedi su {host} (o crea un account e conferma la tua email).',
+            'Apri **Il tuo account → Progetti disponibili** e **iscriviti** a “Darts”.',
+            'Apri l’app e imposta il tuo **profilo**: il tuo nome al bersaglio, la mano di tiro, il livello, come preferisci inserire i punteggi e, se ne hai uno, il tuo doppio preferito.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'modes',
+      title: '2. Tre modi di giocare',
+      blocks: [
+        {
+          list: [
+            '**Allenamento**: da solo. Qualsiasi gioco, o esercizi creati dalle tue statistiche. Ogni turno e le sue tre freccette vengono salvati, così vedi i tuoi progressi sessione dopo sessione.',
+            '**Amichevoli**: inizi una partita e i tuoi amici entrano con il suo codice o codice QR. Come organizzatore avvii la partita e puoi rimuovere un giocatore perché ne entri un altro.',
+            '**Torneo**: un torneo a eliminazione diretta sui tuoi bersagli. I giocatori si iscrivono, tu sorteggi ogni round, gli incontri si giocano sui bersagli e tutti seguono il tabellone in diretta.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'games',
+      title: '3. I giochi',
+      blocks: [
+        {
+          list: [
+            '**501 / 301** (anche 701 e 1001): scendi esattamente a zero; l’ultima freccetta deve essere un doppio o il bull. Scendere sotto zero, a 1 o a zero senza un doppio è un bust e il turno non conta. Opzioni: double in, single o master out, più leg.',
+            '**Cricket**: chiudi i numeri dal 15 al 20 e il bull con tre segni ciascuno, poi fai punti sui numeri che i tuoi avversari non hanno chiuso. Nel cut-throat i tuoi punti vanno agli avversari.',
+            '**Shanghai**: un numero per giro. Singolo, doppio e triplo di quel numero in un solo turno fanno vincere subito.',
+            '**Giro dell’orologio**: da 1 a 20 in ordine, poi il bull. A scelta, solo doppi.',
+            '**Killer**: ognuno riceve un numero. Colpisci il suo doppio per diventare killer, poi togli le vite agli altri con i loro doppi.',
+            '**Count-Up**: vince chi fa più punti dopo un certo numero di giri.',
+            '**Esercizio sui bersagli** ed **esercizio di chiusura**: allenamento sui bersagli o sulle chiusure che scegli (solo in Allenamento).',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'scoring',
+      title: '4. Inserire un turno',
+      blocks: [
+        {
+          p: 'Quando tocca a te, inserisci le tue tre freccette in uno dei due modi (puoi cambiare quando vuoi):',
+        },
+        {
+          list: [
+            '**Bersaglio**: tocca il settore in cui è finita ogni freccetta. Gli anelli sono larghi, così doppi e tripli si toccano facilmente. Tocca fuori dal bersaglio o **Fuori** per una freccetta che lo ha mancato.',
+            '**Tastierino**: un tocco per freccetta. Se serve, tocca prima **Doppio** o **Triplo** (vale solo per la freccetta successiva), poi il numero. Sopra, i **turni con un clic** inseriscono un turno intero in una volta: le chiusure, i tuoi turni frequenti e i punteggi comuni a questo punto della partita (solo turni ammessi dalle regole). Al computer: D o T poi il numero, B bull, 0 fuori, Invio invia.',
+          ],
+        },
+        {
+          p: 'Ogni freccetta viene controllata con le regole mentre la inserisci e i punteggi si aggiornano subito. Dopo un bust o una chiusura il turno è finito: invialo. Il pulsante dice cosa succede dopo, per esempio **Tocca a: Ana**, **Bust · tocca a: Ana** o **Vinci la partita!** **Annulla freccetta** toglie una freccetta prima di inviare; **Annulla il mio ultimo turno** annulla un turno già inviato, purché nessuno abbia tirato dopo.',
+        },
+        {
+          tip: 'Sotto le freccette l’app mostra fino a tre suggerimenti che ti avvicinano di più alla vittoria: percorsi di chiusura (per esempio Triplo 20 → Doppio 20 per 100), un tiro di preparazione quando non si può chiudere, o i bersagli che contano in Cricket, Shanghai e Killer. Il primo si illumina anche sul bersaglio.',
+        },
+      ],
+    },
+    {
+      id: 'casual',
+      title: '5. Giocare con gli amici',
+      blocks: [
+        {
+          steps: [
+            'In **Amichevoli** scegli un gioco e le sue opzioni, poi **Crea la partita e invita**.',
+            'I tuoi amici scansionano il codice QR, aprono il link o scrivono il codice di 8 caratteri. Servono un account DevQuake e l’app.',
+            'Quando ci sono tutti, **Inizia la partita** (a scelta sorteggiando chi tira per primo). Ogni giocatore inserisce le proprie freccette sul proprio telefono.',
+          ],
+        },
+        {
+          p: 'Per far seguire la partita ad altri senza giocare, apri **Fai guardare gli altri** e condividi quel link o codice QR. Chi guarda vede i punteggi in diretta ma non può cambiare nulla.',
+        },
+      ],
+    },
+    {
+      id: 'tournament',
+      title: '6. Organizzare un torneo',
+      blocks: [
+        {
+          steps: [
+            'In **Tornei → Nuovo torneo** scegli il nome, il gioco, il numero di bersagli e, se vuoi, una quota d’iscrizione con la tua percentuale (può essere 0).',
+            'Stampa i codici QR dei bersagli e metti ognuno accanto al suo bersaglio. I giocatori entrano scansionando il codice di un bersaglio (vengono assegnati a quel bersaglio) o con il codice del torneo (l’app li distribuisce sui bersagli).',
+            'Quando ci sono tutti, **Inizia il torneo**. L’app suggerisce coppie di giocatori di forza simile; tocca un giocatore e poi un altro per scambiarli, poi **Inizia il round**.',
+            'Gli incontri vanno sui bersagli liberi; se ci sono più incontri che bersagli, gli altri iniziano appena un bersaglio si libera. I giocatori vedono il loro incontro nella schermata iniziale e nel torneo.',
+            'Quando tutti gli incontri di un round sono finiti, sorteggia il round successivo. L’ultimo giocatore rimasto vince il torneo.',
+          ],
+        },
+        {
+          tip: 'Tocca un incontro qualsiasi nel tabellone per guardarlo in diretta. Solo i suoi due giocatori possono inserire i punteggi. L’app tiene traccia di chi ha pagato la quota e del montepremi; i soldi li gestisci tu. Sotto il tabellone, **Andamento del punteggio** mostra ogni incontro turno per turno: cerca il nome di un giocatore per vedere cosa ha tirato, come è sceso il suo punteggio e contro chi ha giocato.',
+        },
+      ],
+    },
+    {
+      id: 'stats',
+      title: '7. Statistiche ed esercizi',
+      blocks: [
+        {
+          p: 'La pagina delle statistiche è solo per te. Mostra:',
+        },
+        {
+          list: [
+            'I tuoi risultati in ogni modalità e ogni avversario, con le tue vittorie e sconfitte contro di lui.',
+            'La tua media su tre freccette, il miglior turno, la chiusura più alta e i punteggi che fai più spesso.',
+            'Una mappa di calore di dove finiscono le tue freccette sul bersaglio.',
+            'Sei abilità (punteggio, doppi, tripli, bull, precisione, costanza), con i tuoi punti forti e deboli e i doppi e i numeri che sbagli di più.',
+          ],
+        },
+        {
+          p: 'In **Allenamento → Fatti per te**, **Crea esercizi per me** crea esercizi proprio per i tuoi punti deboli. Sono solo tuoi e ogni esercizio che giochi arricchisce le tue statistiche.',
+        },
+      ],
+    },
+    {
+      id: 'privacy',
+      title: '8. I tuoi dati',
+      blocks: [
+        {
+          p: 'Se annulli l’iscrizione all’app o elimini il tuo account DevQuake, vengono eliminati il tuo profilo, gli esercizi, le partite di allenamento e i tornei che hai organizzato. Nelle partite giocate con altri il tuo nome viene rimosso, così loro conservano i propri risultati contro un “ex giocatore”.',
+        },
+      ],
+    },
+  ],
+  questions: 'Domande o idee? Scrivi a {email}.',
+  back: '← Torna all’app',
+};
+
+const es: Manual = {
+  metaTitle: 'Manual de uso · Darts',
+  metaDescription:
+    'Lleva la puntuación de los dardos en el móvil: entrena solo con ejercicios hechos para ti, juega partidas amistosas con amigos u organiza torneos con un cuadro en directo. 501, 301, Cricket, Shanghai, Vuelta al reloj y Killer.',
+  ogTitle: 'Darts: manual de uso',
+  cta: '¿Quieres probarla? Darts es una app para miembros de DevQuake. {link} y suscríbete a la app.',
+  ctaLink: 'Crea una cuenta o inicia sesión',
+  kicker: 'Darts · Manual de uso',
+  title: 'Cómo jugar a los dardos con la app',
+  intro:
+    'La app lleva la puntuación de cada dardo, comprueba las reglas, sugiere los mejores cierres y aprende cómo juegas. Practica solo, juega con amigos u organiza un torneo en varias dianas.',
+  contents: 'Contenido',
+  sections: [
+    {
+      id: 'start',
+      title: '1. Primeros pasos',
+      blocks: [
+        {
+          steps: [
+            'Inicia sesión en {host} (o crea una cuenta y confirma tu correo).',
+            'Abre **Tu cuenta → Proyectos disponibles** y **suscríbete** a “Darts”.',
+            'Abre la app y configura tu **perfil**: tu nombre en la diana, tu mano de lanzamiento, tu nivel, cómo prefieres introducir las puntuaciones y, si tienes uno, tu doble favorito.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'modes',
+      title: '2. Tres formas de jugar',
+      blocks: [
+        {
+          list: [
+            '**Práctica**: solo. Cualquier juego, o ejercicios creados a partir de tus estadísticas. Se guarda cada tirada con sus tres dardos, así ves tu progreso sesión tras sesión.',
+            '**Amistosas**: empiezas una partida y tus amigos se unen con su código o código QR. Como anfitrión, empiezas la partida y puedes quitar a un jugador para que entre otro.',
+            '**Torneo**: un torneo eliminatorio en tus dianas. Los jugadores se apuntan, tú sorteas cada ronda, los enfrentamientos se juegan en las dianas y todos siguen el cuadro en directo.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'games',
+      title: '3. Los juegos',
+      blocks: [
+        {
+          list: [
+            '**501 / 301** (también 701 y 1001): baja exactamente a cero; el último dardo debe ser un doble o el bull. Bajar de cero, quedarte en 1 o llegar a cero sin doble es un bust y la tirada no cuenta. Opciones: double in, single o master out, varios legs.',
+            '**Cricket**: cierra del 15 al 20 y el bull con tres marcas cada uno, y luego puntúa en los números que tus rivales no han cerrado. En cut-throat tus puntos van a los rivales.',
+            '**Shanghai**: un número por ronda. Su simple, su doble y su triple en una sola tirada ganan al instante.',
+            '**Vuelta al reloj**: del 1 al 20 en orden, y luego el bull. Opcionalmente, solo dobles.',
+            '**Killer**: cada uno recibe un número. Acierta su doble para convertirte en killer y luego quita vidas a los demás con sus dobles.',
+            '**Count-Up**: gana quien más puntos tenga tras un número de rondas.',
+            '**Ejercicio de objetivos** y **ejercicio de cierre**: práctica en los objetivos o cierres que elijas (solo en Práctica).',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'scoring',
+      title: '4. Introducir una tirada',
+      blocks: [
+        {
+          p: 'Cuando te toque, introduce tus tres dardos de una de estas dos formas (puedes cambiar cuando quieras):',
+        },
+        {
+          list: [
+            '**Diana**: toca el sector donde cayó cada dardo. Los anillos son anchos, así que los dobles y triples son fáciles de tocar. Toca fuera de la diana o **Fallo** para un dardo que no le dio.',
+            '**Teclado**: un toque por dardo. Si hace falta, toca primero **Doble** o **Triple** (solo vale para el siguiente dardo) y luego el número. Encima, las **tiradas con un clic** introducen una tirada entera de una vez: los cierres, tus tiradas frecuentes y las puntuaciones habituales en este punto de la partida (solo tiradas que permiten las reglas). En el ordenador: D o T y luego el número, B bull, 0 fallo, Intro envía.',
+          ],
+        },
+        {
+          p: 'Cada dardo se comprueba con las reglas al introducirlo y las puntuaciones se actualizan al momento. Tras un bust o un cierre, la tirada ha terminado: envíala. El botón dice qué pasará, por ejemplo **Le toca a: Ana**, **Bust · le toca a: Ana** o **¡Gana la partida!** **Deshacer dardo** retira un dardo antes de enviar; **Deshacer mi última tirada** retira una tirada ya enviada, siempre que nadie haya lanzado después.',
+        },
+        {
+          tip: 'Debajo de los dardos, la app muestra hasta tres sugerencias que más te acercan a la victoria: rutas de cierre (por ejemplo Triple 20 → Doble 20 para 100), un tiro de preparación cuando no se puede cerrar, o los objetivos que importan en Cricket, Shanghai y Killer. La primera también se ilumina en la diana.',
+        },
+      ],
+    },
+    {
+      id: 'casual',
+      title: '5. Jugar con amigos',
+      blocks: [
+        {
+          steps: [
+            'En **Amistosas**, elige un juego y sus opciones, y luego **Crear partida e invitar**.',
+            'Tus amigos escanean el código QR, abren el enlace o escriben el código de 8 caracteres. Necesitan una cuenta de DevQuake y la app.',
+            'Cuando estén todos, **Empezar partida** (opcionalmente sorteando quién lanza primero). Cada jugador introduce sus propios dardos en su propio móvil.',
+          ],
+        },
+        {
+          p: 'Para que otros sigan la partida sin jugar, abre **Deja que otros miren** y comparte ese enlace o código QR. Quienes miran ven las puntuaciones en directo, pero no pueden cambiar nada.',
+        },
+      ],
+    },
+    {
+      id: 'tournament',
+      title: '6. Organizar un torneo',
+      blocks: [
+        {
+          steps: [
+            'En **Torneos → Nuevo torneo**, elige el nombre, el juego, el número de dianas y, si quieres, una cuota de inscripción con tu parte en porcentaje (puede ser 0).',
+            'Imprime los códigos QR de las dianas y pon cada uno junto a su diana. Los jugadores se unen escaneando el código de una diana (quedan asignados a esa diana) o con el código del torneo (la app los reparte entre las dianas).',
+            'Cuando estén todos, **Empezar torneo**. La app sugiere parejas de jugadores de nivel parecido; toca un jugador y luego otro para intercambiarlos, y después **Empezar ronda**.',
+            'Los enfrentamientos van a las dianas libres; si hay más enfrentamientos que dianas, el resto empieza en cuanto quede una diana libre. Los jugadores ven su enfrentamiento en la pantalla de inicio y en el torneo.',
+            'Cuando terminen todos los enfrentamientos de una ronda, sortea la siguiente. El último jugador que quede gana el torneo.',
+          ],
+        },
+        {
+          tip: 'Toca cualquier enfrentamiento del cuadro para verlo en directo. Solo sus dos jugadores pueden anotar puntos. La app lleva la cuenta de quién ha pagado la cuota y del bote; el dinero lo gestionas tú. Debajo del cuadro, **Evolución de la puntuación** muestra cada enfrentamiento tirada a tirada: busca el nombre de un jugador para ver qué lanzó, cómo bajó su puntuación y contra quién jugó.',
+        },
+      ],
+    },
+    {
+      id: 'stats',
+      title: '7. Estadísticas y ejercicios',
+      blocks: [
+        {
+          p: 'Tu página de estadísticas es solo para ti. Muestra:',
+        },
+        {
+          list: [
+            'Tus resultados en cada modo y cada rival, con tus victorias y derrotas contra él.',
+            'Tu media de tres dardos, tu mejor tirada, tu cierre más alto y las puntuaciones que más lanzas.',
+            'Un mapa de calor de dónde caen tus dardos en la diana.',
+            'Seis habilidades (puntuación, dobles, triples, bull, precisión, regularidad), con tus puntos fuertes y débiles y los dobles y números que más fallas.',
+          ],
+        },
+        {
+          p: 'En **Práctica → Hechos para ti**, **Crea ejercicios para mí** crea ejercicios justo para tus puntos débiles. Son solo tuyos, y cada uno que juegas alimenta tus estadísticas.',
+        },
+      ],
+    },
+    {
+      id: 'privacy',
+      title: '8. Tus datos',
+      blocks: [
+        {
+          p: 'Si cancelas tu suscripción a la app o eliminas tu cuenta de DevQuake, se eliminan tu perfil, tus ejercicios, tus partidas de práctica y los torneos que organizaste. En las partidas que jugaste con otros se quita tu nombre, así ellos conservan sus resultados contra un “antiguo jugador”.',
+        },
+      ],
+    },
+  ],
+  questions: '¿Preguntas o ideas? Escribe a {email}.',
+  back: '← Volver a la app',
+};
+
+export const MANUAL: Record<Locale, Manual> = { en, de, ro, hu, it, es };

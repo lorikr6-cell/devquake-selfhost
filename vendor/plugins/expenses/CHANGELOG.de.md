@@ -1,5 +1,9 @@
 # Änderungsprotokoll — Geteilte Ausgaben
 
+## 0.3.0
+
+- Die App gibt es jetzt auch auf Italienisch und Spanisch: Wähle die Sprache oben auf der Seite.
+
 ## 0.2.0
 
 - Nebenkosten und Einkaufslisten können jetzt Ausgaben zu deinen Gruppen hinzufügen: eine Rechnung mit dem genauen Anteil aller oder das auf einer Liste Gekaufte, gleich geteilt. Dieselbe Rechnung oder Liste zweimal hinzuzufügen ändert nichts, und die Ausgabe zeigt mit einem Link, woher sie kommt.

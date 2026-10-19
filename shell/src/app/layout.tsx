@@ -18,7 +18,8 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang={await getLocale()}>
-      <body className="min-h-screen antialiased">
+      {/* A column, so the DevQuake footer stays at the bottom of short pages. */}
+      <body className="flex min-h-dvh flex-col antialiased">
         <TimeZoneSync />
         {children}
         <PoweredBy />

@@ -1,5 +1,9 @@
 # Changelog — Cookbook
 
+## 0.7.0
+
+- The app is now also in Italian and Spanish: pick the language at the top of the page.
+
 ## 0.6.1
 
 - Notifications: on large screens the list now opens right under the bell; on phones and tablets it stays centred on the screen. It always fits the screen: the heading stays in view and only the list scrolls.
@@ -31,7 +35,7 @@
 
 - The app’s card on DevQuake and its front page now show how many members use it and its totals: recipes, recommendations.
 
-0.1.0
+## 0.1.0
 
 - A starter library of recipes written for DevQuake, in English, German, Romanian and Hungarian, from shakshuka to goulash soup.
 - Choose the servings and every quantity is recalculated: eggs stay whole, spices grow less, quantities are rounded for the kitchen. Metric or imperial.

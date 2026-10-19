@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'pulse',
     name: 'Pulse',
-    version: '0.6.0',
+    version: '0.8.0',
     description:
       'A realtime events API: your website or server sends events with your own key:value data, and every connected browser receives them live. Secured with website verification, secret keys and short-lived client tokens.',
     status: 'active',
@@ -23,6 +23,7 @@ export default definePlugin({
     '/apps/:id': () => import('./pages/app'),
     '/apps/:id/test': () => import('./pages/test'),
     '/demo': () => import('./pages/demo'),
+    '/platform': () => import('./pages/platform'),
     '/help': () => import('./pages/help'),
   },
   api: {
@@ -36,6 +37,7 @@ export default definePlugin({
     '/apps/:id/test-token': () => import('./api/test-token'),
     '/demo/token': () => import('./api/demo-token'),
     '/admin/calls': () => import('./api/admin/calls'),
+    '/admin/platform': () => import('./api/admin/platform'),
     '/v1/events': () => import('./api/v1/events'),
     '/v1/stream': () => import('./api/v1/stream'),
     '/v1/poll': () => import('./api/v1/poll'),

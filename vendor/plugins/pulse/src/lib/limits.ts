@@ -5,7 +5,9 @@
 // site down: trial use is deliberately slow and small; subscribers get a fair everyday amount;
 // "full" (unlimited use, later paid) is granted by DevQuake on request.
 
-export type Plan = 'trial' | 'standard' | 'full';
+// "platform" (ADR 0063): DevQuake's own service and the services of its admins and owner; no
+// quotas. Never a member's plan.
+export type Plan = 'trial' | 'standard' | 'full' | 'platform';
 
 export interface Limits {
   /** API services (apps) the member may have. */
@@ -87,6 +89,24 @@ export const LIMITS: Record<Plan, Limits> = {
     pollIntervalMs: 1000,
     historyMinutes: 7 * 24 * 60,
   },
+  // DevQuake's platform service (ADR 0063): no quotas. The numbers are only far above any real
+  // use; the one limit that stays is the connection slots of each process (streamSlotFree).
+  platform: {
+    apps: 1000,
+    origins: 50,
+    eventTypes: 1000,
+    connections: 1_000_000,
+    channelsPerConnection: 50,
+    eventsPerDay: 1_000_000_000,
+    eventsPerMinute: 1_000_000,
+    burst: 100_000,
+    payloadBytes: 8192,
+    deliveryDelayMs: 0,
+    streamSeconds: 50,
+    reconnectMs: 1000,
+    pollIntervalMs: 1000,
+    historyMinutes: 24 * 60,
+  },
 };
 
 /** Keys of `LIMITS` shown on the plan comparison, in this order. */
@@ -109,6 +129,28 @@ export function maxStreamsPerProcess(env: string | undefined = process.env.PULSE
   return Number.isInteger(n) && n > 0 && n <= 1000 ? n : 30;
 }
 
+/** Slots of each process kept free for DevQuake's platform service (ADR 0063). */
+export function platformReservedStreams(max: number = maxStreamsPerProcess()): number {
+  return Math.ceil(max / 3);
+}
+
+/**
+ * Whether one more live connection may open in this process: never more than `max` in all;
+ * members' services leave the platform service's reserved slots free (while it uses fewer).
+ */
+export function streamSlotFree(args: {
+  open: number;
+  platformOpen: number;
+  isPlatform: boolean;
+  max?: number;
+}): boolean {
+  const max = args.max ?? maxStreamsPerProcess();
+  if (args.open >= max) return false;
+  if (args.isPlatform) return true;
+  const stillReserved = Math.max(0, platformReservedStreams(max) - args.platformOpen);
+  return max - args.open > stillReserved;
+}
+
 /**
  * The plan of a member from their access to the app and their account row. A self-hosted
  * instance (ADR 0054) sets PULSE_DEFAULT_PLAN=full: its members get the full plan without a
@@ -120,6 +162,8 @@ export function planOf(
   defaultPlan: string | undefined = process.env.PULSE_DEFAULT_PLAN,
 ): Plan | null {
   if (access === 'none') return null;
+  // DevQuake's admins and owner (accounts.plan = 'staff', kept by syncStaffPlan).
+  if (accountPlan === 'staff') return 'platform';
   if (access === 'trial') return 'trial';
   return accountPlan === 'full' || defaultPlan === 'full' ? 'full' : 'standard';
 }

@@ -9,6 +9,15 @@ export const platformRo: MessagesOf<typeof platformEn> = {
     connect: 'Continuă cu DevQuake',
     orEmail: 'Sau intră cu orice adresă de e-mail',
     linked: 'Conectat cu contul tău DevQuake.',
+    devquakeTitle: 'Din contul tău DevQuake',
+    devquakeName: 'Nume',
+    devquakeEmail: 'E-mail',
+    manageOnDevQuake: 'Schimbă pe DevQuake',
+    statFavorites: 'Favorite',
+    statPurchases: 'Cumpărături',
+    statCart: 'În coș',
+    memberPrivacyNote:
+      'Numele și adresa ta de e-mail vin din contul tău DevQuake. Acest magazin păstrează datele tale de livrare, mesajele și comenzile (cum cere legea); ștergerea contului aici elimină totul în afară de comenzi.',
     deliveryTitle: 'Date de livrare',
     deliveryHint: 'Salvate în contul tău de aici, completează pentru tine finalizarea comenzii.',
     phone: 'Telefon',
@@ -27,6 +36,11 @@ export const platformRo: MessagesOf<typeof platformEn> = {
   shop: {
     theme: { label: 'Temă', adaptive: 'Automată', light: 'Luminoasă', dark: 'Întunecată' },
     currency: 'Moneda',
+    newsletterToggle: 'Trimite-mi newsletterul acestui magazin',
+    newsletterToggleHint: 'La {email}. Debifează oricând ca să-l oprești.',
+    newsletterOn: 'Newsletter activat.',
+    newsletterOff: 'Newsletter dezactivat.',
+    newsletterFailed: 'Setarea newsletterului nu a putut fi salvată. Încearcă din nou.',
     fxNote:
       'Prețurile în {currency} sunt aproximative, la cursurile Băncii Centrale Europene din {date}. Plătești în {base}; banca sau cardul tău face conversia.',
   },

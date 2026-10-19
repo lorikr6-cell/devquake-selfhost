@@ -73,6 +73,15 @@ stack, checks the first run and publishes the images to GHCR.
 `selfhost.json` holds the repository, the image registry and the Hostinger referral code used by
 the Deploy buttons.
 
+## The DevQuake footer
+
+Every app shows a small footer at the bottom of each page: "Self-hosted <app> · Powered by" and
+the DevQuake logo, linking to devquake.com (`shell/src/components/powered-by.tsx`, in every
+language of the app). We would appreciate it if you kept it: it is how other people find
+DevQuake, and it keeps these apps free. You are free to remove it, though: set
+`SHOW_POWERED_BY=false` in your `.env`, or change the code.
+
 ## Licence
 
-[MIT](LICENSE).
+[MIT](LICENSE). The licence allows removing the footer: it only requires that the copyright and
+licence notice stay with copies of the code (the `LICENSE` file), not a credit in the running app.

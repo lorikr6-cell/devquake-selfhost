@@ -85,6 +85,30 @@ const WORDS: Record<
     clearYes: 'Törlés',
     cancel: 'Mégse',
   },
+  it: {
+    open: 'Notifiche',
+    title: 'Notifiche',
+    empty: 'Niente di nuovo. Qui compaiono i promemoria degli eventi in arrivo.',
+    close: 'Chiudi',
+    fresh: 'nuova',
+    unread: (n) => (n === 1 ? '1 nuova' : `${n} nuove`),
+    clear: 'Cancella tutto',
+    clearAsk: 'Cancellare tutte le notifiche? Non si possono recuperare.',
+    clearYes: 'Cancella',
+    cancel: 'Annulla',
+  },
+  es: {
+    open: 'Notificaciones',
+    title: 'Notificaciones',
+    empty: 'No hay novedades. Aquí aparecen los recordatorios de los próximos eventos.',
+    close: 'Cerrar',
+    fresh: 'nueva',
+    unread: (n) => (n === 1 ? '1 nueva' : `${n} nuevas`),
+    clear: 'Borrar todo',
+    clearAsk: '¿Borrar todas las notificaciones? No se pueden recuperar.',
+    clearYes: 'Borrar',
+    cancel: 'Cancelar',
+  },
 };
 
 /** From this width the list opens under the bell; below it, centred as a sheet. */

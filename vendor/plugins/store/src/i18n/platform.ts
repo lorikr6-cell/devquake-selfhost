@@ -2,6 +2,8 @@ import { defineMessages } from './define';
 import { platformDe } from './platform-de';
 import { platformEn } from './platform-en';
 import { platformHu } from './platform-hu';
+import { platformIt } from './platform-it';
+import { platformEs } from './platform-es';
 import { platformRo } from './platform-ro';
 
 /** The shop on DevQuake: connecting a DevQuake account, saved details and the promotion. */
@@ -9,4 +11,6 @@ export const platform = defineMessages(platformEn, {
   de: platformDe,
   ro: platformRo,
   hu: platformHu,
+  it: platformIt,
+  es: platformEs,
 });

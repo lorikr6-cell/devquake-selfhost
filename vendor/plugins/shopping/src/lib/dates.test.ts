@@ -65,5 +65,7 @@ describe('formatting in the page language', () => {
     expect(weekdayNames('de-DE')[0]).toMatch(/^Mo/);
     expect(formatMonthName('2026-09-01', 'ro-RO')).toBe('septembrie');
     expect(formatMonth('2026-09-01', 'hu-HU')).toContain('szeptember');
+    expect(formatMonthName('2026-09-01', 'it-IT')).toBe('settembre');
+    expect(formatMonthName('2026-09-01', 'es-ES')).toBe('septiembre');
   });
 });

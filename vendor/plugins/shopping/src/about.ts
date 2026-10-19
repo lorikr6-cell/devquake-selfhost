@@ -8,6 +8,8 @@ export const about: PluginAbout = {
     de: 'Plane gemeinsame Einkaufslisten nach Tagen, ordne Produkte nach Geschäften und kaufe zusammen mit Familie und Freunden ein.',
     ro: 'Planifică liste de cumpărături comune pe zile, grupează produsele pe magazine și faceți cumpărăturile împreună cu familia și prietenii.',
     hu: 'Tervezz közös bevásárlólistákat napokra bontva, csoportosítsd a termékeket boltok szerint, és vásárolj együtt a családdal és barátokkal.',
+    it: 'Pianifica liste della spesa condivise giorno per giorno, raggruppa i prodotti per negozio e fai la spesa insieme a famiglia e amici.',
+    es: 'Planifica listas de la compra compartidas por días, agrupa los productos por tienda y haz la compra junto con tu familia y tus amigos.',
   },
   features: {
     en: [
@@ -33,6 +35,18 @@ export const about: PluginAbout = {
       'Termékek mennyiséggel, egységárral és bolttal',
       'Hívj meg másokat linkkel, kóddal vagy QR-rel',
       'Költési statisztikák',
+    ],
+    it: [
+      'Una lista per ogni giorno di spesa, in un calendario settimanale, mensile o annuale',
+      'Prodotti con quantità, prezzo unitario e negozio',
+      'Invita persone con un link, un codice o un QR',
+      'Statistiche delle spese',
+    ],
+    es: [
+      'Una lista para cada día de compra, en un calendario semanal, mensual o anual',
+      'Productos con cantidad, precio por unidad y tienda',
+      'Invita a otras personas con un enlace, un código o un QR',
+      'Estadísticas de gastos',
     ],
   },
 };

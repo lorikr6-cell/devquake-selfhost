@@ -1,12 +1,13 @@
 import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import type { PluginContext, PluginDatabase, PluginUser } from '@devquake/plugin-sdk';
-import { LOCALE_TAGS, Link, isLocale, rich, type Locale } from '@devquake/ui';
+import { LOCALE_TAGS, Link, isLocale, localizePath, rich, type Locale } from '@devquake/ui';
 import type { ReactNode } from 'react';
 import { applyShopLanguage, localeOf, translator } from '../i18n';
 import { languageMessages, languageNames } from '../lib/languages-data';
-import { buyerCookie, type Buyer } from '../lib/buyers-data';
+import { buyerCookie, SIGNED_OUT, type Buyer } from '../lib/buyers-data';
 import { resolveBuyer } from '../lib/buyer-session';
+import { subscriberByEmail } from '../lib/newsletter-data';
 import { storeBySlug, storeOfMember, type Store } from '../lib/data';
 import { formatCents } from '../lib/pricing';
 import { can, type Area, type Role } from '../lib/roles';
@@ -116,8 +117,53 @@ export type ShopScope =
       team: boolean;
       locale: Locale;
       timeZone: string;
+      /** Who is looking: their name in the header, and whether to connect them silently. */
+      viewer: ShopViewer | null;
     }
   | { ok: false; notice: ReactNode };
+
+/**
+ * A signed-in visitor of the shop: a buyer, or a DevQuake member. A member who already allowed
+ * shops to use their sign-in address (ADR 0059) gets their shop account without a click
+ * (`autoConnect`); the others connect once on the account page.
+ */
+export interface ShopViewer {
+  name: string;
+  autoConnect: boolean;
+  /**
+   * Signed in to the shop (a buyer session, also a connected DevQuake member): whether they get
+   * the newsletter, and their address, so a checkbox replaces typing it again. Null otherwise.
+   */
+  newsletter: { on: boolean; email: string } | null;
+}
+
+/** The member's account page on DevQuake, at its email settings (the profile). */
+export const devquakeAccountUrl = (ctx: PluginContext) =>
+  `${ctx.hostUrl}${localizePath('/account', localeOf(ctx))}#profile`;
+
+export async function shopViewer(ctx: PluginContext, store: Store): Promise<ShopViewer | null> {
+  if (!ctx.db) return null;
+  const buyer = await currentBuyer(ctx.db, store, ctx.user).catch(() => null);
+  if (buyer) {
+    const subscriber = await subscriberByEmail(ctx.db, store.id, buyer.email).catch(() => null);
+    return {
+      name: buyer.name || buyer.email,
+      autoConnect: false,
+      newsletter: { on: subscriber?.status === 'confirmed', email: buyer.email },
+    };
+  }
+  if (!ctx.user) return null;
+  // Signed out of this shop on purpose: no silent sign-in again (they connect on the account page).
+  const token = (await cookies()).get(buyerCookie(store.id))?.value;
+  if (token === SIGNED_OUT)
+    return { name: ctx.user.displayName, autoConnect: false, newsletter: null };
+  const granted = ctx.profile ? await ctx.profile.granted().catch(() => []) : [];
+  return {
+    name: ctx.user.displayName,
+    autoConnect: granted.some((g) => g.field === 'email'),
+    newsletter: null,
+  };
+}
 
 /** A shop's pages: the store must exist and be open, except for its team (a preview). */
 export async function shopScope(ctx: PluginContext, slug: string | undefined): Promise<ShopScope> {
@@ -162,6 +208,7 @@ export async function shopScope(ctx: PluginContext, slug: string | undefined): P
     team,
     locale: localeOf(ctx),
     timeZone: ctx.timeZone || 'UTC',
+    viewer: await shopViewer(ctx, store),
   };
 }
 

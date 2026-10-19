@@ -1,5 +1,9 @@
 # Változások — Szakácskönyv
 
+## 0.7.0
+
+- Az alkalmazás mostantól olaszul és spanyolul is elérhető: a nyelvet az oldal tetején választhatod ki.
+
 ## 0.6.1
 
 - Értesítések: nagy képernyőn a lista most közvetlenül a csengő alatt nyílik meg; telefonon és tableten továbbra is a képernyő közepén. Mindig elfér a képernyőn: a cím látható marad, csak a lista görget.
@@ -31,7 +35,7 @@
 
 - Az alkalmazás kártyája a DevQuake-en és a kezdőoldala most megmutatja, hány tag használja, és a számait: recept, ajánlás.
 
-0.1.0
+## 0.1.0
 
 - Induló receptkönyvtár a DevQuake-nek írt receptekkel, angolul, németül, románul és magyarul, a shakshukától a gulyáslevesig.
 - Válaszd ki az adagokat, és minden mennyiség újraszámolódik: a tojás egész marad, a fűszer kevésbé nő, a mennyiségek konyhai kerekítéssel. Metrikus vagy angolszász.

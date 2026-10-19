@@ -8,6 +8,8 @@ export const about: PluginAbout = {
     de: 'Zähle Darts-Spiele, trainiere mit Übungen aus deinen Statistiken und spiele lockere Partien oder K.-o.-Turniere an deinen Boards.',
     ro: 'Ține scorul la darts, antrenează-te cu exerciții create din statisticile tale și organizează jocuri sau turnee eliminatorii la panourile tale.',
     hu: 'Vezesd a darts játszmák pontjait, gyakorolj a statisztikáidból készült feladatokkal, és rendezz játékokat vagy kieséses tornákat a tábláidon.',
+    it: 'Punteggi delle partite di freccette, esercizi creati dalle tue statistiche e partite tra amici o tornei a eliminazione diretta sui tuoi bersagli.',
+    es: 'Puntuación de tus partidas de dardos, ejercicios creados a partir de tus estadísticas y partidas o torneos eliminatorios en tus dianas.',
   },
   features: {
     en: [
@@ -33,6 +35,18 @@ export const about: PluginAbout = {
       'Baráti játékok: kóddal vagy QR-rel lehet csatlakozni',
       'Kieséses tornák több táblán',
       'Statisztika minden körről, játékról és kiszállóról',
+    ],
+    it: [
+      'Allenati da solo, con esercizi creati dalle tue statistiche',
+      'Partite tra amici: si entra con un codice o un QR',
+      'Tornei a eliminazione diretta su più bersagli',
+      'Statistiche per ogni turno, partita e checkout',
+    ],
+    es: [
+      'Entrena solo, con ejercicios creados a partir de tus estadísticas',
+      'Partidas con amigos: se unen con un código o un QR',
+      'Torneos eliminatorios en varias dianas',
+      'Estadísticas de cada tirada, partida y checkout',
     ],
   },
 };

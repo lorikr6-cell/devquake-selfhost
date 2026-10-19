@@ -1,0 +1,90 @@
+import type { MessagesOf } from '@devquake/ui';
+import type { interestEn } from './interest-en';
+
+export const interestIt: MessagesOf<typeof interestEn> = {
+  interest: {
+    badge: 'Vota',
+    cardHint: 'Non ancora in vendita: votalo',
+    notSold: 'Non ancora in vendita',
+    title: 'Lo compreresti?',
+    intro:
+      'Lo produciamo solo se abbastanza persone lo vogliono. Diccelo e, se vuoi, quale versione preferisci e quanto pagheresti.',
+    count: {
+      one: '{count} persona lo vuole',
+      many: '{count} persone lo vogliono',
+      other: '{count} persone lo vogliono',
+    },
+    any: 'Qualsiasi',
+    priceRange: 'Quanto pagheresti? Facoltativo, in {currency}',
+    priceMin: 'Da',
+    priceMax: 'Fino a',
+    yes: 'Sì, lo voglio',
+    update: 'Aggiorna il mio voto',
+    no: 'Non fa per me',
+    withdraw: 'Ritira il mio voto',
+    votedYes: 'Hai detto che lo vuoi. Puoi cambiare risposta.',
+    votedNo: 'Hai detto che non fa per te. Puoi cambiare risposta.',
+    thanks: 'Grazie, il tuo voto conta',
+    withdrawn: 'Il tuo voto è stato ritirato',
+    signIn: 'Un voto a persona:',
+    signInLink: 'accedi per votare',
+  },
+  interestAdmin: {
+    title: 'Voto di interesse',
+    intro:
+      'Mostra un voto al posto del prezzo: gli acquirenti dicono se lo vogliono, quanto pagherebbero e quale versione (i campi a scelta multipla del suo tipo, come colori e taglie). Finché è attivo non si può ordinare.',
+    toggle: 'Chiedi voti invece di vendere',
+    unitCost: 'Costo al pezzo ({currency})',
+    unitCostHint: 'Materiali, stampa e imballaggio, per la stima del ritorno.',
+    setupCost: 'Investimento una tantum ({currency})',
+    setupCostHint: 'Design, telai di stampa, campioni.',
+    save: 'Salva',
+    saved: 'Voto di interesse salvato',
+    results: 'Vedi i voti',
+  },
+  interestStats: {
+    title: 'Voti di interesse',
+    intro:
+      'I prodotti che chiedono voti, con la domanda e una stima basata su quanto i votanti hanno detto che pagherebbero. I prezzi includono l’IVA; ricavi e profitto sono senza IVA e prima della spedizione.',
+    empty: 'Nessun prodotto chiede ancora voti. Attivalo per un prodotto dalla sua pagina.',
+    total:
+      'Tutti i prodotti votati: {interested} interessati, fino a {revenue} di ricavi e {profit} di profitto ai prezzi suggeriti.',
+    votes: '{yes} lo vogliono · {no} no',
+    range: 'Quanto pagherebbero (mediana)',
+    priced: {
+      one: '{count} ha indicato un prezzo',
+      many: '{count} hanno indicato un prezzo',
+      other: '{count} hanno indicato un prezzo',
+    },
+    suggested: 'Prezzo suggerito',
+    units: 'Acquirenti previsti',
+    revenue: 'Ricavi (senza IVA)',
+    costs: 'Costi',
+    addCosts: 'Aggiungi i costi',
+    costLine: '{unit} al pezzo, {setup} una tantum',
+    investment: 'Investimento',
+    profit: 'Profitto',
+    roi: 'Ritorno (ROI)',
+    breakEven: 'Pareggio',
+    pieces: { one: '{count} pezzo', many: '{count} pezzi', other: '{count} pezzi' },
+    never: 'mai a questo prezzo',
+    preferences: 'Versioni richieste',
+    verdict: {
+      early: 'Troppo presto: meno di {min} persone lo vogliono.',
+      noCosts: 'Aggiungi il costo al pezzo per vedere profitto e ritorno.',
+      loss: 'Ci perderesti al prezzo che i votanti accettano.',
+      thin: 'Un ritorno basso: sotto il {roi} % al prezzo che i votanti accettano.',
+      good: 'Vale la pena produrlo: un buon ritorno al prezzo che i votanti accettano.',
+    },
+    note: 'Il prezzo suggerito è quello che rende di più in base ai limiti massimi indicati dai votanti; chi non ha indicato un prezzo conta nella stessa proporzione. Le vendite reali di solito sono meno dei voti.',
+  },
+  errors: {
+    interestOff: 'I voti di interesse sono disattivati per questo negozio.',
+    voteSignIn: 'Accedi per votare: un voto a persona.',
+  },
+  fields: {
+    unitCost: 'Il costo al pezzo',
+    setupCost: 'L’investimento una tantum',
+    price: 'Il prezzo',
+  },
+};

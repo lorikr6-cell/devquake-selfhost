@@ -89,7 +89,14 @@ export const getHighlights: PluginPlatformModule['getHighlights'] = async ({ db 
   return [
     {
       value: n(row?.bills),
-      label: { en: 'Bills', de: 'Rechnungen', ro: 'Facturi', hu: 'Számla' },
+      label: {
+        en: 'Bills',
+        de: 'Rechnungen',
+        ro: 'Facturi',
+        hu: 'Számla',
+        it: 'Bollette',
+        es: 'Facturas',
+      },
       icon: '🧾',
     },
     {
@@ -99,6 +106,8 @@ export const getHighlights: PluginPlatformModule['getHighlights'] = async ({ db 
         de: 'Zählerstände',
         ro: 'Citiri de contor',
         hu: 'Mérőóra-állás',
+        it: 'Letture dei contatori',
+        es: 'Lecturas de contador',
       },
       icon: '📟',
     },

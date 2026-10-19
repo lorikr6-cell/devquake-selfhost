@@ -58,7 +58,14 @@ export default async function OrderPage({ ctx, params, searchParams }: PluginPag
   const country = countryNamer(locale);
 
   return (
-    <ShopFrame store={store} preview={preview} team={team} locale={locale} db={db}>
+    <ShopFrame
+      store={store}
+      preview={preview}
+      team={team}
+      locale={locale}
+      db={db}
+      viewer={scope.viewer}
+    >
       <div className="space-y-2">
         <h1 className={cn('text-2xl font-bold', S.heading)}>{t('title')}</h1>
         {fresh ? (

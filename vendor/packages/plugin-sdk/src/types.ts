@@ -204,7 +204,8 @@ export interface PluginContext {
    */
   timeZone?: string;
   /**
-   * The page language (ADR 0011): 'en' | 'de' | 'ro' | 'hu'; undefined (= 'en') on older hosts.
+   * The page language (ADR 0011, 0069): 'en' | 'de' | 'ro' | 'hu' | 'it' | 'es'; undefined (= 'en')
+   * on older hosts.
    * Show every text in it (the app's own catalogs) and keep it in links (`Link`,
    * `localizePath` from @devquake/ui).
    */
@@ -491,7 +492,7 @@ export interface PluginAppIdentity {
   iconUrl: string;
 }
 
-export type PluginLocale = 'en' | 'de' | 'ro' | 'hu';
+export type PluginLocale = 'en' | 'de' | 'ro' | 'hu' | 'it' | 'es';
 
 /** The signed-in person's session, as far as an app may touch it (ADR 0014). */
 export interface PluginSession {

@@ -739,4 +739,362 @@ const hu: Manual = {
   back: '← Vissza a számláidhoz',
 };
 
-export const MANUAL: Record<Locale, Manual> = { en, de, ro, hu };
+const it: Manual = {
+  metaTitle: 'Manuale d’uso · Bollette',
+  metaDescription:
+    'Come condividere le bollette: aggiungi il PDF del fornitore, raccogli le letture dei contatori con le foto, dividi la bolletta in modo equo, registra i pagamenti con il riporto e segui consumi e costi.',
+  ogTitle: 'Bollette: manuale d’uso',
+  cta: 'Vuoi provarla? Bollette è un’app per i membri di DevQuake. {link}, poi abbonati all’app.',
+  ctaLink: 'Crea un account o accedi',
+  kicker: 'Bollette · Manuale d’uso',
+  title: 'Come condividere le bollette',
+  intro:
+    'Condividi le bollette con le persone con cui vivi: aggiungi la bolletta del fornitore, raccogli le letture dei contatori di tutti, vedi chi deve cosa e segui consumi e costi. Questo manuale ti guida passo dopo passo.',
+  contents: 'Indice',
+  sections: [
+    {
+      id: 'start',
+      title: '1. Per iniziare',
+      blocks: [
+        {
+          p: 'Bollette è un’app di DevQuake e usa il tuo account DevQuake, quindi non serve una registrazione separata.',
+        },
+        {
+          steps: [
+            'Accedi su {host} (o crea un account e conferma la tua email).',
+            'Apri **Il tuo account → Progetti disponibili** e premi **Iscriviti** su “Bollette”.',
+            'Apri l’app. La prima volta indica il tuo **nome e cognome** e il tuo **indirizzo**: paese, regione o provincia, città, via, numero civico e (facoltativo) interno. Mentre scrivi, i suggerimenti di OpenStreetMap ti aiutano a compilarlo. Li vedono solo le persone con cui condividi un’utenza, così un contatore può essere controllato se serve. Puoi cambiarli quando vuoi in **Profilo**.',
+          ],
+        },
+        {
+          p: 'La barra degli strumenti mostra il nome dell’app (toccalo per tornare all’inizio), lo schermo intero e il simbolo di DevQuake. Il manuale e le note di versione sono in fondo a ogni pagina; lingua e tema si impostano in **Il tuo account → Profilo** su DevQuake.',
+        },
+      ],
+    },
+    {
+      id: 'utilities',
+      title: '2. Utenze',
+      blocks: [
+        {
+          p: 'Un’utenza è qualcosa che ti manda regolarmente una bolletta. Aggiungila nella scheda **Nuova**: scegli la **categoria**, dalle un nome, indica il fornitore, l’**unità** in cui si misura il consumo (kWh, m³…) e la **valuta**.',
+        },
+        {
+          list: [
+            '**Categorie**: elettricità, gas, acqua, riscaldamento, telefono, TV via cavo, internet, hosting online, Xbox, Microsoft, Apple, Steam, oppure **Altro** per tutto il resto.',
+            'Spunta **Contatore individuale obbligatorio** quando più abitazioni condividono un allacciamento e ognuna ha il proprio contatore: allora per ogni bolletta tutti inviano una foto del proprio contatore e la bolletta viene divisa in base al consumo.',
+            'Senza questa opzione (abbonamenti, internet…) la bolletta viene divisa in parti uguali.',
+          ],
+        },
+        {
+          p: 'La scheda **Bollette** elenca le tue utenze per categoria, con lo stato dell’ultima bolletta e quanto resta da pagare.',
+        },
+        {
+          p: 'Più veloce: **Cerca i servizi disponibili** (nella scheda **Nuova**) condivide una volta la tua posizione, o usa l’indirizzo del tuo profilo, ed elenca i servizi abituali per il tuo paese e la tua regione o provincia con il fornitore probabile: elettricità, gas, acqua e internet sono già spuntati. Cambia un fornitore o togli la spunta a ciò che non hai, poi premi **Aggiungi**. Per ora ci sono suggerimenti per Romania, Germania e Ungheria; la tua posizione non viene salvata.',
+        },
+      ],
+    },
+    {
+      id: 'sharing',
+      title: '3. Condividere un’utenza',
+      blocks: [
+        {
+          steps: [
+            'Apri l’utenza e scegli **Condivisione e membri**.',
+            'Invia il **link di invito**, il **codice** o fai scansionare il **codice QR**; oppure aggiungi con un clic le persone dei tuoi **inviti DevQuake**.',
+            'Aprono il link e scelgono **Unisciti**. Condividono le bollette dal mese in cui si uniscono in poi.',
+          ],
+        },
+        {
+          tip: 'Nessun altro può vedere le tue utenze o bollette: solo le persone di un’utenza. **Nuovo link** fa smettere di funzionare il vecchio link e il codice.',
+        },
+        {
+          p: 'Per un familiare che deve solo vedere le bollette: spunta **Sola visualizzazione** accanto al suo nome in **Condivisione e membri**. Vede ogni bolletta e i suoi dettagli, ma non ha una parte e non paga nulla.',
+        },
+      ],
+    },
+    {
+      id: 'bills',
+      title: '4. Aggiungere una bolletta',
+      blocks: [
+        {
+          steps: [
+            'Quando arriva la bolletta del fornitore, apri l’utenza e scegli **Aggiungi bolletta**.',
+            'Scegli il **PDF** del fornitore. L’app prova a leggerne il **totale**, il **consumo**, il **prezzo unitario** e la **scadenza**.',
+            'Controlla cosa ha trovato; quello che non è riuscita a leggere, scrivilo nello stesso modulo.',
+            'Spunta **Ho pagato il fornitore** quando l’hai pagato.',
+          ],
+        },
+        {
+          tip: 'Se la bolletta non indica un prezzo unitario, l’app usa totale ÷ consumo. I PDF scansionati non hanno testo da leggere: scrivi tu i valori.',
+        },
+        {
+          p: 'Solo chi gestisce l’utenza (chi l’ha creata e paga il fornitore) può aggiungere, modificare o eliminare le sue bollette.',
+        },
+      ],
+    },
+    {
+      id: 'readings',
+      title: '5. Letture dei contatori',
+      blocks: [
+        {
+          steps: [
+            'Apri la bolletta e trova **La tua lettura del contatore**.',
+            'Scatta una **foto del contatore** nitida e da vicino. L’app prova a leggerne la lettura sul tuo dispositivo.',
+            'Controlla la **lettura attuale** (o scrivila tu). La **lettura precedente** viene dalla tua ultima lettura; il consumo è la differenza.',
+            'Scegli **Salva lettura**.',
+          ],
+        },
+        {
+          tip: 'Tutti quelli dell’utenza possono aprire le foto dei contatori, così le letture si possono controllare. Il gestore può anche inserire una lettura per qualcuno.',
+        },
+        {
+          p: 'Usa **Scatta foto** per la fotocamera, o **Scegli dalla galleria** per una foto che hai già scattato.',
+        },
+      ],
+    },
+    {
+      id: 'split',
+      title: '6. Come viene divisa una bolletta',
+      blocks: [
+        {
+          list: [
+            'Con i contatori individuali, ognuno paga **il proprio consumo × il prezzo unitario**.',
+            'Quando ci sono tutte le letture e non coprono l’intera bolletta (parti comuni, perdite, quote fisse), **il resto viene diviso in parti uguali** tra tutti, gestore compreso. Se le letture superano la bolletta, la differenza viene scalata in parti uguali.',
+            'Senza contatori, la bolletta viene **divisa in parti uguali**.',
+            'I centesimi che non si dividono esattamente vanno al gestore, così le parti danno sempre esattamente il totale della bolletta.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'payments',
+      title: '7. Pagamenti e riporto',
+      blocks: [
+        {
+          tip: 'Tieni le spese condivise in un unico posto: con **Spese condivise** collegata, il gestore può usare **Aggiungi la bolletta** per metterla in un gruppo di spese con la parte esatta di ognuno, pagata da lui. Aggiungerla due volte non cambia nulla.',
+        },
+        {
+          p: 'L’app non sposta denaro: le persone pagano il gestore in contanti, con carta o in qualsiasi altro modo, e il gestore registra l’**importo ricevuto** sulla bolletta.',
+        },
+        {
+          list: [
+            'Pagato **di più** del richiesto: l’eccedenza viene scalata dalla prossima bolletta della stessa utenza.',
+            'Pagato **di meno**: la somma mancante viene aggiunta alla prossima bolletta.',
+            '✔ **Spunta verde**: il fornitore è pagato e tutti hanno pagato la loro parte.',
+            '⚠ **Avviso**: i pagamenti non coprono ancora la bolletta. ⏳ **Clessidra**: mancano ancora letture dei contatori.',
+          ],
+        },
+        {
+          p: 'Tutti quelli della bolletta possono **commentarla**. Il gestore può eliminare una bolletta o l’intera utenza.',
+        },
+        {
+          tip: 'Quando il gestore conferma un pagamento, questo viene bloccato (solo un amministratore di DevQuake può modificarlo), e chi ha pagato riceve un’email con la bolletta completa, il suo consumo e la sua parte, e un link alla bolletta, dove si può aprire il PDF del fornitore.',
+        },
+      ],
+    },
+    {
+      id: 'overview',
+      title: '8. Calendario e statistiche',
+      blocks: [
+        {
+          list: [
+            'Il **Calendario** mostra la tua parte mese per mese o per un anno intero: il tuo consumo, la tua parte e quanto hai pagato, per ogni bolletta.',
+            'Le **Statistiche** mostrano, per categoria, il tuo consumo, la tua parte e il prezzo unitario mese per mese, con i totali annuali e il prezzo medio. Ogni grafico si può mostrare anche come tabella.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'privacy',
+      title: '9. I tuoi dati',
+      blocks: [
+        {
+          p: 'Il tuo nome, il tuo indirizzo, le letture, le foto dei contatori e le bollette sono visibili solo alle persone con cui condividi un’utenza. Per i suggerimenti di indirizzo, quello che scrivi nei campi regione, città e via viene inviato tramite DevQuake a Photon (komoot), un servizio di ricerca per OpenStreetMap; nient’altro su di te. Quando elimini il tuo account DevQuake o annulli l’abbonamento all’app, tutto ciò che è tuo viene eliminato: il profilo, le letture, le foto, i pagamenti e i commenti, e le utenze che gestisci con tutte le loro bollette e i PDF.',
+        },
+      ],
+    },
+  ],
+  questions: 'Domande o idee? Scrivi a {email}.',
+  back: '← Torna alle tue bollette',
+};
+
+const es: Manual = {
+  metaTitle: 'Manual de uso · Facturas del hogar',
+  metaDescription:
+    'Cómo compartir las facturas de suministros: añade el PDF del proveedor, reúne las lecturas de los contadores con fotos, reparte la factura de forma justa, registra los pagos con arrastre de saldo y sigue tu consumo y tus costes.',
+  ogTitle: 'Facturas del hogar: manual de uso',
+  cta: '¿Quieres probarla? Facturas del hogar es una app para miembros de DevQuake. {link} y luego suscríbete a la app.',
+  ctaLink: 'Crea una cuenta o inicia sesión',
+  kicker: 'Facturas del hogar · Manual de uso',
+  title: 'Cómo compartir las facturas de suministros',
+  intro:
+    'Comparte las facturas de suministros con las personas con las que vives: añade la factura del proveedor, reúne las lecturas de contador de todos, mira quién debe qué y sigue tu consumo y tus costes. Este manual te guía paso a paso.',
+  contents: 'Contenido',
+  sections: [
+    {
+      id: 'start',
+      title: '1. Primeros pasos',
+      blocks: [
+        {
+          p: 'Facturas del hogar es una app de DevQuake y usa tu cuenta de DevQuake, así que no hace falta registrarse aparte.',
+        },
+        {
+          steps: [
+            'Inicia sesión en {host} (o crea una cuenta y confirma tu correo).',
+            'Abre **Tu cuenta → Proyectos disponibles** y pulsa **Suscribirse** en “Facturas del hogar”.',
+            'Abre la app. La primera vez, indica tu **nombre completo** y tu **dirección**: país, comunidad o provincia, ciudad, calle, número y (opcional) piso/puerta. Mientras escribes, las sugerencias de OpenStreetMap te ayudan a rellenarla. Solo las ven las personas con las que compartes un suministro, para poder comprobar un contador si hace falta. Puedes cambiarlos cuando quieras en **Perfil**.',
+          ],
+        },
+        {
+          p: 'La barra de herramientas muestra el nombre de la app (tócalo para volver al inicio), la pantalla completa y el símbolo de DevQuake. El manual y las notas de versión están al pie de cada página; el idioma y el tema se ajustan en **Tu cuenta → Perfil** en DevQuake.',
+        },
+      ],
+    },
+    {
+      id: 'utilities',
+      title: '2. Suministros',
+      blocks: [
+        {
+          p: 'Un suministro es algo que te envía una factura con regularidad. Añádelo en la pestaña **Nuevo**: elige su **categoría**, ponle un nombre, el proveedor, la **unidad** en que se mide el consumo (kWh, m³…) y la **moneda**.',
+        },
+        {
+          list: [
+            '**Categorías**: electricidad, gas, agua, calefacción, teléfono, TV por cable, internet, alojamiento web, Xbox, Microsoft, Apple, Steam u **Otro** para todo lo demás.',
+            'Marca **Contador individual obligatorio** cuando varias viviendas comparten una conexión y cada una tiene su propio contador: así, en cada factura todos envían una foto de su contador y la factura se reparte según el consumo.',
+            'Sin esta opción (suscripciones, internet…) la factura se reparte a partes iguales.',
+          ],
+        },
+        {
+          p: 'La pestaña **Facturas** muestra tus suministros por categoría, con el estado de la última factura y lo que aún se debe.',
+        },
+        {
+          p: 'Más rápido: **Buscar servicios de suministro disponibles** (en la pestaña **Nuevo**) comparte tu ubicación una vez, o usa la dirección de tu perfil, y muestra los servicios habituales de tu país y tu provincia o región con el proveedor más probable: electricidad, gas, agua e internet vienen marcados. Cambia un proveedor o desmarca lo que no tengas y pulsa **Añadir**. Por ahora hay sugerencias para Rumanía, Alemania y Hungría; tu ubicación no se guarda.',
+        },
+      ],
+    },
+    {
+      id: 'sharing',
+      title: '3. Compartir un suministro',
+      blocks: [
+        {
+          steps: [
+            'Abre el suministro y elige **Compartir y miembros**.',
+            'Envía el **enlace de invitación**, el **código** o deja que escaneen el **código QR**; o añade con un clic a personas de tus **invitaciones de DevQuake**.',
+            'Abren el enlace y eligen **Unirse**. Comparten las facturas a partir del mes en que se unen.',
+          ],
+        },
+        {
+          tip: 'Nadie más puede ver tus suministros o facturas: solo las personas de un suministro. **Nuevo enlace** hace que el enlace y el código anteriores dejen de funcionar.',
+        },
+        {
+          p: 'Para un familiar que solo debe ver las facturas: marca **Solo lectura** junto a su nombre en **Compartir y miembros**. Ve todas las facturas y sus detalles, pero no tiene parte y no paga nada.',
+        },
+      ],
+    },
+    {
+      id: 'bills',
+      title: '4. Añadir una factura',
+      blocks: [
+        {
+          steps: [
+            'Cuando llegue la factura del proveedor, abre el suministro y elige **Añadir factura**.',
+            'Elige el **PDF** del proveedor. La app intenta leer de él el **total**, el **consumo**, el **precio unitario** y la **fecha de vencimiento**.',
+            'Comprueba lo que ha encontrado; lo que no haya podido leer, escríbelo en el mismo formulario.',
+            'Marca **He pagado al proveedor** cuando lo hayas pagado.',
+          ],
+        },
+        {
+          tip: 'Si la factura no indica un precio unitario, la app usa total ÷ consumo. Los PDF escaneados no tienen texto que leer: escribe tú los valores.',
+        },
+        {
+          p: 'Solo quien gestiona el suministro (quien lo creó y paga al proveedor) puede añadir, cambiar o eliminar sus facturas.',
+        },
+      ],
+    },
+    {
+      id: 'readings',
+      title: '5. Lecturas de contador',
+      blocks: [
+        {
+          steps: [
+            'Abre la factura y busca **Tu lectura del contador**.',
+            'Haz una **foto del contador** nítida y de cerca. La app intenta leer la lectura en tu dispositivo.',
+            'Comprueba la **lectura actual** (o escríbela tú). La **lectura anterior** viene de tu última lectura; el consumo es la diferencia.',
+            'Elige **Guardar lectura**.',
+          ],
+        },
+        {
+          tip: 'Todos los del suministro pueden abrir las fotos de los contadores, así que las lecturas se pueden comprobar. El gestor también puede introducir una lectura por alguien.',
+        },
+        {
+          p: 'Usa **Hacer foto** para la cámara, o **Elegir de la galería** para una foto que ya hayas hecho.',
+        },
+      ],
+    },
+    {
+      id: 'split',
+      title: '6. Cómo se reparte una factura',
+      blocks: [
+        {
+          list: [
+            'Con contadores individuales, cada uno paga **su consumo × el precio unitario**.',
+            'Cuando están todas las lecturas y no cubren toda la factura (zonas comunes, pérdidas, cuotas fijas), **el resto se reparte a partes iguales** entre todos, gestor incluido. Si las lecturas suman más que la factura, la diferencia se descuenta a partes iguales.',
+            'Sin contadores, la factura se **reparte a partes iguales**.',
+            'Los céntimos que no se dividen exactamente van al gestor, así que las partes siempre suman exactamente la factura.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'payments',
+      title: '7. Pagos y arrastre de saldo',
+      blocks: [
+        {
+          tip: 'Ten tus gastos compartidos en un solo sitio: con **Gastos compartidos** conectada, el gestor puede usar **Añadir la factura** para ponerla en un grupo de gastos con la parte exacta de cada uno, pagada por él. Añadirla dos veces no cambia nada.',
+        },
+        {
+          p: 'La app no mueve dinero: las personas pagan al gestor en efectivo, con tarjeta o de cualquier otra forma, y el gestor registra el **importe recibido** en la factura.',
+        },
+        {
+          list: [
+            'Pagó **de más**: lo que sobra se descuenta de la próxima factura del mismo suministro.',
+            'Pagó **de menos**: lo que falta se suma a la próxima factura.',
+            '✔ **Marca verde**: el proveedor está pagado y todos han pagado su parte.',
+            '⚠ **Aviso**: los pagos aún no cubren la factura. ⏳ **Reloj de arena**: aún faltan lecturas de contador.',
+          ],
+        },
+        {
+          p: 'Todos los de la factura pueden **comentarla**. El gestor puede eliminar una factura o todo el suministro.',
+        },
+        {
+          tip: 'Cuando el gestor confirma un pago, este queda bloqueado (solo un administrador de DevQuake puede cambiarlo), y quien pagó recibe un correo con la factura completa, su consumo y su parte, y un enlace a la factura, donde se puede abrir el PDF del proveedor.',
+        },
+      ],
+    },
+    {
+      id: 'overview',
+      title: '8. Calendario y estadísticas',
+      blocks: [
+        {
+          list: [
+            'El **Calendario** muestra tu parte mes a mes o de todo un año: tu consumo, tu parte y lo que pagaste, de cada factura.',
+            'Las **Estadísticas** muestran, por categoría, tu consumo, tu parte y el precio unitario mes a mes, con los totales anuales y el precio medio. Cada gráfico se puede ver también como tabla.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'privacy',
+      title: '9. Tus datos',
+      blocks: [
+        {
+          p: 'Tu nombre, tu dirección, tus lecturas, las fotos de los contadores y las facturas solo los ven las personas con las que compartes un suministro. Para las sugerencias de dirección, lo que escribes en los campos de provincia, ciudad y calle se envía a través de DevQuake a Photon (komoot), un servicio de búsqueda para OpenStreetMap; nada más sobre ti. Cuando eliminas tu cuenta de DevQuake o cancelas la suscripción a la app, se elimina todo lo tuyo: tu perfil, lecturas, fotos, pagos y comentarios, y los suministros que gestionas con todas sus facturas y PDF.',
+        },
+      ],
+    },
+  ],
+  questions: '¿Dudas o ideas? Escribe a {email}.',
+  back: '← Volver a tus facturas',
+};
+
+export const MANUAL: Record<Locale, Manual> = { en, de, ro, hu, it, es };

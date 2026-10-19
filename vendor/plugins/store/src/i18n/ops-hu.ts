@@ -171,7 +171,7 @@ export const opsHu: MessagesOf<typeof opsEn> = {
   languages: {
     title: 'Nyelvek',
     intro:
-      'A bolt angolul, németül, románul és magyarul érhető el. Adj hozzá bármilyen más nyelvet, vagy módosítsd egy beépített nyelv szövegeit: másold ki a vásárlók által látott szövegeket, fordítsd le bárhol, és illeszd vissza.',
+      'A bolt angolul, németül, románul, magyarul, olaszul és spanyolul érhető el. Adj hozzá bármilyen más nyelvet, vagy módosítsd egy beépített nyelv szövegeit: másold ki a vásárlók által látott szövegeket, fordítsd le bárhol, és illeszd vissza.',
     step1: '1. Szövegek másolása',
     step1Hint: 'Válaszd ki a nyelvet, amelyből fordítasz, majd másold vagy töltsd le a szövegeket.',
     base: 'Fordítás innen',
@@ -186,7 +186,7 @@ export const opsHu: MessagesOf<typeof opsEn> = {
     step2Hint: 'Adj a nyelvnek kódot és nevet, illeszd be a lefordított szövegeket, és ments.',
     code: 'Kód',
     codeHint:
-      'Két vagy három betű, pl. fr, es, pl. A de, ro, hu vagy en a beépített nyelvet módosítja.',
+      'Két vagy három betű, pl. fr, pl, nl. A de, ro, hu, it, es vagy en a beépített nyelvet módosítja.',
     name: 'Név a vásárlóknak',
     nameHint: 'Az adott nyelven, pl. Français.',
     overrides: 'Ez módosítja a(z) {language} szövegeket a boltodban.',
@@ -215,7 +215,7 @@ export const opsHu: MessagesOf<typeof opsEn> = {
     maintenance: 'A bolt karbantartás alatt áll. Kérjük, nézz vissza hamarosan.',
     roles: 'Válassz legalább egy szerepkört.',
     pieces: 'A darabszám legalább 2, egész szám kell legyen.',
-    languageCode: 'A kód két vagy három betű legyen, pl. fr vagy es.',
+    languageCode: 'A kód két vagy három betű legyen, pl. fr vagy pl.',
     labelsJson: 'Ez nem a kimásolt szöveg (JSON). Illeszd be a teljes lefordított szöveget.',
     labelsEmpty: 'Ebből a szövegből egyetlen szöveget sem lehetett átvenni.',
     tooManyLanguages: 'Egy boltnak legfeljebb {max} saját nyelve lehet.',

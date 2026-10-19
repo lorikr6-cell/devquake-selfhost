@@ -1,5 +1,30 @@
 # Änderungsprotokoll — Shop
 
+## 0.13.0
+
+- Die App gibt es jetzt auch auf Italienisch und Spanisch: Wähle die Sprache oben auf der Seite (im Shop finden Käufer sie unten).
+
+## 0.12.2
+
+- Wenn du dich bei DevQuake mit einem anderen Konto anmeldest, ändert sich jetzt auch, wer du im Shop bist: Der Shop behält in einem anderen Tab nicht mehr die Sitzung des vorherigen Kontos, und wenn du dich bei DevQuake abmeldest, wirst du auch von einem damit verbundenen Konto abgemeldet.
+
+## 0.12.1
+
+- Der Weg zurück zu DevQuake ist jetzt ein kleiner Knopf mit dem DevQuake-Logo am rechten Ende der Kopfzeile des Shops, nach dem Warenkorb; fahre mit der Maus darüber, um zu sehen, zu welcher Seite er führt.
+
+## 0.12.0
+
+- Im Shop angemeldet: Der Newsletter ist ein Kästchen für die E-Mail-Adresse, die dein Konto schon hat, auf deiner Kontoseite, in der Fußzeile und auf der Newsletter-Seite. Er wird sofort ein- oder ausgeschaltet und sagt es dir, ohne Adresse eintippen und ohne Bestätigungs-E-Mail. Wer nicht angemeldet ist, meldet sich weiter mit seiner E-Mail-Adresse an.
+
+## 0.11.0
+
+- Bei DevQuake angemeldet: Dein Konto im Shop zeigt deinen Namen und deine E-Mail-Adresse aus DevQuake (dort änderst du sie), dazu Zähler für deine Favoriten, Einkäufe und Artikel im Warenkorb, die die jeweilige Liste öffnen. Deine Lieferangaben bleiben im Shop. Den Newsletter stellst du in deinem DevQuake-Konto ein, der Shop fragt also nicht noch einmal nach einer Anmeldung. Ohne DevQuake bleibt die Kontoseite wie bisher.
+
+## 0.10.0
+
+- Bei DevQuake angemeldet: Sobald du dem Shop erlaubt hast, deine Anmeldeadresse zu nutzen, bist du bei jedem Besuch automatisch im Shop angemeldet, und im Kopf steht dein Name statt „Konto“. Wenn du dich im Shop abmeldest, bleibst du abgemeldet.
+- Von einer DevQuake-Seite gekommen (Plattform, App oder Blog)? „← Zurück“ oben im Shop bringt dich dorthin zurück.
+
 ## 0.9.0
 
 - Favoriten: Speichere Produkte mit dem Herz auf ihrer Seite und finde sie unter „Favoriten“ in der Kopfzeile des Shops, mit dem Datum des Speicherns, dem heutigen Preis und wie viel günstiger oder teurer sie seitdem sind. Produkte, die man nicht mehr kaufen kann, sind durchgestrichen.

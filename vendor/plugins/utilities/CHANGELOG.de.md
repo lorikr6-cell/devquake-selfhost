@@ -1,5 +1,13 @@
 # Änderungen — Nebenkosten
 
+## 0.12.0
+
+- Die App gibt es jetzt auch auf Italienisch und Spanisch: Wähle die Sprache oben auf der Seite.
+
+## 0.11.1
+
+- Teilen: Wenn du „Nur ansehen“ für jemanden an- oder abhakst, bestätigt eine Meldung jetzt, dass es ein- oder ausgeschaltet wurde.
+
 ## 0.11.0
 
 - Eine Rechnung zu Geteilte Ausgaben hinzufügen: Sind die beiden Apps verbunden, legt der Verwalter die Rechnung mit dem genauen Anteil aller in eine Ausgabengruppe, bezahlt von ihm, und öffnet sie von dort. Zweimal hinzufügen ändert nichts.
@@ -30,7 +38,7 @@
 
 - Die Karte der App auf DevQuake und ihre Startseite zeigen jetzt, wie viele Mitglieder sie nutzen, und ihre Zahlen: Rechnungen, Zählerstände.
 
-0.5.0
+## 0.5.0
 
 - Arbeitet mit dem Familienplaner, den Einkaufslisten und dem Trainingstagebuch zusammen: Verbinde sie bei DevQuake („Arbeitet mit“ unten auf der Seite) und trenne sie dort jederzeit.
 - Kalender über Apps hinweg: Unter dem Kalender zeigt „Aus deinen anderen Apps“ die nächsten 31 Tage der verbundenen Apps — Familientermine (auch geteilte), Einkaufstage und Trainings —, jeweils in ihrer App zu öffnen. Verbundene Apps können die Fälligkeitstermine deiner offenen Rechnungen zeigen (nur den Namen, keine Beträge).

@@ -45,6 +45,8 @@ const plugins = app.plugins.map((plugin) => {
     ['de', 'CHANGELOG.de.md'],
     ['ro', 'CHANGELOG.ro.md'],
     ['hu', 'CHANGELOG.hu.md'],
+    ['it', 'CHANGELOG.it.md'],
+    ['es', 'CHANGELOG.es.md'],
   ]) {
     const p = path.join(dir, file);
     if (fs.existsSync(p)) changelogs[locale] = fs.readFileSync(p, 'utf8');
@@ -106,7 +108,7 @@ export const MIGRATIONS: Record<string, Array<{ version: string; sql: string }>>
   Object.fromEntries(plugins.map((p) => [p.id, p.migrations])),
 )};
 
-export const CHANGELOGS: Record<string, Partial<Record<'en' | 'de' | 'ro' | 'hu', string>>> = ${JSON.stringify(
+export const CHANGELOGS: Record<string, Partial<Record<'en' | 'de' | 'ro' | 'hu' | 'it' | 'es', string>>> = ${JSON.stringify(
   Object.fromEntries(plugins.map((p) => [p.id, p.changelogs])),
 )};
 `;

@@ -1,5 +1,30 @@
 # Változásnapló — Bolt
 
+## 0.13.0
+
+- Az alkalmazás mostantól olaszul és spanyolul is elérhető: a nyelvet az oldal tetején választhatod ki (a boltban a vásárlók az oldal alján találják).
+
+## 0.12.2
+
+- Ha másik fiókkal jelentkezel be a DevQuake-re, most az is megváltozik, ki vagy a boltban: a bolt egy másik lapon már nem tartja meg az előző fiók munkamenetét, és ha kijelentkezel a DevQuake-ről, a hozzá kapcsolt fiókból is kijelentkezel.
+
+## 0.12.1
+
+- A DevQuake-re visszavezető út most egy kis gomb a DevQuake logójával a bolt fejlécének jobb végén, a kosár után; vidd fölé az egeret, és látod, melyik oldalra visz vissza.
+
+## 0.12.0
+
+- Bejelentkezve a boltba: a hírlevél egyetlen jelölőnégyzet a fiókodhoz már tartozó e-mail-címre, a fiókoldalon, a láblécben és a hírlevél oldalán. Azonnal be- vagy kikapcsol, és jelzi is, cím beírása és megerősítő e-mail nélkül. Aki nincs bejelentkezve, továbbra is az e-mail-címével iratkozik fel.
+
+## 0.11.0
+
+- Bejelentkezve a DevQuake-en: a bolti fiókod a DevQuake-ből mutatja a neved és az e-mail-címed (ott módosíthatod), a kedvenceid, vásárlásaid és a kosárban lévő termékek számával, amelyek megnyitják az adott listát. A szállítási adataid a boltban maradnak. A hírlevelet a DevQuake-fiókodban állíthatod be, így a bolt nem kér újra feliratkozást. DevQuake nélkül a fiókoldal a régi marad.
+
+## 0.10.0
+
+- Bejelentkezve a DevQuake-en: miután engedted, hogy a bolt használja a bejelentkezési címedet, minden látogatáskor automatikusan be vagy jelentkezve a boltba, és a fejlécben a neved áll a „Fiók” helyett. Ha kijelentkezel a boltból, kijelentkezve maradsz.
+- DevQuake-oldalról jöttél (a platformról, egy alkalmazásból vagy a blogról)? A bolt tetején a „← Vissza” visszavisz oda.
+
 ## 0.9.0
 
 - Kedvencek: ments termékeket a szívvel az oldalukon, és találd meg őket a bolt fejlécében a „Kedvencek” alatt, a mentés dátumával, a mai árral és azzal, mennyivel lettek olcsóbbak vagy drágábbak azóta. A már nem megvásárolható termékek át vannak húzva.

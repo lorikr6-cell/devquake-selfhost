@@ -1,5 +1,13 @@
 # Changelog — Utility bill manager
 
+## 0.12.0
+
+- The app is now also in Italian and Spanish: pick the language at the top of the page.
+
+## 0.11.1
+
+- Sharing: ticking or unticking “View only” for someone now confirms that it was switched on or off.
+
 ## 0.11.0
 
 - Add a bill to Shared expenses: with the two apps connected, the owner puts the bill into an expense group with everyone’s exact share, paid by them, and opens it from there. Adding it twice changes nothing.
@@ -30,7 +38,7 @@
 
 - The app’s card on DevQuake and its front page now show how many members use it and its totals: bills, meter readings.
 
-0.5.0
+## 0.5.0
 
 - Works with the family planner, Shared shopping lists and the workout tracker: connect them on DevQuake (“Works with” at the bottom of the page) and disconnect them there any time.
 - Calendars across apps: under the calendar, “From your other apps” lists the next 31 days of the apps you connected — family events (shared ones included), shopping days and training sessions — each opening in its app. Connected apps can show the due dates of your unpaid bills (the utility’s name only, no amounts).

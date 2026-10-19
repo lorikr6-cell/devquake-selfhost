@@ -116,7 +116,14 @@ export default async function ComparePage({ ctx, params, searchParams }: PluginP
   rows.push({ label: t('summary'), values: products.map((p) => p.summary ?? '') });
 
   return (
-    <ShopFrame store={store} preview={preview} team={team} locale={locale} db={db}>
+    <ShopFrame
+      store={store}
+      preview={preview}
+      team={team}
+      locale={locale}
+      db={db}
+      viewer={scope.viewer}
+    >
       <div className="space-y-1">
         <h1 className={cn('text-2xl font-bold', S.heading)}>{t('title')}</h1>
         <p className={cn('text-sm', S.muted)}>{t('intro', { max: COMPARE_MAX })}</p>

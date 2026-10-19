@@ -87,12 +87,21 @@ export const getHighlights: PluginPlatformModule['getHighlights'] = async ({ db 
         de: 'Beendete Spiele',
         ro: 'Jocuri terminate',
         hu: 'Befejezett játék',
+        it: 'Partite concluse',
+        es: 'Partidas terminadas',
       },
       icon: '🎯',
     },
     {
       value: n(row?.tournaments),
-      label: { en: 'Tournaments', de: 'Turniere', ro: 'Turnee', hu: 'Verseny' },
+      label: {
+        en: 'Tournaments',
+        de: 'Turniere',
+        ro: 'Turnee',
+        hu: 'Verseny',
+        it: 'Tornei',
+        es: 'Torneos',
+      },
       icon: '🏆',
     },
   ];

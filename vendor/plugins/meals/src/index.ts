@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'meals',
     name: 'Meal planner',
-    version: '0.4.1',
+    version: '0.5.0',
     description:
       'Plan the week’s meals for your household with recipes from your cookbook: servings for the people eating, a suggested week for your diet, nutrition per day and one shopping list for the week.',
     status: 'active',
@@ -25,6 +25,8 @@ export default definePlugin({
             de: 'Die Namen deiner Haushalte sehen',
             ro: 'Să vadă numele gospodăriilor tale',
             hu: 'Lássa a háztartásaid nevét',
+            it: 'Vedere i nomi delle tue case',
+            es: 'Ver los nombres de tus hogares',
           },
         },
         {
@@ -35,6 +37,8 @@ export default definePlugin({
             de: 'Ein Rezept in eine Mahlzeit deines Plans setzen',
             ro: 'Să pună o rețetă într-o masă din planul tău',
             hu: 'Receptet tegyen a terved egy étkezésébe',
+            it: 'Inserire una ricetta in un pasto del tuo piano',
+            es: 'Poner una receta en una comida de tu plan',
           },
         },
         {
@@ -46,6 +50,8 @@ export default definePlugin({
             de: 'Die Namen deiner geplanten Mahlzeiten sehen',
             ro: 'Să vadă numele meselor planificate de tine',
             hu: 'Lássa a megtervezett étkezéseid nevét',
+            it: 'Vedere i nomi dei pasti che hai pianificato',
+            es: 'Ver los nombres de las comidas que has planificado',
           },
         },
       ],
@@ -58,6 +64,8 @@ export default definePlugin({
             de: 'den Essensplan der Woche',
             ro: 'planul de mese al săptămânii',
             hu: 'a heti étkezéstervet',
+            it: 'il piano dei pasti della settimana',
+            es: 'el plan de comidas de la semana',
           },
         },
       ],
@@ -71,6 +79,8 @@ export default definePlugin({
             de: 'Plane die Woche mit Rezepten aus deinem Kochbuch: Portionen, Nährwerte und Zutaten kommen mit.',
             ro: 'Planifică săptămâna cu rețete din cartea ta de bucate: porțiile, valorile nutritive și ingredientele vin cu ele.',
             hu: 'Tervezd meg a hetet a szakácskönyved receptjeivel: az adagok, a tápérték és a hozzávalók is jönnek velük.',
+            it: 'Pianifica la settimana con le ricette del tuo ricettario: porzioni, valori nutrizionali e ingredienti arrivano con loro.',
+            es: 'Planifica la semana con recetas de tu recetario: las raciones, los valores nutricionales y los ingredientes vienen con ellas.',
           },
         },
         {
@@ -82,6 +92,8 @@ export default definePlugin({
             de: 'Mach aus den Mahlzeiten der Woche mit einem Schritt eine Einkaufsliste.',
             ro: 'Transformă mesele săptămânii într-o singură listă de cumpărături dintr-un pas.',
             hu: 'Egy lépésben egyetlen bevásárlólista lesz a hét étkezéseiből.',
+            it: 'Trasforma i pasti della settimana in un’unica lista della spesa in un solo passaggio.',
+            es: 'Convierte las comidas de la semana en una sola lista de la compra en un solo paso.',
           },
         },
       ],

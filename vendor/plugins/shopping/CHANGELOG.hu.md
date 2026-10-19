@@ -1,5 +1,9 @@
 # Változások: Közös bevásárlólisták
 
+## 0.22.0
+
+- Az alkalmazás mostantól olaszul és spanyolul is elérhető: a nyelvet az oldal tetején választhatod ki.
+
 ## 0.21.0
 
 - A vásárlás hozzáadása a Közös kiadásokhoz: ha a két alkalmazás össze van kapcsolva, a kipipált, áras tételekből általad fizetett kiadás lesz, a listán szereplők között egyenlően elosztva. Ugyanazt a listát kétszer hozzáadni nem változtat semmit.
@@ -44,7 +48,7 @@
 
 - Az alkalmazás kártyája a DevQuake-en és a kezdőoldala most megmutatja, hány tag használja, és a számait: bevásárlólista, tétel.
 
-0.12.0
+## 0.12.0
 
 - Naptárak alkalmazásokon át: a naptár alatt „A többi alkalmazásodból” mutatja a kapcsolt alkalmazások következő 31 napját — családi eseményeket (a megosztottakat is), edzéseket és számlák esedékességét —, mindegyik a saját alkalmazásában nyílik meg.
 - Együttműködik a családi tervezővel, az edzésnaplóval és a Közműszámlák alkalmazással; ezek mutathatják a bevásárlónapjaidat (csak a listák nevét és dátumát).

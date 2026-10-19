@@ -13,27 +13,29 @@ Members may describe the keys of each event (**event types**) and refuse everyth
 
 ## Routes
 
-| Type | Pattern                       | File                     | Purpose                                                        |
-| ---- | ----------------------------- | ------------------------ | -------------------------------------------------------------- |
-| Page | `/`                           | `src/pages/home.tsx`     | Services, new service (secret shown once), plan and limits     |
-| Page | `/apps/:id`                   | `src/pages/app.tsx`      | Keys, websites (DNS proof), data structure, code, usage, log   |
-| Page | `/apps/:id/test`              | `src/pages/test.tsx`     | Live test: listen and send as the owner, two-device scenario   |
-| Page | `/help`                       | `src/pages/help.tsx`     | User manual and code examples; **public** (ADR 0009)           |
-| Page | `/demo`                       | `src/pages/demo.tsx`     | Check it live: two browsers, one private channel (ADR 0029)    |
-| API  | `/health`                     | `src/api/health.ts`      | Liveness                                                       |
-| API  | `/apps`                       | `src/api/apps.ts`        | GET own services; POST `{ name }` → `{ id, secret }`           |
-| API  | `/apps/:id`                   | `src/api/app.ts`         | PATCH name and settings; DELETE with all its data              |
-| API  | `/apps/:id/secret`            | `src/api/secret.ts`      | POST: new secret (previous one valid 24 h)                     |
-| API  | `/apps/:id/origins`           | `src/api/origins.ts`     | POST `{ origin }`: add a website                               |
-| API  | `/apps/:id/origins/:originId` | `src/api/origin.ts`      | POST: check the DNS TXT proof; DELETE                          |
-| API  | `/apps/:id/event-types`       | `src/api/event-types.ts` | PUT all event types                                            |
-| API  | `/apps/:id/test-token`        | `src/api/test-token.ts`  | POST: a 10-minute client token for the live test               |
-| API  | `/demo/token`                 | `src/api/demo-token.ts`  | POST `{ browser }`: a 10-minute demo token for own channel     |
-| API  | `/admin/calls`                | `src/api/admin/calls.ts` | Admins: GET call totals and log size; POST clean; PUT interval |
-| API  | `/v1/events`                  | `src/api/v1/events.ts`   | **Key route**: POST one event (202 `{ id, at }`)               |
-| API  | `/v1/stream`                  | `src/api/v1/stream.ts`   | **Key route**: GET live events (SSE, `Last-Event-ID` catch-up) |
-| API  | `/v1/poll`                    | `src/api/v1/poll.ts`     | **Key route**: GET events after an id (fallback)               |
-| API  | `/v1/client`                  | `src/api/v1/client.ts`   | **Key route**: GET the browser library (JavaScript)            |
+| Type | Pattern                       | File                        | Purpose                                                        |
+| ---- | ----------------------------- | --------------------------- | -------------------------------------------------------------- |
+| Page | `/`                           | `src/pages/home.tsx`        | Services, new service (secret shown once), plan and limits     |
+| Page | `/apps/:id`                   | `src/pages/app.tsx`         | Keys, websites (DNS proof), data structure, code, usage, log   |
+| Page | `/apps/:id/test`              | `src/pages/test.tsx`        | Live test: listen and send as the owner, two-device scenario   |
+| Page | `/help`                       | `src/pages/help.tsx`        | User manual and code examples; **public** (ADR 0009)           |
+| Page | `/demo`                       | `src/pages/demo.tsx`        | Check it live: two browsers, one private channel (ADR 0029)    |
+| Page | `/platform`                   | `src/pages/platform.tsx`    | **Admins only** (404 otherwise): DevQuake's platform service   |
+| API  | `/health`                     | `src/api/health.ts`         | Liveness                                                       |
+| API  | `/apps`                       | `src/api/apps.ts`           | GET own services; POST `{ name }` → `{ id, secret }`           |
+| API  | `/apps/:id`                   | `src/api/app.ts`            | PATCH name and settings; DELETE with all its data              |
+| API  | `/apps/:id/secret`            | `src/api/secret.ts`         | POST: new secret (previous one valid 24 h)                     |
+| API  | `/apps/:id/origins`           | `src/api/origins.ts`        | POST `{ origin }`: add a website                               |
+| API  | `/apps/:id/origins/:originId` | `src/api/origin.ts`         | POST: check the DNS TXT proof; DELETE                          |
+| API  | `/apps/:id/event-types`       | `src/api/event-types.ts`    | PUT all event types                                            |
+| API  | `/apps/:id/test-token`        | `src/api/test-token.ts`     | POST: a 10-minute client token for the live test               |
+| API  | `/demo/token`                 | `src/api/demo-token.ts`     | POST `{ browser }`: a 10-minute demo token for own channel     |
+| API  | `/admin/calls`                | `src/api/admin/calls.ts`    | Admins: GET call totals and log size; POST clean; PUT interval |
+| API  | `/admin/platform`             | `src/api/admin/platform.ts` | Admins: GET the platform service; POST a new secret key (once) |
+| API  | `/v1/events`                  | `src/api/v1/events.ts`      | **Key route**: POST one event (202 `{ id, at }`)               |
+| API  | `/v1/stream`                  | `src/api/v1/stream.ts`      | **Key route**: GET live events (SSE, `Last-Event-ID` catch-up) |
+| API  | `/v1/poll`                    | `src/api/v1/poll.ts`        | **Key route**: GET events after an id (fallback)               |
+| API  | `/v1/client`                  | `src/api/v1/client.ts`      | **Key route**: GET the browser library (JavaScript)            |
 
 **Key routes** (`manifest.keyRoutes`, ADR 0023): the host lets them through without a session,
 subscription or same-origin check and routes CORS preflights (OPTIONS) to them. Every call is
@@ -74,6 +76,28 @@ Every process holds at most `PULSE_MAX_STREAMS` (default 30) live connections fo
 Pulse can never take all of the site's connection slots; new ones get 503 `busy` and the client
 falls back to polling. Live connections close after 20 s (trial) / 50 s and reconnect.
 
+## The platform service (ADR 0063)
+
+DevQuake's own apps and website get their live updates through **one service owned by
+DevQuake** (`apps.platform = 1`, `user_id` 0, made on first use): never listed as anyone's
+service, on the **`platform`** plan without quotas. DevQuake's **admins and owner** get the same
+plan for their own services: using the dashboard while staff sets `accounts.plan = 'staff'`
+(`syncStaffPlan`), using it without being staff any more sets it back to `standard`. Every
+other member keeps trial, standard or full.
+
+- A third of each process's live connections (`platformReservedStreams`, 10 of 30) stays free
+  for the platform service; members' services may open one only while that many are free for it
+  (`streamSlotFree`, tested).
+- Admins manage it on `/platform` (404 for everyone else, linked only on admins' start page):
+  keys, today's use, whether the website has the current secret key, and a new secret key
+  (shown once, the previous one works 24 hours).
+- The website reads the secret key from `PULSE_PLATFORM_SECRET`, publishes `changed`
+  `{ scope }` events to `private-dq-<scope>` whenever a change counter moves (ADR 0041), and
+  gives app members a one-hour listen-only token at `/api/_realtime` on their app's subdomain.
+- Setting up: apply migration 0004, open `/platform`, make a secret key, put it into
+  `PULSE_PLATFORM_SECRET` in hPanel and `devquake.env`, restart the app subdomains; the page then
+  says the website has the current key.
+
 ## Delivery (`src/lib/hub.ts`)
 
 Events are stored in `events` by whichever process receives them. Each process runs **one**
@@ -96,11 +120,12 @@ Own database `u962314563_pulse` (ADR 0007), configured with `PULSE_DB_NAME`, `PU
 set up and the API answers 503. Never change the master key: every secret key would stop working.
 Optional `PULSE_MAX_STREAMS`.
 
-| File                  | Adds                                                                                             |
-| --------------------- | ------------------------------------------------------------------------------------------------ |
-| `0001_pulse.sql`      | accounts, apps, app_origins, event_types, events, usage_daily, server_ips, security_log, streams |
-| `0002_api_calls.sql`  | api_calls (call log), api_totals (call totals), settings (log cleaning)                          |
-| `0003_pulse_demo.sql` | `apps.demo`: DevQuake's own demo service (user 0) for Check it live                              |
+| File                      | Adds                                                                                             |
+| ------------------------- | ------------------------------------------------------------------------------------------------ |
+| `0001_pulse.sql`          | accounts, apps, app_origins, event_types, events, usage_daily, server_ips, security_log, streams |
+| `0002_api_calls.sql`      | api_calls (call log), api_totals (call totals), settings (log cleaning)                          |
+| `0003_pulse_demo.sql`     | `apps.demo`: DevQuake's own demo service (user 0) for Check it live                              |
+| `0004_pulse_platform.sql` | `apps.platform`: DevQuake's platform service (user 0); `accounts.plan` gets `staff` (ADR 0063)   |
 
 Scheduled hook (`src/platform.ts`, every few minutes): events older than a day (7 days for
 `full`), usage and server IPs older than 35 days, security log older than 30 days, dead

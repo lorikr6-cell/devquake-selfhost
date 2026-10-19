@@ -8,6 +8,8 @@ export const about: PluginAbout = {
     de: 'Rezepte für beliebig viele Personen: Mengen und Nährwerte pro Portion passen sich an, der Kochmodus liest die Schritte vor.',
     ro: 'Rețete pentru oricâte persoane: cantitățile și valorile pe porție se adaptează, modul de gătit citește pașii.',
     hu: 'Receptek bármennyi főre: a mennyiségek és az adagonkénti tápérték igazodik, a főzőmód felolvassa a lépéseket.',
+    it: 'Ricette per quante persone vuoi: quantità e valori nutrizionali per porzione si adattano, la modalità cucina legge i passaggi ad alta voce.',
+    es: 'Recetas para las personas que quieras: las cantidades y los valores por ración se adaptan, el modo cocina lee los pasos en voz alta.',
   },
   features: {
     en: [
@@ -33,6 +35,18 @@ export const about: PluginAbout = {
       'Tápérték adagonként, étrendek indoklással és a 14 allergén',
       'Főzőmód: lépésenként egy képernyő, időzítők és felolvasás',
       'Saját receptek fotóval, privátan vagy linkkel megosztva',
+    ],
+    it: [
+      'Scegli le porzioni: ogni quantità viene ricalcolata, le uova restano intere',
+      'Valori nutrizionali per porzione, diete con il motivo per cui sono adatte e i 14 allergeni',
+      'Modalità cucina: un passaggio per schermata, timer e una voce',
+      'Le tue ricette con una foto, private o condivise con un link',
+    ],
+    es: [
+      'Elige las raciones: cada cantidad se recalcula, los huevos siguen enteros',
+      'Valores nutricionales por ración, dietas con el motivo por el que encajan y los 14 alérgenos',
+      'Modo cocina: un paso por pantalla, temporizadores y una voz',
+      'Tus propias recetas con foto, privadas o compartidas con un enlace',
     ],
   },
 };

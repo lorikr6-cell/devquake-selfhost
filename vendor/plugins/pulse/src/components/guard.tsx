@@ -2,7 +2,7 @@ import type { PluginContext, PluginDatabase, PluginUser } from '@devquake/plugin
 import { rich } from '@devquake/ui';
 import type { ReactNode } from 'react';
 import { localeOf, translator } from '../i18n';
-import { accountPlan } from '../lib/data';
+import { accountPlan, syncStaffPlan } from '../lib/data';
 import { masterKey } from '../lib/keys';
 import { LIMITS, planOf, type Limits, type Plan } from '../lib/limits';
 import { Notice } from './panel';
@@ -68,6 +68,10 @@ export async function pageScope(ctx: PluginContext): Promise<PageScope> {
   const level = ctx.accessOf
     ? ((await ctx.accessOf([ctx.user.id]))[ctx.user.id] ?? 'none')
     : 'member';
-  const plan = planOf(level, await accountPlan(ctx.db, ctx.user.id)) ?? 'trial';
+  const plan =
+    planOf(
+      level,
+      await syncStaffPlan(ctx.db, ctx.user).catch(() => accountPlan(ctx.db!, ctx.user!.id)),
+    ) ?? 'trial';
   return { ok: true, db: ctx.db, user: ctx.user, plan, limits: LIMITS[plan] };
 }

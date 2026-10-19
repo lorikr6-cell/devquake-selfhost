@@ -1,5 +1,9 @@
 # Änderungen: Gemeinsame Einkaufslisten
 
+## 0.22.0
+
+- Die App gibt es jetzt auch auf Italienisch und Spanisch: Wähle die Sprache oben auf der Seite.
+
 ## 0.21.0
 
 - Das Gekaufte zu Geteilte Ausgaben hinzufügen: Sind die beiden Apps verbunden, werden die abgehakten Artikel mit Preis eine Ausgabe, bezahlt von dir, gleich geteilt unter allen auf der Liste. Dieselbe Liste zweimal hinzuzufügen ändert nichts.
@@ -44,7 +48,7 @@
 
 - Die Karte der App auf DevQuake und ihre Startseite zeigen jetzt, wie viele Mitglieder sie nutzen, und ihre Zahlen: Einkaufslisten, Artikel.
 
-0.12.0
+## 0.12.0
 
 - Kalender über Apps hinweg: Unter dem Kalender zeigt „Aus deinen anderen Apps“ die nächsten 31 Tage der verbundenen Apps — Familientermine (auch geteilte), Trainings und Fälligkeitstermine von Rechnungen —, jeweils in ihrer App zu öffnen.
 - Arbeitet mit dem Familienplaner, dem Trainingstagebuch und der Nebenkosten-App zusammen; sie können deine Einkaufstage zeigen (nur Listennamen und Daten).

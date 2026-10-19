@@ -32,6 +32,8 @@ export const DEFAULT_COUNTRY: Record<string, string | null> = {
   de: 'DE',
   ro: 'RO',
   hu: 'HU',
+  it: 'IT',
+  es: 'ES',
 };
 
 /** The country's name in a language (BCP 47 tag); the code itself when unknown. */

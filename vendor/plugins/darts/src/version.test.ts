@@ -32,7 +32,7 @@ describe('version', () => {
 
   // Translated release notes (ADR 0011) are optional, but when present they must cover the
   // same versions, so the app never shows a newer version without notes in that language.
-  for (const lang of ['de', 'ro', 'hu']) {
+  for (const lang of ['de', 'ro', 'hu', 'it', 'es']) {
     it(`CHANGELOG.${lang}.md has the same versions as the English one`, () => {
       const url = new URL(`../CHANGELOG.${lang}.md`, import.meta.url);
       let text: string;

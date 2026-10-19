@@ -2,7 +2,12 @@ import { clientIp, shopApi } from '../lib/api';
 import { mayMail } from '../lib/buyer-session';
 import { HttpError } from '../lib/http';
 import { shopMailConfigured } from '../lib/mailer';
-import { subscribe } from '../lib/newsletter-data';
+import {
+  confirmSubscriber,
+  subscribe,
+  subscriberByEmail,
+  unsubscribe,
+} from '../lib/newsletter-data';
 import { isTrap } from '../lib/reviews';
 import { sendSubscribeConfirmation } from '../lib/shop-mail';
 import { emailAddress, readBody } from '../lib/validate';
@@ -24,4 +29,25 @@ export const POST = shopApi(
     return { ok: true };
   },
   { limit: 5, sameSite: true },
+);
+
+// PUT /api/s/:slug/newsletter { on }: the checkbox of a signed-in buyer (or DevQuake member), for
+// the address their account already has. Their sign-in link or DevQuake proved it is theirs, so
+// it is confirmed at once, without a confirmation email.
+export const PUT = shopApi(
+  async ({ request, db, store, locale, buyer }) => {
+    const me = await buyer();
+    if (!me) throw new HttpError(401, 'buyerSignIn');
+    const on = (await readBody(request, 1024)).on === true;
+    if (on) {
+      if (!shopMailConfigured()) throw new HttpError(503, 'mailOff');
+      const { subscriber } = await subscribe(db, store.id, me.email, locale, 'account');
+      if (subscriber.status !== 'confirmed') await confirmSubscriber(db, subscriber.id);
+    } else {
+      const subscriber = await subscriberByEmail(db, store.id, me.email);
+      if (subscriber && subscriber.status !== 'unsubscribed') await unsubscribe(db, subscriber.id);
+    }
+    return { on };
+  },
+  { limit: 20, sameSite: true },
 );

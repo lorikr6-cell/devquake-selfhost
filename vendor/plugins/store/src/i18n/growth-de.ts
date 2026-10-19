@@ -650,6 +650,7 @@ export const growthDe: MessagesOf<typeof growthEn> = {
   },
   shop: {
     shopNav: 'Der Shop',
+    returnBack: 'Zurück',
     account: 'Konto',
     compare: 'Vergleichen',
     categories: 'Kategorien',

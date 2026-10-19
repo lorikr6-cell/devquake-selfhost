@@ -88,5 +88,49 @@ export const emails = defineMessages(
         footer: 'Azért kapod, mert az étkezésed nyilvános a DevQuake Étkezéstervezőjében.',
       },
     },
+    it: {
+      reminderEmail: {
+        subject: 'Per domani: {remind}',
+        intro: 'Promemoria – {slot}: {title}.',
+        meal: 'Pasto',
+        when: 'Giorno',
+        household: 'Casa',
+        button: 'Apri la settimana',
+        footer:
+          'Ricevi questa email perché fai parte di questa casa nel Pianificatore dei pasti di DevQuake. Chi ha pianificato il pasto ha aggiunto il promemoria.',
+      },
+      commentEmail: {
+        subject: '{name} ha commentato il tuo pasto “{title}”',
+        heading: 'Un commento su “{title}”',
+        intro: '{name} ha scritto sul tuo pasto pubblico “{title}”:',
+        meal: 'Pasto',
+        from: 'Da',
+        button: 'Apri il pasto',
+        footer:
+          'Ricevi questo messaggio perché il tuo pasto è pubblico nel Pianificatore dei pasti di DevQuake.',
+      },
+    },
+    es: {
+      reminderEmail: {
+        subject: 'Para mañana: {remind}',
+        intro: 'Recordatorio – {slot}: {title}.',
+        meal: 'Comida',
+        when: 'Día',
+        household: 'Hogar',
+        button: 'Abrir la semana',
+        footer:
+          'Recibes este correo porque formas parte de este hogar en el Planificador de comidas de DevQuake. Quien planificó la comida añadió el recordatorio.',
+      },
+      commentEmail: {
+        subject: '{name} ha comentado tu comida “{title}”',
+        heading: 'Un comentario sobre “{title}”',
+        intro: '{name} ha escrito en tu comida pública “{title}”:',
+        meal: 'Comida',
+        from: 'De',
+        button: 'Abrir la comida',
+        footer:
+          'Recibes esto porque tu comida es pública en el Planificador de comidas de DevQuake.',
+      },
+    },
   },
 );

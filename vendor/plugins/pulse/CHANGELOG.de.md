@@ -1,5 +1,13 @@
 # Änderungen — Pulse
 
+## 0.8.0
+
+- Die App gibt es jetzt auch auf Italienisch und Spanisch: Wähle die Sprache oben auf der Seite.
+
+## 0.7.0
+
+- Die eigenen Apps von DevQuake erhalten ihre Live-Updates jetzt über Pulse. Deine Dienste, dein Plan und deine Limits bleiben, wie sie sind; Live-Verbindungen stehen ihnen weiter zur Verfügung.
+
 ## 0.6.0
 
 - Pulse läuft jetzt auch auf deinem eigenen Server (DevQuake selbst gehostet): Dort bekommt jedes Mitglied den vollen Plan.
@@ -12,7 +20,7 @@
 
 - Die Karte der App auf DevQuake und ihre Startseite zeigen jetzt, wie viele Mitglieder sie nutzen, und ihre Zahlen: API-Dienste, Ereignisse heute.
 
-0.4.1
+## 0.4.1
 
 - Wer die App noch nicht nutzt, sieht jetzt auf ihrer Startseite, was sie kann, mit einem Link zum Benutzerhandbuch, und geteilte Links zeigen das eigene Bild der App.
 
