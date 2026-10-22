@@ -32,6 +32,7 @@ describe('reading an identity card', () => {
       idSeries: 'XV',
       idNumber: '123456',
       address: 'Mun. Cluj-Napoca, Str. Lalelelor nr. 12, ap. 4',
+      idExpiresOn: '2028-05-17',
     });
   });
 
@@ -51,7 +52,12 @@ describe('reading an identity card', () => {
       idSeries: null,
       idNumber: null,
       address: null,
+      idExpiresOn: null,
     });
+  });
+
+  it('reads the expiry from the front when the machine zone is unreadable', () => {
+    expect(readIdCard('Valabilitate 12.03.18-17.09.2028').idExpiresOn).toBe('2028-09-17');
   });
 
   it('takes the series from the front when the machine zone is unreadable', () => {

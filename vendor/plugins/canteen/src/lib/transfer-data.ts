@@ -1,7 +1,8 @@
 import type { PluginDatabase } from '@devquake/plugin-sdk';
 import type { Locale } from '@devquake/ui';
 import { translator } from '../i18n';
-import { listPeople, listStaff, requireCan } from './data';
+import { openText, sealText } from './crypto';
+import { listPeople, listStaff, log, requireCan, requireKey } from './data';
 import { isIsoDate, type IsoDate } from './dates';
 import { HttpError } from './http';
 import { parseTime, type MealTime } from './meals';
@@ -22,8 +23,11 @@ import {
   parseSheets,
   statusCode,
   type ParsedSheet,
+  type TransferIdentity,
 } from './transfer';
 import {
+  identityInput,
+  type IdentityInput,
   longOptionalText,
   optionalText,
   personInput,
@@ -37,8 +41,9 @@ import { readXlsx, writeXlsx } from './xlsx';
  * Export and re-upload of an organisation (organisers only). The upload is checked in full
  * first: one wrong row and nothing changes, the message says which sheet and row. Then every
  * change is applied in one transaction. Rows are matched by their id; rows without one are
- * added; nothing is deleted. Personal numbers, pictures and the medical file are never part
- * of the file.
+ * added; nothing is deleted. Pictures and the medical file are never part of the file. The
+ * personal numbers are: each person's are logged as exported (`identity.export`), and changed
+ * ones as edited. Drivers' licence data is changed only where a licence picture was uploaded.
  */
 
 type Db = Omit<PluginDatabase, 'transaction'>;
@@ -77,13 +82,16 @@ export async function exportOrg(
   timeZone: string,
 ): Promise<{ fileName: string; bytes: Uint8Array }> {
   await requireCan(db, orgId, userId, 'org.manage');
-  const [page, people, mealTimes, menus, drivers, staff] = await Promise.all([
+  requireKey();
+  const [page, people, mealTimes, menus, drivers, staff, identities, licences] = await Promise.all([
     orgPage(db, orgId, userId),
     listPeople(db, orgId, userId),
     listMealTimes(db, orgId, userId),
     allMenus(db, orgId, userId),
     listDrivers(db, orgId, userId),
     listStaff(db, orgId, userId),
+    identitiesOf(db, orgId),
+    licencesOf(db, orgId),
   ]);
   const routes = await db.query<{
     day: string;
@@ -117,12 +125,76 @@ export async function exportOrg(
         person: `${r.last_name} ${r.first_name}`,
         delivered: num(r.delivered) === 1,
       })),
+      identities: Object.fromEntries(identities),
+      licences: Object.fromEntries(licences),
     },
     locale,
     today,
   );
+  // Whose personal numbers left in the file, in the access log like any other showing.
+  for (const [personId, id] of identities) {
+    if (id.cnp || id.idSeries || id.idNumber || id.idExpiresOn) {
+      await log(db, orgId, personId, userId, 'identity.export');
+    }
+  }
   return { fileName: exportFileName(page.name, new Date(), timeZone), bytes: writeXlsx(sheets) };
 }
+
+/** Every person's personal numbers, opened from their encryption. */
+async function identitiesOf(db: Db, orgId: number): Promise<Map<number, TransferIdentity>> {
+  const rows = await db.query<{
+    id: number;
+    id_series: string | null;
+    id_number_sealed: string | null;
+    cnp_sealed: string | null;
+    id_expires_on: string | null;
+  }>(
+    `SELECT id, id_series, id_number_sealed, cnp_sealed,
+            DATE_FORMAT(id_expires_on, '%Y-%m-%d') AS id_expires_on
+       FROM canteen_people WHERE org_id = ?`,
+    [orgId],
+  );
+  return new Map(
+    rows.map((r) => [
+      num(r.id),
+      {
+        cnp: openText(r.cnp_sealed),
+        idSeries: r.id_series,
+        idNumber: openText(r.id_number_sealed),
+        idExpiresOn: r.id_expires_on,
+      },
+    ]),
+  );
+}
+
+/** Every driver's licence expiry and number (the picture stays out of the file). */
+async function licencesOf(
+  db: Db,
+  orgId: number,
+): Promise<Map<number, { expiresOn: string; number: string | null }>> {
+  const rows = await db.query<{
+    driver_id: number;
+    expires_on: string;
+    number_sealed: string | null;
+  }>(
+    `SELECT l.driver_id, DATE_FORMAT(l.expires_on, '%Y-%m-%d') AS expires_on, l.number_sealed
+       FROM canteen_driver_licences l JOIN canteen_drivers d ON d.id = l.driver_id
+      WHERE d.org_id = ?`,
+    [orgId],
+  );
+  return new Map(
+    rows.map((r) => [
+      num(r.driver_id),
+      { expiresOn: r.expires_on, number: openText(r.number_sealed) },
+    ]),
+  );
+}
+
+const sameIdentity = (a: TransferIdentity | undefined, b: IdentityInput) =>
+  (a?.cnp ?? null) === b.cnp &&
+  (a?.idSeries ?? null) === b.idSeries &&
+  (a?.idNumber ?? null) === b.idNumber &&
+  (a?.idExpiresOn ?? null) === b.idExpiresOn;
 
 // ---------------------------------------------------------------------------------------------
 // Re-upload
@@ -134,7 +206,13 @@ export interface ImportResult {
 
 type Change =
   | { kind: 'org'; name: string; description: string | null }
-  | { kind: 'person'; id: number | null; input: PersonInput }
+  | {
+      kind: 'person';
+      id: number | null;
+      input: PersonInput;
+      /** The personal numbers when they changed (files from before 0.16.0 have no columns). */
+      identity: IdentityInput | null;
+    }
   | { kind: 'mealTime'; id: number | null; name: string; startsMin: number; endsMin: number }
   | {
       kind: 'menu';
@@ -152,7 +230,17 @@ type Change =
       shiftFromMin: number;
       shiftToMin: number;
       active: boolean;
+      /** The licence's new expiry and number, when the expiry cell is filled and changed. */
+      licence: { expiresOn: IsoDate; number: string | null } | null;
     };
+
+interface Known {
+  people: Set<number>;
+  mealTimes: Set<number>;
+  drivers: Set<number>;
+  identities: Map<number, TransferIdentity>;
+  licences: Map<number, { expiresOn: string; number: string | null }>;
+}
 
 const rowId = (value: string, known: Set<number>): number | null => {
   if (!value) return null;
@@ -167,13 +255,31 @@ function time(value: string): number {
   return t;
 }
 
-/** Turns the sheets into changes, refusing the first wrong row (with its sheet and row). */
-function changesOf(
-  sheets: ParsedSheet[],
-  known: { people: Set<number>; mealTimes: Set<number>; drivers: Set<number> },
+/**
+ * A driver row's licence cells: ignored while the expiry cell is empty; refused for a driver
+ * without an uploaded licence (the picture is what was checked); an expiry that changed must
+ * not be in the past.
+ */
+function licenceOf(
+  v: Record<string, string>,
+  before: { expiresOn: string; number: string | null } | undefined,
   today: IsoDate,
-  locale: Locale,
-): Change[] {
+): { expiresOn: IsoDate; number: string | null } | null {
+  if (!v.licenceExpiresOn) return null;
+  const expiresOn = cellDate(v.licenceExpiresOn);
+  if (!isIsoDate(expiresOn)) throw new HttpError(400, 'date', { field: 'licenceExpiry' });
+  const number =
+    optionalText(v.licenceNumber, 'licenceNumber', 20)?.replace(/\s/g, '').toUpperCase() ?? null;
+  if (!before) throw new HttpError(400, 'importNoLicence');
+  if (before.expiresOn === expiresOn && before.number === number) return null;
+  if (before.expiresOn !== expiresOn && expiresOn < today) {
+    throw new HttpError(400, 'licenceExpired');
+  }
+  return { expiresOn, number };
+}
+
+/** Turns the sheets into changes, refusing the first wrong row (with its sheet and row). */
+function changesOf(sheets: ParsedSheet[], known: Known, today: IsoDate, locale: Locale): Change[] {
   const t = translator(locale);
   const changes: Change[] = [];
   for (const sheet of sheets) {
@@ -187,10 +293,23 @@ function changesOf(
               description: longOptionalText(v.description, 'description', 2000),
             });
             break;
-          case 'people':
+          case 'people': {
+            const id = rowId(v.id ?? '', known.people);
+            let identity: IdentityInput | null = null;
+            if (v.cnp !== undefined) {
+              const input = identityInput({
+                cnp: v.cnp,
+                idSeries: v.idSeries,
+                idNumber: v.idNumber,
+                idExpiresOn: v.idExpiresOn ? cellDate(v.idExpiresOn) : null,
+              });
+              const before = id === null ? undefined : known.identities.get(id);
+              if (!sameIdentity(before, input)) identity = input;
+            }
             changes.push({
               kind: 'person',
-              id: rowId(v.id ?? '', known.people),
+              id,
+              identity,
               input: personInput(
                 {
                   ...v,
@@ -206,6 +325,7 @@ function changesOf(
               ),
             });
             break;
+          }
           case 'mealTimes': {
             const startsMin = time(v.starts ?? '');
             const endsMin = time(v.ends ?? '');
@@ -240,9 +360,11 @@ function changesOf(
             const shiftFromMin = time(v.shiftFrom ?? '');
             const shiftToMin = time(v.shiftTo ?? '');
             if (shiftToMin <= shiftFromMin) throw new HttpError(400, 'shiftRange');
+            const id = rowId(v.id ?? '', known.drivers);
             changes.push({
               kind: 'driver',
-              id: rowId(v.id ?? '', known.drivers),
+              id,
+              licence: licenceOf(v, id === null ? undefined : known.licences.get(id), today),
               name: requiredText(v.name, 'driverName', LIMITS.displayName),
               phone: optionalText(v.phone, 'phone', LIMITS.phone),
               weekdays: weekdays(cellDays(v.weekdays ?? '')),
@@ -293,10 +415,13 @@ export async function importOrg(
         (r) => num(r.id),
       ),
     );
-  const known = {
+  requireKey();
+  const known: Known = {
     people: await ids('canteen_people'),
     mealTimes: await ids('canteen_meal_times'),
     drivers: await ids('canteen_drivers'),
+    identities: await identitiesOf(db, orgId),
+    licences: await licencesOf(db, orgId),
   };
   const changes = changesOf(sheets, known, today, locale);
   const t = translator(locale);
@@ -387,6 +512,22 @@ export async function importOrg(
           );
           personId = res.insertId;
         }
+        if (c.identity) {
+          const id = c.identity;
+          await tx.execute(
+            `UPDATE canteen_people SET id_series = ?, id_number_sealed = ?, cnp_sealed = ?,
+               id_expires_on = ? WHERE id = ? AND org_id = ?`,
+            [
+              id.idSeries,
+              id.idNumber ? sealText(id.idNumber) : null,
+              id.cnp ? sealText(id.cnp) : null,
+              id.idExpiresOn,
+              personId,
+              orgId,
+            ],
+          );
+          await log(tx, orgId, personId, userId, 'identity.edit');
+        }
         await tx.execute('DELETE FROM canteen_delivery_days WHERE person_id = ?', [personId]);
         for (const day of p.deliveryDays) {
           await tx.execute('INSERT INTO canteen_delivery_days (person_id, weekday) VALUES (?, ?)', [
@@ -410,6 +551,12 @@ export async function importOrg(
                shift_to_min = ?, active = ? WHERE id = ? AND org_id = ?`,
             [...values, c.id, orgId],
           );
+          if (c.licence) {
+            await tx.execute(
+              'UPDATE canteen_driver_licences SET expires_on = ?, number_sealed = ? WHERE driver_id = ?',
+              [c.licence.expiresOn, c.licence.number ? sealText(c.licence.number) : null, c.id],
+            );
+          }
         } else {
           await tx.execute(
             `INSERT INTO canteen_drivers (name, phone, weekdays, shift_from_min, shift_to_min,

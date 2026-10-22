@@ -72,7 +72,11 @@ export default async function RouteDayPage({ ctx, params }: PluginPageProps) {
       {/* The printed route sheets: one page per driver. */}
       <div className="hidden print:block">
         {routes.map((r) => (
-          <section key={r.driver.id} className="break-after-page text-black">
+          <section
+            key={r.driver.id}
+            data-driver={r.driver.id}
+            className="break-after-page text-black"
+          >
             <h1 className="text-xl font-bold">
               {r.driver.name} · <span className="capitalize">{title}</span>
             </h1>

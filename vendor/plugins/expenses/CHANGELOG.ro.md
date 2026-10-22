@@ -1,5 +1,9 @@
 # Jurnal de modificări — Cheltuieli comune
 
+## 0.3.1
+
+- Rândul de file nu mai arată o mică bară de derulare când încap toate filele; se derulează lateral doar când nu încap.
+
 ## 0.3.0
 
 - Aplicația este acum și în italiană și spaniolă: alege limba din partea de sus a paginii.

@@ -121,6 +121,18 @@ export async function allMenus(db: Db, orgId: number, userId: number): Promise<M
   return menusOf(db, orgId, '2000-01-01', 365 * 200);
 }
 
+/** The menus of the days from `from`, `days` long (the calendar's month). */
+export async function menusBetween(
+  db: Db,
+  orgId: number,
+  userId: number,
+  from: IsoDate,
+  days: number,
+): Promise<Menu[]> {
+  await requireCan(db, orgId, userId, 'kitchen.view');
+  return menusOf(db, orgId, from, days);
+}
+
 export async function weekMenus(
   db: Db,
   orgId: number,

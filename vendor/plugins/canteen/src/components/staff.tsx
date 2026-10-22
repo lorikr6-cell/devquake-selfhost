@@ -128,7 +128,6 @@ export function Invites({
           </Button>
         </div>
       ) : null}
-      <p className="mt-3 text-xs text-ink/60 dark:text-paper/60">{t('staff.privateNote')}</p>
       {invites.length ? (
         <>
           <h3 className="mt-5 mb-2 text-sm font-semibold">{t('staff.pending')}</h3>

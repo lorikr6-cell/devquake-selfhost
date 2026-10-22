@@ -1,5 +1,9 @@
 # Änderungen — Kochbuch
 
+## 0.7.1
+
+- Die Reihe der Reiter zeigt keinen kleinen Scrollbalken mehr, wenn alle Reiter passen; sie lässt sich nur seitlich scrollen, wenn sie nicht passen.
+
 ## 0.7.0
 
 - Die App gibt es jetzt auch auf Italienisch und Spanisch: Wähle die Sprache oben auf der Seite.

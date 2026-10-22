@@ -12,6 +12,8 @@ import type { Cell, Sheet } from './xlsx';
 // with a hidden row of keys ("people.id", "people.lastName", …) and a row of titles: people may
 // rename titles and sheets, reorder nothing. Values use the page language's labels; reading
 // accepts the labels of every language and the codes. Pure: tested in transfer.test.ts.
+// People carry their personal numbers (CNP, ID card series, number and expiry) and drivers their
+// licence's expiry and number: the file is as sensitive as the ID cards themselves.
 
 export const SHEETS = ['org', 'people', 'mealTimes', 'menus', 'drivers'] as const;
 export type SheetId = (typeof SHEETS)[number];
@@ -33,9 +35,23 @@ const PEOPLE_KEYS = [
   'deliveryDays',
   'windowFrom',
   'windowTo',
+  'cnp',
+  'idSeries',
+  'idNumber',
+  'idExpiresOn',
 ] as const;
 const MEAL_TIME_KEYS = ['id', 'name', 'starts', 'ends'] as const;
-const DRIVER_KEYS = ['id', 'name', 'phone', 'weekdays', 'shiftFrom', 'shiftTo', 'active'] as const;
+const DRIVER_KEYS = [
+  'id',
+  'name',
+  'phone',
+  'weekdays',
+  'shiftFrom',
+  'shiftTo',
+  'active',
+  'licenceExpiresOn',
+  'licenceNumber',
+] as const;
 const VARIANT_DIETS = DIETS.filter((d) => d !== 'normal');
 const MENU_KEYS = ['day', 'meal', 'dishes', ...VARIANT_DIETS.map((d) => `variant_${d}`)] as const;
 
@@ -48,6 +64,17 @@ export interface OrgData {
   drivers: Driver[];
   staff: { name: string; role: string }[];
   routes: { day: string; driver: string; position: number; person: string; delivered: boolean }[];
+  /** Personal numbers by person id (opened from their encryption). */
+  identities: Record<number, TransferIdentity>;
+  /** Licences by driver id. */
+  licences: Record<number, { expiresOn: string; number: string | null }>;
+}
+
+export interface TransferIdentity {
+  cnp: string | null;
+  idSeries: string | null;
+  idNumber: string | null;
+  idExpiresOn: string | null;
 }
 
 /** Column titles reuse the app's own labels; a few exist only in the file. */
@@ -79,6 +106,12 @@ const LABELS: Record<string, string> = {
   shiftFrom: 'routes.shiftFrom',
   shiftTo: 'routes.shiftTo',
   active: 'routes.active',
+  cnp: 'fields.cnp',
+  idSeries: 'fields.idSeries',
+  idNumber: 'fields.idNumber',
+  idExpiresOn: 'transfer.idExpiresOnColumn',
+  licenceExpiresOn: 'transfer.licenceExpiresOnColumn',
+  licenceNumber: 'licence.number',
 };
 
 const header = (id: SheetId, keys: readonly string[], t: Translate): Cell[][] => [
@@ -102,28 +135,35 @@ export function buildSheets(data: OrgData, locale: Locale, today: string): Sheet
     name: t('transfer.sheets.people'),
     rows: [
       ...header('people', PEOPLE_KEYS, t),
-      ...data.people.map((p) => [
-        p.id,
-        p.lastName,
-        p.firstName,
-        p.birthDate ?? '',
-        t(`kinds.${p.kind}`),
-        t(`statuses.${p.status}`),
-        p.address ?? '',
-        p.phone ?? '',
-        p.contactName ?? '',
-        p.contactPhone ?? '',
-        t(`diets.${p.diet}`),
-        p.allergies ?? '',
-        p.observation ?? '',
-        p.deliveryDays.join(','),
-        time(p.windowFromMin),
-        time(p.windowToMin),
-      ]),
+      ...data.people.map((p) => {
+        const id = data.identities[p.id];
+        return [
+          p.id,
+          p.lastName,
+          p.firstName,
+          p.birthDate ?? '',
+          t(`kinds.${p.kind}`),
+          t(`statuses.${p.status}`),
+          p.address ?? '',
+          p.phone ?? '',
+          p.contactName ?? '',
+          p.contactPhone ?? '',
+          t(`diets.${p.diet}`),
+          p.allergies ?? '',
+          p.observation ?? '',
+          p.deliveryDays.join(','),
+          time(p.windowFromMin),
+          time(p.windowToMin),
+          id?.cnp ?? '',
+          id?.idSeries ?? '',
+          id?.idNumber ?? '',
+          id?.idExpiresOn ?? '',
+        ];
+      }),
     ],
     hiddenRows: [0],
     boldRows: [1],
-    widths: [6, 16, 16, 12, 18, 10, 30, 14, 18, 14, 12, 18, 30, 12, 10, 10],
+    widths: [6, 16, 16, 12, 18, 10, 30, 14, 18, 14, 12, 18, 30, 12, 10, 10, 16, 8, 12, 14],
   };
   const mealName = (id: number) =>
     id === 0 ? t('meals.delivered') : (data.mealTimes.find((m) => m.id === id)?.name ?? '');
@@ -181,11 +221,13 @@ export function buildSheets(data: OrgData, locale: Locale, today: string): Sheet
           formatTime(d.shiftFromMin),
           formatTime(d.shiftToMin),
           d.active ? yes : no,
+          data.licences[d.id]?.expiresOn ?? '',
+          data.licences[d.id]?.number ?? '',
         ]),
       ],
       hiddenRows: [0],
       boldRows: [1],
-      widths: [6, 20, 14, 14, 10, 10, 8],
+      widths: [6, 20, 14, 14, 10, 10, 8, 16, 16],
     },
     // Read-only sheets: they have no keys row and are ignored on re-upload.
     {

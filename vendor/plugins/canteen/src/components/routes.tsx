@@ -8,6 +8,7 @@ import type { DayPlan, Driver, StopPerson } from '../lib/routes-data';
 import { callApi } from './call-api';
 import { ErrorText, Field, Input, Panel } from './ui';
 import { useFeedback } from './feedback';
+import { LicenceLabel, LicenceUpload } from './licence';
 import { useAction } from './use-action';
 
 /** Short weekday names in the page language (19 October 2026 is a Monday). */
@@ -18,6 +19,19 @@ function useWeekday() {
       weekday: 'short',
       timeZone: 'UTC',
     });
+}
+
+/** Prints one driver's sheet only: the others are hidden from the printout meanwhile. */
+function printDriver(driverId: number) {
+  const style = document.createElement('style');
+  style.textContent = `@media print { [data-driver]:not([data-driver="${driverId}"]) { display: none !important; } }`;
+  document.head.appendChild(style);
+  const done = () => {
+    style.remove();
+    window.removeEventListener('afterprint', done);
+  };
+  window.addEventListener('afterprint', done);
+  window.print();
 }
 
 const windowText = (p: StopPerson) =>
@@ -43,8 +57,13 @@ export function Drivers({
   minutesPerStop,
   accounts,
   kitchen,
+  licences,
+  today,
 }: {
   orgId: number;
+  /** Each driver's licence expiry (YYYY-MM-DD), when one was uploaded. */
+  licences: Record<number, string>;
+  today: string;
   drivers: Driver[];
   minutesPerStop: number;
   /** Where the routes start, for computing the order from the map. */
@@ -57,6 +76,7 @@ export function Drivers({
   const [form, setForm] = useState(EMPTY_DRIVER);
   const [perStop, setPerStop] = useState(String(minutesPerStop));
   const [kitchenAddress, setKitchenAddress] = useState(kitchen ?? '');
+  const [licenceFor, setLicenceFor] = useState<number | null>(null);
   const { busy, error, act, confirm } = useAction();
 
   async function save(e: FormEvent) {
@@ -132,6 +152,25 @@ export function Drivers({
               <Button type="button" variant="ghost" disabled={busy} onClick={() => remove(d)}>
                 {t('staff.remove')}
               </Button>
+              <LicenceLabel expiresOn={licences[d.id] ?? null} today={today} />
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={() => setLicenceFor(licenceFor === d.id ? null : d.id)}
+              >
+                {t('licence.button')}
+              </Button>
+              {licenceFor === d.id ? (
+                <div className="w-full">
+                  <LicenceUpload
+                    orgId={orgId}
+                    driverId={d.id}
+                    driverName={d.name}
+                    today={today}
+                    onDone={() => setLicenceFor(null)}
+                  />
+                </div>
+              ) : null}
             </li>
           ))}
         </ul>
@@ -230,7 +269,7 @@ export function Drivers({
         </div>
       </form>
       <form
-        className="mt-6 flex flex-wrap items-end gap-3 border-t border-ink/10 pt-4 dark:border-paper/10"
+        className="mt-6 flex flex-wrap items-start gap-3 border-t border-ink/10 pt-4 dark:border-paper/10"
         onSubmit={(e) => {
           e.preventDefault();
           void act(
@@ -264,7 +303,8 @@ export function Drivers({
             maxLength={255}
           />
         </Field>
-        <Button type="submit" variant="secondary" disabled={busy}>
+        {/* Level with the inputs, below their labels (the hints hang under them). */}
+        <Button type="submit" variant="secondary" disabled={busy} className="sm:mt-6">
           {t('person.save')}
         </Button>
       </form>
@@ -406,6 +446,16 @@ export function DayPlanner({
                   total: r.stops.length,
                 })}
               </div>
+              {r.stops.length ? (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="mt-2 mr-2"
+                  onClick={() => printDriver(r.driver.id)}
+                >
+                  {t('routes.printDriver')}
+                </Button>
+              ) : null}
               {canOptimise && r.stops.length > 1 ? (
                 <Button
                   type="button"

@@ -85,7 +85,7 @@ export function GroupShell({
       </div>
       <nav
         aria-label={t('tabs.label')}
-        className="flex gap-1 overflow-x-auto border-b border-ink/10 text-sm [scrollbar-width:none] dark:border-paper/10"
+        className="flex gap-1 overflow-x-auto overflow-y-hidden border-b border-ink/10 text-sm [scrollbar-width:none] dark:border-paper/10"
       >
         {TABS.map((x) => (
           <Link

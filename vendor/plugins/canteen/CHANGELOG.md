@@ -1,5 +1,33 @@
 # Changelog — Social canteen
 
+## 0.16.1
+
+- Routes: the Save button next to the kitchen address now sits level with the input fields.
+
+## 0.16.0
+
+- Drivers upload their driving licence (a photo, read on the device): the app checks that the driver's name is on it, reads its expiry date and number, and refuses an expired licence.
+- Next to each driver, planners see the licence's state: valid until, expires in N days (from three months before), expired, or missing. Drivers see a notice on their route every time they open it while their licence is missing, expired or expires within three months.
+- People's personal numbers now include the ID card's expiry date; reading the ID card fills it in.
+- The Excel file now carries the personal numbers (CNP, ID card series, number and expiry) and the drivers' licence expiry and number, and they can be changed by uploading it again. Each export is recorded in the access log of the people in it: keep the file as safely as the ID cards themselves.
+
+## 0.15.0
+
+- Organisers can delete their organisation with everything in it, after typing its name to confirm. It cannot be undone: download it as Excel first if you need it.
+
+## 0.14.1
+
+- The row of tabs no longer shows a small scroll bar when all tabs fit; it scrolls sideways only when they do not.
+
+## 0.14.0
+
+- Print what you plan: the week's menus, one driver's route sheet (or all of them), the kitchen sheet and the calendar. Printouts leave out the app's toolbar and buttons.
+- Below the month calendar, a day-by-day grid with everything assigned: birthdays, menus with their diet variants, each driver's route with the people in order (delivered ones ticked, with the driver's comments) and the portions per meal.
+
+## 0.13.1
+
+- "Open the organisation’s page" no longer shows “not found” while the page is private: your staff see a preview with a note, and visitors see it once you switch it on.
+
 ## 0.13.0
 
 - Drivers can switch their route between the list and a map: every stop is a numbered pin in the order of the route, green once delivered, with the kitchen as a house. Tap a pin for the name, address and time.

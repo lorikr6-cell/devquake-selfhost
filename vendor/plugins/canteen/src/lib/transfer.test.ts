@@ -48,6 +48,10 @@ const data = {
   drivers: [],
   staff: [{ name: 'Ana', role: 'organiser' }],
   routes: [],
+  identities: {
+    7: { cnp: '2570917123456', idSeries: 'XV', idNumber: '012345', idExpiresOn: '2028-05-17' },
+  },
+  licences: {},
 };
 
 describe('organisation workbook', () => {
@@ -71,6 +75,10 @@ describe('organisation workbook', () => {
           diet: 'Diabetic',
           deliveryDays: '1,3,5',
           windowFrom: '11:00',
+          // Kept as text: the leading zero survives.
+          cnp: '2570917123456',
+          idNumber: '012345',
+          idExpiresOn: '2028-05-17',
         }),
       },
     ]);

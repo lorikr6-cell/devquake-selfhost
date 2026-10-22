@@ -39,7 +39,7 @@ export function SectionNav({ items, label }: { items: SectionNavItem[]; label: s
   return (
     <nav
       aria-label={label}
-      className="mx-auto flex max-w-4xl items-center gap-1 overflow-x-auto px-2 text-sm [scrollbar-width:none] sm:px-4"
+      className="mx-auto flex max-w-4xl items-center gap-1 overflow-x-auto overflow-y-hidden px-2 text-sm [scrollbar-width:none] sm:px-4"
     >
       {items.map((item) => {
         const active = item.href === current;

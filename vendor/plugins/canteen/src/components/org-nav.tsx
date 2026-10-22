@@ -33,7 +33,7 @@ export function OrgNav({
       {tabs.length > 1 ? (
         <nav
           aria-label={orgName}
-          className="-mx-4 mt-2 overflow-x-auto border-b border-ink/10 px-4 sm:mx-0 sm:px-0 dark:border-paper/10"
+          className="-mx-4 mt-2 overflow-x-auto overflow-y-hidden border-b border-ink/10 px-4 sm:mx-0 sm:px-0 dark:border-paper/10"
         >
           <ul className="flex min-w-max gap-1">
             {tabs.map((tab) => (

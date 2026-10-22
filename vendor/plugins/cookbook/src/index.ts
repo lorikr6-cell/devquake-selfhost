@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'cookbook',
     name: 'Cookbook',
-    version: '0.7.0',
+    version: '0.7.1',
     description:
       'Recipes that adapt to the people at the table: choose the servings and every quantity and the nutrition per portion update; cooking mode with timers and a voice; diet tags and allergens.',
     status: 'active',

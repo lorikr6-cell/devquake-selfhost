@@ -1,5 +1,9 @@
 # Registro de cambios — Recetario
 
+## 0.7.1
+
+- La fila de pestañas ya no muestra una pequeña barra de desplazamiento cuando caben todas; solo se desplaza de lado cuando no caben.
+
 ## 0.7.0
 
 - La app ahora también está en italiano y en español: elige el idioma en la parte superior de la página.

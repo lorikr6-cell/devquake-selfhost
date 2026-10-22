@@ -135,6 +135,19 @@ export async function updateOrg(db: Db, orgId: number, userId: number, input: { 
   await db.execute('UPDATE canteen_orgs SET name = ? WHERE id = ?', [input.name, orgId]);
 }
 
+/**
+ * Deletes the organisation with everything in it (people, documents, medical files, menus,
+ * routes, staff): every table cascades from canteen_orgs. Organisers only, and only when
+ * `confirmName` is the organisation's name exactly, so it cannot happen by accident.
+ */
+export async function deleteOrg(db: Db, orgId: number, userId: number, confirmName: string) {
+  await requireCan(db, orgId, userId, 'org.manage');
+  const org = await orgById(db, orgId);
+  if (!org) throw new HttpError(404, 'orgNotFound');
+  if (confirmName.trim() !== org.name.trim()) throw new HttpError(400, 'deleteOrgName');
+  await db.execute('DELETE FROM canteen_orgs WHERE id = ?', [orgId]);
+}
+
 // ---------------------------------------------------------------------------------------------
 // People
 
@@ -345,6 +358,7 @@ export interface Identity {
   idSeries: string | null;
   idNumber: string | null;
   cnp: string | null;
+  idExpiresOn: string | null;
 }
 
 export async function readIdentity(
@@ -358,8 +372,11 @@ export async function readIdentity(
     id_series: string | null;
     id_number_sealed: string | null;
     cnp_sealed: string | null;
+    id_expires_on: string | null;
   }>(
-    'SELECT id_series, id_number_sealed, cnp_sealed FROM canteen_people WHERE id = ? AND org_id = ?',
+    `SELECT id_series, id_number_sealed, cnp_sealed,
+            DATE_FORMAT(id_expires_on, '%Y-%m-%d') AS id_expires_on
+       FROM canteen_people WHERE id = ? AND org_id = ?`,
     [personId, orgId],
   );
   if (!row) throw new HttpError(404, 'personNotFound');
@@ -368,6 +385,7 @@ export async function readIdentity(
     idSeries: row.id_series,
     idNumber: openText(row.id_number_sealed),
     cnp: openText(row.cnp_sealed),
+    idExpiresOn: row.id_expires_on,
   };
 }
 
@@ -382,12 +400,13 @@ export async function saveIdentity(
   await personOf(db, orgId, personId);
   if (input.idNumber || input.cnp) requireKey();
   await db.execute(
-    `UPDATE canteen_people SET id_series = ?, id_number_sealed = ?, cnp_sealed = ?
+    `UPDATE canteen_people SET id_series = ?, id_number_sealed = ?, cnp_sealed = ?, id_expires_on = ?
       WHERE id = ? AND org_id = ?`,
     [
       input.idSeries,
       input.idNumber ? sealText(input.idNumber) : null,
       input.cnp ? sealText(input.cnp) : null,
+      input.idExpiresOn,
       personId,
       orgId,
     ],

@@ -55,8 +55,8 @@ export function WeekMenus({
 
   return (
     <>
-      <div className="overflow-x-auto rounded-xl border border-ink/10 dark:border-paper/10">
-        <table className="w-full min-w-[56rem] table-fixed text-sm">
+      <div className="overflow-x-auto rounded-xl border border-ink/10 print:overflow-visible dark:border-paper/10">
+        <table className="w-full min-w-[56rem] table-fixed text-sm print:min-w-0 print:text-xs">
           <thead>
             <tr className="bg-ink/5 text-left dark:bg-paper/5">
               <th className="w-36 px-3 py-2 font-medium" />
@@ -163,7 +163,7 @@ function MenuEditor({
   }
 
   return (
-    <Panel className="mt-4">
+    <Panel className="mt-4 print:hidden">
       <form onSubmit={save} className="space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 className="font-semibold capitalize">{title}</h2>

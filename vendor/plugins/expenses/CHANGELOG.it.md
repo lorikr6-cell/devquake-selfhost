@@ -1,5 +1,9 @@
 # Registro delle modifiche — Spese condivise
 
+## 0.3.1
+
+- La riga delle schede non mostra più una piccola barra di scorrimento quando ci stanno tutte; scorre di lato solo quando non ci stanno.
+
 ## 0.3.0
 
 - L’app ora è anche in italiano e in spagnolo: scegli la lingua in alto nella pagina.

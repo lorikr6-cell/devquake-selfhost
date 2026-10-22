@@ -7,24 +7,13 @@ import { readIdCard, type IdCardFields } from '../lib/id-card';
 import { formatTime } from '../lib/meals';
 import { callApi } from './call-api';
 import { ErrorText, Field, Input, Panel } from './ui';
+import { recognise } from './ocr';
 import { useAction } from './use-action';
 
 /**
- * Reads the stored ID card picture in the browser (tesseract.js; the engine and the Romanian and
- * English language data load from a CDN the first time) and proposes its fields. Nothing is
- * saved until the organiser has checked and confirmed them.
+ * Reads the stored ID card picture in the browser (components/ocr.ts) and proposes its fields.
+ * Nothing is saved until the organiser has checked and confirmed them.
  */
-async function recognise(blob: Blob): Promise<string> {
-  const { createWorker } = await import('tesseract.js');
-  const worker = await createWorker(['ron', 'eng']);
-  try {
-    const { data } = await worker.recognize(blob);
-    return data.text ?? '';
-  } finally {
-    await worker.terminate();
-  }
-}
-
 type Form = Record<keyof IdCardFields, string>;
 
 export function IdReader({ base, person }: { base: string; person: Person }) {
@@ -50,6 +39,7 @@ export function IdReader({ base, person }: { base: string; person: Person }) {
         idSeries: fields.idSeries ?? '',
         idNumber: fields.idNumber ?? '',
         address: fields.address ?? person.address ?? '',
+        idExpiresOn: fields.idExpiresOn ?? '',
       });
       setState('done');
     } catch (err) {
@@ -67,6 +57,7 @@ export function IdReader({ base, person }: { base: string; person: Person }) {
           idSeries: form.idSeries,
           idNumber: form.idNumber,
           cnp: form.cnp,
+          idExpiresOn: form.idExpiresOn,
         });
         // The profile keeps everything else as it is.
         await callApi(base, 'PATCH', {
@@ -121,6 +112,7 @@ export function IdReader({ base, person }: { base: string; person: Person }) {
           {field('cnp', t('fields.cnp'))}
           {field('idSeries', t('fields.idSeries'))}
           {field('idNumber', t('fields.idNumber'))}
+          {field('idExpiresOn', t('fields.idExpiresOn'), 'date')}
           <div className="sm:col-span-2">{field('address', t('fields.address'))}</div>
           <div className="flex flex-wrap items-center gap-3 sm:col-span-2">
             <Button type="submit" disabled={busy}>

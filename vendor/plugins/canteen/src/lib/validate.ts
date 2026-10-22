@@ -169,6 +169,8 @@ export interface IdentityInput {
   idSeries: string | null;
   idNumber: string | null;
   cnp: string | null;
+  /** The ID card's expiry date (YYYY-MM-DD), when it has one. */
+  idExpiresOn: IsoDate | null;
 }
 
 /** The ID card's series (2 letters) and number (6 digits) and the CNP (checksum checked). */
@@ -179,7 +181,13 @@ export function identityInput(body: Body): IdentityInput {
   if (number && !/^\d{6,9}$/.test(number)) throw bad('idNumber');
   const cnp = optionalText(body.cnp, 'cnp', 20)?.replace(/\s/g, '') ?? null;
   if (cnp && !parseCnp(cnp)) throw bad('cnp');
-  return { idSeries: series, idNumber: number, cnp };
+  const expiry = body.idExpiresOn;
+  let idExpiresOn: IsoDate | null = null;
+  if (expiry !== undefined && expiry !== null && expiry !== '') {
+    if (!isIsoDate(expiry, BIRTH_FROM_YEAR)) throw bad('date', { field: 'idExpiresOn' });
+    idExpiresOn = expiry;
+  }
+  return { idSeries: series, idNumber: number, cnp, idExpiresOn };
 }
 
 export function incidentInput(body: Body): { occurredAt: Date; note: string } {

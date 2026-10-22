@@ -11,10 +11,11 @@ interface Identity {
   idSeries: string | null;
   idNumber: string | null;
   cnp: string | null;
+  idExpiresOn: string | null;
 }
 
 /**
- * The CNP and ID card series and number (organisers only). Hidden until "Show": each showing is
+ * The CNP and ID card series, number and expiry date (organisers only). Hidden until "Show": each showing is
  * a request the server records in the access log.
  */
 export function IdentityPanel({ path }: { path: string }) {
@@ -23,7 +24,12 @@ export function IdentityPanel({ path }: { path: string }) {
   const locale = useLocale();
   const [shown, setShown] = useState<Identity | null>(null);
   const [editing, setEditing] = useState(false);
-  const [form, setForm] = useState<Identity>({ idSeries: '', idNumber: '', cnp: '' });
+  const [form, setForm] = useState<Identity>({
+    idSeries: '',
+    idNumber: '',
+    cnp: '',
+    idExpiresOn: '',
+  });
   const { busy, error, act } = useAction();
 
   async function show() {
@@ -35,6 +41,7 @@ export function IdentityPanel({ path }: { path: string }) {
           idSeries: data?.idSeries ?? '',
           idNumber: data?.idNumber ?? '',
           cnp: data?.cnp ?? '',
+          idExpiresOn: data?.idExpiresOn ?? '',
         });
       },
       { after: () => undefined },
@@ -52,6 +59,10 @@ export function IdentityPanel({ path }: { path: string }) {
     });
   }
 
+  const day = (d: string | null) =>
+    d
+      ? new Date(`${d}T00:00:00Z`).toLocaleDateString(LOCALE_TAGS[locale], { timeZone: 'UTC' })
+      : null;
   const birth = form.cnp ? parseCnp(form.cnp)?.birthDate : null;
   const birthText = birth
     ? new Date(`${birth}T00:00:00Z`).toLocaleDateString(LOCALE_TAGS[locale], { timeZone: 'UTC' })
@@ -87,17 +98,21 @@ export function IdentityPanel({ path }: { path: string }) {
       </div>
       <p className="mt-1 text-xs text-ink/60 dark:text-paper/60">{t('intro')}</p>
       {shown && !editing ? (
-        <dl className="mt-3 grid gap-2 text-sm sm:grid-cols-3">
+        <dl className="mt-3 grid gap-2 text-sm sm:grid-cols-4">
           {(['idSeries', 'idNumber', 'cnp'] as const).map((k) => (
             <div key={k}>
               <dt className="text-xs text-ink/60 dark:text-paper/60">{tf(k)}</dt>
               <dd className="font-mono">{shown[k] || t('notSet')}</dd>
             </div>
           ))}
+          <div>
+            <dt className="text-xs text-ink/60 dark:text-paper/60">{tf('idExpiresOn')}</dt>
+            <dd>{day(shown.idExpiresOn) ?? t('notSet')}</dd>
+          </div>
         </dl>
       ) : null}
       {editing ? (
-        <form onSubmit={save} className="mt-3 grid gap-3 sm:grid-cols-3">
+        <form onSubmit={save} className="mt-3 grid gap-3 sm:grid-cols-4">
           <Field label={tf('idSeries')}>
             <Input
               value={form.idSeries ?? ''}
@@ -127,7 +142,14 @@ export function IdentityPanel({ path }: { path: string }) {
               autoComplete="off"
             />
           </Field>
-          <div className="flex items-center gap-3 sm:col-span-3">
+          <Field label={tf('idExpiresOn')}>
+            <Input
+              type="date"
+              value={form.idExpiresOn ?? ''}
+              onChange={(e) => setForm({ ...form, idExpiresOn: e.target.value })}
+            />
+          </Field>
+          <div className="flex items-center gap-3 sm:col-span-4">
             <Button type="submit" disabled={busy}>
               {t('save')}
             </Button>

@@ -95,6 +95,9 @@ export const screens = defineMessages(
       contact: 'Contact person',
     },
     fields: {
+      idExpiresOn: 'ID card valid until',
+      licenceExpiry: 'Licence valid until',
+      licenceNumber: 'Licence number',
       deliveryNote: 'Comment for the organisers',
       kitchenAddress: 'Kitchen address',
       description: 'Description',
@@ -194,6 +197,7 @@ export const screens = defineMessages(
         medical_view: 'Opened the medical file',
         identity_view: 'Showed the personal numbers',
         identity_edit: 'Changed the personal numbers',
+        identity_export: 'Exported the personal numbers to Excel',
         document_id_card: 'Opened the ID card',
         document_extra1: 'Opened other paper (1)',
         document_extra2: 'Opened other paper (2)',
@@ -284,6 +288,7 @@ export const screens = defineMessages(
       nobody: 'Nobody to cook for on this day.',
     },
     routes: {
+      printDriver: 'Print this route',
       deliveredAt: 'delivered {time}',
       kitchen: 'Kitchen address',
       kitchenHint: 'Where the routes start and end, for computing the order from the map.',
@@ -381,6 +386,10 @@ export const screens = defineMessages(
       by: 'by {name}',
     },
     calendar: {
+      dayByDay: 'Day by day',
+      nothing: 'Nothing planned this month.',
+      day: 'Day',
+      birthdays: 'Birthdays',
       previous: 'Previous',
       next: 'Next',
       thisMonth: 'This month',
@@ -433,9 +442,44 @@ export const screens = defineMessages(
       removeTitle: 'Remove “{title}”?',
       removeBody: 'The paper is deleted for good.',
     },
+    licence: {
+      missing: 'No licence',
+      expired: 'Licence expired {date}',
+      soon: {
+        one: 'Licence expires in {count} day ({date})',
+        other: 'Licence expires in {count} days ({date})',
+      },
+      valid: 'Licence valid until {date}',
+      button: 'Driving licence',
+      take: 'Take a photo',
+      choose: 'Choose a picture…',
+      reading: 'Reading the licence…',
+      hint: 'The front of the licence, straight and sharp. It is read on this device.',
+      nameFound: '{name} is on the licence.',
+      nameMissing: '{name} could not be found on the licence: check that it is theirs.',
+      expiry: 'Valid until (field 4b)',
+      number: 'Licence number (field 5)',
+      expiredRefused: 'This licence has expired and cannot be saved.',
+      save: 'Save the licence',
+      cancel: 'Cancel',
+      saved: 'Licence saved.',
+      failed: 'The licence could not be saved.',
+      noticeMissing:
+        'Upload your driving licence: the organisation needs a valid one for every driver.',
+      noticeExpired: 'Your driving licence expired on {date}. Renew it and upload the new one.',
+      noticeSoon: {
+        one: 'Your driving licence expires in {count} day, on {date}. Please renew it in time and upload the new one.',
+        other:
+          'Your driving licence expires in {count} days, on {date}. Please renew it in time and upload the new one.',
+      },
+      upload: 'Upload the licence',
+    },
     transfer: {
       title: 'Excel',
-      intro: 'Everything except personal numbers, pictures and the medical file.',
+      intro:
+        'Everything except pictures and the medical file. The file contains personal numbers (CNP, ID card): keep it as safely as the ID cards themselves.',
+      idExpiresOnColumn: 'ID card valid until (YYYY-MM-DD)',
+      licenceExpiresOnColumn: 'Licence valid until (YYYY-MM-DD)',
       export: 'Download as Excel',
       upload: 'Upload a changed file…',
       uploading: 'Applying…',
@@ -472,6 +516,8 @@ export const screens = defineMessages(
       },
     },
     orgPage: {
+      previewNote:
+        'Only your organisation’s staff see this page while it is private. Switch it on under Organisation to let visitors see it.',
       logo: 'Logo',
       descriptionHint: 'Shown under the name on your pages and on the organisation’s own page.',
       public: 'Visitors can see the organisation’s page',
@@ -484,7 +530,19 @@ export const screens = defineMessages(
       view: 'Open the organisation’s page',
       poweredBy: 'Social canteen, a DevQuake app.',
     },
+    deleteOrg: {
+      open: 'Delete the organisation…',
+      title: 'Delete {name}?',
+      body: 'Everything in it is deleted for good: people, pictures, personal numbers, medical files, menus, routes, drivers and staff. There is no backup: download it as Excel first if you need it.',
+      typeName: 'Type “{name}” to confirm',
+      confirm: 'Delete for good',
+      cancel: 'Cancel',
+      deleted: '{name} was deleted.',
+    },
     errors: {
+      licenceExpired: 'This licence has expired: upload a valid one.',
+      importNoLicence: 'This driver has no licence picture yet: upload it in the app first.',
+      deleteOrgName: 'Type the organisation’s name exactly to delete it.',
       noMapKey: 'The map service is not set up on this server (CANTEEN_ORS_KEY).',
       noKitchen: 'Enter the kitchen’s address first (Routes → Drivers).',
       kitchenNotFound: 'The kitchen’s address could not be found on the map: write it more fully.',
@@ -644,6 +702,9 @@ export const screens = defineMessages(
         contact: 'Kontaktperson',
       },
       fields: {
+        idExpiresOn: 'Ausweis gültig bis',
+        licenceExpiry: 'Führerschein gültig bis',
+        licenceNumber: 'Führerscheinnummer',
         deliveryNote: 'Kommentar für die Organisation',
         kitchenAddress: 'Adresse der Küche',
         description: 'Beschreibung',
@@ -744,6 +805,7 @@ export const screens = defineMessages(
           medical_view: 'Medizinische Akte geöffnet',
           identity_view: 'Persönliche Nummern angezeigt',
           identity_edit: 'Persönliche Nummern geändert',
+          identity_export: 'Persönliche Nummern nach Excel exportiert',
           document_id_card: 'Ausweis geöffnet',
           document_extra1: 'Weiteres Dokument (1) geöffnet',
           document_extra2: 'Weiteres Dokument (2) geöffnet',
@@ -838,6 +900,7 @@ export const screens = defineMessages(
         nobody: 'An diesem Tag ist für niemanden zu kochen.',
       },
       routes: {
+        printDriver: 'Diese Route drucken',
         deliveredAt: 'geliefert {time}',
         kitchen: 'Adresse der Küche',
         kitchenHint: 'Wo die Routen beginnen und enden, um die Reihenfolge per Karte zu berechnen.',
@@ -942,6 +1005,10 @@ export const screens = defineMessages(
         by: 'von {name}',
       },
       calendar: {
+        dayByDay: 'Tag für Tag',
+        nothing: 'In diesem Monat ist nichts geplant.',
+        day: 'Tag',
+        birthdays: 'Geburtstage',
         previous: 'Zurück',
         next: 'Weiter',
         thisMonth: 'Dieser Monat',
@@ -994,9 +1061,46 @@ export const screens = defineMessages(
         removeTitle: '„{title}“ entfernen?',
         removeBody: 'Das Dokument wird endgültig gelöscht.',
       },
+      licence: {
+        missing: 'Kein Führerschein',
+        expired: 'Führerschein abgelaufen am {date}',
+        soon: {
+          one: 'Führerschein läuft in {count} Tag ab ({date})',
+          other: 'Führerschein läuft in {count} Tagen ab ({date})',
+        },
+        valid: 'Führerschein gültig bis {date}',
+        button: 'Führerschein',
+        take: 'Foto aufnehmen',
+        choose: 'Bild auswählen …',
+        reading: 'Führerschein wird gelesen …',
+        hint: 'Die Vorderseite, gerade und scharf. Sie wird auf diesem Gerät gelesen.',
+        nameFound: '{name} steht auf dem Führerschein.',
+        nameMissing:
+          '{name} wurde auf dem Führerschein nicht gefunden: Prüfe, ob es der richtige ist.',
+        expiry: 'Gültig bis (Feld 4b)',
+        number: 'Führerscheinnummer (Feld 5)',
+        expiredRefused: 'Dieser Führerschein ist abgelaufen und kann nicht gespeichert werden.',
+        save: 'Führerschein speichern',
+        cancel: 'Abbrechen',
+        saved: 'Führerschein gespeichert.',
+        failed: 'Der Führerschein konnte nicht gespeichert werden.',
+        noticeMissing:
+          'Lade deinen Führerschein hoch: Die Organisation braucht für jeden Fahrer einen gültigen.',
+        noticeExpired:
+          'Dein Führerschein ist am {date} abgelaufen. Erneuere ihn und lade den neuen hoch.',
+        noticeSoon: {
+          one: 'Dein Führerschein läuft in {count} Tag ab, am {date}. Bitte erneuere ihn rechtzeitig und lade den neuen hoch.',
+          other:
+            'Dein Führerschein läuft in {count} Tagen ab, am {date}. Bitte erneuere ihn rechtzeitig und lade den neuen hoch.',
+        },
+        upload: 'Führerschein hochladen',
+      },
       transfer: {
         title: 'Excel',
-        intro: 'Alles außer persönlichen Nummern, Bildern und der medizinischen Akte.',
+        intro:
+          'Alles außer Bildern und der medizinischen Akte. Die Datei enthält persönliche Nummern (CNP, Ausweis): Bewahre sie so sicher auf wie die Ausweise selbst.',
+        idExpiresOnColumn: 'Ausweis gültig bis (JJJJ-MM-TT)',
+        licenceExpiresOnColumn: 'Führerschein gültig bis (JJJJ-MM-TT)',
         export: 'Als Excel herunterladen',
         upload: 'Geänderte Datei hochladen …',
         uploading: 'Wird übernommen …',
@@ -1033,6 +1137,8 @@ export const screens = defineMessages(
         },
       },
       orgPage: {
+        previewNote:
+          'Solange die Seite privat ist, sieht sie nur das Personal eurer Organisation. Schalte sie unter Organisation ein, damit Besucher sie sehen.',
         logo: 'Logo',
         descriptionHint:
           'Steht unter dem Namen auf euren Seiten und auf der Seite der Organisation.',
@@ -1045,7 +1151,20 @@ export const screens = defineMessages(
         view: 'Seite der Organisation öffnen',
         poweredBy: 'Sozialküche, eine DevQuake-App.',
       },
+      deleteOrg: {
+        open: 'Organisation löschen …',
+        title: '{name} löschen?',
+        body: 'Alles darin wird endgültig gelöscht: Personen, Bilder, persönliche Nummern, medizinische Akten, Speisepläne, Routen, Fahrer und Personal. Es gibt keine Sicherung: Lade sie vorher als Excel herunter, wenn du sie brauchst.',
+        typeName: 'Gib „{name}“ ein, um zu bestätigen',
+        confirm: 'Endgültig löschen',
+        cancel: 'Abbrechen',
+        deleted: '{name} wurde gelöscht.',
+      },
       errors: {
+        licenceExpired: 'Dieser Führerschein ist abgelaufen: Lade einen gültigen hoch.',
+        importNoLicence:
+          'Für diesen Fahrer gibt es noch kein Führerscheinbild: Lade es zuerst in der App hoch.',
+        deleteOrgName: 'Gib den Namen der Organisation genau ein, um sie zu löschen.',
         noMapKey: 'Der Kartendienst ist auf diesem Server nicht eingerichtet (CANTEEN_ORS_KEY).',
         noKitchen: 'Gib zuerst die Adresse der Küche an (Routen → Fahrer).',
         kitchenNotFound:
@@ -1208,6 +1327,9 @@ export const screens = defineMessages(
         contact: 'Persoană de contact',
       },
       fields: {
+        idExpiresOn: 'Buletin valabil până la',
+        licenceExpiry: 'Permis valabil până la',
+        licenceNumber: 'Numărul permisului',
         deliveryNote: 'Comentariu pentru organizatori',
         kitchenAddress: 'Adresa bucătăriei',
         description: 'Descriere',
@@ -1308,6 +1430,7 @@ export const screens = defineMessages(
           medical_view: 'A deschis dosarul medical',
           identity_view: 'A afișat datele de identificare',
           identity_edit: 'A modificat datele de identificare',
+          identity_export: 'A exportat datele de identificare în Excel',
           document_id_card: 'A deschis buletinul',
           document_extra1: 'A deschis alt document (1)',
           document_extra2: 'A deschis alt document (2)',
@@ -1403,6 +1526,7 @@ export const screens = defineMessages(
         nobody: 'Nu e nimeni de gătit în această zi.',
       },
       routes: {
+        printDriver: 'Tipărește acest traseu',
         deliveredAt: 'livrat la {time}',
         kitchen: 'Adresa bucătăriei',
         kitchenHint: 'De unde pleacă și unde se întorc traseele, pentru calculul ordinii pe hartă.',
@@ -1512,6 +1636,10 @@ export const screens = defineMessages(
         by: 'de {name}',
       },
       calendar: {
+        dayByDay: 'Zi de zi',
+        nothing: 'Nimic planificat luna aceasta.',
+        day: 'Ziua',
+        birthdays: 'Zile de naștere',
         previous: 'Înapoi',
         next: 'Înainte',
         thisMonth: 'Luna aceasta',
@@ -1567,9 +1695,47 @@ export const screens = defineMessages(
         removeTitle: 'Elimini „{title}”?',
         removeBody: 'Documentul se șterge definitiv.',
       },
+      licence: {
+        missing: 'Fără permis',
+        expired: 'Permis expirat la {date}',
+        soon: {
+          one: 'Permisul expiră în {count} zi ({date})',
+          few: 'Permisul expiră în {count} zile ({date})',
+          other: 'Permisul expiră în {count} de zile ({date})',
+        },
+        valid: 'Permis valabil până la {date}',
+        button: 'Permis de conducere',
+        take: 'Fă o poză',
+        choose: 'Alege o imagine…',
+        reading: 'Se citește permisul…',
+        hint: 'Fața permisului, dreaptă și clară. Se citește pe acest dispozitiv.',
+        nameFound: '{name} apare pe permis.',
+        nameMissing: '{name} nu a fost găsit pe permis: verifică dacă este al lui.',
+        expiry: 'Valabil până la (câmpul 4b)',
+        number: 'Numărul permisului (câmpul 5)',
+        expiredRefused: 'Acest permis a expirat și nu poate fi salvat.',
+        save: 'Salvează permisul',
+        cancel: 'Renunță',
+        saved: 'Permisul a fost salvat.',
+        failed: 'Permisul nu a putut fi salvat.',
+        noticeMissing:
+          'Încarcă permisul de conducere: organizația are nevoie de un permis valabil pentru fiecare șofer.',
+        noticeExpired:
+          'Permisul tău de conducere a expirat la {date}. Reînnoiește-l și încarcă-l pe cel nou.',
+        noticeSoon: {
+          one: 'Permisul tău de conducere expiră în {count} zi, pe {date}. Te rugăm să-l reînnoiești la timp și să-l încarci pe cel nou.',
+          few: 'Permisul tău de conducere expiră în {count} zile, pe {date}. Te rugăm să-l reînnoiești la timp și să-l încarci pe cel nou.',
+          other:
+            'Permisul tău de conducere expiră în {count} de zile, pe {date}. Te rugăm să-l reînnoiești la timp și să-l încarci pe cel nou.',
+        },
+        upload: 'Încarcă permisul',
+      },
       transfer: {
         title: 'Excel',
-        intro: 'Totul în afară de datele de identificare, imagini și dosarul medical.',
+        intro:
+          'Totul, în afară de imagini și dosarul medical. Fișierul conține date de identificare (CNP, buletin): păstrează-l la fel de sigur ca buletinele.',
+        idExpiresOnColumn: 'Buletin valabil până la (AAAA-LL-ZZ)',
+        licenceExpiresOnColumn: 'Permis valabil până la (AAAA-LL-ZZ)',
         export: 'Descarcă în Excel',
         upload: 'Încarcă un fișier modificat…',
         uploading: 'Se aplică…',
@@ -1606,6 +1772,8 @@ export const screens = defineMessages(
         },
       },
       orgPage: {
+        previewNote:
+          'Cât timp pagina este privată, o vede doar personalul organizației. Activeaz-o la Organizația ca s-o vadă vizitatorii.',
         logo: 'Siglă',
         descriptionHint: 'Apare sub nume pe paginile voastre și pe pagina organizației.',
         public: 'Vizitatorii pot vedea pagina organizației',
@@ -1618,7 +1786,20 @@ export const screens = defineMessages(
         view: 'Deschide pagina organizației',
         poweredBy: 'Cantina socială, o aplicație DevQuake.',
       },
+      deleteOrg: {
+        open: 'Șterge organizația…',
+        title: 'Ștergi {name}?',
+        body: 'Tot ce conține se șterge definitiv: persoane, imagini, date de identificare, dosare medicale, meniuri, trasee, șoferi și personal. Nu există copie de siguranță: descarc-o mai întâi în Excel dacă ai nevoie.',
+        typeName: 'Scrie „{name}” ca să confirmi',
+        confirm: 'Șterge definitiv',
+        cancel: 'Renunță',
+        deleted: '{name} a fost ștearsă.',
+      },
       errors: {
+        licenceExpired: 'Acest permis a expirat: încarcă unul valabil.',
+        importNoLicence:
+          'Acest șofer nu are încă poza permisului: încarc-o mai întâi în aplicație.',
+        deleteOrgName: 'Scrie exact numele organizației ca s-o ștergi.',
         noMapKey: 'Serviciul de hărți nu este configurat pe acest server (CANTEEN_ORS_KEY).',
         noKitchen: 'Introdu mai întâi adresa bucătăriei (Trasee → Șoferi).',
         kitchenNotFound: 'Adresa bucătăriei nu a fost găsită pe hartă: scrie-o mai complet.',
@@ -1777,6 +1958,9 @@ export const screens = defineMessages(
         contact: 'Kapcsolattartó',
       },
       fields: {
+        idExpiresOn: 'Személyi igazolvány érvényes',
+        licenceExpiry: 'Jogosítvány érvényes',
+        licenceNumber: 'Jogosítvány száma',
         deliveryNote: 'Megjegyzés a szervezőknek',
         kitchenAddress: 'A konyha címe',
         description: 'Leírás',
@@ -1877,6 +2061,7 @@ export const screens = defineMessages(
           medical_view: 'Megnyitotta az egészségügyi lapot',
           identity_view: 'Megjelenítette a személyes azonosítókat',
           identity_edit: 'Módosította a személyes azonosítókat',
+          identity_export: 'Exportálta a személyes azonosítókat Excelbe',
           document_id_card: 'Megnyitotta a személyi igazolványt',
           document_extra1: 'Megnyitotta az egyéb iratot (1)',
           document_extra2: 'Megnyitotta az egyéb iratot (2)',
@@ -1970,6 +2155,7 @@ export const screens = defineMessages(
         nobody: 'Ezen a napon nincs kinek főzni.',
       },
       routes: {
+        printDriver: 'Útvonal nyomtatása',
         deliveredAt: 'kiszállítva {time}',
         kitchen: 'A konyha címe',
         kitchenHint:
@@ -2072,6 +2258,10 @@ export const screens = defineMessages(
         by: 'írta: {name}',
       },
       calendar: {
+        dayByDay: 'Napról napra',
+        nothing: 'Ebben a hónapban nincs semmi tervezve.',
+        day: 'Nap',
+        birthdays: 'Születésnapok',
         previous: 'Előző',
         next: 'Következő',
         thisMonth: 'Ez a hónap',
@@ -2125,9 +2315,44 @@ export const screens = defineMessages(
         removeTitle: 'Eltávolítod: „{title}”?',
         removeBody: 'Az irat véglegesen törlődik.',
       },
+      licence: {
+        missing: 'Nincs jogosítvány',
+        expired: 'A jogosítvány lejárt: {date}',
+        soon: {
+          one: 'A jogosítvány {count} nap múlva lejár ({date})',
+          other: 'A jogosítvány {count} nap múlva lejár ({date})',
+        },
+        valid: 'Jogosítvány érvényes: {date}',
+        button: 'Jogosítvány',
+        take: 'Fénykép készítése',
+        choose: 'Kép kiválasztása…',
+        reading: 'A jogosítvány olvasása…',
+        hint: 'A jogosítvány eleje, egyenesen és élesen. Ezen az eszközön olvassuk be.',
+        nameFound: '{name} szerepel a jogosítványon.',
+        nameMissing: '{name} nem található a jogosítványon: ellenőrizd, hogy az övé-e.',
+        expiry: 'Érvényes (4b mező)',
+        number: 'Jogosítvány száma (5. mező)',
+        expiredRefused: 'Ez a jogosítvány lejárt, nem menthető.',
+        save: 'Jogosítvány mentése',
+        cancel: 'Mégse',
+        saved: 'Jogosítvány mentve.',
+        failed: 'A jogosítványt nem sikerült menteni.',
+        noticeMissing:
+          'Töltsd fel a jogosítványodat: a szervezetnek minden sofőrtől érvényes jogosítvány kell.',
+        noticeExpired: 'A jogosítványod lejárt: {date}. Újítsd meg, és töltsd fel az újat.',
+        noticeSoon: {
+          one: 'A jogosítványod {count} nap múlva lejár, {date}. Kérjük, újítsd meg időben, és töltsd fel az újat.',
+          other:
+            'A jogosítványod {count} nap múlva lejár, {date}. Kérjük, újítsd meg időben, és töltsd fel az újat.',
+        },
+        upload: 'Jogosítvány feltöltése',
+      },
       transfer: {
         title: 'Excel',
-        intro: 'Minden, kivéve a személyes azonosítókat, a képeket és az egészségügyi lapot.',
+        intro:
+          'Minden, kivéve a képeket és az egészségügyi aktát. A fájl személyes azonosítókat tartalmaz (CNP, személyi igazolvány): őrizd olyan biztonságosan, mint magukat az igazolványokat.',
+        idExpiresOnColumn: 'Személyi igazolvány érvényes (ÉÉÉÉ-HH-NN)',
+        licenceExpiresOnColumn: 'Jogosítvány érvényes (ÉÉÉÉ-HH-NN)',
         export: 'Letöltés Excelben',
         upload: 'Módosított fájl feltöltése…',
         uploading: 'Alkalmazás…',
@@ -2164,6 +2389,8 @@ export const screens = defineMessages(
         },
       },
       orgPage: {
+        previewNote:
+          'Amíg az oldal privát, csak a szervezet munkatársai látják. Kapcsold be a Szervezet résznél, hogy a látogatók is lássák.',
         logo: 'Logó',
         descriptionHint: 'A név alatt látszik az oldalaitokon és a szervezet saját oldalán.',
         public: 'A látogatók láthatják a szervezet oldalát',
@@ -2175,7 +2402,20 @@ export const screens = defineMessages(
         view: 'A szervezet oldalának megnyitása',
         poweredBy: 'Szociális konyha, egy DevQuake-alkalmazás.',
       },
+      deleteOrg: {
+        open: 'Szervezet törlése…',
+        title: 'Törlöd: {name}?',
+        body: 'Minden benne lévő adat véglegesen törlődik: személyek, képek, személyes azonosítók, egészségügyi lapok, étlapok, útvonalak, sofőrök és munkatársak. Nincs biztonsági mentés: ha kell, előbb töltsd le Excelben.',
+        typeName: 'Írd be: „{name}” a megerősítéshez',
+        confirm: 'Végleges törlés',
+        cancel: 'Mégse',
+        deleted: '{name} törölve.',
+      },
       errors: {
+        licenceExpired: 'Ez a jogosítvány lejárt: tölts fel egy érvényeset.',
+        importNoLicence:
+          'Ennek a sofőrnek még nincs feltöltött jogosítványképe: előbb töltsd fel az alkalmazásban.',
+        deleteOrgName: 'A törléshez pontosan írd be a szervezet nevét.',
         noMapKey: 'A térképszolgáltatás nincs beállítva ezen a szerveren (CANTEEN_ORS_KEY).',
         noKitchen: 'Előbb add meg a konyha címét (Útvonalak → Sofőrök).',
         kitchenNotFound: 'A konyha címe nem található a térképen: írd meg teljesebben.',
@@ -2335,6 +2575,9 @@ export const screens = defineMessages(
         contact: 'Persona di contatto',
       },
       fields: {
+        idExpiresOn: 'Carta d’identità valida fino al',
+        licenceExpiry: 'Patente valida fino al',
+        licenceNumber: 'Numero della patente',
         deliveryNote: 'Commento per gli organizzatori',
         kitchenAddress: 'Indirizzo della cucina',
         description: 'Descrizione',
@@ -2436,6 +2679,7 @@ export const screens = defineMessages(
           medical_view: 'Ha aperto la cartella medica',
           identity_view: 'Ha mostrato i numeri personali',
           identity_edit: 'Ha modificato i numeri personali',
+          identity_export: 'Ha esportato i dati identificativi in Excel',
           document_id_card: 'Ha aperto la carta d’identità',
           document_extra1: 'Ha aperto altro documento (1)',
           document_extra2: 'Ha aperto altro documento (2)',
@@ -2531,6 +2775,7 @@ export const screens = defineMessages(
         nobody: 'In questo giorno non c’è nessuno per cui cucinare.',
       },
       routes: {
+        printDriver: 'Stampa questo giro',
         deliveredAt: 'consegnato alle {time}',
         kitchen: 'Indirizzo della cucina',
         kitchenHint: 'Da dove partono e dove tornano i giri, per calcolare l’ordine dalla mappa.',
@@ -2640,6 +2885,10 @@ export const screens = defineMessages(
         by: 'di {name}',
       },
       calendar: {
+        dayByDay: 'Giorno per giorno',
+        nothing: 'Niente in programma questo mese.',
+        day: 'Giorno',
+        birthdays: 'Compleanni',
         previous: 'Precedente',
         next: 'Successivo',
         thisMonth: 'Questo mese',
@@ -2695,9 +2944,46 @@ export const screens = defineMessages(
         removeTitle: 'Rimuovere «{title}»?',
         removeBody: 'Il documento viene eliminato per sempre.',
       },
+      licence: {
+        missing: 'Nessuna patente',
+        expired: 'Patente scaduta il {date}',
+        soon: {
+          one: 'La patente scade tra {count} giorno ({date})',
+          many: 'La patente scade tra {count} giorni ({date})',
+          other: 'La patente scade tra {count} giorni ({date})',
+        },
+        valid: 'Patente valida fino al {date}',
+        button: 'Patente di guida',
+        take: 'Scatta una foto',
+        choose: 'Scegli un’immagine…',
+        reading: 'Lettura della patente…',
+        hint: 'Il fronte della patente, dritto e nitido. Viene letto su questo dispositivo.',
+        nameFound: '{name} compare sulla patente.',
+        nameMissing: '{name} non è stato trovato sulla patente: verifica che sia la sua.',
+        expiry: 'Valida fino al (campo 4b)',
+        number: 'Numero della patente (campo 5)',
+        expiredRefused: 'Questa patente è scaduta e non può essere salvata.',
+        save: 'Salva la patente',
+        cancel: 'Annulla',
+        saved: 'Patente salvata.',
+        failed: 'Non è stato possibile salvare la patente.',
+        noticeMissing:
+          'Carica la tua patente di guida: l’organizzazione ne ha bisogno di una valida per ogni autista.',
+        noticeExpired: 'La tua patente è scaduta il {date}. Rinnovala e carica quella nuova.',
+        noticeSoon: {
+          one: 'La tua patente scade tra {count} giorno, il {date}. Rinnovala in tempo e carica quella nuova.',
+          many: 'La tua patente scade tra {count} giorni, il {date}. Rinnovala in tempo e carica quella nuova.',
+          other:
+            'La tua patente scade tra {count} giorni, il {date}. Rinnovala in tempo e carica quella nuova.',
+        },
+        upload: 'Carica la patente',
+      },
       transfer: {
         title: 'Excel',
-        intro: 'Tutto tranne numeri personali, immagini e cartella medica.',
+        intro:
+          'Tutto tranne le immagini e la cartella medica. Il file contiene dati identificativi (CNP, carta d’identità): conservalo con la stessa cura dei documenti.',
+        idExpiresOnColumn: 'Carta d’identità valida fino al (AAAA-MM-GG)',
+        licenceExpiresOnColumn: 'Patente valida fino al (AAAA-MM-GG)',
         export: 'Scarica in Excel',
         upload: 'Carica un file modificato…',
         uploading: 'Applicazione…',
@@ -2734,6 +3020,8 @@ export const screens = defineMessages(
         },
       },
       orgPage: {
+        previewNote:
+          'Finché la pagina è privata, la vede solo il personale della tua organizzazione. Attivala in Organizzazione perché la vedano i visitatori.',
         logo: 'Logo',
         descriptionHint:
           'Compare sotto il nome nelle vostre pagine e nella pagina dell’organizzazione.',
@@ -2746,7 +3034,20 @@ export const screens = defineMessages(
         view: 'Apri la pagina dell’organizzazione',
         poweredBy: 'Mensa sociale, un’app DevQuake.',
       },
+      deleteOrg: {
+        open: 'Elimina l’organizzazione…',
+        title: 'Eliminare {name}?',
+        body: 'Tutto ciò che contiene viene eliminato per sempre: persone, immagini, numeri personali, cartelle mediche, menù, giri, autisti e personale. Non c’è backup: scaricala prima in Excel se ti serve.',
+        typeName: 'Scrivi «{name}» per confermare',
+        confirm: 'Elimina per sempre',
+        cancel: 'Annulla',
+        deleted: '{name} è stata eliminata.',
+      },
       errors: {
+        licenceExpired: 'Questa patente è scaduta: carica una patente valida.',
+        importNoLicence:
+          'Questo autista non ha ancora la foto della patente: caricala prima nell’app.',
+        deleteOrgName: 'Scrivi esattamente il nome dell’organizzazione per eliminarla.',
         noMapKey: 'Il servizio di mappe non è configurato su questo server (CANTEEN_ORS_KEY).',
         noKitchen: 'Inserisci prima l’indirizzo della cucina (Giri → Autisti).',
         kitchenNotFound:
@@ -2907,6 +3208,9 @@ export const screens = defineMessages(
         contact: 'Persona de contacto',
       },
       fields: {
+        idExpiresOn: 'DNI válido hasta',
+        licenceExpiry: 'Carné válido hasta',
+        licenceNumber: 'Número del carné',
         deliveryNote: 'Comentario para los organizadores',
         kitchenAddress: 'Dirección de la cocina',
         description: 'Descripción',
@@ -3008,6 +3312,7 @@ export const screens = defineMessages(
           medical_view: 'Abrió la ficha médica',
           identity_view: 'Mostró los números personales',
           identity_edit: 'Cambió los números personales',
+          identity_export: 'Exportó los datos de identificación a Excel',
           document_id_card: 'Abrió el documento de identidad',
           document_extra1: 'Abrió otro documento (1)',
           document_extra2: 'Abrió otro documento (2)',
@@ -3103,6 +3408,7 @@ export const screens = defineMessages(
         nobody: 'Este día no hay nadie para quien cocinar.',
       },
       routes: {
+        printDriver: 'Imprimir esta ruta',
         deliveredAt: 'entregado a las {time}',
         kitchen: 'Dirección de la cocina',
         kitchenHint:
@@ -3211,6 +3517,10 @@ export const screens = defineMessages(
         by: 'por {name}',
       },
       calendar: {
+        dayByDay: 'Día a día',
+        nothing: 'Nada previsto este mes.',
+        day: 'Día',
+        birthdays: 'Cumpleaños',
         previous: 'Anterior',
         next: 'Siguiente',
         thisMonth: 'Este mes',
@@ -3266,9 +3576,46 @@ export const screens = defineMessages(
         removeTitle: '¿Quitar «{title}»?',
         removeBody: 'El documento se elimina para siempre.',
       },
+      licence: {
+        missing: 'Sin carné',
+        expired: 'Carné caducado el {date}',
+        soon: {
+          one: 'El carné caduca en {count} día ({date})',
+          many: 'El carné caduca en {count} días ({date})',
+          other: 'El carné caduca en {count} días ({date})',
+        },
+        valid: 'Carné válido hasta el {date}',
+        button: 'Carné de conducir',
+        take: 'Hacer una foto',
+        choose: 'Elegir una imagen…',
+        reading: 'Leyendo el carné…',
+        hint: 'La parte delantera del carné, recta y nítida. Se lee en este dispositivo.',
+        nameFound: '{name} aparece en el carné.',
+        nameMissing: 'No se encontró a {name} en el carné: comprueba que sea suyo.',
+        expiry: 'Válido hasta (campo 4b)',
+        number: 'Número del carné (campo 5)',
+        expiredRefused: 'Este carné ha caducado y no se puede guardar.',
+        save: 'Guardar el carné',
+        cancel: 'Cancelar',
+        saved: 'Carné guardado.',
+        failed: 'No se pudo guardar el carné.',
+        noticeMissing:
+          'Sube tu carné de conducir: la organización necesita uno válido de cada conductor.',
+        noticeExpired: 'Tu carné de conducir caducó el {date}. Renuévalo y sube el nuevo.',
+        noticeSoon: {
+          one: 'Tu carné de conducir caduca en {count} día, el {date}. Renuévalo a tiempo y sube el nuevo.',
+          many: 'Tu carné de conducir caduca en {count} días, el {date}. Renuévalo a tiempo y sube el nuevo.',
+          other:
+            'Tu carné de conducir caduca en {count} días, el {date}. Renuévalo a tiempo y sube el nuevo.',
+        },
+        upload: 'Subir el carné',
+      },
       transfer: {
         title: 'Excel',
-        intro: 'Todo salvo números personales, imágenes y la ficha médica.',
+        intro:
+          'Todo excepto las imágenes y el historial médico. El archivo contiene datos de identificación (CNP, DNI): guárdalo con el mismo cuidado que los propios documentos.',
+        idExpiresOnColumn: 'DNI válido hasta (AAAA-MM-DD)',
+        licenceExpiresOnColumn: 'Carné válido hasta (AAAA-MM-DD)',
         export: 'Descargar en Excel',
         upload: 'Subir un archivo modificado…',
         uploading: 'Aplicando…',
@@ -3305,6 +3652,8 @@ export const screens = defineMessages(
         },
       },
       orgPage: {
+        previewNote:
+          'Mientras la página sea privada, solo la ve el personal de tu organización. Actívala en Organización para que la vean los visitantes.',
         logo: 'Logotipo',
         descriptionHint:
           'Aparece bajo el nombre en vuestras páginas y en la página de la organización.',
@@ -3318,7 +3667,20 @@ export const screens = defineMessages(
         view: 'Abrir la página de la organización',
         poweredBy: 'Comedor social, una app de DevQuake.',
       },
+      deleteOrg: {
+        open: 'Eliminar la organización…',
+        title: '¿Eliminar {name}?',
+        body: 'Todo lo que contiene se elimina para siempre: personas, imágenes, números personales, fichas médicas, menús, rutas, repartidores y personal. No hay copia de seguridad: descárgala antes en Excel si la necesitas.',
+        typeName: 'Escribe «{name}» para confirmar',
+        confirm: 'Eliminar para siempre',
+        cancel: 'Cancelar',
+        deleted: '{name} se ha eliminado.',
+      },
       errors: {
+        licenceExpired: 'Este carné ha caducado: sube uno válido.',
+        importNoLicence:
+          'Este conductor aún no tiene la foto del carné: súbela primero en la aplicación.',
+        deleteOrgName: 'Escribe exactamente el nombre de la organización para eliminarla.',
         noMapKey: 'El servicio de mapas no está configurado en este servidor (CANTEEN_ORS_KEY).',
         noKitchen: 'Indica primero la dirección de la cocina (Rutas → Repartidores).',
         kitchenNotFound:

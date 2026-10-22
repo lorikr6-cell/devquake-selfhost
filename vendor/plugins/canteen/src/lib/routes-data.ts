@@ -668,3 +668,51 @@ export async function myRoutePositions(
   }
   return { stops, kitchen, missing };
 }
+
+/** The routes of a span of days for the calendar's day-by-day grid: stops in order per driver. */
+export async function routesBetween(
+  db: Db,
+  orgId: number,
+  userId: number,
+  from: IsoDate,
+  to: IsoDate,
+): Promise<
+  {
+    day: IsoDate;
+    driver: string;
+    stops: { name: string; delivered: boolean; note: string | null }[];
+  }[]
+> {
+  await requireCan(db, orgId, userId, 'routes.edit');
+  const rows = await db.query<{
+    day: string;
+    driver: string;
+    first_name: string;
+    last_name: string;
+    delivered: number;
+    note: string | null;
+  }>(
+    `SELECT DATE_FORMAT(s.day, '%Y-%m-%d') AS day, d.name AS driver, p.first_name, p.last_name,
+            s.delivered_at IS NOT NULL AS delivered, s.delivery_note AS note
+       FROM canteen_route_stops s
+       JOIN canteen_drivers d ON d.id = s.driver_id
+       JOIN canteen_people p ON p.id = s.person_id
+      WHERE s.org_id = ? AND s.day >= ? AND s.day <= ?
+      ORDER BY s.day, d.name, s.position`,
+    [orgId, from, to],
+  );
+  const routes: Awaited<ReturnType<typeof routesBetween>> = [];
+  for (const r of rows) {
+    let route = routes.find((x) => x.day === r.day && x.driver === r.driver);
+    if (!route) {
+      route = { day: r.day, driver: r.driver, stops: [] };
+      routes.push(route);
+    }
+    route.stops.push({
+      name: `${r.last_name} ${r.first_name}`,
+      delivered: num(r.delivered) === 1,
+      note: r.note,
+    });
+  }
+  return routes;
+}

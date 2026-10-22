@@ -1,5 +1,9 @@
 # Változások — Szakácskönyv
 
+## 0.7.1
+
+- A fülek sora már nem mutat apró görgetősávot, ha minden fül elfér; csak akkor görgethető oldalra, ha nem férnek el.
+
 ## 0.7.0
 
 - Az alkalmazás mostantól olaszul és spanyolul is elérhető: a nyelvet az oldal tetején választhatod ki.

@@ -1,5 +1,9 @@
 # Changelog — Cookbook
 
+## 0.7.1
+
+- The row of tabs no longer shows a small scroll bar when all tabs fit; it scrolls sideways only when they do not.
+
 ## 0.7.0
 
 - The app is now also in Italian and Spanish: pick the language at the top of the page.

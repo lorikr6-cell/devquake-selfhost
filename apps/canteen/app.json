@@ -13,8 +13,7 @@
   ],
   "audience": "Social services, NGOs, parishes and care homes that cook for elderly people and deliver meals to their homes.",
   "plugins": ["canteen"],
-  "hostedUrl": "https://devquake.com",
-  "hostedNote": "**Prefer not to run a server?** DevQuake hosts its apps for you:",
+  "hostedUrl": "https://canteen.devquake.com",
   "secrets": {
     "CANTEEN_MASTER_KEY": {
       "kind": "base64-32",

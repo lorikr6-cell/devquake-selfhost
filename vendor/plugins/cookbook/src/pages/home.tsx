@@ -83,7 +83,7 @@ export default async function Home({ ctx, searchParams }: PluginPageProps) {
 
       <nav
         aria-label={t('tabsLabel')}
-        className="flex gap-1 overflow-x-auto border-b border-ink/10 text-sm dark:border-paper/10"
+        className="flex gap-1 overflow-x-auto overflow-y-hidden border-b border-ink/10 text-sm dark:border-paper/10"
       >
         {TABS.map((x) => (
           <Link

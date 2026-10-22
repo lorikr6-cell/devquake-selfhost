@@ -1,10 +1,12 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { LOCALE_TAGS, Link, buttonClass } from '@devquake/ui';
 import { orgScope } from '../components/guard';
+import { MyLicenceNotice } from '../components/licence';
 import { MyRoute } from '../components/my-route';
 import { OrgNav } from '../components/org-nav';
 import { localeOf, translator } from '../i18n';
 import { addDays, isIsoDate } from '../lib/dates';
+import { myLicence } from '../lib/licence-data';
 import { myRoute, packagesOf } from '../lib/routes-data';
 
 export async function generateMetadata({ ctx }: PluginPageProps) {
@@ -18,9 +20,10 @@ export default async function MyRoutePage({ ctx, params, searchParams }: PluginP
   const t = translator(scope.locale);
   const asked = (await searchParams).day;
   const day = typeof asked === 'string' && isIsoDate(asked) ? asked : scope.today;
-  const [route, packages] = await Promise.all([
+  const [route, packages, me] = await Promise.all([
     myRoute(scope.db, scope.org.id, scope.user.id, day),
     packagesOf(scope.db, scope.org.id, scope.user.id, day),
+    myLicence(scope.db, scope.org.id, scope.user.id),
   ]);
   const title = new Date(`${day}T12:00:00Z`).toLocaleDateString(LOCALE_TAGS[scope.locale], {
     weekday: 'long',
@@ -52,6 +55,15 @@ export default async function MyRoutePage({ ctx, params, searchParams }: PluginP
           </Link>
         </div>
       </div>
+      {me ? (
+        <MyLicenceNotice
+          orgId={scope.org.id}
+          driverId={me.driverId}
+          driverName={me.name}
+          expiresOn={me.licence?.expiresOn ?? null}
+          today={scope.today}
+        />
+      ) : null}
       {route && route.stops.length ? (
         <MyRoute orgId={scope.org.id} day={day} route={route} packages={packages} />
       ) : (

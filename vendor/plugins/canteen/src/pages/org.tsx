@@ -2,6 +2,7 @@ import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { redirect } from 'next/navigation';
 import { Link, buttonClass, localizePath } from '@devquake/ui';
 import { OrgForm } from '../components/forms';
+import { DeleteOrg } from '../components/delete-org';
 import { OrgBanner } from '../components/org-banner';
 import { OrgPageSettings } from '../components/org-settings';
 import { OrgTransfer } from '../components/org-transfer';
@@ -136,6 +137,9 @@ export default async function OrgPage({ ctx, params }: PluginPageProps) {
               <div className="mt-4 border-t border-ink/10 pt-4 dark:border-paper/10">
                 <h3 className="mb-2 text-sm font-semibold">{t('transfer.title')}</h3>
                 <OrgTransfer orgId={scope.org.id} />
+              </div>
+              <div className="mt-4 border-t border-ink/10 pt-4 dark:border-paper/10">
+                <DeleteOrg org={scope.org} />
               </div>
               <Link
                 href={`/orgs/${scope.org.id}/staff`}

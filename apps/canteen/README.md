@@ -2,8 +2,8 @@
 
 For organisations that feed elderly people, on your own server: profiles with ID card reading, meal plans and the kitchen sheet, delivery routes with a map and the drivers' phones, and a medical file, each role seeing only what it needs.
 
-> **Prefer not to run a server?** DevQuake hosts its apps for you:
-> [devquake.com](https://devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=canteen)
+> **Prefer not to run a server?** Social canteen is free on DevQuake, hosted for you:
+> [canteen.devquake.com](https://canteen.devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=canteen)
 
 [![Deploy on Hostinger](https://assets.hostinger.com/vps/deploy.svg)](https://www.hostinger.com/docker-hosting?compose_url=https%3A%2F%2Fraw.githubusercontent.com%2Florikr6-cell%2Fdevquake-selfhost%2Fmain%2Fapps%2Fcanteen%2Fdocker-compose.yml&REFERRALCODE=BYLLORIKRXAQ)
 
@@ -107,6 +107,6 @@ only asks that the licence and copyright notice stay with copies of the code.
 
 ## About
 
-Social canteen is a [DevQuake](https://devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=canteen) app (canteen 0.13.0),
+Social canteen is a [DevQuake](https://devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=canteen) app (canteen 0.16.1),
 packaged to run on its own. Licence: [MIT](../../LICENSE). Problems and ideas:
 [GitHub issues](https://github.com/lorikr6-cell/devquake-selfhost/issues).

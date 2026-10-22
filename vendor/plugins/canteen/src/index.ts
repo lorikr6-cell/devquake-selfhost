@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'canteen',
     name: 'Social canteen',
-    version: '0.13.0',
+    version: '0.16.1',
     description:
       'For organisations that feed elderly people: profiles with photo and ID card, personal numbers and papers stored encrypted, incidents and birthdays; meals, routes and the medical file follow.',
     status: 'active',
@@ -65,6 +65,7 @@ export default definePlugin({
     '/orgs/:id/menus/copy': () => import('./api/menus-copy'),
     '/orgs/:id/drivers': () => import('./api/drivers'),
     '/orgs/:id/drivers/:driverId': () => import('./api/driver'),
+    '/orgs/:id/drivers/:driverId/licence': () => import('./api/licence'),
     '/orgs/:id/route-settings': () => import('./api/route-settings'),
     '/orgs/:id/routes/:day': () => import('./api/route'),
     '/orgs/:id/routes/:day/copy': () => import('./api/route-copy'),

@@ -12,6 +12,7 @@ import {
   listDrivers,
   weekRoutes,
 } from '../lib/routes-data';
+import { licencesOf } from '../lib/licence-data';
 
 export async function generateMetadata({ ctx }: PluginPageProps) {
   return { title: translator(localeOf(ctx))('orgNav.routes') };
@@ -30,7 +31,10 @@ export default async function RoutesPage({ ctx, params, searchParams }: PluginPa
     dayPlan(scope.db, scope.org.id, scope.user.id, scope.today),
     driverAccounts(scope.db, scope.org.id, scope.user.id),
   ]);
-  const kitchen = await kitchenAddress(scope.db, scope.org.id, scope.user.id);
+  const [kitchen, licences] = await Promise.all([
+    kitchenAddress(scope.db, scope.org.id, scope.user.id),
+    licencesOf(scope.db, scope.org.id, scope.user.id),
+  ]);
   const tag = LOCALE_TAGS[scope.locale];
   const base = `/orgs/${scope.org.id}/routes`;
   const label = (day: string) =>
@@ -107,6 +111,8 @@ export default async function RoutesPage({ ctx, params, searchParams }: PluginPa
           minutesPerStop={today.minutesPerStop}
           accounts={accounts}
           kitchen={kitchen}
+          licences={Object.fromEntries([...licences].map(([id, l]) => [id, l.expiresOn]))}
+          today={scope.today}
         />
       </div>
     </>

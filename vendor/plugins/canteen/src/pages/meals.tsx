@@ -1,7 +1,7 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { LOCALE_TAGS, Link, buttonClass } from '@devquake/ui';
 import { orgScope } from '../components/guard';
-import { CopyLastWeek, MealTimes, WeekMenus } from '../components/meals';
+import { CopyLastWeek, MealTimes, PrintButton, WeekMenus } from '../components/meals';
 import { OrgNav } from '../components/org-nav';
 import { localeOf, translator } from '../i18n';
 import { addDays, isIsoDate, mondayOf } from '../lib/dates';
@@ -32,8 +32,11 @@ export default async function MealsPage({ ctx, params, searchParams }: PluginPag
     <>
       <OrgNav orgId={scope.org.id} orgName={scope.org.name} current="meals" can={scope.can} t={t} />
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-display text-2xl font-bold">{range}</h1>
-        <div className="flex flex-wrap gap-2">
+        <h1 className="font-display text-2xl font-bold">
+          <span className="hidden print:inline">{scope.org.name} · </span>
+          {range}
+        </h1>
+        <div className="flex flex-wrap gap-2 print:hidden">
           <Link href={`${base}?week=${addDays(monday, -7)}`} className={buttonClass('ghost')}>
             ← {t('meals.previous')}
           </Link>
@@ -43,6 +46,7 @@ export default async function MealsPage({ ctx, params, searchParams }: PluginPag
           <Link href={`${base}?week=${addDays(monday, 7)}`} className={buttonClass('ghost')}>
             {t('meals.next')} →
           </Link>
+          <PrintButton />
           {canEdit ? (
             <CopyLastWeek orgId={scope.org.id} from={addDays(monday, -7)} to={monday} />
           ) : null}
@@ -56,7 +60,7 @@ export default async function MealsPage({ ctx, params, searchParams }: PluginPag
         canEdit={canEdit}
       />
       {canEdit ? (
-        <div className="mt-6">
+        <div className="mt-6 print:hidden">
           <MealTimes orgId={scope.org.id} mealTimes={mealTimes} />
         </div>
       ) : null}

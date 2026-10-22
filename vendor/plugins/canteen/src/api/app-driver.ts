@@ -3,6 +3,8 @@ import { api } from '../lib/api';
 import { orgsOf } from '../lib/data';
 import { dishLines } from '../lib/meals';
 import { can } from '../lib/roles';
+import { licenceState } from '../lib/licence';
+import { myLicence } from '../lib/licence-data';
 import { myRoute, packagesOf } from '../lib/routes-data';
 import { routeDay } from '../lib/validate';
 
@@ -20,14 +22,25 @@ export const GET = api(async ({ request, db, user, today, locale }) => {
   const orgs = (await orgsOf(db, user.id)).filter((o) => can(o.role, 'route.own'));
   const routes = [];
   for (const org of orgs) {
-    const [route, packages] = await Promise.all([
+    const [route, packages, me] = await Promise.all([
       myRoute(db, org.id, user.id, day),
       packagesOf(db, org.id, user.id, day),
+      myLicence(db, org.id, user.id),
     ]);
+    const state = licenceState(me?.licence?.expiresOn ?? null, today);
     routes.push({
       orgId: org.id,
       orgName: org.name,
       driver: route?.driver.name ?? null,
+      // The driver's licence (format 1 addition, older apps ignore it): missing, soon (within
+      // 90 days), expired or ok; the apps show a notice for the first three.
+      licence: me
+        ? {
+            state: state.kind,
+            expiresOn: state.kind === 'missing' ? null : state.expiresOn,
+            daysLeft: state.kind === 'soon' ? state.daysLeft : null,
+          }
+        : null,
       stops: (route?.stops ?? []).map((s) => {
         const contents = packages.variants[s.diet] ?? packages.menu;
         return {

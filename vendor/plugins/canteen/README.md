@@ -2,8 +2,7 @@
 
 DevQuake plugin served at `https://canteen.devquake.com` (local: `http://canteen.localhost:3000`).
 For organisations that feed elderly people. Spec and roadmap:
-[docs/plugins/ideas/canteen.md](../../docs/plugins/ideas/canteen.md). Private (not listed) until
-the legal steps in the spec are done.
+[docs/plugins/ideas/canteen.md](../../docs/plugins/ideas/canteen.md). Public on DevQuake (migration 0071).
 
 ## Setup
 
@@ -35,7 +34,7 @@ the legal steps in the spec are done.
 | Page | `/join/:code` (signed in, before access)                   | `src/pages/join.tsx`            |
 | API  | `/health`                                                  | `src/api/health.ts`             |
 | API  | `POST /orgs`                                               | `src/api/orgs.ts`               |
-| API  | `PATCH /orgs/:id`                                          | `src/api/org.ts`                |
+| API  | `PATCH, DELETE /orgs/:id`                                  | `src/api/org.ts`                |
 | API  | `POST /orgs/:id/people`                                    | `src/api/people.ts`             |
 | API  | `PATCH, DELETE /orgs/:id/people/:personId`                 | `src/api/person.ts`             |
 | API  | `GET, PUT …/:personId/identity`                            | `src/api/identity.ts`           |
@@ -52,6 +51,7 @@ the legal steps in the spec are done.
 | API  | `POST /orgs/:id/menus/copy`                                | `src/api/menus-copy.ts`         |
 | API  | `POST /orgs/:id/drivers`                                   | `src/api/drivers.ts`            |
 | API  | `PATCH, DELETE /orgs/:id/drivers/:driverId`                | `src/api/driver.ts`             |
+| API  | `GET, PUT, DELETE /orgs/:id/drivers/:driverId/licence`     | `src/api/licence.ts`            |
 | API  | `PUT /orgs/:id/route-settings`                             | `src/api/route-settings.ts`     |
 | API  | `PUT /orgs/:id/routes/:day`                                | `src/api/route.ts`              |
 | API  | `POST /orgs/:id/routes/:day/copy`                          | `src/api/route-copy.ts`         |

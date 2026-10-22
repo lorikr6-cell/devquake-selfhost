@@ -12,6 +12,8 @@ export interface IdCardFields {
   idSeries: string | null;
   idNumber: string | null;
   address: string | null;
+  /** YYYY-MM-DD: the card's expiry date. */
+  idExpiresOn: string | null;
 }
 
 /** Letters OCR often reads instead of digits, in places where only digits belong. */
@@ -99,6 +101,38 @@ function readAddress(text: string): string | null {
   return address.length >= 6 ? address.slice(0, 255) : null;
 }
 
+/**
+ * The expiry date: in the machine-readable zone after the nationality, the date of birth and
+ * the sex ("ROU5709170F2805179": expiry 28-05-17 → 2028-05-17), else the last date of the
+ * front's "Valabilitate" line (dd.mm.yy-dd.mm.yyyy).
+ */
+function readExpiry(text: string): string | null {
+  const upper = text.toUpperCase().replace(/\s+/g, '');
+  const mrz = /ROU[0-9OQDILZSB]{6}[0-9OQDILZSB<][MF<]([0-9OQDILZSB]{6})/.exec(upper);
+  if (mrz) {
+    const yymmdd = digits(mrz[1]!);
+    const [yy, mm, dd] = [
+      Number(yymmdd.slice(0, 2)),
+      Number(yymmdd.slice(2, 4)),
+      Number(yymmdd.slice(4, 6)),
+    ];
+    const date = new Date(Date.UTC(2000 + yy, mm - 1, dd));
+    if (date.getUTCMonth() === mm - 1 && date.getUTCDate() === dd) {
+      return `${2000 + yy}-${String(mm).padStart(2, '0')}-${String(dd).padStart(2, '0')}`;
+    }
+  }
+  const line = text.split('\n').find((l) => /valabil|validit|g[uü]ltig/i.test(l));
+  const dates = [...(line ?? '').matchAll(/(\d{2})\.(\d{2})\.(\d{2,4})/g)];
+  const last = dates.at(-1);
+  if (!last) return null;
+  const year = last[3]!.length === 2 ? 2000 + Number(last[3]) : Number(last[3]);
+  const [mm, dd] = [Number(last[2]), Number(last[1])];
+  const date = new Date(Date.UTC(year, mm - 1, dd));
+  return date.getUTCMonth() === mm - 1
+    ? `${year}-${String(mm).padStart(2, '0')}-${String(dd).padStart(2, '0')}`
+    : null;
+}
+
 export function readIdCard(text: string): IdCardFields {
   const mrz = readMrz(text);
   const front = readFrontNumber(text);
@@ -111,5 +145,6 @@ export function readIdCard(text: string): IdCardFields {
     idSeries: mrz.idSeries ?? front?.idSeries ?? null,
     idNumber: mrz.idNumber ?? front?.idNumber ?? null,
     address: readAddress(text),
+    idExpiresOn: readExpiry(text),
   };
 }

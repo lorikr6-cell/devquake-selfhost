@@ -1,5 +1,9 @@
 # Registro delle modifiche — Ricettario
 
+## 0.7.1
+
+- La riga delle schede non mostra più una piccola barra di scorrimento quando ci stanno tutte; scorre di lato solo quando non ci stanno.
+
 ## 0.7.0
 
 - L’app ora è disponibile anche in italiano e in spagnolo: scegli la lingua in cima alla pagina.
