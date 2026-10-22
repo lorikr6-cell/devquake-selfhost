@@ -175,6 +175,9 @@ importers:
 
   shell:
     dependencies:
+      '@devquake/plugin-canteen':
+        specifier: workspace:*
+        version: link:../vendor/plugins/canteen
       '@devquake/plugin-cookbook':
         specifier: workspace:*
         version: link:../vendor/plugins/cookbook
@@ -305,6 +308,52 @@ importers:
       typescript:
         specifier: ^5.6.0
         version: 5.9.3
+
+  vendor/plugins/canteen:
+    dependencies:
+      '@devquake/plugin-sdk':
+        specifier: workspace:*
+        version: link:../../packages/plugin-sdk
+      '@devquake/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      fflate:
+        specifier: ^0.8.3
+        version: 0.8.3
+      leaflet:
+        specifier: ^1.9.4
+        version: 1.9.4
+      tesseract.js:
+        specifier: ^7.0.0
+        version: 7.0.0
+    devDependencies:
+      '@devquake/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+      '@types/leaflet':
+        specifier: ^1.9.20
+        version: 1.9.22
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.3.0
+      '@types/react-dom':
+        specifier: ^19.0.0
+        version: 19.3.0(@types/react@19.3.0)
+      next:
+        specifier: ^16.0.0
+        version: 16.4.0(@types/node@22.20.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      react:
+        specifier: ^19.0.0
+        version: 19.3.0
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.3.0(react@19.3.0)
+      typescript:
+        specifier: ^5.6.0
+        version: 5.9.3
+      vitest:
+        specifier: ^3.0.0
+        version: 3.2.7(@types/node@22.20.5)(jiti@2.7.0)(lightningcss@1.32.0)
 
   vendor/plugins/cookbook:
     dependencies:
@@ -1231,6 +1280,12 @@ packages:
   '@types/estree@1.0.9':
     resolution: {integrity: sha512-GhdPgy1el4/ImP05X05Uw4cw2/M93BCUmnEvWZNStlCzEKME4Fkk+YpoA5OiHNQmoS7Cafb8Xa3Pya8m1Qrzeg==}
 
+  '@types/geojson@7946.0.16':
+    resolution: {integrity: sha512-6C8nqWur3j98U6+lXDfTUWIfgvZU+EumvpHKcYjujKH7woYyLj2sUmff0tRhrqM7BohUw7Pz3ZB1jj2gW9Fvmg==}
+
+  '@types/leaflet@1.9.22':
+    resolution: {integrity: sha512-h3lhECYEKDasG7LFHu+GiHqAvsgLuQvlJvVZzJDGONo3sEL+wUOqSFLnwkZlK0qVxnxbuGFW8iBlJNYs5wgndA==}
+
   '@types/node@22.20.5':
     resolution: {integrity: sha512-U2+DNr+wSjpsTS/wZGYHq7GcwfuSmKiKvoPvK22zwTlRhU91yOniN4qRR5KhIjvif7ysw/dz/hKmfDH0Ris4aA==}
 
@@ -1391,6 +1446,9 @@ packages:
       picomatch:
         optional: true
 
+  fflate@0.8.3:
+    resolution: {integrity: sha512-tbZNuJrLwGUp3zshBtdy4W+ORxZuIh8a5ilyIEQDC5rY1f3U20JMry0Ll3WBzU58EZKsEuJFXhb5gwv8CsPvgA==}
+
   find-up@4.1.0:
     resolution: {integrity: sha512-PpOwAdQ/YlXQ2vj8a3h8IipDuYRi3wceVQQGYWxNINccq40Anw7BlsEXCMbt1Zt+OLA6Fq9suIpIWD0OsnISlw==}
     engines: {node: '>=8'}
@@ -1433,6 +1491,9 @@ packages:
 
   js-tokens@9.0.1:
     resolution: {integrity: sha512-mxa9E9ITFOt0ban3j6L5MpjwegGz6lBQmM1IJkWeBZGcMxto50+eWdjC/52xDbS2vy0k7vIMK0Fe2wfL9OQSpQ==}
+
+  leaflet@1.9.4:
+    resolution: {integrity: sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA==}
 
   lightningcss-android-arm64@1.32.0:
     resolution: {integrity: sha512-YK7/ClTt4kAK0vo6w3X+Pnm0D2cf2vPHbhOXdoNti1Ga0al1P4TBZhwjATvjNwLEBCnKvjJc2jQgHXH0NEwlAg==}
@@ -2289,6 +2350,12 @@ snapshots:
 
   '@types/estree@1.0.9': {}
 
+  '@types/geojson@7946.0.16': {}
+
+  '@types/leaflet@1.9.22':
+    dependencies:
+      '@types/geojson': 7946.0.16
+
   '@types/node@22.20.5':
     dependencies:
       undici-types: 6.21.0
@@ -2457,6 +2524,8 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.7
 
+  fflate@0.8.3: {}
+
   find-up@4.1.0:
     dependencies:
       locate-path: 5.0.0
@@ -2488,6 +2557,8 @@ snapshots:
   jiti@2.7.0: {}
 
   js-tokens@9.0.1: {}
+
+  leaflet@1.9.4: {}
 
   lightningcss-android-arm64@1.32.0:
     optional: true

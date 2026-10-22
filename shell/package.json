@@ -11,6 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@devquake/plugin-canteen": "workspace:*",
     "@devquake/plugin-cookbook": "workspace:*",
     "@devquake/plugin-darts": "workspace:*",
     "@devquake/plugin-expenses": "workspace:*",

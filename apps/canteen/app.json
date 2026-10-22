@@ -1,0 +1,31 @@
+{
+  "id": "canteen",
+  "name": "Social canteen",
+  "tagline": "For organisations that feed elderly people, on your own server: profiles with ID card reading, meal plans and the kitchen sheet, delivery routes with a map and the drivers' phones, and a medical file, each role seeing only what it needs.",
+  "features": [
+    "People living at home or in your care home: address, diet, allergies, a note for the driver, birthdays in a calendar",
+    "The ID card read on the device, personal numbers and every document stored encrypted, and a record of who opened them",
+    "Weekly menus with diet variants and a printable kitchen sheet with portions, allergies and box labels",
+    "Delivery routes per driver with time windows, the order computed from the map (optional OpenRouteService key), printed sheets",
+    "Drivers on their phone: the route as a list or on a map, what is in each package, a tick and a comment per stop",
+    "A medical file for the medical staff: medications and the daily round, notes, hospital stays and papers",
+    "Roles for organisers, coordinators, kitchen, drivers and medical staff; the whole organisation to Excel and back"
+  ],
+  "audience": "Social services, NGOs, parishes and care homes that cook for elderly people and deliver meals to their homes.",
+  "plugins": ["canteen"],
+  "hostedUrl": "https://devquake.com",
+  "hostedNote": "**Prefer not to run a server?** DevQuake hosts its apps for you:",
+  "secrets": {
+    "CANTEEN_MASTER_KEY": {
+      "kind": "base64-32",
+      "help": "Encrypts personal numbers, ID card pictures, documents and the medical file (32 random bytes, base64). Made on first start and kept in the data volume; set it to manage it yourself. Keep a copy: losing or changing it makes everything it encrypted unreadable."
+    }
+  },
+  "env": [
+    {
+      "name": "CANTEEN_ORS_KEY",
+      "default": "",
+      "help": "Optional: a free key from openrouteservice.org. Shows \"Compute the order from the map\" on routes and places the drivers' stops on their map. Only addresses are sent, never names."
+    }
+  ]
+}
