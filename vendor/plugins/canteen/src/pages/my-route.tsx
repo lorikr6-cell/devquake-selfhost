@@ -1,4 +1,5 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
+import { PrintHeader } from '../components/print-header';
 import { LOCALE_TAGS, Link, buttonClass } from '@devquake/ui';
 import { orgScope } from '../components/guard';
 import { MyLicenceNotice } from '../components/licence';
@@ -34,8 +35,10 @@ export default async function MyRoutePage({ ctx, params, searchParams }: PluginP
   const base = `/orgs/${scope.org.id}/my-route`;
   return (
     <>
+      <PrintHeader scope={scope} />
       <OrgNav
         orgId={scope.org.id}
+        demo={scope.org.demo ? scope.staff.role : undefined}
         orgName={scope.org.name}
         current="myRoute"
         can={scope.can}

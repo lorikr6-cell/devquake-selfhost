@@ -1,4 +1,5 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
+import { PrintHeader } from '../components/print-header';
 import { notFound } from 'next/navigation';
 import { Link } from '@devquake/ui';
 import { PersonForm } from '../components/forms';
@@ -25,6 +26,7 @@ export default async function EditPersonPage({ ctx, params }: PluginPageProps) {
   const name = `${person.lastName} ${person.firstName}`;
   return (
     <>
+      <PrintHeader scope={scope} />
       <Link
         href={`/orgs/${scope.org.id}/people/${person.id}`}
         className="text-sm underline hover:text-quake"

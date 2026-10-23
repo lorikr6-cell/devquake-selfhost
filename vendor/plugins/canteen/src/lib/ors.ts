@@ -2,7 +2,11 @@
 // a route's stops (its optimisation service, VROOM). Only addresses and map positions are sent,
 // never names. The request and answer shapes are pure and tested in ors.test.ts.
 
-export const ORS_URL = 'https://api.openrouteservice.org';
+// HeiGIT moved the APIs from api.openrouteservice.org to api.heigit.org/<service>/<version>
+// (2026; the old address shuts down): geocoding is Pelias, the optimisation VROOM. Same key.
+export const ORS_URL = 'https://api.heigit.org';
+export const GEOCODE_PATH = '/pelias/v1/search';
+export const OPTIMISE_PATH = '/vroom/v0';
 
 /** Seconds a stop takes at the door (the driving comes from the map). */
 export const SERVICE_SECONDS = 180;
@@ -110,11 +114,11 @@ export async function geocode(address: string, near?: LngLat | null): Promise<Ln
     query.set('focus.point.lon', String(near[0]));
     query.set('focus.point.lat', String(near[1]));
   }
-  return positionFrom(await call(`/geocode/search?${query}`, { method: 'GET' }));
+  return positionFrom(await call(`${GEOCODE_PATH}?${query}`, { method: 'GET' }));
 }
 
 export async function optimise(request: ReturnType<typeof optimisationRequest>): Promise<unknown> {
-  return call('/optimization', {
+  return call(OPTIMISE_PATH, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(request),

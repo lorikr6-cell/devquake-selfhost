@@ -1,5 +1,9 @@
 # Changelog — Darts
 
+## 0.7.1
+
+- The loading bar at the top now shows whenever the app is waiting for the server, and no longer appears for the automatic checks for new changes.
+
 ## 0.7.0
 
 - The app is now also in Italian and Spanish: pick the language at the top of the page.

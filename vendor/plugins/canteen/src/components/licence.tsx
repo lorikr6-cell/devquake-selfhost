@@ -165,7 +165,7 @@ export function LicenceUpload({
           )}
         </div>
       ) : (
-        <form onSubmit={save} className="grid gap-3 sm:grid-cols-2">
+        <form data-dq-submit="always" onSubmit={save} className="grid gap-3 sm:grid-cols-2">
           <p
             className={cn(
               'sm:col-span-2',

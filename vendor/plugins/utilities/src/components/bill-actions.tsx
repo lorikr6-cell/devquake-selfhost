@@ -73,7 +73,7 @@ export function PaymentForm({
   }
 
   return (
-    <form onSubmit={submit} className="space-y-3">
+    <form data-dq-submit="always" onSubmit={submit} className="space-y-3">
       <div className="grid gap-3 sm:grid-cols-3">
         <Field
           label={t('amount', { currency })}

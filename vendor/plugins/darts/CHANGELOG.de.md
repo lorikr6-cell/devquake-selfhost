@@ -1,5 +1,9 @@
 # Änderungen — Darts
 
+## 0.7.1
+
+- Der Ladebalken oben erscheint jetzt immer, wenn die App auf den Server wartet, und nicht mehr bei den automatischen Prüfungen auf neue Änderungen.
+
 ## 0.7.0
 
 - Die App gibt es jetzt auch auf Italienisch und Spanisch: Wähle die Sprache oben auf der Seite.

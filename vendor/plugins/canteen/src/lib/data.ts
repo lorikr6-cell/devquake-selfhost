@@ -98,12 +98,15 @@ export async function orgsOf(db: Db, userId: number): Promise<Org[]> {
   return rows.map((r) => ({ id: num(r.id), name: r.name, role: r.role, people: num(r.people) }));
 }
 
-export async function orgById(db: Db, orgId: number): Promise<{ id: number; name: string } | null> {
-  const [row] = await db.query<{ id: number; name: string }>(
-    'SELECT id, name FROM canteen_orgs WHERE id = ?',
+export async function orgById(
+  db: Db,
+  orgId: number,
+): Promise<{ id: number; name: string; demo: boolean } | null> {
+  const [row] = await db.query<{ id: number; name: string; is_demo: number }>(
+    'SELECT id, name, is_demo FROM canteen_orgs WHERE id = ?',
     [orgId],
   );
-  return row ? { id: num(row.id), name: row.name } : null;
+  return row ? { id: num(row.id), name: row.name, demo: num(row.is_demo) === 1 } : null;
 }
 
 /** A new organisation with the visitor as its organiser. */
@@ -688,13 +691,24 @@ export interface Invite {
   code: string;
   role: Role;
   expiresAt: string;
+  /** Sent by email to (masked, e.g. a***@gmail.com), and how many times (migration 0015). */
+  emailHint: string | null;
+  emailCount: number;
 }
 
 export async function listInvites(db: Db, orgId: number, userId: number): Promise<Invite[]> {
   await requireCan(db, orgId, userId, 'org.manage');
-  const rows = await db.query<{ id: number; code: string; role: Role; expires_at: Date | string }>(
-    `SELECT id, code, role, expires_at FROM canteen_invites
-      WHERE org_id = ? AND expires_at > UTC_TIMESTAMP() ORDER BY created_at DESC`,
+  const rows = await db.query<{
+    id: number;
+    code: string;
+    role: Role;
+    expires_at: Date | string;
+    email_hint: string | null;
+    email_count: number;
+  }>(
+    `SELECT id, code, role, expires_at, email_hint, email_count FROM canteen_invites
+      WHERE org_id = ? AND status = 'open' AND expires_at > UTC_TIMESTAMP()
+      ORDER BY created_at DESC`,
     [orgId],
   );
   return rows.map((r) => ({
@@ -702,6 +716,8 @@ export async function listInvites(db: Db, orgId: number, userId: number): Promis
     code: r.code,
     role: r.role,
     expiresAt: iso(r.expires_at),
+    emailHint: r.email_hint,
+    emailCount: num(r.email_count),
   }));
 }
 
@@ -713,12 +729,14 @@ export async function createInvite(
   role: Role,
 ): Promise<string> {
   await requireCan(db, orgId, userId, 'org.manage');
+  // The history is kept for INVITE_HISTORY_DAYS (migration 0017); older rows go now.
   await db.execute(
-    'DELETE FROM canteen_invites WHERE org_id = ? AND expires_at <= UTC_TIMESTAMP()',
-    [orgId],
+    'DELETE FROM canteen_invites WHERE org_id = ? AND created_at < UTC_TIMESTAMP() - INTERVAL ? DAY',
+    [orgId, INVITE_HISTORY_DAYS],
   );
   const [count] = await db.query<{ n: number }>(
-    'SELECT COUNT(*) AS n FROM canteen_invites WHERE org_id = ?',
+    `SELECT COUNT(*) AS n FROM canteen_invites
+      WHERE org_id = ? AND status = 'open' AND expires_at > UTC_TIMESTAMP()`,
     [orgId],
   );
   if (num(count?.n ?? 0) >= 20) throw new HttpError(400, 'tooManyInvites', { max: 20 });
@@ -733,7 +751,73 @@ export async function createInvite(
 
 export async function revokeInvite(db: Db, orgId: number, inviteId: number, userId: number) {
   await requireCan(db, orgId, userId, 'org.manage');
-  await db.execute('DELETE FROM canteen_invites WHERE id = ? AND org_id = ?', [inviteId, orgId]);
+  await db.execute(
+    `UPDATE canteen_invites SET status = 'revoked', closed_at = UTC_TIMESTAMP()
+      WHERE id = ? AND org_id = ? AND status = 'open'`,
+    [inviteId, orgId],
+  );
+}
+
+/** How long sent invitations stay listed on the staff page. */
+export const INVITE_HISTORY_DAYS = 180;
+
+export type InviteStatus = 'open' | 'expired' | 'accepted' | 'revoked';
+
+export interface SentInvite {
+  id: number;
+  role: Role;
+  status: InviteStatus;
+  createdAt: string;
+  /** Who made it (their name in the organisation), if they are still staff. */
+  createdBy: string | null;
+  /** Until when it works (open), when it ran out (expired), or was accepted / revoked. */
+  when: string;
+  acceptedName: string | null;
+  emailHint: string | null;
+}
+
+/** Every invitation of the last INVITE_HISTORY_DAYS days with its status (organisers). */
+export async function listSentInvites(
+  db: Db,
+  orgId: number,
+  userId: number,
+): Promise<SentInvite[]> {
+  await requireCan(db, orgId, userId, 'org.manage');
+  const rows = await db.query<{
+    id: number;
+    role: Role;
+    status: 'open' | 'accepted' | 'revoked';
+    created_at: Date | string;
+    expires_at: Date | string;
+    closed_at: Date | string | null;
+    accepted_name: string | null;
+    email_hint: string | null;
+    by_name: string | null;
+    expired: number;
+  }>(
+    `SELECT i.id, i.role, i.status, i.created_at, i.expires_at, i.closed_at, i.accepted_name,
+            i.email_hint, s.display_name AS by_name, i.expires_at <= UTC_TIMESTAMP() AS expired
+       FROM canteen_invites i
+       LEFT JOIN canteen_staff s ON s.org_id = i.org_id AND s.user_id = i.created_by
+      WHERE i.org_id = ? AND i.created_at >= UTC_TIMESTAMP() - INTERVAL ? DAY
+      ORDER BY i.created_at DESC, i.id DESC`,
+    [orgId, INVITE_HISTORY_DAYS],
+  );
+  return rows.map((r) => {
+    const status: InviteStatus = r.status === 'open' && num(r.expired) === 1 ? 'expired' : r.status;
+    return {
+      id: num(r.id),
+      role: r.role,
+      status,
+      createdAt: iso(r.created_at),
+      createdBy: r.by_name,
+      when: iso(
+        status === 'open' || status === 'expired' ? r.expires_at : (r.closed_at ?? r.expires_at),
+      ),
+      acceptedName: r.accepted_name,
+      emailHint: r.email_hint,
+    };
+  });
 }
 
 /** What an invitation offers, for its join page; null when it is unknown or expired. */
@@ -743,7 +827,7 @@ export async function inviteInfo(
 ): Promise<{ orgName: string; role: Role } | null> {
   const [row] = await db.query<{ name: string; role: Role }>(
     `SELECT o.name, i.role FROM canteen_invites i JOIN canteen_orgs o ON o.id = i.org_id
-      WHERE i.code = ? AND i.expires_at > UTC_TIMESTAMP()`,
+      WHERE i.code = ? AND i.status = 'open' AND i.expires_at > UTC_TIMESTAMP()`,
     [code],
   );
   return row && isRole(row.role) ? { orgName: row.name, role: row.role } : null;
@@ -763,7 +847,7 @@ export async function joinByInvite(
       created_by: number;
     }>(
       `SELECT id, org_id, role, created_by FROM canteen_invites
-        WHERE code = ? AND expires_at > UTC_TIMESTAMP() FOR UPDATE`,
+        WHERE code = ? AND status = 'open' AND expires_at > UTC_TIMESTAMP() FOR UPDATE`,
       [code],
     );
     if (!invite) throw new HttpError(404, 'inviteInvalid');
@@ -780,7 +864,12 @@ export async function joinByInvite(
         [orgId, user.id, user.displayName.slice(0, LIMITS.displayName), invite.role, inviter],
       );
     }
-    await tx.execute('DELETE FROM canteen_invites WHERE id = ?', [invite.id]);
+    // Used up, and kept in the history: who accepted it and when.
+    await tx.execute(
+      `UPDATE canteen_invites SET status = 'accepted', accepted_by = ?, accepted_name = ?,
+         closed_at = UTC_TIMESTAMP() WHERE id = ?`,
+      [user.id, user.displayName.slice(0, 80), invite.id],
+    );
     return { orgId, inviter: already ? null : inviter };
   });
 }
@@ -807,6 +896,20 @@ export async function inviterOf(db: Db, userId: number): Promise<number | null> 
  * Incident notes and the access log keep the user id as a plain number (shown without a name).
  */
 export async function forgetUser(db: PluginDatabase, userId: number) {
+  // Their demo organisations go with them, whatever role they last viewed them in.
+  await db.execute('DELETE FROM canteen_orgs WHERE is_demo = 1 AND created_by = ?', [userId]);
+  // Invitations they accepted stay in the history without their name.
+  await db.execute(
+    'UPDATE canteen_invites SET accepted_by = NULL, accepted_name = NULL WHERE accepted_by = ?',
+    [userId],
+  );
+  // Dishes and exports stay with the organisation; who made them is forgotten. A purchasing
+  // list they chose lives in their Shopping, so the organisation forgets it.
+  await db.execute('UPDATE canteen_dishes SET imported_by = NULL WHERE imported_by = ?', [userId]);
+  await db.execute('UPDATE canteen_shopping_exports SET exported_by = NULL WHERE exported_by = ?', [
+    userId,
+  ]);
+  await db.execute('DELETE FROM canteen_org_links WHERE set_by = ?', [userId]);
   const orgs = await db.query<{ org_id: number; role: Role }>(
     'SELECT org_id, role FROM canteen_staff WHERE user_id = ?',
     [userId],

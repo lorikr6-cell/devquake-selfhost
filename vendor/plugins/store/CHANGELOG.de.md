@@ -1,5 +1,9 @@
 # Änderungsprotokoll — Shop
 
+## 0.13.1
+
+- Schaltflächen, die gerade nicht nutzbar sind, zeigen den normalen Pfeil statt eines Verbotszeichens.
+
 ## 0.13.0
 
 - Die App gibt es jetzt auch auf Italienisch und Spanisch: Wähle die Sprache oben auf der Seite (im Shop finden Käufer sie unten).

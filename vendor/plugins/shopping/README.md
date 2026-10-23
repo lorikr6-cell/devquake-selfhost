@@ -130,11 +130,11 @@ With the visitor's consent, pages are counted in Google Analytics under the cont
 
 Offered to connected apps (`src/links/`, declared in `manifest.links`):
 
-| Id                | Kind  | Input                                                    | Reply                                                                             |
-| ----------------- | ----- | -------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `lists.overview`  | read  | `{ limit? }` (1–20, default 5)                           | `{ lists: [{ id, name, shopDate, open, done }] }` (open lists from a week ago on) |
-| `list.add-items`  | write | `{ listId, items: [{ name, quantity?, unit? }] }` (≤ 30) | `{ listId, added }` (added as the member)                                         |
-| `calendar.events` | read  | `{ from, to }` (`YYYY-MM-DD`, ≤ 62 days)                 | `{ events }`: the member's lists by shopping date (names only, all-day)           |
+| Id                | Kind  | Input                                                    | Reply                                                                                                                           |
+| ----------------- | ----- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `lists.overview`  | read  | `{ limit?, includeEmpty? }` (1–20, default 5)            | `{ lists: [{ id, name, shopDate, open, done }] }` (lists with open items from a week ago on; `includeEmpty` adds those without) |
+| `list.add-items`  | write | `{ listId, items: [{ name, quantity?, unit? }] }` (≤ 30) | `{ listId, added }` (added as the member)                                                                                       |
+| `calendar.events` | read  | `{ from, to }` (`YYYY-MM-DD`, ≤ 62 days)                 | `{ events }`: the member's lists by shopping date (names only, all-day)                                                         |
 
 Target `list` → `/lists/:id`. Used by the family planner. Change these only by adding.
 

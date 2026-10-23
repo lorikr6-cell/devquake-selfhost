@@ -1,5 +1,9 @@
 # Änderungen — Kochbuch
 
+## 0.8.0
+
+- Rezepte können jetzt eine Sozialküche versorgen: Wählst du dort eines aus, wird es für bis zu 500 Portionen umgerechnet, und die Küche behält eine Kopie.
+
 ## 0.7.1
 
 - Die Reihe der Reiter zeigt keinen kleinen Scrollbalken mehr, wenn alle Reiter passen; sie lässt sich nur seitlich scrollen, wenn sie nicht passen.

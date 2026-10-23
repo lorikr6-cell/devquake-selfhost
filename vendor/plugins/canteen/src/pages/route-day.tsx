@@ -1,4 +1,5 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
+import { PrintHeader } from '../components/print-header';
 import { notFound } from 'next/navigation';
 import { LOCALE_TAGS, Link, buttonClass } from '@devquake/ui';
 import { orgScope } from '../components/guard';
@@ -41,6 +42,7 @@ export default async function RouteDayPage({ ctx, params }: PluginPageProps) {
       <div className="print:hidden">
         <OrgNav
           orgId={scope.org.id}
+          demo={scope.org.demo ? scope.staff.role : undefined}
           orgName={scope.org.name}
           current="routes"
           can={scope.can}
@@ -77,6 +79,8 @@ export default async function RouteDayPage({ ctx, params }: PluginPageProps) {
             data-driver={r.driver.id}
             className="break-after-page text-black"
           >
+            {/* Every driver's sheet carries the organisation and who printed it. */}
+            <PrintHeader scope={scope} />
             <h1 className="text-xl font-bold">
               {r.driver.name} · <span className="capitalize">{title}</span>
             </h1>

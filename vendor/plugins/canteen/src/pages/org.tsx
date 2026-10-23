@@ -1,4 +1,5 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
+import { PrintHeader } from '../components/print-header';
 import { redirect } from 'next/navigation';
 import { Link, buttonClass, localizePath } from '@devquake/ui';
 import { OrgForm } from '../components/forms';
@@ -44,6 +45,7 @@ export default async function OrgPage({ ctx, params }: PluginPageProps) {
       <>
         <OrgNav
           orgId={scope.org.id}
+          demo={scope.org.demo ? scope.staff.role : undefined}
           orgName={scope.org.name}
           current="people"
           can={scope.can}
@@ -71,8 +73,10 @@ export default async function OrgPage({ ctx, params }: PluginPageProps) {
 
   return (
     <>
+      <PrintHeader scope={scope} />
       <OrgNav
         orgId={scope.org.id}
+        demo={scope.org.demo ? scope.staff.role : undefined}
         orgName={`${scope.org.name} · ${t(`roles.${scope.staff.role}`)}`}
         current="people"
         can={scope.can}

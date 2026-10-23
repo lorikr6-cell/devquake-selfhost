@@ -95,6 +95,7 @@ export const screens = defineMessages(
       contact: 'Contact person',
     },
     fields: {
+      contactEmail: 'Contact email',
       idExpiresOn: 'ID card valid until',
       licenceExpiry: 'Licence valid until',
       licenceNumber: 'Licence number',
@@ -209,7 +210,38 @@ export const screens = defineMessages(
         document_extra2_deleted: 'Removed other paper (2)',
       },
     },
+    inviteEmail: {
+      contact: 'Questions? Write to {email}.',
+      subject: '{org}: join as {role}',
+      heading: 'Join {org} on Social canteen',
+      body: '{org} invites you to help as {role}. The organisation uses Social canteen to plan meals, deliveries and the people it cares for.',
+      driver:
+        'As a driver you see your route of the day on your phone, what goes in each package, and you tick each delivery.',
+      howTo:
+        'The invitation is for you alone and works until {date}. Sign in, or create a free DevQuake account, then accept it.',
+      button: 'Accept the invitation',
+    },
     staff: {
+      nobody: 'Nobody yet.',
+      sentTitle: 'Invitations sent',
+      noneSent: 'No invitations in the last six months.',
+      sentOn: 'Sent',
+      sentBy: 'By',
+      status: 'Status',
+      statusAccepted: 'Accepted by {name} on {date}',
+      status_open: 'Open until {date}',
+      status_expired: 'Expired on {date}',
+      status_revoked: 'Revoked on {date}',
+      downloadQr: 'Download QR',
+      sendEmail: 'Send by email',
+      emailAddress: 'Email address',
+      emailLanguage: 'Language of the email',
+      send: 'Send',
+      emailHint: 'The email has the link and this QR code. It works once, for one person.',
+      emailHintDriver: 'The email has the link, this QR code and the drivers’ app for their phone.',
+      emailedTo: 'Emailed to {hint}',
+      emailSent: 'Invitation sent.',
+      emailAlready: 'Already sent to this address today.',
       title: 'Staff',
       link: 'Staff and invitations',
       intro:
@@ -442,6 +474,158 @@ export const screens = defineMessages(
       removeTitle: 'Remove “{title}”?',
       removeBody: 'The paper is deleted for good.',
     },
+    kitchenApps: {
+      dishesTitle: 'Dishes from Cookbook',
+      dishesIntro:
+        'Pick recipes from your Cookbook: the organisation keeps a copy. Write a dish’s name as a line of a menu (or insert it there) and the kitchen sheet shows its ingredients for the day’s portions.',
+      ingredientsCount: {
+        one: '{count} ingredient',
+        other: '{count} ingredients',
+      },
+      remove: 'Remove',
+      removed: 'Dish removed.',
+      noDishes: 'No dishes yet.',
+      searchPlaceholder: 'Search your recipes',
+      search: 'Search',
+      servings: {
+        one: 'for {count}',
+        other: 'for {count}',
+      },
+      add: 'Add',
+      added: '{name} added to the dishes.',
+      noRecipes: 'No recipe found.',
+      cookbookOffer: 'Connect Cookbook to pick the menus’ dishes from your recipes.',
+      connect: 'Connect',
+      getIt: 'Get it',
+      shoppingTitle: 'The week’s purchasing',
+      shoppingIntro:
+        'Everything this week’s dishes need, for every portion and diet, merged into one list.',
+      shoppingOffer: 'Connect Shopping to send the week’s ingredients to the purchasing list.',
+      prepare: 'Prepare the list',
+      nothingToBuy: 'No dishes from Cookbook on this week’s menus: nothing to buy yet.',
+      list: 'List',
+      purchasing: 'purchasing list',
+      noLists: 'You have no list in Shopping yet: make one there first.',
+      send: {
+        one: 'Send {count} item',
+        other: 'Send {count} items',
+      },
+      sendAgain: 'Send again',
+      sendAgainBody:
+        'These ingredients already went to this list for this week. Send them once more?',
+      alreadySent: 'Already sent',
+      sent: 'Sent to {list}.',
+      cancel: 'Cancel',
+      insertDish: 'Insert a dish…',
+      ingredients: 'Ingredients',
+    },
+    worksWith: {
+      title: 'Works with',
+      open: 'Open',
+      connect: 'Connect',
+      getIt: 'Get it',
+      connected: 'connected',
+      close: 'Close',
+      disconnect: 'Disconnect',
+      disconnectTitle: 'Disconnect {app}?',
+      disconnectBody:
+        'The two apps stop working together for you. Your subscriptions and everything you made in them stay.',
+      cancel: 'Cancel',
+      intro:
+        'Apps that work together with the Meal planner. Connect them once on DevQuake; you can disconnect any time under Account → Connected apps.',
+    },
+    allergens: {
+      gluten: 'Gluten',
+      crustaceans: 'Crustaceans',
+      eggs: 'Eggs',
+      fish: 'Fish',
+      peanuts: 'Peanuts',
+      soy: 'Soy',
+      milk: 'Milk',
+      nuts: 'Nuts',
+      celery: 'Celery',
+      mustard: 'Mustard',
+      sesame: 'Sesame',
+      sulphites: 'Sulphites',
+      lupin: 'Lupin',
+      molluscs: 'Molluscs',
+    },
+    print: {
+      by: 'Printed by {name} on {date}',
+    },
+    areas: {
+      title: 'Driver areas',
+      intro:
+        'Who delivers to whom. Propose areas from the addresses so drivers do not cross each other’s streets, move people to another driver where needed, save, then build the routes of a day, a week or a month and print them.',
+      propose: 'Propose areas from the addresses',
+      proposed: 'Areas proposed: check them, change what you want and save.',
+      proposeHint:
+        'The proposal shares people out by direction from the kitchen, in proportion to how much each driver works. Nothing changes until you save.',
+      previewHint: 'This is a preview: people in orange move to another driver when you save.',
+      locate: {
+        one: 'Find {count} address on the map',
+        other: 'Find {count} addresses on the map',
+      },
+      located: 'Addresses looked up.',
+      noMap: {
+        one: '{count} address is not on the map yet: without the map key it is left where it is.',
+        other:
+          '{count} addresses are not on the map yet: without the map key they are left where they are.',
+      },
+      save: {
+        one: 'Save {count} change',
+        other: 'Save {count} changes',
+      },
+      saved: {
+        one: '{count} change saved.',
+        other: '{count} changes saved.',
+      },
+      undo: 'Undo the changes',
+      noArea: 'No area',
+      noAddress: 'no address',
+      notOnMap: 'not on the map yet',
+      moveTo: 'Driver for {name}',
+      routesTitle: 'Routes from the areas',
+      routesIntro:
+        'For every day of the span, each driver who works that day gets the people of their area who get a delivery, nearest first from the kitchen. Ticks already given stay; people of a driver who does not work that day are left to place by hand.',
+      from: 'From',
+      to: 'To',
+      build: 'Build the routes',
+      buildTitle: 'Build the routes from the areas?',
+      buildBody:
+        'The planned routes of these days are replaced by the areas. Deliveries already ticked stay.',
+      built: 'Routes built.',
+      builtToPlace: {
+        one: 'Routes built. {count} delivery has no driver that day: place it on the day’s page.',
+        other:
+          'Routes built. {count} deliveries have no driver that day: place them on the day’s page.',
+      },
+      saveFirst: 'Save the areas first.',
+      printFor: 'Print for',
+      allDrivers: 'All drivers',
+      printDay: 'Print the day',
+      printWeek: 'Print the week',
+      printMonth: 'Print the month',
+      printTitle: 'Route sheets',
+      sheets: {
+        one: '{count} sheet',
+        other: '{count} sheets',
+      },
+      noSheets: 'No routes in these days.',
+      stops: {
+        one: '{count} stop',
+        other: '{count} stops',
+      },
+    },
+    demo: {
+      badge: 'Demo',
+      viewAs: 'View as',
+      intro:
+        'Try the app with a demo organisation of your own, filled with invented people, personal numbers, menus, drivers, today’s routes and medical files, to try every feature. You are its organiser and its driver, and you can view it in any role.',
+      create: 'Try it with demo data',
+      creating: 'Creating the demo…',
+      created: 'Demo organisation created.',
+    },
     licence: {
       missing: 'No licence',
       expired: 'Licence expired {date}',
@@ -516,6 +700,8 @@ export const screens = defineMessages(
       },
     },
     orgPage: {
+      contactHint:
+        'Shown on your page and used for replies to your invitations. Leave it empty to use DevQuake’s contact@devquake.com.',
       previewNote:
         'Only your organisation’s staff see this page while it is private. Switch it on under Organisation to let visitors see it.',
       logo: 'Logo',
@@ -540,6 +726,23 @@ export const screens = defineMessages(
       deleted: '{name} was deleted.',
     },
     errors: {
+      noDrivers: 'Add an active driver first.',
+      spanTooLong: 'Choose at most {max} days.',
+      contactEmail: 'This is not a valid email address: check it (for example office@example.org).',
+      inviteNotFound: 'This invitation is no longer open.',
+      inviteEmailMax: 'This invitation was already emailed {max} times: make a new one.',
+      inviteEmailInvalid: 'Check the email address.',
+      inviteEmailLimit:
+        'Too many invitations by email today: try again tomorrow, or copy the link and send it yourself.',
+      inviteEmailDeclined:
+        'This address asked not to receive invitations from DevQuake: give them the link or the QR code another way.',
+      inviteEmailUnavailable:
+        'The email could not be sent right now. Copy the link and send it yourself, or try again later.',
+      linkNotConnected: 'Connect that app first (“Works with”, at the bottom of the page).',
+      linkRateLimited: 'Too many requests to the other app: try again in a minute.',
+      linkNotFound: 'Not found in the other app (deleted, or not yours).',
+      linkFailed: 'The other app did not answer. Try again later.',
+      noIngredients: 'No dishes from Cookbook on this week’s menus.',
       licenceExpired: 'This licence has expired: upload a valid one.',
       importNoLicence: 'This driver has no licence picture yet: upload it in the app first.',
       deleteOrgName: 'Type the organisation’s name exactly to delete it.',
@@ -702,6 +905,7 @@ export const screens = defineMessages(
         contact: 'Kontaktperson',
       },
       fields: {
+        contactEmail: 'Kontakt-E-Mail',
         idExpiresOn: 'Ausweis gültig bis',
         licenceExpiry: 'Führerschein gültig bis',
         licenceNumber: 'Führerscheinnummer',
@@ -817,7 +1021,40 @@ export const screens = defineMessages(
           document_extra2_deleted: 'Weiteres Dokument (2) entfernt',
         },
       },
+      inviteEmail: {
+        contact: 'Fragen? Schreib an {email}.',
+        subject: '{org}: Mach mit als {role}',
+        heading: 'Mach mit bei {org} in der Sozialküche',
+        body: '{org} lädt dich ein, als {role} mitzuhelfen. Die Organisation plant mit der Sozialküche Mahlzeiten, Lieferungen und die Menschen, für die sie sorgt.',
+        driver:
+          'Als Fahrer siehst du deine Route des Tages auf dem Handy, was in jedes Paket gehört, und hakst jede Lieferung ab.',
+        howTo:
+          'Die Einladung gilt nur für dich und bis {date}. Melde dich an oder erstelle ein kostenloses DevQuake-Konto und nimm sie an.',
+        button: 'Einladung annehmen',
+      },
       staff: {
+        nobody: 'Noch niemand.',
+        sentTitle: 'Gesendete Einladungen',
+        noneSent: 'Keine Einladungen in den letzten sechs Monaten.',
+        sentOn: 'Gesendet',
+        sentBy: 'Von',
+        status: 'Status',
+        statusAccepted: 'Angenommen von {name} am {date}',
+        status_open: 'Offen bis {date}',
+        status_expired: 'Abgelaufen am {date}',
+        status_revoked: 'Zurückgezogen am {date}',
+        downloadQr: 'QR herunterladen',
+        sendEmail: 'Per E-Mail senden',
+        emailAddress: 'E-Mail-Adresse',
+        emailLanguage: 'Sprache der E-Mail',
+        send: 'Senden',
+        emailHint:
+          'Die E-Mail enthält den Link und diesen QR-Code. Er funktioniert einmal, für eine Person.',
+        emailHintDriver:
+          'Die E-Mail enthält den Link, diesen QR-Code und die Fahrer-App für das Handy.',
+        emailedTo: 'Gesendet an {hint}',
+        emailSent: 'Einladung gesendet.',
+        emailAlready: 'Heute schon an diese Adresse gesendet.',
         title: 'Personal',
         link: 'Personal und Einladungen',
         intro:
@@ -1061,6 +1298,162 @@ export const screens = defineMessages(
         removeTitle: '„{title}“ entfernen?',
         removeBody: 'Das Dokument wird endgültig gelöscht.',
       },
+      kitchenApps: {
+        dishesTitle: 'Gerichte aus dem Kochbuch',
+        dishesIntro:
+          'Wähle Rezepte aus deinem Kochbuch: Die Organisation behält eine Kopie. Schreibe den Namen eines Gerichts als Zeile eines Menüs (oder füge ihn dort ein), und das Küchenblatt zeigt seine Zutaten für die Portionen des Tages.',
+        ingredientsCount: {
+          one: '{count} Zutat',
+          other: '{count} Zutaten',
+        },
+        remove: 'Entfernen',
+        removed: 'Gericht entfernt.',
+        noDishes: 'Noch keine Gerichte.',
+        searchPlaceholder: 'Deine Rezepte durchsuchen',
+        search: 'Suchen',
+        servings: {
+          one: 'für {count}',
+          other: 'für {count}',
+        },
+        add: 'Hinzufügen',
+        added: '{name} zu den Gerichten hinzugefügt.',
+        noRecipes: 'Kein Rezept gefunden.',
+        cookbookOffer:
+          'Verbinde das Kochbuch, um die Gerichte der Menüs aus deinen Rezepten zu wählen.',
+        connect: 'Verbinden',
+        getIt: 'Holen',
+        shoppingTitle: 'Der Einkauf der Woche',
+        shoppingIntro:
+          'Alles, was die Gerichte dieser Woche brauchen, für alle Portionen und Diäten, in einer Liste zusammengefasst.',
+        shoppingOffer:
+          'Verbinde Einkaufslisten, um die Zutaten der Woche auf die Einkaufsliste zu schicken.',
+        prepare: 'Liste vorbereiten',
+        nothingToBuy:
+          'Keine Gerichte aus dem Kochbuch auf den Menüs dieser Woche: noch nichts zu kaufen.',
+        list: 'Liste',
+        purchasing: 'Einkaufsliste der Organisation',
+        noLists: 'Du hast noch keine Liste in Einkaufslisten: Lege dort zuerst eine an.',
+        send: {
+          one: '{count} Artikel senden',
+          other: '{count} Artikel senden',
+        },
+        sendAgain: 'Noch einmal senden',
+        sendAgainBody:
+          'Diese Zutaten gingen für diese Woche schon an diese Liste. Noch einmal senden?',
+        alreadySent: 'Schon gesendet',
+        sent: 'An {list} gesendet.',
+        cancel: 'Abbrechen',
+        insertDish: 'Gericht einfügen …',
+        ingredients: 'Zutaten',
+      },
+      worksWith: {
+        title: 'Arbeitet mit',
+        open: 'Öffnen',
+        connect: 'Verbinden',
+        getIt: 'Holen',
+        connected: 'verbunden',
+        close: 'Schließen',
+        disconnect: 'Trennen',
+        disconnectTitle: '{app} trennen?',
+        disconnectBody:
+          'Die beiden Apps arbeiten nicht mehr für dich zusammen. Deine Abos und alles, was du darin erstellt hast, bleiben.',
+        cancel: 'Abbrechen',
+        intro:
+          'Apps, die mit dem Essensplaner zusammenarbeiten. Verbinde sie einmal bei DevQuake; trennen kannst du sie jederzeit unter Konto → Verbundene Apps.',
+      },
+      allergens: {
+        gluten: 'Gluten',
+        crustaceans: 'Krebstiere',
+        eggs: 'Eier',
+        fish: 'Fisch',
+        peanuts: 'Erdnüsse',
+        soy: 'Soja',
+        milk: 'Milch',
+        nuts: 'Schalenfrüchte',
+        celery: 'Sellerie',
+        mustard: 'Senf',
+        sesame: 'Sesam',
+        sulphites: 'Sulfite',
+        lupin: 'Lupinen',
+        molluscs: 'Weichtiere',
+      },
+      print: {
+        by: 'Gedruckt von {name} am {date}',
+      },
+      areas: {
+        title: 'Fahrergebiete',
+        intro:
+          'Wer zu wem liefert. Schlage Gebiete aus den Adressen vor, damit sich die Fahrer nicht in die Quere kommen, verschiebe Personen bei Bedarf zu einem anderen Fahrer, speichere, erstelle dann die Routen eines Tages, einer Woche oder eines Monats und drucke sie.',
+        propose: 'Gebiete aus den Adressen vorschlagen',
+        proposed: 'Gebiete vorgeschlagen: Prüfe sie, ändere, was du willst, und speichere.',
+        proposeHint:
+          'Der Vorschlag teilt die Personen nach der Richtung von der Küche aus auf, im Verhältnis dazu, wie viel jeder Fahrer arbeitet. Nichts ändert sich, bevor du speicherst.',
+        previewHint:
+          'Das ist eine Vorschau: Orange markierte Personen wechseln beim Speichern zu einem anderen Fahrer.',
+        locate: {
+          one: '{count} Adresse auf der Karte finden',
+          other: '{count} Adressen auf der Karte finden',
+        },
+        located: 'Adressen nachgeschlagen.',
+        noMap: {
+          one: '{count} Adresse ist noch nicht auf der Karte: Ohne Kartenschlüssel bleibt sie, wo sie ist.',
+          other:
+            '{count} Adressen sind noch nicht auf der Karte: Ohne Kartenschlüssel bleiben sie, wo sie sind.',
+        },
+        save: {
+          one: '{count} Änderung speichern',
+          other: '{count} Änderungen speichern',
+        },
+        saved: {
+          one: '{count} Änderung gespeichert.',
+          other: '{count} Änderungen gespeichert.',
+        },
+        undo: 'Änderungen verwerfen',
+        noArea: 'Kein Gebiet',
+        noAddress: 'keine Adresse',
+        notOnMap: 'noch nicht auf der Karte',
+        moveTo: 'Fahrer für {name}',
+        routesTitle: 'Routen aus den Gebieten',
+        routesIntro:
+          'Für jeden Tag des Zeitraums bekommt jeder Fahrer, der an dem Tag arbeitet, die Personen seines Gebiets, die eine Lieferung bekommen, die nächsten von der Küche zuerst. Bereits gesetzte Haken bleiben; Personen eines Fahrers, der an dem Tag nicht arbeitet, werden von Hand zugeteilt.',
+        from: 'Von',
+        to: 'Bis',
+        build: 'Routen erstellen',
+        buildTitle: 'Routen aus den Gebieten erstellen?',
+        buildBody:
+          'Die geplanten Routen dieser Tage werden durch die Gebiete ersetzt. Bereits abgehakte Lieferungen bleiben.',
+        built: 'Routen erstellt.',
+        builtToPlace: {
+          one: 'Routen erstellt. {count} Lieferung hat an dem Tag keinen Fahrer: Teile sie auf der Tagesseite zu.',
+          other:
+            'Routen erstellt. {count} Lieferungen haben an dem Tag keinen Fahrer: Teile sie auf der Tagesseite zu.',
+        },
+        saveFirst: 'Speichere zuerst die Gebiete.',
+        printFor: 'Drucken für',
+        allDrivers: 'Alle Fahrer',
+        printDay: 'Tag drucken',
+        printWeek: 'Woche drucken',
+        printMonth: 'Monat drucken',
+        printTitle: 'Routenblätter',
+        sheets: {
+          one: '{count} Blatt',
+          other: '{count} Blätter',
+        },
+        noSheets: 'Keine Routen in diesen Tagen.',
+        stops: {
+          one: '{count} Halt',
+          other: '{count} Halte',
+        },
+      },
+      demo: {
+        badge: 'Demo',
+        viewAs: 'Ansehen als',
+        intro:
+          'Probiere die App mit einer eigenen Demo-Organisation aus, gefüllt mit erfundenen Personen, persönlichen Nummern, Menüs, Fahrern, den heutigen Routen und medizinischen Akten, um jede Funktion auszuprobieren. Du bist ihr Organisator und ihr Fahrer und kannst sie in jeder Rolle ansehen.',
+        create: 'Mit Demodaten ausprobieren',
+        creating: 'Demo wird erstellt …',
+        created: 'Demo-Organisation erstellt.',
+      },
       licence: {
         missing: 'Kein Führerschein',
         expired: 'Führerschein abgelaufen am {date}',
@@ -1137,6 +1530,8 @@ export const screens = defineMessages(
         },
       },
       orgPage: {
+        contactHint:
+          'Steht auf eurer Seite und erhält die Antworten auf eure Einladungen. Leer lassen, um DevQuakes contact@devquake.com zu nutzen.',
         previewNote:
           'Solange die Seite privat ist, sieht sie nur das Personal eurer Organisation. Schalte sie unter Organisation ein, damit Besucher sie sehen.',
         logo: 'Logo',
@@ -1161,6 +1556,25 @@ export const screens = defineMessages(
         deleted: '{name} wurde gelöscht.',
       },
       errors: {
+        noDrivers: 'Lege zuerst einen aktiven Fahrer an.',
+        spanTooLong: 'Wähle höchstens {max} Tage.',
+        contactEmail:
+          'Das ist keine gültige E-Mail-Adresse: Prüfe sie (zum Beispiel buero@beispiel.de).',
+        inviteNotFound: 'Diese Einladung ist nicht mehr offen.',
+        inviteEmailMax: 'Diese Einladung wurde schon {max}-mal gesendet: Erstelle eine neue.',
+        inviteEmailInvalid: 'Prüfe die E-Mail-Adresse.',
+        inviteEmailLimit:
+          'Heute zu viele Einladungen per E-Mail: Versuche es morgen wieder oder kopiere den Link und sende ihn selbst.',
+        inviteEmailDeclined:
+          'Diese Adresse möchte keine Einladungen von DevQuake: Gib den Link oder den QR-Code auf anderem Weg weiter.',
+        inviteEmailUnavailable:
+          'Die E-Mail konnte gerade nicht gesendet werden. Kopiere den Link und sende ihn selbst, oder versuche es später.',
+        linkNotConnected: 'Verbinde zuerst diese App („Arbeitet mit“, unten auf der Seite).',
+        linkRateLimited:
+          'Zu viele Anfragen an die andere App: Versuche es in einer Minute noch einmal.',
+        linkNotFound: 'In der anderen App nicht gefunden (gelöscht oder nicht deins).',
+        linkFailed: 'Die andere App hat nicht geantwortet. Versuche es später noch einmal.',
+        noIngredients: 'Keine Gerichte aus dem Kochbuch auf den Menüs dieser Woche.',
         licenceExpired: 'Dieser Führerschein ist abgelaufen: Lade einen gültigen hoch.',
         importNoLicence:
           'Für diesen Fahrer gibt es noch kein Führerscheinbild: Lade es zuerst in der App hoch.',
@@ -1327,6 +1741,7 @@ export const screens = defineMessages(
         contact: 'Persoană de contact',
       },
       fields: {
+        contactEmail: 'E-mail de contact',
         idExpiresOn: 'Buletin valabil până la',
         licenceExpiry: 'Permis valabil până la',
         licenceNumber: 'Numărul permisului',
@@ -1442,7 +1857,40 @@ export const screens = defineMessages(
           document_extra2_deleted: 'A eliminat alt document (2)',
         },
       },
+      inviteEmail: {
+        contact: 'Întrebări? Scrie la {email}.',
+        subject: '{org}: alătură-te ca {role}',
+        heading: 'Alătură-te organizației {org} în Cantina socială',
+        body: '{org} te invită să ajuți ca {role}. Organizația folosește Cantina socială pentru a planifica mesele, livrările și persoanele de care are grijă.',
+        driver:
+          'Ca șofer îți vezi pe telefon traseul zilei, ce intră în fiecare pachet și bifezi fiecare livrare.',
+        howTo:
+          'Invitația este doar pentru tine și este valabilă până la {date}. Conectează-te sau creează un cont DevQuake gratuit, apoi accept-o.',
+        button: 'Acceptă invitația',
+      },
       staff: {
+        nobody: 'Nimeni deocamdată.',
+        sentTitle: 'Invitații trimise',
+        noneSent: 'Nicio invitație în ultimele șase luni.',
+        sentOn: 'Trimisă',
+        sentBy: 'De',
+        status: 'Stare',
+        statusAccepted: 'Acceptată de {name} la {date}',
+        status_open: 'Deschisă până la {date}',
+        status_expired: 'Expirată la {date}',
+        status_revoked: 'Retrasă la {date}',
+        downloadQr: 'Descarcă QR',
+        sendEmail: 'Trimite prin e-mail',
+        emailAddress: 'Adresa de e-mail',
+        emailLanguage: 'Limba e-mailului',
+        send: 'Trimite',
+        emailHint:
+          'E-mailul conține linkul și acest cod QR. Funcționează o singură dată, pentru o persoană.',
+        emailHintDriver:
+          'E-mailul conține linkul, acest cod QR și aplicația șoferilor pentru telefon.',
+        emailedTo: 'Trimis la {hint}',
+        emailSent: 'Invitația a fost trimisă.',
+        emailAlready: 'Deja trimisă azi la această adresă.',
         title: 'Personal',
         link: 'Personal și invitații',
         intro:
@@ -1695,6 +2143,171 @@ export const screens = defineMessages(
         removeTitle: 'Elimini „{title}”?',
         removeBody: 'Documentul se șterge definitiv.',
       },
+      kitchenApps: {
+        dishesTitle: 'Feluri din Cartea de bucate',
+        dishesIntro:
+          'Alege rețete din Cartea ta de bucate: organizația păstrează o copie. Scrie numele unui fel ca rând al unui meniu (sau inserează-l acolo), iar fișa bucătăriei arată ingredientele lui pentru porțiile zilei.',
+        ingredientsCount: {
+          one: '{count} ingredient',
+          few: '{count} ingrediente',
+          other: '{count} de ingrediente',
+        },
+        remove: 'Elimină',
+        removed: 'Fel eliminat.',
+        noDishes: 'Încă nu sunt feluri.',
+        searchPlaceholder: 'Caută în rețetele tale',
+        search: 'Caută',
+        servings: {
+          one: 'pentru {count}',
+          few: 'pentru {count}',
+          other: 'pentru {count}',
+        },
+        add: 'Adaugă',
+        added: '{name} a fost adăugat la feluri.',
+        noRecipes: 'Nu s-a găsit nicio rețetă.',
+        cookbookOffer:
+          'Conectează Cartea de bucate ca să alegi felurile meniurilor din rețetele tale.',
+        connect: 'Conectează',
+        getIt: 'Obține',
+        shoppingTitle: 'Achizițiile săptămânii',
+        shoppingIntro:
+          'Tot ce le trebuie felurilor din această săptămână, pentru toate porțiile și dietele, adunat într-o singură listă.',
+        shoppingOffer:
+          'Conectează Listele de cumpărături ca să trimiți ingredientele săptămânii pe lista de achiziții.',
+        prepare: 'Pregătește lista',
+        nothingToBuy:
+          'Nu sunt feluri din Cartea de bucate în meniurile săptămânii: încă nu e nimic de cumpărat.',
+        list: 'Listă',
+        purchasing: 'lista de achiziții',
+        noLists: 'Nu ai încă nicio listă în Listele de cumpărături: creează mai întâi una acolo.',
+        send: {
+          one: 'Trimite {count} produs',
+          few: 'Trimite {count} produse',
+          other: 'Trimite {count} de produse',
+        },
+        sendAgain: 'Trimite din nou',
+        sendAgainBody:
+          'Aceste ingrediente au mers deja pe această listă pentru săptămâna aceasta. Le trimiți încă o dată?',
+        alreadySent: 'Deja trimis',
+        sent: 'Trimis pe {list}.',
+        cancel: 'Renunță',
+        insertDish: 'Inserează un fel…',
+        ingredients: 'Ingrediente',
+      },
+      worksWith: {
+        title: 'Funcționează cu',
+        open: 'Deschide',
+        connect: 'Conectează',
+        getIt: 'Obține',
+        connected: 'conectată',
+        close: 'Închide',
+        disconnect: 'Deconectează',
+        disconnectTitle: 'Deconectezi {app}?',
+        disconnectBody:
+          'Cele două aplicații nu mai lucrează împreună pentru tine. Abonamentele și tot ce ai creat în ele rămân.',
+        cancel: 'Renunță',
+        intro:
+          'Aplicații care lucrează împreună cu Planificatorul de mese. Conectează-le o dată pe DevQuake; le poți deconecta oricând din Cont → Aplicații conectate.',
+      },
+      allergens: {
+        gluten: 'Gluten',
+        crustaceans: 'Crustacee',
+        eggs: 'Ouă',
+        fish: 'Pește',
+        peanuts: 'Arahide',
+        soy: 'Soia',
+        milk: 'Lapte',
+        nuts: 'Fructe cu coajă',
+        celery: 'Țelină',
+        mustard: 'Muștar',
+        sesame: 'Susan',
+        sulphites: 'Sulfiți',
+        lupin: 'Lupin',
+        molluscs: 'Moluște',
+      },
+      print: {
+        by: 'Tipărit de {name} la {date}',
+      },
+      areas: {
+        title: 'Zonele șoferilor',
+        intro:
+          'Cine livrează cui. Propune zone din adrese, ca șoferii să nu treacă unii pe străzile altora, mută persoane la alt șofer unde e nevoie, salvează, apoi construiește traseele unei zile, ale unei săptămâni sau ale unei luni și tipărește-le.',
+        propose: 'Propune zone din adrese',
+        proposed: 'Zone propuse: verifică-le, schimbă ce vrei și salvează.',
+        proposeHint:
+          'Propunerea împarte persoanele după direcția față de bucătărie, proporțional cu cât lucrează fiecare șofer. Nimic nu se schimbă până nu salvezi.',
+        previewHint:
+          'Aceasta este o previzualizare: persoanele cu portocaliu trec la alt șofer când salvezi.',
+        locate: {
+          one: 'Găsește {count} adresă pe hartă',
+          few: 'Găsește {count} adrese pe hartă',
+          other: 'Găsește {count} de adrese pe hartă',
+        },
+        located: 'Adrese căutate.',
+        noMap: {
+          one: '{count} adresă nu e încă pe hartă: fără cheia hărții rămâne unde este.',
+          few: '{count} adrese nu sunt încă pe hartă: fără cheia hărții rămân unde sunt.',
+          other: '{count} de adrese nu sunt încă pe hartă: fără cheia hărții rămân unde sunt.',
+        },
+        save: {
+          one: 'Salvează {count} modificare',
+          few: 'Salvează {count} modificări',
+          other: 'Salvează {count} de modificări',
+        },
+        saved: {
+          one: '{count} modificare salvată.',
+          few: '{count} modificări salvate.',
+          other: '{count} de modificări salvate.',
+        },
+        undo: 'Anulează modificările',
+        noArea: 'Fără zonă',
+        noAddress: 'fără adresă',
+        notOnMap: 'încă nu e pe hartă',
+        moveTo: 'Șoferul pentru {name}',
+        routesTitle: 'Trasee din zone',
+        routesIntro:
+          'Pentru fiecare zi din interval, fiecare șofer care lucrează în ziua aceea primește persoanele din zona sa care au livrare, cele mai apropiate de bucătărie mai întâi. Bifele deja date rămân; persoanele unui șofer care nu lucrează în ziua aceea se repartizează manual.',
+        from: 'De la',
+        to: 'Până la',
+        build: 'Construiește traseele',
+        buildTitle: 'Construiești traseele din zone?',
+        buildBody:
+          'Traseele planificate ale acestor zile sunt înlocuite de zone. Livrările deja bifate rămân.',
+        built: 'Trasee construite.',
+        builtToPlace: {
+          one: 'Trasee construite. {count} livrare nu are șofer în ziua aceea: repartizeaz-o pe pagina zilei.',
+          few: 'Trasee construite. {count} livrări nu au șofer în ziua aceea: repartizează-le pe pagina zilei.',
+          other:
+            'Trasee construite. {count} de livrări nu au șofer în ziua aceea: repartizează-le pe pagina zilei.',
+        },
+        saveFirst: 'Salvează mai întâi zonele.',
+        printFor: 'Tipărește pentru',
+        allDrivers: 'Toți șoferii',
+        printDay: 'Tipărește ziua',
+        printWeek: 'Tipărește săptămâna',
+        printMonth: 'Tipărește luna',
+        printTitle: 'Foi de traseu',
+        sheets: {
+          one: '{count} foaie',
+          few: '{count} foi',
+          other: '{count} de foi',
+        },
+        noSheets: 'Niciun traseu în aceste zile.',
+        stops: {
+          one: '{count} oprire',
+          few: '{count} opriri',
+          other: '{count} de opriri',
+        },
+      },
+      demo: {
+        badge: 'Demo',
+        viewAs: 'Vezi ca',
+        intro:
+          'Încearcă aplicația cu o organizație demo a ta, cu persoane inventate, date de identificare, meniuri, șoferi, traseele de azi și dosare medicale, ca să încerci fiecare funcție. Ești organizatorul și șoferul ei și o poți vedea în orice rol.',
+        create: 'Încearcă cu date demo',
+        creating: 'Se creează demo-ul…',
+        created: 'Organizația demo a fost creată.',
+      },
       licence: {
         missing: 'Fără permis',
         expired: 'Permis expirat la {date}',
@@ -1772,6 +2385,8 @@ export const screens = defineMessages(
         },
       },
       orgPage: {
+        contactHint:
+          'Apare pe pagina voastră și primește răspunsurile la invitațiile voastre. Lasă gol pentru a folosi contact@devquake.com al DevQuake.',
         previewNote:
           'Cât timp pagina este privată, o vede doar personalul organizației. Activeaz-o la Organizația ca s-o vadă vizitatorii.',
         logo: 'Siglă',
@@ -1796,6 +2411,25 @@ export const screens = defineMessages(
         deleted: '{name} a fost ștearsă.',
       },
       errors: {
+        noDrivers: 'Adaugă mai întâi un șofer activ.',
+        spanTooLong: 'Alege cel mult {max} zile.',
+        contactEmail:
+          'Aceasta nu este o adresă de e-mail validă: verific-o (de exemplu birou@exemplu.ro).',
+        inviteNotFound: 'Această invitație nu mai este deschisă.',
+        inviteEmailMax: 'Această invitație a fost deja trimisă de {max} ori: creează una nouă.',
+        inviteEmailInvalid: 'Verifică adresa de e-mail.',
+        inviteEmailLimit:
+          'Prea multe invitații prin e-mail azi: încearcă mâine sau copiază linkul și trimite-l tu.',
+        inviteEmailDeclined:
+          'Această adresă a cerut să nu primească invitații de la DevQuake: dă-i linkul sau codul QR pe altă cale.',
+        inviteEmailUnavailable:
+          'E-mailul nu a putut fi trimis acum. Copiază linkul și trimite-l tu sau încearcă mai târziu.',
+        linkNotConnected: 'Conectează mai întâi acea aplicație („Funcționează cu”, jos pe pagină).',
+        linkRateLimited:
+          'Prea multe cereri către cealaltă aplicație: încearcă din nou peste un minut.',
+        linkNotFound: 'Nu s-a găsit în cealaltă aplicație (șters sau nu e al tău).',
+        linkFailed: 'Cealaltă aplicație nu a răspuns. Încearcă mai târziu.',
+        noIngredients: 'Nu sunt feluri din Cartea de bucate în meniurile acestei săptămâni.',
         licenceExpired: 'Acest permis a expirat: încarcă unul valabil.',
         importNoLicence:
           'Acest șofer nu are încă poza permisului: încarc-o mai întâi în aplicație.',
@@ -1958,6 +2592,7 @@ export const screens = defineMessages(
         contact: 'Kapcsolattartó',
       },
       fields: {
+        contactEmail: 'Kapcsolattartási e-mail',
         idExpiresOn: 'Személyi igazolvány érvényes',
         licenceExpiry: 'Jogosítvány érvényes',
         licenceNumber: 'Jogosítvány száma',
@@ -2073,7 +2708,39 @@ export const screens = defineMessages(
           document_extra2_deleted: 'Eltávolította az egyéb iratot (2)',
         },
       },
+      inviteEmail: {
+        contact: 'Kérdésed van? Írj ide: {email}.',
+        subject: '{org}: csatlakozz mint {role}',
+        heading: 'Csatlakozz: {org} a Szociális konyhában',
+        body: '{org} meghív, hogy segíts mint {role}. A szervezet a Szociális konyhával tervezi az étkezéseket, a kiszállításokat és a gondozottjait.',
+        driver:
+          'Sofőrként a telefonodon látod a napi útvonaladat, hogy mi kerül az egyes csomagokba, és kipipálod a kiszállításokat.',
+        howTo:
+          'A meghívó csak neked szól, és {date}-ig érvényes. Jelentkezz be, vagy hozz létre ingyenes DevQuake-fiókot, majd fogadd el.',
+        button: 'Meghívó elfogadása',
+      },
       staff: {
+        nobody: 'Még senki.',
+        sentTitle: 'Elküldött meghívók',
+        noneSent: 'Az elmúlt hat hónapban nem volt meghívó.',
+        sentOn: 'Küldve',
+        sentBy: 'Küldte',
+        status: 'Állapot',
+        statusAccepted: 'Elfogadta: {name}, {date}',
+        status_open: 'Nyitott eddig: {date}',
+        status_expired: 'Lejárt: {date}',
+        status_revoked: 'Visszavonva: {date}',
+        downloadQr: 'QR letöltése',
+        sendEmail: 'Küldés e-mailben',
+        emailAddress: 'E-mail-cím',
+        emailLanguage: 'Az e-mail nyelve',
+        send: 'Küldés',
+        emailHint: 'Az e-mailben benne van a link és ez a QR-kód. Egyszer működik, egy személynek.',
+        emailHintDriver:
+          'Az e-mailben benne van a link, ez a QR-kód és a sofőrök telefonos alkalmazása.',
+        emailedTo: 'Elküldve ide: {hint}',
+        emailSent: 'Meghívó elküldve.',
+        emailAlready: 'Ma már elküldtük erre a címre.',
         title: 'Munkatársak',
         link: 'Munkatársak és meghívók',
         intro:
@@ -2315,6 +2982,160 @@ export const screens = defineMessages(
         removeTitle: 'Eltávolítod: „{title}”?',
         removeBody: 'Az irat véglegesen törlődik.',
       },
+      kitchenApps: {
+        dishesTitle: 'Fogások a Szakácskönyvből',
+        dishesIntro:
+          'Válassz recepteket a Szakácskönyvedből: a szervezet megtart egy másolatot. Írd egy fogás nevét a menü egy sorába (vagy szúrd be oda), és a konyhai lap megmutatja a hozzávalóit a napi adagokra.',
+        ingredientsCount: {
+          one: '{count} hozzávaló',
+          other: '{count} hozzávaló',
+        },
+        remove: 'Eltávolítás',
+        removed: 'Fogás eltávolítva.',
+        noDishes: 'Még nincsenek fogások.',
+        searchPlaceholder: 'Keresés a receptjeid között',
+        search: 'Keresés',
+        servings: {
+          one: '{count} főre',
+          other: '{count} főre',
+        },
+        add: 'Hozzáadás',
+        added: '{name} hozzáadva a fogásokhoz.',
+        noRecipes: 'Nincs ilyen recept.',
+        cookbookOffer:
+          'Kapcsold össze a Szakácskönyvet, hogy a menük fogásait a receptjeid közül válaszd.',
+        connect: 'Összekapcsolás',
+        getIt: 'Beszerzés',
+        shoppingTitle: 'A hét beszerzése',
+        shoppingIntro:
+          'Minden, ami a hét fogásaihoz kell, minden adagra és diétára, egyetlen listába összesítve.',
+        shoppingOffer:
+          'Kapcsold össze a Bevásárlólistákat, hogy a hét hozzávalóit a beszerzési listára küldd.',
+        prepare: 'Lista előkészítése',
+        nothingToBuy: 'A hét menüiben nincs fogás a Szakácskönyvből: még nincs mit venni.',
+        list: 'Lista',
+        purchasing: 'beszerzési lista',
+        noLists: 'Még nincs listád a Bevásárlólistákban: előbb ott hozz létre egyet.',
+        send: {
+          one: '{count} tétel küldése',
+          other: '{count} tétel küldése',
+        },
+        sendAgain: 'Küldés újra',
+        sendAgainBody:
+          'Ezek a hozzávalók erre a hétre már erre a listára kerültek. Elküldöd még egyszer?',
+        alreadySent: 'Már elküldve',
+        sent: 'Elküldve ide: {list}.',
+        cancel: 'Mégse',
+        insertDish: 'Fogás beszúrása…',
+        ingredients: 'Hozzávalók',
+      },
+      worksWith: {
+        title: 'Működik ezekkel',
+        open: 'Megnyitás',
+        connect: 'Összekapcsolás',
+        getIt: 'Beszerzés',
+        connected: 'összekapcsolva',
+        close: 'Bezárás',
+        disconnect: 'Leválasztás',
+        disconnectTitle: 'Leválasztod: {app}?',
+        disconnectBody:
+          'A két alkalmazás többé nem dolgozik együtt neked. Az előfizetéseid és minden, amit bennük létrehoztál, megmarad.',
+        cancel: 'Mégse',
+        intro:
+          'Alkalmazások, amelyek együttműködnek az Étkezéstervezővel. Kapcsold össze őket egyszer a DevQuake-en; bármikor leválaszthatod a Fiók → Kapcsolt alkalmazások résznél.',
+      },
+      allergens: {
+        gluten: 'Glutén',
+        crustaceans: 'Rákfélék',
+        eggs: 'Tojás',
+        fish: 'Hal',
+        peanuts: 'Földimogyoró',
+        soy: 'Szója',
+        milk: 'Tej',
+        nuts: 'Diófélék',
+        celery: 'Zeller',
+        mustard: 'Mustár',
+        sesame: 'Szezám',
+        sulphites: 'Szulfitok',
+        lupin: 'Csillagfürt',
+        molluscs: 'Puhatestűek',
+      },
+      print: {
+        by: 'Nyomtatta: {name}, {date}',
+      },
+      areas: {
+        title: 'Sofőrkörzetek',
+        intro:
+          'Ki kinek szállít. Javasolj körzeteket a címek alapján, hogy a sofőrök ne keresztezzék egymás utcáit, szükség esetén tedd át az embereket másik sofőrhöz, ments, majd készítsd el egy nap, egy hét vagy egy hónap útvonalait, és nyomtasd ki őket.',
+        propose: 'Körzetek javaslata a címekből',
+        proposed: 'Körzetek javasolva: ellenőrizd őket, módosíts, amit szeretnél, és ments.',
+        proposeHint:
+          'A javaslat a konyhától mért irány szerint osztja el az embereket, aszerint, hogy ki mennyit dolgozik. Mentés nélkül semmi sem változik.',
+        previewHint:
+          'Ez előnézet: a narancssárgával jelölt emberek mentéskor másik sofőrhöz kerülnek.',
+        locate: {
+          one: '{count} cím megkeresése a térképen',
+          other: '{count} cím megkeresése a térképen',
+        },
+        located: 'Címek megkeresve.',
+        noMap: {
+          one: '{count} cím még nincs a térképen: térképkulcs nélkül ott marad, ahol van.',
+          other: '{count} cím még nincs a térképen: térképkulcs nélkül ott maradnak, ahol vannak.',
+        },
+        save: {
+          one: '{count} módosítás mentése',
+          other: '{count} módosítás mentése',
+        },
+        saved: {
+          one: '{count} módosítás mentve.',
+          other: '{count} módosítás mentve.',
+        },
+        undo: 'Módosítások elvetése',
+        noArea: 'Nincs körzet',
+        noAddress: 'nincs cím',
+        notOnMap: 'még nincs a térképen',
+        moveTo: '{name} sofőrje',
+        routesTitle: 'Útvonalak a körzetekből',
+        routesIntro:
+          'Az időszak minden napján minden aznap dolgozó sofőr megkapja a körzetéből azokat, akiknek szállítás jár, a konyhához legközelebbiekkel kezdve. A már kipipált szállítások maradnak; az aznap nem dolgozó sofőr emberei kézzel osztandók be.',
+        from: 'Ettől',
+        to: 'Eddig',
+        build: 'Útvonalak elkészítése',
+        buildTitle: 'Elkészíted az útvonalakat a körzetekből?',
+        buildBody:
+          'Ezeknek a napoknak a tervezett útvonalait a körzetek váltják fel. A már kipipált szállítások maradnak.',
+        built: 'Útvonalak elkészítve.',
+        builtToPlace: {
+          one: 'Útvonalak elkészítve. {count} szállításnak nincs aznap sofőrje: oszd be a nap oldalán.',
+          other:
+            'Útvonalak elkészítve. {count} szállításnak nincs aznap sofőrje: oszd be őket a nap oldalán.',
+        },
+        saveFirst: 'Előbb mentsd a körzeteket.',
+        printFor: 'Nyomtatás neki',
+        allDrivers: 'Minden sofőr',
+        printDay: 'A nap nyomtatása',
+        printWeek: 'A hét nyomtatása',
+        printMonth: 'A hónap nyomtatása',
+        printTitle: 'Útvonallapok',
+        sheets: {
+          one: '{count} lap',
+          other: '{count} lap',
+        },
+        noSheets: 'Nincs útvonal ezeken a napokon.',
+        stops: {
+          one: '{count} megálló',
+          other: '{count} megálló',
+        },
+      },
+      demo: {
+        badge: 'Demó',
+        viewAs: 'Megtekintés mint',
+        intro:
+          'Próbáld ki az alkalmazást egy saját demó szervezettel, kitalált személyekkel, személyes azonosítókkal, menükkel, sofőrökkel, a mai útvonalakkal és egészségügyi aktákkal, hogy minden funkciót kipróbálhass. Te vagy a szervezője és a sofőrje, és bármelyik szerepkörben megtekintheted.',
+        create: 'Kipróbálás demóadatokkal',
+        creating: 'A demó készül…',
+        created: 'A demó szervezet elkészült.',
+      },
       licence: {
         missing: 'Nincs jogosítvány',
         expired: 'A jogosítvány lejárt: {date}',
@@ -2389,6 +3210,8 @@ export const screens = defineMessages(
         },
       },
       orgPage: {
+        contactHint:
+          'Megjelenik az oldalatokon, és ide érkeznek a meghívókra adott válaszok. Hagyd üresen a DevQuake contact@devquake.com címéhez.',
         previewNote:
           'Amíg az oldal privát, csak a szervezet munkatársai látják. Kapcsold be a Szervezet résznél, hogy a látogatók is lássák.',
         logo: 'Logó',
@@ -2412,6 +3235,24 @@ export const screens = defineMessages(
         deleted: '{name} törölve.',
       },
       errors: {
+        noDrivers: 'Előbb adj hozzá egy aktív sofőrt.',
+        spanTooLong: 'Legfeljebb {max} napot válassz.',
+        contactEmail: 'Ez nem érvényes e-mail-cím: ellenőrizd (például iroda@pelda.hu).',
+        inviteNotFound: 'Ez a meghívó már nem nyitott.',
+        inviteEmailMax: 'Ezt a meghívót már {max}-szor elküldtük: készíts újat.',
+        inviteEmailInvalid: 'Ellenőrizd az e-mail-címet.',
+        inviteEmailLimit:
+          'Ma túl sok meghívó ment ki e-mailben: próbáld holnap, vagy másold ki a linket és küldd el magad.',
+        inviteEmailDeclined:
+          'Ez a cím nem kér meghívót a DevQuake-től: add át a linket vagy a QR-kódot más módon.',
+        inviteEmailUnavailable:
+          'Az e-mailt most nem sikerült elküldeni. Másold ki a linket és küldd el magad, vagy próbáld később.',
+        linkNotConnected:
+          'Előbb kapcsold össze azt az alkalmazást („Együttműködik”, az oldal alján).',
+        linkRateLimited: 'Túl sok kérés a másik alkalmazás felé: próbáld újra egy perc múlva.',
+        linkNotFound: 'Nem található a másik alkalmazásban (törölve, vagy nem a tiéd).',
+        linkFailed: 'A másik alkalmazás nem válaszolt. Próbáld később.',
+        noIngredients: 'A hét menüiben nincs fogás a Szakácskönyvből.',
         licenceExpired: 'Ez a jogosítvány lejárt: tölts fel egy érvényeset.',
         importNoLicence:
           'Ennek a sofőrnek még nincs feltöltött jogosítványképe: előbb töltsd fel az alkalmazásban.',
@@ -2575,6 +3416,7 @@ export const screens = defineMessages(
         contact: 'Persona di contatto',
       },
       fields: {
+        contactEmail: 'Email di contatto',
         idExpiresOn: 'Carta d’identità valida fino al',
         licenceExpiry: 'Patente valida fino al',
         licenceNumber: 'Numero della patente',
@@ -2691,7 +3533,40 @@ export const screens = defineMessages(
           document_extra2_deleted: 'Ha rimosso altro documento (2)',
         },
       },
+      inviteEmail: {
+        contact: 'Domande? Scrivi a {email}.',
+        subject: '{org}: unisciti come {role}',
+        heading: 'Unisciti a {org} su Mensa sociale',
+        body: '{org} ti invita ad aiutare come {role}. L’organizzazione usa Mensa sociale per pianificare pasti, consegne e le persone di cui si prende cura.',
+        driver:
+          'Come autista vedi sul telefono il giro del giorno, cosa va in ogni pacco, e spunti ogni consegna.',
+        howTo:
+          'L’invito è solo per te e vale fino al {date}. Accedi o crea un account DevQuake gratuito, poi accettalo.',
+        button: 'Accetta l’invito',
+      },
       staff: {
+        nobody: 'Ancora nessuno.',
+        sentTitle: 'Inviti inviati',
+        noneSent: 'Nessun invito negli ultimi sei mesi.',
+        sentOn: 'Inviato',
+        sentBy: 'Da',
+        status: 'Stato',
+        statusAccepted: 'Accettato da {name} il {date}',
+        status_open: 'Aperto fino al {date}',
+        status_expired: 'Scaduto il {date}',
+        status_revoked: 'Revocato il {date}',
+        downloadQr: 'Scarica il QR',
+        sendEmail: 'Invia per email',
+        emailAddress: 'Indirizzo email',
+        emailLanguage: 'Lingua dell’email',
+        send: 'Invia',
+        emailHint:
+          'L’email contiene il link e questo codice QR. Funziona una volta, per una persona.',
+        emailHintDriver:
+          'L’email contiene il link, questo codice QR e l’app degli autisti per il telefono.',
+        emailedTo: 'Inviato a {hint}',
+        emailSent: 'Invito inviato.',
+        emailAlready: 'Già inviato oggi a questo indirizzo.',
         title: 'Personale',
         link: 'Personale e inviti',
         intro:
@@ -2944,6 +3819,161 @@ export const screens = defineMessages(
         removeTitle: 'Rimuovere «{title}»?',
         removeBody: 'Il documento viene eliminato per sempre.',
       },
+      kitchenApps: {
+        dishesTitle: 'Piatti dal Ricettario',
+        dishesIntro:
+          'Scegli ricette dal tuo Ricettario: l’organizzazione ne tiene una copia. Scrivi il nome di un piatto come riga di un menù (o inseriscilo lì) e il foglio cucina mostra i suoi ingredienti per le porzioni del giorno.',
+        ingredientsCount: {
+          one: '{count} ingrediente',
+          other: '{count} ingredienti',
+        },
+        remove: 'Rimuovi',
+        removed: 'Piatto rimosso.',
+        noDishes: 'Ancora nessun piatto.',
+        searchPlaceholder: 'Cerca nelle tue ricette',
+        search: 'Cerca',
+        servings: {
+          one: 'per {count}',
+          other: 'per {count}',
+        },
+        add: 'Aggiungi',
+        added: '{name} aggiunto ai piatti.',
+        noRecipes: 'Nessuna ricetta trovata.',
+        cookbookOffer: 'Collega il Ricettario per scegliere i piatti dei menù dalle tue ricette.',
+        connect: 'Collega',
+        getIt: 'Ottienila',
+        shoppingTitle: 'Gli acquisti della settimana',
+        shoppingIntro:
+          'Tutto ciò che serve ai piatti di questa settimana, per ogni porzione e dieta, riunito in un’unica lista.',
+        shoppingOffer:
+          'Collega le Liste della spesa per inviare gli ingredienti della settimana alla lista d’acquisto.',
+        prepare: 'Prepara la lista',
+        nothingToBuy:
+          'Nessun piatto del Ricettario nei menù di questa settimana: ancora niente da comprare.',
+        list: 'Lista',
+        purchasing: 'lista d’acquisto',
+        noLists: 'Non hai ancora nessuna lista nelle Liste della spesa: creane prima una lì.',
+        send: {
+          one: 'Invia {count} articolo',
+          other: 'Invia {count} articoli',
+        },
+        sendAgain: 'Invia di nuovo',
+        sendAgainBody:
+          'Questi ingredienti sono già andati su questa lista per questa settimana. Inviarli ancora una volta?',
+        alreadySent: 'Già inviato',
+        sent: 'Inviato a {list}.',
+        cancel: 'Annulla',
+        insertDish: 'Inserisci un piatto…',
+        ingredients: 'Ingredienti',
+      },
+      worksWith: {
+        title: 'Funziona con',
+        open: 'Apri',
+        connect: 'Collega',
+        getIt: 'Ottienila',
+        connected: 'collegata',
+        close: 'Chiudi',
+        disconnect: 'Scollega',
+        disconnectTitle: 'Scollegare {app}?',
+        disconnectBody:
+          'Le due app smettono di lavorare insieme per te. I tuoi abbonamenti e tutto ciò che hai creato in esse restano.',
+        cancel: 'Annulla',
+        intro:
+          'App che lavorano insieme al Pianificatore dei pasti. Collegale una volta su DevQuake; puoi scollegarle quando vuoi in Account → App collegate.',
+      },
+      allergens: {
+        gluten: 'Glutine',
+        crustaceans: 'Crostacei',
+        eggs: 'Uova',
+        fish: 'Pesce',
+        peanuts: 'Arachidi',
+        soy: 'Soia',
+        milk: 'Latte',
+        nuts: 'Frutta a guscio',
+        celery: 'Sedano',
+        mustard: 'Senape',
+        sesame: 'Sesamo',
+        sulphites: 'Solfiti',
+        lupin: 'Lupini',
+        molluscs: 'Molluschi',
+      },
+      print: {
+        by: 'Stampato da {name} il {date}',
+      },
+      areas: {
+        title: 'Zone degli autisti',
+        intro:
+          'Chi consegna a chi. Proponi zone dagli indirizzi così gli autisti non si incrociano, sposta le persone a un altro autista dove serve, salva, poi crea i giri di un giorno, di una settimana o di un mese e stampali.',
+        propose: 'Proponi zone dagli indirizzi',
+        proposed: 'Zone proposte: controllale, cambia ciò che vuoi e salva.',
+        proposeHint:
+          'La proposta divide le persone per direzione dalla cucina, in proporzione a quanto lavora ogni autista. Nulla cambia finché non salvi.',
+        previewHint:
+          'Questa è un’anteprima: le persone in arancione passano a un altro autista quando salvi.',
+        locate: {
+          one: 'Trova {count} indirizzo sulla mappa',
+          other: 'Trova {count} indirizzi sulla mappa',
+        },
+        located: 'Indirizzi cercati.',
+        noMap: {
+          one: '{count} indirizzo non è ancora sulla mappa: senza la chiave della mappa resta dov’è.',
+          other:
+            '{count} indirizzi non sono ancora sulla mappa: senza la chiave della mappa restano dove sono.',
+        },
+        save: {
+          one: 'Salva {count} modifica',
+          other: 'Salva {count} modifiche',
+        },
+        saved: {
+          one: '{count} modifica salvata.',
+          other: '{count} modifiche salvate.',
+        },
+        undo: 'Annulla le modifiche',
+        noArea: 'Nessuna zona',
+        noAddress: 'nessun indirizzo',
+        notOnMap: 'non ancora sulla mappa',
+        moveTo: 'Autista per {name}',
+        routesTitle: 'Giri dalle zone',
+        routesIntro:
+          'Per ogni giorno del periodo, ogni autista che lavora quel giorno riceve le persone della sua zona che hanno una consegna, le più vicine alla cucina per prime. Le spunte già date restano; le persone di un autista che quel giorno non lavora si assegnano a mano.',
+        from: 'Dal',
+        to: 'Al',
+        build: 'Crea i giri',
+        buildTitle: 'Creare i giri dalle zone?',
+        buildBody:
+          'I giri pianificati di questi giorni vengono sostituiti dalle zone. Le consegne già spuntate restano.',
+        built: 'Giri creati.',
+        builtToPlace: {
+          one: 'Giri creati. {count} consegna non ha un autista quel giorno: assegnala nella pagina del giorno.',
+          other:
+            'Giri creati. {count} consegne non hanno un autista quel giorno: assegnale nella pagina del giorno.',
+        },
+        saveFirst: 'Salva prima le zone.',
+        printFor: 'Stampa per',
+        allDrivers: 'Tutti gli autisti',
+        printDay: 'Stampa il giorno',
+        printWeek: 'Stampa la settimana',
+        printMonth: 'Stampa il mese',
+        printTitle: 'Fogli di giro',
+        sheets: {
+          one: '{count} foglio',
+          other: '{count} fogli',
+        },
+        noSheets: 'Nessun giro in questi giorni.',
+        stops: {
+          one: '{count} fermata',
+          other: '{count} fermate',
+        },
+      },
+      demo: {
+        badge: 'Demo',
+        viewAs: 'Visualizza come',
+        intro:
+          'Prova l’app con una tua organizzazione demo, con persone inventate, dati identificativi, menù, autisti, i giri di oggi e cartelle mediche, per provare ogni funzione. Ne sei l’organizzatore e l’autista e puoi vederla in qualsiasi ruolo.',
+        create: 'Prova con dati demo',
+        creating: 'Creazione della demo…',
+        created: 'Organizzazione demo creata.',
+      },
       licence: {
         missing: 'Nessuna patente',
         expired: 'Patente scaduta il {date}',
@@ -3020,6 +4050,8 @@ export const screens = defineMessages(
         },
       },
       orgPage: {
+        contactHint:
+          'Compare sulla vostra pagina e riceve le risposte ai vostri inviti. Lascia vuoto per usare contact@devquake.com di DevQuake.',
         previewNote:
           'Finché la pagina è privata, la vede solo il personale della tua organizzazione. Attivala in Organizzazione perché la vedano i visitatori.',
         logo: 'Logo',
@@ -3044,6 +4076,24 @@ export const screens = defineMessages(
         deleted: '{name} è stata eliminata.',
       },
       errors: {
+        noDrivers: 'Aggiungi prima un autista attivo.',
+        spanTooLong: 'Scegli al massimo {max} giorni.',
+        contactEmail:
+          'Questo non è un indirizzo email valido: controllalo (per esempio ufficio@esempio.it).',
+        inviteNotFound: 'Questo invito non è più aperto.',
+        inviteEmailMax: 'Questo invito è già stato inviato {max} volte: creane uno nuovo.',
+        inviteEmailInvalid: 'Controlla l’indirizzo email.',
+        inviteEmailLimit:
+          'Troppi inviti via email oggi: riprova domani, oppure copia il link e invialo tu.',
+        inviteEmailDeclined:
+          'Questo indirizzo ha chiesto di non ricevere inviti da DevQuake: dagli il link o il QR in un altro modo.',
+        inviteEmailUnavailable:
+          'Non è stato possibile inviare l’email ora. Copia il link e invialo tu, o riprova più tardi.',
+        linkNotConnected: 'Collega prima quell’app («Funziona con», in fondo alla pagina).',
+        linkRateLimited: 'Troppe richieste all’altra app: riprova tra un minuto.',
+        linkNotFound: 'Non trovato nell’altra app (eliminato o non tuo).',
+        linkFailed: 'L’altra app non ha risposto. Riprova più tardi.',
+        noIngredients: 'Nessun piatto del Ricettario nei menù di questa settimana.',
         licenceExpired: 'Questa patente è scaduta: carica una patente valida.',
         importNoLicence:
           'Questo autista non ha ancora la foto della patente: caricala prima nell’app.',
@@ -3208,6 +4258,7 @@ export const screens = defineMessages(
         contact: 'Persona de contacto',
       },
       fields: {
+        contactEmail: 'Correo de contacto',
         idExpiresOn: 'DNI válido hasta',
         licenceExpiry: 'Carné válido hasta',
         licenceNumber: 'Número del carné',
@@ -3324,7 +4375,40 @@ export const screens = defineMessages(
           document_extra2_deleted: 'Quitó otro documento (2)',
         },
       },
+      inviteEmail: {
+        contact: '¿Preguntas? Escribe a {email}.',
+        subject: '{org}: únete como {role}',
+        heading: 'Únete a {org} en Comedor social',
+        body: '{org} te invita a ayudar como {role}. La organización usa Comedor social para planificar comidas, repartos y a las personas que atiende.',
+        driver:
+          'Como conductor ves en el móvil tu ruta del día, qué va en cada paquete, y marcas cada entrega.',
+        howTo:
+          'La invitación es solo para ti y vale hasta el {date}. Inicia sesión o crea una cuenta gratuita de DevQuake y acéptala.',
+        button: 'Aceptar la invitación',
+      },
       staff: {
+        nobody: 'Nadie todavía.',
+        sentTitle: 'Invitaciones enviadas',
+        noneSent: 'Ninguna invitación en los últimos seis meses.',
+        sentOn: 'Enviada',
+        sentBy: 'Por',
+        status: 'Estado',
+        statusAccepted: 'Aceptada por {name} el {date}',
+        status_open: 'Abierta hasta el {date}',
+        status_expired: 'Caducó el {date}',
+        status_revoked: 'Revocada el {date}',
+        downloadQr: 'Descargar QR',
+        sendEmail: 'Enviar por correo',
+        emailAddress: 'Dirección de correo',
+        emailLanguage: 'Idioma del correo',
+        send: 'Enviar',
+        emailHint:
+          'El correo incluye el enlace y este código QR. Funciona una vez, para una persona.',
+        emailHintDriver:
+          'El correo incluye el enlace, este código QR y la aplicación de conductores para el móvil.',
+        emailedTo: 'Enviado a {hint}',
+        emailSent: 'Invitación enviada.',
+        emailAlready: 'Ya se envió hoy a esta dirección.',
         title: 'Personal',
         link: 'Personal e invitaciones',
         intro:
@@ -3576,6 +4660,162 @@ export const screens = defineMessages(
         removeTitle: '¿Quitar «{title}»?',
         removeBody: 'El documento se elimina para siempre.',
       },
+      kitchenApps: {
+        dishesTitle: 'Platos del Recetario',
+        dishesIntro:
+          'Elige recetas de tu Recetario: la organización guarda una copia. Escribe el nombre de un plato como línea de un menú (o insértalo allí) y la hoja de cocina muestra sus ingredientes para las raciones del día.',
+        ingredientsCount: {
+          one: '{count} ingrediente',
+          other: '{count} ingredientes',
+        },
+        remove: 'Quitar',
+        removed: 'Plato quitado.',
+        noDishes: 'Aún no hay platos.',
+        searchPlaceholder: 'Busca en tus recetas',
+        search: 'Buscar',
+        servings: {
+          one: 'para {count}',
+          other: 'para {count}',
+        },
+        add: 'Añadir',
+        added: '{name} añadido a los platos.',
+        noRecipes: 'No se encontró ninguna receta.',
+        cookbookOffer:
+          'Conecta el Recetario para elegir los platos de los menús entre tus recetas.',
+        connect: 'Conectar',
+        getIt: 'Conseguirla',
+        shoppingTitle: 'Las compras de la semana',
+        shoppingIntro:
+          'Todo lo que necesitan los platos de esta semana, para todas las raciones y dietas, reunido en una sola lista.',
+        shoppingOffer:
+          'Conecta las Listas de la compra para enviar los ingredientes de la semana a la lista de compras.',
+        prepare: 'Preparar la lista',
+        nothingToBuy:
+          'No hay platos del Recetario en los menús de esta semana: aún no hay nada que comprar.',
+        list: 'Lista',
+        purchasing: 'lista de compras',
+        noLists: 'Aún no tienes ninguna lista en las Listas de la compra: crea una allí primero.',
+        send: {
+          one: 'Enviar {count} artículo',
+          other: 'Enviar {count} artículos',
+        },
+        sendAgain: 'Enviar de nuevo',
+        sendAgainBody:
+          'Estos ingredientes ya se enviaron a esta lista para esta semana. ¿Enviarlos otra vez?',
+        alreadySent: 'Ya enviado',
+        sent: 'Enviado a {list}.',
+        cancel: 'Cancelar',
+        insertDish: 'Insertar un plato…',
+        ingredients: 'Ingredientes',
+      },
+      worksWith: {
+        title: 'Funciona con',
+        open: 'Abrir',
+        connect: 'Conectar',
+        getIt: 'Conseguirla',
+        connected: 'conectada',
+        close: 'Cerrar',
+        disconnect: 'Desconectar',
+        disconnectTitle: '¿Desconectar {app}?',
+        disconnectBody:
+          'Las dos apps dejan de funcionar juntas para ti. Tus suscripciones y todo lo que creaste en ellas se mantienen.',
+        cancel: 'Cancelar',
+        intro:
+          'Apps que funcionan junto con el Planificador de comidas. Conéctalas una vez en DevQuake; puedes desconectarlas cuando quieras en Cuenta → Apps conectadas.',
+      },
+      allergens: {
+        gluten: 'Gluten',
+        crustaceans: 'Crustáceos',
+        eggs: 'Huevos',
+        fish: 'Pescado',
+        peanuts: 'Cacahuetes',
+        soy: 'Soja',
+        milk: 'Leche',
+        nuts: 'Frutos de cáscara',
+        celery: 'Apio',
+        mustard: 'Mostaza',
+        sesame: 'Sésamo',
+        sulphites: 'Sulfitos',
+        lupin: 'Altramuces',
+        molluscs: 'Moluscos',
+      },
+      print: {
+        by: 'Impreso por {name} el {date}',
+      },
+      areas: {
+        title: 'Zonas de los conductores',
+        intro:
+          'Quién entrega a quién. Propón zonas a partir de las direcciones para que los conductores no se crucen, mueve personas a otro conductor donde haga falta, guarda, y luego crea las rutas de un día, una semana o un mes e imprímelas.',
+        propose: 'Proponer zonas a partir de las direcciones',
+        proposed: 'Zonas propuestas: revísalas, cambia lo que quieras y guarda.',
+        proposeHint:
+          'La propuesta reparte a las personas según la dirección desde la cocina, en proporción a lo que trabaja cada conductor. Nada cambia hasta que guardes.',
+        previewHint:
+          'Esto es una vista previa: las personas en naranja pasan a otro conductor al guardar.',
+        locate: {
+          one: 'Buscar {count} dirección en el mapa',
+          other: 'Buscar {count} direcciones en el mapa',
+        },
+        located: 'Direcciones buscadas.',
+        noMap: {
+          one: '{count} dirección aún no está en el mapa: sin la clave del mapa se queda donde está.',
+          other:
+            '{count} direcciones aún no están en el mapa: sin la clave del mapa se quedan donde están.',
+        },
+        save: {
+          one: 'Guardar {count} cambio',
+          other: 'Guardar {count} cambios',
+        },
+        saved: {
+          one: '{count} cambio guardado.',
+          other: '{count} cambios guardados.',
+        },
+        undo: 'Deshacer los cambios',
+        noArea: 'Sin zona',
+        noAddress: 'sin dirección',
+        notOnMap: 'aún no está en el mapa',
+        moveTo: 'Conductor para {name}',
+        routesTitle: 'Rutas a partir de las zonas',
+        routesIntro:
+          'Para cada día del periodo, cada conductor que trabaja ese día recibe a las personas de su zona que tienen entrega, primero las más cercanas a la cocina. Las marcas ya dadas se mantienen; las personas de un conductor que no trabaja ese día se asignan a mano.',
+        from: 'Desde',
+        to: 'Hasta',
+        build: 'Crear las rutas',
+        buildTitle: '¿Crear las rutas a partir de las zonas?',
+        buildBody:
+          'Las rutas planificadas de estos días se sustituyen por las zonas. Las entregas ya marcadas se mantienen.',
+        built: 'Rutas creadas.',
+        builtToPlace: {
+          one: 'Rutas creadas. {count} entrega no tiene conductor ese día: asígnala en la página del día.',
+          other:
+            'Rutas creadas. {count} entregas no tienen conductor ese día: asígnalas en la página del día.',
+        },
+        saveFirst: 'Guarda primero las zonas.',
+        printFor: 'Imprimir para',
+        allDrivers: 'Todos los conductores',
+        printDay: 'Imprimir el día',
+        printWeek: 'Imprimir la semana',
+        printMonth: 'Imprimir el mes',
+        printTitle: 'Hojas de ruta',
+        sheets: {
+          one: '{count} hoja',
+          other: '{count} hojas',
+        },
+        noSheets: 'No hay rutas en estos días.',
+        stops: {
+          one: '{count} parada',
+          other: '{count} paradas',
+        },
+      },
+      demo: {
+        badge: 'Demo',
+        viewAs: 'Ver como',
+        intro:
+          'Prueba la aplicación con una organización de demostración propia, con personas inventadas, datos de identificación, menús, conductores, las rutas de hoy e historiales médicos, para probar cada función. Eres su organizador y su conductor, y puedes verla con cualquier rol.',
+        create: 'Probar con datos de demostración',
+        creating: 'Creando la demostración…',
+        created: 'Organización de demostración creada.',
+      },
       licence: {
         missing: 'Sin carné',
         expired: 'Carné caducado el {date}',
@@ -3652,6 +4892,8 @@ export const screens = defineMessages(
         },
       },
       orgPage: {
+        contactHint:
+          'Aparece en vuestra página y recibe las respuestas a vuestras invitaciones. Déjalo vacío para usar contact@devquake.com de DevQuake.',
         previewNote:
           'Mientras la página sea privada, solo la ve el personal de tu organización. Actívala en Organización para que la vean los visitantes.',
         logo: 'Logotipo',
@@ -3677,6 +4919,25 @@ export const screens = defineMessages(
         deleted: '{name} se ha eliminado.',
       },
       errors: {
+        noDrivers: 'Añade primero un conductor activo.',
+        spanTooLong: 'Elige como máximo {max} días.',
+        contactEmail:
+          'No es una dirección de correo válida: revísala (por ejemplo oficina@ejemplo.es).',
+        inviteNotFound: 'Esta invitación ya no está abierta.',
+        inviteEmailMax: 'Esta invitación ya se envió {max} veces: crea una nueva.',
+        inviteEmailInvalid: 'Revisa la dirección de correo.',
+        inviteEmailLimit:
+          'Demasiadas invitaciones por correo hoy: inténtalo mañana, o copia el enlace y envíalo tú.',
+        inviteEmailDeclined:
+          'Esta dirección pidió no recibir invitaciones de DevQuake: dale el enlace o el código QR por otra vía.',
+        inviteEmailUnavailable:
+          'No se pudo enviar el correo ahora. Copia el enlace y envíalo tú, o inténtalo más tarde.',
+        linkNotConnected: 'Conecta primero esa aplicación («Funciona con», al final de la página).',
+        linkRateLimited:
+          'Demasiadas solicitudes a la otra aplicación: inténtalo de nuevo en un minuto.',
+        linkNotFound: 'No se encontró en la otra aplicación (eliminado o no es tuyo).',
+        linkFailed: 'La otra aplicación no respondió. Inténtalo más tarde.',
+        noIngredients: 'No hay platos del Recetario en los menús de esta semana.',
         licenceExpired: 'Este carné ha caducado: sube uno válido.',
         importNoLicence:
           'Este conductor aún no tiene la foto del carné: súbela primero en la aplicación.',

@@ -78,3 +78,15 @@ export {
   type OutboxEntry,
 } from './outbox';
 export { AutoCheckbox } from './auto-checkbox';
+export { BACKGROUND_REQUEST } from './background';
+export { CircleCropper, type CircleCropperLabels } from './circle-cropper';
+export {
+  clampView,
+  cropSquare,
+  fitView,
+  moveView,
+  scaleLimits,
+  zoomView,
+  type CropFrame,
+  type CropView,
+} from './crop';

@@ -53,7 +53,7 @@ export default async function CustomersPage({ ctx, searchParams }: PluginPagePro
             </Link>
           ))}
         </nav>
-        <form className="ml-auto flex gap-2" role="search">
+        <form data-dq-submit="always" className="ml-auto flex gap-2" role="search">
           <input type="hidden" name="filter" value={filter} />
           <label className="sr-only" htmlFor="customer-search">
             {t('search')}

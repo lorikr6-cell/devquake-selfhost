@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import { Button, formatDateTime, useLocale, useT } from '@devquake/ui';
-import type { Invite, StaffMember } from '../lib/data';
+import type { SentInvite, StaffMember } from '../lib/data';
 import { ROLES, type Role } from '../lib/roles';
 import { callApi } from './call-api';
+import { InviteCard, type InviteWithQr } from './invite-card';
 import { ErrorText, Field, Input, Panel, Select } from './ui';
 import { useAction } from './use-action';
 
@@ -41,35 +42,109 @@ export function StaffList({
     }
   }
 
+  // Grouped by role, every role shown (with "nobody yet"), so gaps are visible at a glance.
   return (
-    <ul className="divide-y divide-ink/10 rounded-xl border border-ink/10 bg-white/70 dark:divide-paper/10 dark:border-paper/10 dark:bg-paper/5">
-      {staff.map((m) => (
-        <li key={m.id} className="flex flex-wrap items-center gap-3 px-4 py-3">
-          <span className="min-w-0 flex-1 font-medium">
-            {m.name}
-            {m.userId === myUserId ? (
-              <span className="ml-2 text-xs text-ink/60 dark:text-paper/60">{t('staff.you')}</span>
-            ) : null}
-          </span>
-          <Select
-            value={m.role}
-            disabled={busy}
-            aria-label={t('staff.roleOf', { name: m.name })}
-            onChange={(e) => setRole(m, e.target.value as Role)}
-            className="w-auto"
-          >
-            {ROLES.map((r) => (
-              <option key={r} value={r}>
-                {t(`roles.${r}`)}
-              </option>
-            ))}
-          </Select>
-          <Button type="button" variant="ghost" disabled={busy} onClick={() => remove(m)}>
-            {t('staff.remove')}
-          </Button>
-        </li>
-      ))}
-    </ul>
+    <div className="space-y-4">
+      {ROLES.map((role) => {
+        const members = staff.filter((m) => m.role === role);
+        return (
+          <section key={role}>
+            <h3 className="mb-1 text-sm font-semibold">
+              {t(`roles.${role}`)}{' '}
+              <span className="font-normal text-ink/60 dark:text-paper/60">({members.length})</span>
+            </h3>
+            {members.length === 0 ? (
+              <p className="text-sm text-ink/60 dark:text-paper/60">{t('staff.nobody')}</p>
+            ) : (
+              <ul className="divide-y divide-ink/10 rounded-xl border border-ink/10 bg-white/70 dark:divide-paper/10 dark:border-paper/10 dark:bg-paper/5">
+                {members.map((m) => (
+                  <li key={m.id} className="flex flex-wrap items-center gap-3 px-4 py-3">
+                    <span className="min-w-0 flex-1 font-medium">
+                      {m.name}
+                      {m.userId === myUserId ? (
+                        <span className="ml-2 text-xs text-ink/60 dark:text-paper/60">
+                          {t('staff.you')}
+                        </span>
+                      ) : null}
+                    </span>
+                    <Select
+                      value={m.role}
+                      disabled={busy}
+                      aria-label={t('staff.roleOf', { name: m.name })}
+                      onChange={(e) => setRole(m, e.target.value as Role)}
+                      className="w-auto"
+                    >
+                      {ROLES.map((r) => (
+                        <option key={r} value={r}>
+                          {t(`roles.${r}`)}
+                        </option>
+                      ))}
+                    </Select>
+                    <Button type="button" variant="ghost" disabled={busy} onClick={() => remove(m)}>
+                      {t('staff.remove')}
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
+const STATUS_STYLE: Record<SentInvite['status'], string> = {
+  open: 'bg-sky-100 text-sky-950 dark:bg-sky-900/60 dark:text-sky-100',
+  accepted: 'bg-emerald-100 text-emerald-950 dark:bg-emerald-900/60 dark:text-emerald-100',
+  expired: 'bg-ink/10 text-ink/70 dark:bg-paper/15 dark:text-paper/70',
+  revoked: 'bg-red-100 text-red-900 dark:bg-red-950 dark:text-red-100',
+};
+
+/** Every invitation of the last months with its status: open, accepted (by whom), expired, revoked. */
+export function SentInvites({ invites, timeZone }: { invites: SentInvite[]; timeZone: string }) {
+  const t = useT();
+  const locale = useLocale();
+  const day = (d: string) => formatDateTime(d, timeZone, 'date', locale);
+  if (invites.length === 0) {
+    return <p className="text-sm text-ink/60 dark:text-paper/60">{t('staff.noneSent')}</p>;
+  }
+  return (
+    <div className="overflow-x-auto rounded-xl border border-ink/10 dark:border-paper/10">
+      <table className="w-full min-w-[34rem] text-left text-sm">
+        <thead className="bg-ink/5 text-xs text-ink/70 dark:bg-paper/5 dark:text-paper/70">
+          <tr>
+            <th className="px-3 py-2 font-medium">{t('staff.role')}</th>
+            <th className="px-3 py-2 font-medium">{t('staff.sentOn')}</th>
+            <th className="px-3 py-2 font-medium">{t('staff.sentBy')}</th>
+            <th className="px-3 py-2 font-medium">{t('staff.status')}</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-ink/10 dark:divide-paper/10">
+          {invites.map((i) => (
+            <tr key={i.id}>
+              <td className="px-3 py-2">{t(`roles.${i.role}`)}</td>
+              <td className="px-3 py-2 whitespace-nowrap">
+                {day(i.createdAt)}
+                {i.emailHint ? (
+                  <span className="block text-xs text-ink/60 dark:text-paper/60">
+                    {i.emailHint}
+                  </span>
+                ) : null}
+              </td>
+              <td className="px-3 py-2">{i.createdBy ?? '—'}</td>
+              <td className="px-3 py-2">
+                <span className={`rounded-full px-2 py-0.5 text-xs ${STATUS_STYLE[i.status]}`}>
+                  {i.status === 'accepted'
+                    ? t('staff.statusAccepted', { name: i.acceptedName ?? '—', date: day(i.when) })
+                    : t(`staff.status_${i.status}`, { date: day(i.when) })}
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
@@ -78,10 +153,13 @@ export function Invites({
   orgId,
   invites,
   timeZone,
+  canEmail,
 }: {
   orgId: number;
-  invites: Invite[];
+  invites: InviteWithQr[];
   timeZone: string;
+  /** The host can email invitations (ADR 0073). */
+  canEmail: boolean;
 }) {
   const t = useT();
   const locale = useLocale();
@@ -131,31 +209,15 @@ export function Invites({
       {invites.length ? (
         <>
           <h3 className="mt-5 mb-2 text-sm font-semibold">{t('staff.pending')}</h3>
-          <ul className="space-y-2 text-sm">
+          <ul className="space-y-3">
             {invites.map((i) => (
-              <li key={i.id} className="flex flex-wrap items-center gap-2">
-                <span className="font-medium">{t(`roles.${i.role}`)}</span>
-                <span className="text-xs text-ink/60 dark:text-paper/60">
-                  {t('staff.until', {
-                    date: formatDateTime(i.expiresAt, timeZone, 'date', locale),
-                  })}
-                </span>
-                <Button type="button" variant="ghost" onClick={() => copy(linkOf(i.code))}>
-                  {t('staff.copy')}
-                </Button>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  disabled={busy}
-                  onClick={() =>
-                    act(() => callApi(`/orgs/${orgId}/invites/${i.id}`, 'DELETE'), {
-                      success: t('staff.revoked'),
-                    })
-                  }
-                >
-                  {t('staff.revoke')}
-                </Button>
-              </li>
+              <InviteCard
+                key={i.id}
+                orgId={orgId}
+                invite={i}
+                timeZone={timeZone}
+                canEmail={canEmail}
+              />
             ))}
           </ul>
         </>

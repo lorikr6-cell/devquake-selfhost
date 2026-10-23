@@ -1,5 +1,9 @@
 # Változásnapló — Bolt
 
+## 0.13.1
+
+- Az éppen nem használható gombok a szokásos nyilat mutatják a „tiltott” jel helyett.
+
 ## 0.13.0
 
 - Az alkalmazás mostantól olaszul és spanyolul is elérhető: a nyelvet az oldal tetején választhatod ki (a boltban a vásárlók az oldal alján találják).

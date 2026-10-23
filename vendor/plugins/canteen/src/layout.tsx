@@ -1,15 +1,17 @@
 import type { PluginLayoutProps } from '@devquake/plugin-sdk';
-import { AppToolbar, I18nProvider, ReleaseNotes } from '@devquake/ui';
+import { AppToolbar, I18nProvider, ReleaseNotes, WorksWith } from '@devquake/ui';
 import { FeedbackProvider } from './components/feedback';
 import { FALLBACK_MESSAGES, appMessages, localeOf, translator } from './i18n';
 
 // The toolbar is shared by every app (AppToolbar): name and logo on the left (linking to the
 // start page), full screen and the DevQuake mark on the right. The manual and the version notes
 // go in the footer; signed-in people set language and theme in their DevQuake account.
-export default function Layout({ children, ctx }: PluginLayoutProps) {
+export default async function Layout({ children, ctx }: PluginLayoutProps) {
   const locale = localeOf(ctx);
   const t = translator(locale);
   const appName = t('appName');
+  // Apps this one works with (Cookbook, Shopping; ADR 0035), for the footer's "Works with".
+  const linked = ctx.links && ctx.user ? await ctx.links.list().catch(() => []) : [];
   return (
     <I18nProvider locale={locale} messages={appMessages(locale)} fallback={FALLBACK_MESSAGES}>
       <FeedbackProvider>
@@ -34,6 +36,22 @@ export default function Layout({ children, ctx }: PluginLayoutProps) {
           <footer className="mx-auto flex print:hidden max-w-5xl flex-wrap items-center gap-x-3 gap-y-1 px-4 pb-10 text-xs text-ink/60 sm:px-6 dark:text-paper/60">
             <span>{appName}</span>
             <ReleaseNotes entries={ctx.changelog ?? []} title={appName} />
+            <WorksWith
+              apps={linked}
+              labels={{
+                title: t('worksWith.title'),
+                intro: t('worksWith.intro'),
+                open: t('worksWith.open'),
+                connect: t('worksWith.connect'),
+                getIt: t('worksWith.getIt'),
+                connected: t('worksWith.connected'),
+                close: t('worksWith.close'),
+                disconnect: t('worksWith.disconnect'),
+                disconnectTitle: t('worksWith.disconnectTitle'),
+                disconnectBody: t('worksWith.disconnectBody'),
+                cancel: t('worksWith.cancel'),
+              }}
+            />
             <a href={ctx.hostUrl} className="underline hover:text-quake">
               {t('nav.devquake')}
             </a>

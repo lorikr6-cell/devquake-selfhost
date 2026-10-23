@@ -1,5 +1,9 @@
 # Registro delle modifiche — Negozio
 
+## 0.13.1
+
+- I pulsanti che al momento non si possono usare mostrano la normale freccia invece del segno di divieto.
+
 ## 0.13.0
 
 - L’app ora è anche in italiano e spagnolo: scegli la lingua in cima alla pagina (nel negozio, gli acquirenti la trovano in fondo).

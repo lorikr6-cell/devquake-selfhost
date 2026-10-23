@@ -1,5 +1,9 @@
 # Changelog — Store
 
+## 0.13.1
+
+- Buttons that cannot be used right now show the normal arrow instead of a “forbidden” sign.
+
 ## 0.13.0
 
 - The app is now also in Italian and Spanish: pick the language at the top of the page (in the shop, buyers find it at the bottom).

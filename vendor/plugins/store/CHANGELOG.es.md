@@ -1,5 +1,9 @@
 # Registro de cambios — Tienda
 
+## 0.13.1
+
+- Los botones que no se pueden usar ahora muestran la flecha normal en lugar de la señal de prohibido.
+
 ## 0.13.0
 
 - La app ya está también en italiano y español: elige el idioma en la parte superior de la página (en la tienda, los compradores lo tienen al pie).

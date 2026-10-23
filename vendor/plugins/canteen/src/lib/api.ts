@@ -3,6 +3,8 @@ import type {
   PluginApiArgs,
   PluginApiHandler,
   PluginDatabase,
+  PluginInvitations,
+  PluginLinksApi,
   PluginUser,
 } from '@devquake/plugin-sdk';
 import { localeOf, translator } from '../i18n';
@@ -21,6 +23,12 @@ export interface ApiScope {
   /** The page language, for files the app writes (the export). */
   locale: Locale;
   timeZone: string;
+  /** The apps the visitor connected (Cookbook, Shopping), when the host offers links. */
+  links: PluginLinksApi | undefined;
+  /** Invitation emails (ADR 0073), for members with full access on hosts that offer them. */
+  invitations: PluginInvitations | undefined;
+  /** This app's address, e.g. https://canteen.devquake.com. */
+  baseUrl: string;
 }
 
 /**
@@ -43,6 +51,9 @@ export function api(fn: (scope: ApiScope) => Promise<unknown>): PluginApiHandler
         grantInvitedAccess: ctx.grantInvitedAccess,
         locale: localeOf(ctx),
         timeZone: ctx.timeZone || 'UTC',
+        links: ctx.links,
+        invitations: ctx.invitations,
+        baseUrl: ctx.baseUrl,
       });
       if (result instanceof Response) return result;
       if (result === undefined) return new Response(null, { status: 204 });

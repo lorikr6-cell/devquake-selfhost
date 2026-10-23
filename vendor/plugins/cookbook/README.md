@@ -83,10 +83,10 @@ deleting theirs). The drawn thumbnail always stays and returns with "Back to the
 
 ## Link points (ADR 0035)
 
-| Id               | Kind | Input                                                          | Reply                                                                                                  |
-| ---------------- | ---- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| `recipes.search` | read | `{ query?, tags?, without? (allergens), maxMinutes?, limit? }` | `{ recipes: [{ ref, title, servings, minutes, kcal, protein, tags, allergens }] }`                     |
-| `recipe.get`     | read | `{ ref, servings? }`                                           | `{ ref, title, servings, minutes, ingredients: [{ name, qty, unit, foodId }], perPortion, allergens }` |
+| Id               | Kind | Input                                                          | Reply                                                                                                                                                                                                                                         |
+| ---------------- | ---- | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `recipes.search` | read | `{ query?, tags?, without? (allergens), maxMinutes?, limit? }` | `{ recipes: [{ ref, title, servings, minutes, kcal, protein, tags, allergens }] }`                                                                                                                                                            |
+| `recipe.get`     | read | `{ ref, servings? }`                                           | `{ ref, title, servings, baseServings, minutes, ingredients: [{ name, qty, unit, foodId, baseQty, scaling }], perPortion, allergens }`; servings ≤ 50, ≤ 500 for `canteen`; scaling: linear, whole (rounded, ≥ 1), spice (factor^0.75), fixed |
 
 Target `recipe` → `/r/:id`. Both replies carry `visibility` (`library`, `public`, `shared`,
 `private`); public recipes of other members are included. Uses shopping (`lists.overview`,

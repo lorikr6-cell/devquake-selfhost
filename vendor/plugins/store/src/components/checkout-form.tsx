@@ -198,7 +198,7 @@ export function CheckoutForm({
   const onlineMethod = method === 'stripe' || method === 'paypal';
 
   return (
-    <form onSubmit={submit} className="grid gap-8 lg:grid-cols-[1fr_20rem]">
+    <form data-dq-submit="always" onSubmit={submit} className="grid gap-8 lg:grid-cols-[1fr_20rem]">
       <div className="space-y-6">
         <fieldset className="space-y-3">
           <legend className={cn('text-lg font-semibold', S.heading)}>{t('contact')}</legend>

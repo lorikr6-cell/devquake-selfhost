@@ -1,5 +1,9 @@
 # Változások — Szakácskönyv
 
+## 0.8.0
+
+- A receptek mostantól egy Szociális konyhát is kiszolgálhatnak: ha ott kiválasztasz egyet, akár 500 adagra is átszámolja, és a konyha megtart egy másolatot.
+
 ## 0.7.1
 
 - A fülek sora már nem mutat apró görgetősávot, ha minden fül elfér; csak akkor görgethető oldalra, ha nem férnek el.

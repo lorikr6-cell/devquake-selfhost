@@ -6,6 +6,7 @@ import { DELIVERY_MEAL, dishLines, formatTime, type MealTime } from '../lib/meal
 import type { Menu } from '../lib/meals-data';
 import { DIETS, type Diet } from '../lib/model';
 import { callApi } from './call-api';
+import { DishPicker } from './kitchen-apps';
 import { ErrorText, Field, Input, Panel, TextArea } from './ui';
 import { useAction } from './use-action';
 
@@ -33,12 +34,15 @@ export function WeekMenus({
   mealTimes,
   menus,
   canEdit,
+  dishes = [],
 }: {
   orgId: number;
   days: string[];
   mealTimes: MealTime[];
   menus: Menu[];
   canEdit: boolean;
+  /** The organisation's dish names, to insert into a menu. */
+  dishes?: string[];
 }) {
   const t = useT();
   const tag = LOCALE_TAGS[useLocale()];
@@ -128,6 +132,7 @@ export function WeekMenus({
           meal={open.meal}
           title={`${meals.find((m) => m.id === open.meal)?.name ?? ''} · ${dayLabel(open.day, tag)}`}
           menu={selected}
+          dishNames={dishes}
           onClose={() => setOpen(null)}
         />
       ) : null}
@@ -141,6 +146,7 @@ function MenuEditor({
   meal,
   title,
   menu,
+  dishNames,
   onClose,
 }: {
   orgId: number;
@@ -148,6 +154,7 @@ function MenuEditor({
   meal: number;
   title: string;
   menu: Menu | undefined;
+  dishNames: string[];
   onClose: () => void;
 }) {
   const t = useT();
@@ -174,6 +181,17 @@ function MenuEditor({
         <Field label={t('fields.dishes')} hint={t('meals.dishesHint')}>
           <TextArea value={dishes} onChange={(e) => setDishes(e.target.value)} rows={4} />
         </Field>
+        <DishPicker
+          dishes={dishNames}
+          onPick={(name) =>
+            setDishes((d) =>
+              d.trim()
+                ? `${d.trimEnd()}
+${name}`
+                : name,
+            )
+          }
+        />
         <details>
           <summary className="cursor-pointer text-sm font-medium">{t('meals.variants')}</summary>
           <p className="mt-1 text-xs text-ink/60 dark:text-paper/60">{t('meals.variantsHint')}</p>

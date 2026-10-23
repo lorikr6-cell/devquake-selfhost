@@ -173,6 +173,7 @@ export function UtilitySuggestions() {
             </>
           ) : step === 'place' || step === 'searching' ? (
             <form
+              data-dq-submit="always"
               className="space-y-3"
               onSubmit={(e) => {
                 e.preventDefault();

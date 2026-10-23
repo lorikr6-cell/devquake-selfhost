@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'canteen',
     name: 'Social canteen',
-    version: '0.16.1',
+    version: '0.22.0',
     description:
       'For organisations that feed elderly people: profiles with photo and ID card, personal numbers and papers stored encrypted, incidents and birthdays; meals, routes and the medical file follow.',
     status: 'active',
@@ -19,6 +19,37 @@ export default definePlugin({
     // only, never anything about the people it serves.
     openRoutes: { pages: ['/o/:id'], api: ['/o/:id/logo'] },
     freeForInvited: true,
+    // Staff invitations by email with their QR code; drivers get the app's download (ADR 0073).
+    invitationEmails: { perMemberPerDay: 10 },
+    // Works with Cookbook (dishes for the menus) and Shopping (the purchasing list), ADR 0035.
+    links: {
+      uses: [
+        {
+          app: 'cookbook',
+          points: ['recipes.search', 'recipe.get'],
+          benefit: {
+            en: 'Pick the menus’ dishes from your recipes: the kitchen sheet shows each dish’s ingredients for the day’s portions.',
+            de: 'Wähle die Gerichte der Menüs aus deinen Rezepten: Das Küchenblatt zeigt die Zutaten jedes Gerichts für die Portionen des Tages.',
+            ro: 'Alege felurile din meniuri din rețetele tale: fișa bucătăriei arată ingredientele fiecărui fel pentru porțiile zilei.',
+            hu: 'Válaszd a menük fogásait a receptjeid közül: a konyhai lap minden fogás hozzávalóit a napi adagokra mutatja.',
+            it: 'Scegli i piatti dei menù dalle tue ricette: il foglio cucina mostra gli ingredienti di ogni piatto per le porzioni del giorno.',
+            es: 'Elige los platos de los menús entre tus recetas: la hoja de cocina muestra los ingredientes de cada plato para las raciones del día.',
+          },
+        },
+        {
+          app: 'shopping',
+          points: ['lists.overview', 'list.add-items'],
+          benefit: {
+            en: 'Send the week’s ingredients, for every portion, to the organisation’s purchasing list in one step.',
+            de: 'Schicke die Zutaten der Woche für alle Portionen mit einem Schritt auf die Einkaufsliste der Organisation.',
+            ro: 'Trimite ingredientele săptămânii, pentru toate porțiile, pe lista de achiziții a organizației, dintr-un pas.',
+            hu: 'Egy lépésben küldd el a hét hozzávalóit minden adagra a szervezet beszerzési listájára.',
+            it: 'Invia gli ingredienti della settimana, per tutte le porzioni, alla lista d’acquisto dell’organizzazione in un solo passaggio.',
+            es: 'Envía los ingredientes de la semana, para todas las raciones, a la lista de compras de la organización en un solo paso.',
+          },
+        },
+      ],
+    },
   },
   layout: () => import('./layout'),
   platform: () => import('./platform'),
@@ -32,6 +63,8 @@ export default definePlugin({
     '/orgs/:id/meals': () => import('./pages/meals'),
     '/orgs/:id/kitchen': () => import('./pages/kitchen'),
     '/orgs/:id/routes': () => import('./pages/routes'),
+    '/orgs/:id/routes/areas': () => import('./pages/areas'),
+    '/orgs/:id/routes/print': () => import('./pages/routes-print'),
     '/orgs/:id/routes/:day': () => import('./pages/route-day'),
     '/orgs/:id/medication': () => import('./pages/medication'),
     '/orgs/:id/calendar': () => import('./pages/calendar'),
@@ -52,7 +85,16 @@ export default definePlugin({
     '/orgs/:id/people/:personId/incidents/:incidentId': () => import('./api/incident'),
     '/orgs/:id/staff/:staffId': () => import('./api/staff'),
     '/orgs/:id/invites': () => import('./api/invites'),
+    '/orgs/:id/demo-role': () => import('./api/demo-role'),
+    '/orgs/:id/areas': () => import('./api/areas'),
+    '/orgs/:id/areas/:action': () => import('./api/areas-action'),
+    '/orgs/:id/dishes': () => import('./api/dishes'),
+    '/orgs/:id/dishes/:dishId': () => import('./api/dish'),
+    '/orgs/:id/recipes': () => import('./api/recipes'),
+    '/orgs/:id/shopping': () => import('./api/shopping-week'),
+    '/demo': () => import('./api/demo'),
     '/orgs/:id/invites/:inviteId': () => import('./api/invite'),
+    '/orgs/:id/invites/:inviteId/email': () => import('./api/invite-email'),
     '/join': () => import('./api/join'),
     '/o/:id/logo': () => import('./api/public-logo'),
     '/orgs/:id/page': () => import('./api/org-page'),

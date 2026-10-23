@@ -1,5 +1,9 @@
 # Jurnal de modificări — Magazin
 
+## 0.13.1
+
+- Butoanele care nu pot fi folosite acum arată săgeata obișnuită în loc de semnul „interzis”.
+
 ## 0.13.0
 
 - Aplicația este acum și în italiană și spaniolă: alege limba din partea de sus a paginii (în magazin, cumpărătorii o găsesc jos).

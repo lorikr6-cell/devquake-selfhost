@@ -24,7 +24,9 @@ export function LiveRefresh({ fingerprint }: { fingerprint: string }) {
     let stopped = false;
     const check = async () => {
       if (document.visibilityState !== 'visible') return;
-      const res = await callApi<{ fingerprint: string }>('/changes').catch(() => null);
+      const res = await callApi<{ fingerprint: string }>('/changes', 'GET', undefined, {
+        background: true,
+      }).catch(() => null);
       if (!stopped && res && res.fingerprint !== known.current) {
         known.current = res.fingerprint;
         router.refresh();

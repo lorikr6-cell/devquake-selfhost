@@ -1,5 +1,9 @@
 # Változások — Darts
 
+## 0.7.1
+
+- A felső töltésjelző most mindig megjelenik, amikor az alkalmazás a szerverre vár, az új változások automatikus ellenőrzésekor viszont már nem.
+
 ## 0.7.0
 
 - Az alkalmazás mostantól olaszul és spanyolul is elérhető: a nyelvet az oldal tetején választhatod ki.

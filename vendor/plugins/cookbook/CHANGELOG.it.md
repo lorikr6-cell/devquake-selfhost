@@ -1,5 +1,9 @@
 # Registro delle modifiche — Ricettario
 
+## 0.8.0
+
+- Le ricette ora possono servire una Mensa sociale: quando ne scegli una lì, viene calcolata fino a 500 porzioni e la mensa ne tiene una copia per la cucina.
+
 ## 0.7.1
 
 - La riga delle schede non mostra più una piccola barra di scorrimento quando ci stanno tutte; scorre di lato solo quando non ci stanno.

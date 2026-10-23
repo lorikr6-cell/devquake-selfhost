@@ -1,5 +1,36 @@
 # Changelog — Social canteen
 
+## 0.22.0
+
+- Driver areas (Routes → Driver areas): propose from the addresses which driver delivers to whom, so drivers do not cross each other's streets, sized to how much each one works. Look at the proposal, move people to another driver, then save.
+- Build the routes of a day, a week or a month from the areas in one step: each working driver gets the people of their area, nearest first from the kitchen. Ticks already given stay.
+- Print the route sheets of a day, a week or a month, for one driver or all of them, with every stop's details.
+- The map service moved to its new address (api.heigit.org); the key stays the same.
+
+## 0.21.0
+
+- Every printout starts with the organisation's logo, name, description and contact email, and says who printed it and when. Each driver's route sheet carries it too.
+- Staff are grouped by role (organisers, coordinators, medical staff, kitchen, drivers), with how many each has, so a missing role shows at once.
+- "Invitations sent" lists every invitation of the last six months with its status: open until, accepted by whom and when, expired or revoked, and the address it was emailed to (hidden in part).
+
+## 0.20.0
+
+- Organisers can set the organisation's own contact email under Organisation. It is checked before saving, shown on the organisation's page and in its invitations, and replies to invitations go to it. Without one, DevQuake's contact@devquake.com is used.
+
+## 0.19.0
+
+- Every open staff invitation shows its QR code with the role under it: scan it to join, or download it as a picture.
+- Send an invitation by email, in the language you choose: the email has the link and the QR code, and for drivers the download of the drivers' app. Only a hidden form of the address is kept (for example a***@gmail.com).
+
+## 0.18.0
+
+- Works with Cookbook: pick the menus' dishes from your recipes. The organisation keeps a copy, and the kitchen sheet shows each dish's ingredients for the day's portions and diets.
+- Works with Shopping: send everything the week's dishes need, for every portion, to the organisation's purchasing list in one step. Sending the same week twice asks first.
+
+## 0.17.0
+
+- Try the app with demo data: "Try it with demo data" fills an organisation of your own with invented people, personal numbers, five weeks of menus, drivers with licences, this week's routes and medical files, and a "View as" switch shows it as each role sees it.
+
 ## 0.16.1
 
 - Routes: the Save button next to the kitchen address now sits level with the input fields.

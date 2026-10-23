@@ -63,7 +63,7 @@ export function pageScope(ctx: PluginContext): PageScope {
 
 export type OrgScope =
   | (Extract<PageScope, { ok: true }> & {
-      org: { id: number; name: string };
+      org: { id: number; name: string; demo: boolean };
       staff: Staff;
       can: (action: Action) => boolean;
     })

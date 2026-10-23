@@ -1,5 +1,6 @@
 import type { PluginDatabase } from '@devquake/plugin-sdk';
 import { requireCan } from './data';
+import { DEFAULT_CONTACT_EMAIL } from './contact-email';
 import { HttpError } from './http';
 import type { Picture } from './picture';
 
@@ -17,6 +18,10 @@ export interface OrgPage {
   publicPage: boolean;
   /** Versions the logo's URL; null without a logo. */
   logoVersion: string | null;
+  /** Where people write to: the organisers' address, or DevQuake's by default. */
+  contactEmail: string;
+  /** The organisers set their own address. */
+  ownContact: boolean;
 }
 
 async function pageOf(db: Db, orgId: number): Promise<OrgPage | null> {
@@ -26,8 +31,9 @@ async function pageOf(db: Db, orgId: number): Promise<OrgPage | null> {
     description: string | null;
     public_page: number;
     logo_version: string | null;
+    contact_email: string | null;
   }>(
-    `SELECT id, name, description, public_page,
+    `SELECT id, name, description, public_page, contact_email,
             DATE_FORMAT(logo_updated_at, '%Y%m%d%H%i%s') AS logo_version
        FROM canteen_orgs WHERE id = ?`,
     [orgId],
@@ -39,6 +45,8 @@ async function pageOf(db: Db, orgId: number): Promise<OrgPage | null> {
         description: row.description,
         publicPage: Number(row.public_page) === 1,
         logoVersion: row.logo_version,
+        contactEmail: row.contact_email ?? DEFAULT_CONTACT_EMAIL,
+        ownContact: row.contact_email !== null,
       }
     : null;
 }
@@ -65,6 +73,17 @@ export async function saveDescription(
 ) {
   await requireCan(db, orgId, userId, 'org.manage');
   await db.execute('UPDATE canteen_orgs SET description = ? WHERE id = ?', [description, orgId]);
+}
+
+/** The organisation's contact email; null = DevQuake's address again. */
+export async function saveContactEmail(
+  db: Db,
+  orgId: number,
+  userId: number,
+  email: string | null,
+) {
+  await requireCan(db, orgId, userId, 'org.manage');
+  await db.execute('UPDATE canteen_orgs SET contact_email = ? WHERE id = ?', [email, orgId]);
 }
 
 export async function setPublicPage(db: Db, orgId: number, userId: number, on: boolean) {

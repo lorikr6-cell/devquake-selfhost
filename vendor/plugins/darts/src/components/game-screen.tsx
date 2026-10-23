@@ -93,6 +93,9 @@ export function GameScreen({
   const refresh = useCallback(async () => {
     const res = await callApi<{ changed: boolean; game?: GameView }>(
       `${pollPath}?v=${version.current}`,
+      'GET',
+      undefined,
+      { background: true },
     ).catch(() => null);
     if (res?.changed && res.game) {
       version.current = res.game.version;

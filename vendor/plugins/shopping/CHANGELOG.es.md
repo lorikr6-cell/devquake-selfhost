@@ -1,5 +1,13 @@
 # Registro de cambios: Listas de la compra
 
+## 0.23.0
+
+- Las aplicaciones conectadas, como el Comedor social, ahora también pueden ofrecer tus listas aún vacías, para llenar enseguida una nueva lista de compras.
+
+## 0.22.1
+
+- La barra de carga de arriba aparece ahora siempre que la aplicación espera al servidor, y ya no durante las comprobaciones automáticas de cambios nuevos.
+
 ## 0.22.0
 
 - La app ahora también está en italiano y en español: elige el idioma en la parte de arriba de la página.

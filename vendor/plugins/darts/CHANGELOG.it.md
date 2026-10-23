@@ -1,5 +1,9 @@
 # Registro delle modifiche — Darts
 
+## 0.7.1
+
+- La barra di caricamento in alto ora compare ogni volta che l’app attende il server e non più durante i controlli automatici delle novità.
+
 ## 0.7.0
 
 - L’app ora è anche in italiano e spagnolo: scegli la lingua in cima alla pagina.

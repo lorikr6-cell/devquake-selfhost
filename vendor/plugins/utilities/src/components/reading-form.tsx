@@ -137,7 +137,7 @@ export function ReadingForm({
   }
 
   return (
-    <form onSubmit={submit} className="space-y-4">
+    <form data-dq-submit="always" onSubmit={submit} className="space-y-4">
       <div className="grid gap-4 sm:grid-cols-[1fr_auto]">
         <Field
           label={meterRequired ? t('photoRequired') : t('photoOptional')}

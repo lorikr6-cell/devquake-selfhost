@@ -1,5 +1,9 @@
 # Registro de cambios — Darts
 
+## 0.7.1
+
+- La barra de carga de arriba aparece ahora siempre que la aplicación espera al servidor, y ya no durante las comprobaciones automáticas de cambios nuevos.
+
 ## 0.7.0
 
 - La app ya está también en italiano y español: elige el idioma en la parte superior de la página.

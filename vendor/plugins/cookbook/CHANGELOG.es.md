@@ -1,5 +1,9 @@
 # Registro de cambios — Recetario
 
+## 0.8.0
+
+- Las recetas ahora pueden alimentar un Comedor social: cuando eliges una allí, se calcula para hasta 500 raciones y el comedor guarda una copia para su cocina.
+
 ## 0.7.1
 
 - La fila de pestañas ya no muestra una pequeña barra de desplazamiento cuando caben todas; solo se desplaza de lado cuando no caben.

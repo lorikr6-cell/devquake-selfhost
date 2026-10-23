@@ -102,7 +102,7 @@ export function IdReader({ base, person }: { base: string; person: Person }) {
       <p className="mt-1 text-xs text-ink/60 dark:text-paper/60">{t('idReader.intro')}</p>
       <ErrorText>{error}</ErrorText>
       {form ? (
-        <form onSubmit={apply} className="mt-3 grid gap-3 sm:grid-cols-2">
+        <form data-dq-submit="always" onSubmit={apply} className="mt-3 grid gap-3 sm:grid-cols-2">
           <p className="text-sm sm:col-span-2">
             {found ? t('idReader.found', { count: found }) : t('idReader.nothing')}
           </p>

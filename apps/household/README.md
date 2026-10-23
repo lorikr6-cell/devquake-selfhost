@@ -119,6 +119,6 @@ only asks that the licence and copyright notice stay with copies of the code.
 
 ## About
 
-Household is a [DevQuake](https://devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=household) app (expenses 0.3.1, utilities 0.12.0, shopping 0.22.0, cookbook 0.7.1, meals 0.5.0),
+Household is a [DevQuake](https://devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=household) app (expenses 0.3.1, utilities 0.12.0, shopping 0.23.0, cookbook 0.8.0, meals 0.5.0),
 packaged to run on its own. Licence: [MIT](../../LICENSE). Problems and ideas:
 [GitHub issues](https://github.com/lorikr6-cell/devquake-selfhost/issues).

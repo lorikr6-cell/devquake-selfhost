@@ -50,7 +50,9 @@ export function ListView({ initial }: { initial: ListSnapshot }) {
   const load = useCallback(
     async (onlyIfChanged: boolean) => {
       const query = onlyIfChanged ? `?v=${version.current}` : '';
-      const next = await callApi<ListSnapshot>(`/lists/${initial.id}${query}`).catch((err) => {
+      const next = await callApi<ListSnapshot>(`/lists/${initial.id}${query}`, 'GET', undefined, {
+        background: onlyIfChanged,
+      }).catch((err) => {
         if ((err as { status?: number }).status === 404) {
           setGone(true);
           return null;

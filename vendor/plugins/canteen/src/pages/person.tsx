@@ -1,4 +1,5 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
+import { PrintHeader } from '../components/print-header';
 import { notFound } from 'next/navigation';
 import { LOCALE_TAGS, Link, buttonClass, formatDateTime } from '@devquake/ui';
 import { DeletePerson } from '../components/forms';
@@ -90,6 +91,7 @@ export default async function PersonPage({ ctx, params }: PluginPageProps) {
 
   return (
     <>
+      <PrintHeader scope={scope} />
       <Link href={`/orgs/${orgId}`} className="text-sm underline hover:text-quake">
         ← {scope.org.name}
       </Link>

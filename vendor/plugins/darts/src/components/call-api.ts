@@ -1,17 +1,22 @@
-import type { Translate } from '@devquake/ui';
+import { BACKGROUND_REQUEST, type Translate } from '@devquake/ui';
 
 /**
  * Calls the app's own API (same origin) and throws an Error with the server's message (the API
  * answers in the visitor's language); `status` is set for errorMessage's fallback.
+ * `background` marks a poll the person did not ask for: the loading bar ignores it.
  */
 export async function callApi<T = unknown>(
   path: string,
   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' = 'GET',
   body?: unknown,
+  options: { background?: boolean } = {},
 ): Promise<T | null> {
   const res = await fetch(`/api${path}`, {
     method,
-    headers: body === undefined ? undefined : { 'Content-Type': 'application/json' },
+    headers: {
+      ...(body === undefined ? {} : { 'Content-Type': 'application/json' }),
+      ...(options.background ? BACKGROUND_REQUEST : {}),
+    },
     body: body === undefined ? undefined : JSON.stringify(body),
     cache: 'no-store',
   });

@@ -1,5 +1,6 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { Link } from '@devquake/ui';
+import { DemoButton } from '../components/demo-button';
 import { OrgForm } from '../components/forms';
 import { pageScope } from '../components/guard';
 import { Panel } from '../components/ui';
@@ -46,6 +47,7 @@ export default async function Home({ ctx }: PluginPageProps) {
         <h2 className="mb-3 font-semibold">{t('home.newOrg')}</h2>
         <OrgForm />
       </Panel>
+      <DemoButton />
     </>
   );
 }

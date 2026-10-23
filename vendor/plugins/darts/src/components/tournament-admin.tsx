@@ -24,6 +24,9 @@ export function TournamentLive({ id, version }: { id: number; version: number })
       if (document.visibilityState !== 'visible') return;
       const res = await callApi<{ changed: boolean; version: number }>(
         `/tournaments/${id}?v=${known.current}`,
+        'GET',
+        undefined,
+        { background: true },
       ).catch(() => null);
       if (res?.changed) {
         known.current = res.version;

@@ -33,7 +33,7 @@ export function ProfileForm({ initial, setup }: { initial: Profile; setup: boole
   }
 
   return (
-    <form onSubmit={save} className="space-y-5">
+    <form data-dq-submit="always" onSubmit={save} className="space-y-5">
       <Field label={t('nickname')} hint={t('nicknameHint')}>
         <Input
           required

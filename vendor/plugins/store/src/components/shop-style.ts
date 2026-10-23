@@ -17,9 +17,9 @@ export const S = {
     'border p-5 [border-radius:var(--shop-radius)] [border-color:var(--shop-card-line)] [background-color:var(--shop-surface)] [box-shadow:var(--shop-shadow)]',
   hoverAccent: 'hover:[border-color:var(--shop-accent)] hover:[color:var(--shop-accent)]',
   button:
-    'inline-flex min-h-11 items-center justify-center gap-2 px-4 py-2 text-sm font-semibold [border-radius:var(--shop-button-radius)] [background-color:var(--shop-accent)] [color:var(--shop-on-accent)] hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--shop-accent)]',
+    'inline-flex min-h-11 items-center justify-center gap-2 px-4 py-2 text-sm font-semibold [border-radius:var(--shop-button-radius)] [background-color:var(--shop-accent)] [color:var(--shop-on-accent)] hover:opacity-90 disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--shop-accent)]',
   buttonSecondary:
-    'inline-flex min-h-11 items-center justify-center gap-2 border px-4 py-2 text-sm font-medium [border-radius:var(--shop-button-radius)] [border-color:var(--shop-line)] hover:[border-color:var(--shop-accent)] disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--shop-accent)]',
+    'inline-flex min-h-11 items-center justify-center gap-2 border px-4 py-2 text-sm font-medium [border-radius:var(--shop-button-radius)] [border-color:var(--shop-line)] hover:[border-color:var(--shop-accent)] disabled:cursor-default disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--shop-accent)]',
   chip: 'inline-flex min-h-9 items-center rounded-full border px-3 py-1.5 text-sm [border-color:var(--shop-line)] hover:[border-color:var(--shop-accent)]',
   chipActive:
     'inline-flex min-h-9 items-center rounded-full border px-3 py-1.5 text-sm font-semibold [border-color:var(--shop-accent)] [background-color:color-mix(in_srgb,var(--shop-accent)_12%,transparent)]',

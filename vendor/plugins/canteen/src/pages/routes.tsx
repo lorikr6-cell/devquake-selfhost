@@ -1,4 +1,5 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
+import { PrintHeader } from '../components/print-header';
 import { LOCALE_TAGS, Link, buttonClass, cn } from '@devquake/ui';
 import { orgScope } from '../components/guard';
 import { OrgNav } from '../components/org-nav';
@@ -47,8 +48,10 @@ export default async function RoutesPage({ ctx, params, searchParams }: PluginPa
 
   return (
     <>
+      <PrintHeader scope={scope} />
       <OrgNav
         orgId={scope.org.id}
+        demo={scope.org.demo ? scope.staff.role : undefined}
         orgName={scope.org.name}
         current="routes"
         can={scope.can}
@@ -57,6 +60,9 @@ export default async function RoutesPage({ ctx, params, searchParams }: PluginPa
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-display text-2xl font-bold">{t('routes.weekTitle')}</h1>
         <div className="flex flex-wrap gap-2">
+          <Link href={`${base}/areas`} className={buttonClass('secondary')}>
+            {t('areas.title')}
+          </Link>
           <Link href={`${base}?week=${addDays(monday, -7)}`} className={buttonClass('ghost')}>
             ← {t('meals.previous')}
           </Link>

@@ -1,4 +1,5 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
+import { PrintHeader } from '../components/print-header';
 import { notFound } from 'next/navigation';
 import { Link } from '@devquake/ui';
 import { orgScope, personIdOf } from '../components/guard';
@@ -34,6 +35,7 @@ export default async function MedicalPage({ ctx, params }: PluginPageProps) {
   const canEdit = scope.can('medical.edit');
   return (
     <>
+      <PrintHeader scope={scope} />
       <Link href={base} className="text-sm underline hover:text-quake">
         ← {file.name}
       </Link>

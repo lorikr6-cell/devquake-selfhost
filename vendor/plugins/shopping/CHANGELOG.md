@@ -1,5 +1,13 @@
 # Changelog: Shared shopping lists
 
+## 0.23.0
+
+- Connected apps such as the Social canteen can now also offer your lists that are still empty, so a new purchasing list can be filled straight away.
+
+## 0.22.1
+
+- The loading bar at the top now shows whenever the app is waiting for the server, and no longer appears for the automatic checks for new changes.
+
 ## 0.22.0
 
 - The app is now also in Italian and Spanish: pick the language at the top of the page.

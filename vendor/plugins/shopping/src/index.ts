@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'shopping',
     name: 'Shared shopping lists',
-    version: '0.22.0',
+    version: '0.23.0',
     description:
       'Shared shopping carts planned by date: a calendar, items grouped by store (type, location, description), prices, totals and statistics, shared with invite links or your DevQuake referrals.',
     status: 'active',

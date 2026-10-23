@@ -207,7 +207,7 @@ export function CopyListsForm({
   );
 
   return (
-    <form onSubmit={submit} className="mt-3 space-y-3">
+    <form data-dq-submit="always" onSubmit={submit} className="mt-3 space-y-3">
       <fieldset>
         <legend className="mb-1 text-sm font-medium">{t('what')}</legend>
         {option('list', t('modeList'))}

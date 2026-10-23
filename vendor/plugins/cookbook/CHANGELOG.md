@@ -1,5 +1,9 @@
 # Changelog — Cookbook
 
+## 0.8.0
+
+- Recipes can now feed a Social canteen: when you pick one there, it is scaled for up to 500 portions, and the canteen keeps a copy for its kitchen.
+
 ## 0.7.1
 
 - The row of tabs no longer shows a small scroll bar when all tabs fit; it scrolls sideways only when they do not.

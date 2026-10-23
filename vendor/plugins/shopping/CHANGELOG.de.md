@@ -1,5 +1,13 @@
 # Änderungen: Gemeinsame Einkaufslisten
 
+## 0.23.0
+
+- Verbundene Apps wie die Sozialküche können jetzt auch deine noch leeren Listen anbieten, damit eine neue Einkaufsliste sofort gefüllt werden kann.
+
+## 0.22.1
+
+- Der Ladebalken oben erscheint jetzt immer, wenn die App auf den Server wartet, und nicht mehr bei den automatischen Prüfungen auf neue Änderungen.
+
 ## 0.22.0
 
 - Die App gibt es jetzt auch auf Italienisch und Spanisch: Wähle die Sprache oben auf der Seite.

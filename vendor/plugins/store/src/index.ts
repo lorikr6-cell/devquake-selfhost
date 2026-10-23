@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'store',
     name: 'Store',
-    version: '0.13.0',
+    version: '0.13.1',
     description:
       'A lightweight shop: products of any type with their own fields, vendors, campaigns, vouchers, announcements and newsletters, reviews, product comparison, QR codes and sharing, the shop’s own design, automatic discounts, a team with several roles per member and a task board, maintenance mode, the shop in any language, buyer accounts with messages and order history, statistics, card (Stripe), PayPal, bank transfer or cash on delivery, and pages search engines can index.',
     status: 'active',

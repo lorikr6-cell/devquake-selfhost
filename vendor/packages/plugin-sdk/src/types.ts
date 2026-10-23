@@ -52,6 +52,12 @@ export interface PluginManifest {
    */
   mailWithoutAccess?: boolean;
   /**
+   * The app may email an invitation to an address a member typed (ADR 0073): a link to one of its
+   * `signedInRoutes.pages`, with a QR code and, optionally, its native app links. The host owns
+   * the address, the layout and the limits; `perMemberPerDay` defaults to 10 (at most 20).
+   */
+  invitationEmails?: { perMemberPerDay?: number };
+  /**
    * People a member with access invites into something they share (a family, a list…) get the
    * app free of NPS points (ADR 0043): the app calls `ctx.grantInvitedAccess(inviterId)` when
    * the invited person joins. The invite pages must be in `signedInRoutes`.
@@ -245,6 +251,11 @@ export interface PluginContext {
    * list the apps this one works with. Undefined when signed out and on older hosts.
    */
   links?: PluginLinksApi;
+  /**
+   * Invitation emails (ADR 0073), for apps with `manifest.invitationEmails`, in API handlers of a
+   * signed-in member with full access (not a trial). Undefined otherwise and on older hosts.
+   */
+  invitations?: PluginInvitations;
   /**
    * The signed-in member's NPS points (ADR 0046), for apps with `manifest.npsGifts`. Undefined
    * when signed out, for other apps and on older hosts.
@@ -721,4 +732,55 @@ export interface PluginDefinition {
   platform?: () => Promise<PluginPlatformModule>;
   /** The handlers of the link points in `manifest.links.offers`, by offer id (ADR 0035). */
   linkHandlers?: Record<string, () => Promise<PluginLinkHandlerModule>>;
+}
+
+/** An invitation email's texts, plain, in the language chosen; the host escapes and lays them out. */
+export interface PluginInvitationEmail {
+  /** ≤ 120 characters. */
+  subject: string;
+  /** ≤ 120. */
+  heading: string;
+  /** 1–4, each ≤ 600, no web addresses (refused: the host adds the only link). */
+  paragraphs: string[];
+  /** ≤ 40. */
+  buttonLabel: string;
+  /** ≤ 300, no web addresses. */
+  footer?: string;
+}
+
+/** One invitation email (ADR 0073). */
+export interface PluginInvitationRequest {
+  /** The address the member typed; the host keeps it only in its email log. */
+  to: string;
+  /** Absolute URL on this app's own subdomain matching one of its `signedInRoutes.pages`. */
+  url: string;
+  /** Language of the email. */
+  locale: PluginLocale;
+  content: PluginInvitationEmail;
+  /** Add a branded QR code of `url` (default true). */
+  qr?: boolean;
+  /** Add this app's offered native app install links (ADR 0064), e.g. for drivers. */
+  nativeApps?: boolean;
+  /** 1–80 of a–z 0–9 `:._-`, e.g. "invite:42": the same key and address within 24 h send once. */
+  key: string;
+  /**
+   * Where replies go: an address the inviting organisation published (e.g. its contact email).
+   * Default contact@devquake.com; never a member's own sign-in address.
+   */
+  replyTo?: string;
+}
+
+/**
+ * 'invalid': bad address, URL not an invitation page of this app, texts too long or with web
+ * addresses; 'rate-limited': a limit was reached (try again tomorrow, or share the link by hand);
+ * 'declined': the address asked not to receive DevQuake invitations; 'unavailable': mail is not
+ * configured or the send failed.
+ */
+export type PluginInvitationError = 'invalid' | 'rate-limited' | 'declined' | 'unavailable';
+
+export interface PluginInvitations {
+  /** `sent: false`: the same key and address were already sent within 24 hours. */
+  send(
+    request: PluginInvitationRequest,
+  ): Promise<{ ok: true; sent: boolean } | { ok: false; error: PluginInvitationError }>;
 }

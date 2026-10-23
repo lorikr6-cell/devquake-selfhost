@@ -102,7 +102,7 @@ export function InterestVote({
           </Link>
         </p>
       ) : (
-        <form onSubmit={(e) => vote(true, e)} className="space-y-3">
+        <form data-dq-submit="always" onSubmit={(e) => vote(true, e)} className="space-y-3">
           {mine ? (
             <p className={cn('text-sm', S.muted)}>
               {mine.interested ? t('votedYes') : t('votedNo')}

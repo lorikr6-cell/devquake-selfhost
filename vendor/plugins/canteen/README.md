@@ -9,7 +9,7 @@ For organisations that feed elderly people. Spec and roadmap:
 1. Create its database in hPanel and set `CANTEEN_DB_NAME`, `CANTEEN_DB_USER`, `CANTEEN_DB_PWD`.
 2. Import every file of `db/migrations/` into it, in order (`0001` … `0010`), or run
    `pnpm db:migrate --plugin canteen`.
-3. Optional: `CANTEEN_ORS_KEY` (a free key from openrouteservice.org) shows "Compute the order
+3. Optional: `CANTEEN_ORS_KEY` (a free key from openrouteservice.org; the API is at api.heigit.org) shows "Compute the order
    from the map" on routes.
 4. Set `CANTEEN_MASTER_KEY` (32 random bytes, base64: `openssl rand -base64 32`). Without it,
    personal numbers and pictures cannot be saved. Never change or lose it.
@@ -52,6 +52,17 @@ For organisations that feed elderly people. Spec and roadmap:
 | API  | `POST /orgs/:id/drivers`                                   | `src/api/drivers.ts`            |
 | API  | `PATCH, DELETE /orgs/:id/drivers/:driverId`                | `src/api/driver.ts`             |
 | API  | `GET, PUT, DELETE /orgs/:id/drivers/:driverId/licence`     | `src/api/licence.ts`            |
+| API  | `POST /orgs/:id/invites/:inviteId/email` (organisers)      | `src/api/invite-email.ts`       |
+| Page | `/orgs/:id/routes/areas` (driver areas, planners)          | `src/pages/areas.tsx`           |
+| Page | `/orgs/:id/routes/print?from=&to=&driver=` (route sheets)  | `src/pages/routes-print.tsx`    |
+| API  | `GET, PUT /orgs/:id/areas`                                 | `src/api/areas.ts`              |
+| API  | `POST /orgs/:id/areas/:action` (propose, locate, build)    | `src/api/areas-action.ts`       |
+| API  | `GET, POST /orgs/:id/dishes` (Cookbook dishes)             | `src/api/dishes.ts`             |
+| API  | `DELETE /orgs/:id/dishes/:dishId`                          | `src/api/dish.ts`               |
+| API  | `GET /orgs/:id/recipes?q=` (the visitor's Cookbook)        | `src/api/recipes.ts`            |
+| API  | `GET, POST /orgs/:id/shopping?week=` (purchasing list)     | `src/api/shopping-week.ts`      |
+| API  | `POST /demo` (one demo per person)                         | `src/api/demo.ts`               |
+| API  | `PUT /orgs/:id/demo-role` (the demo's maker)               | `src/api/demo-role.ts`          |
 | API  | `PUT /orgs/:id/route-settings`                             | `src/api/route-settings.ts`     |
 | API  | `PUT /orgs/:id/routes/:day`                                | `src/api/route.ts`              |
 | API  | `POST /orgs/:id/routes/:day/copy`                          | `src/api/route-copy.ts`         |

@@ -1,4 +1,5 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
+import { PrintHeader } from '../components/print-header';
 import { LOCALE_TAGS, Link, buttonClass } from '@devquake/ui';
 import { orgScope } from '../components/guard';
 import { PrintButton } from '../components/meals';
@@ -29,8 +30,10 @@ export default async function MedicationPage({ ctx, params, searchParams }: Plug
   const base = `/orgs/${scope.org.id}/medication`;
   return (
     <>
+      <PrintHeader scope={scope} />
       <OrgNav
         orgId={scope.org.id}
+        demo={scope.org.demo ? scope.staff.role : undefined}
         orgName={scope.org.name}
         current="medication"
         can={scope.can}

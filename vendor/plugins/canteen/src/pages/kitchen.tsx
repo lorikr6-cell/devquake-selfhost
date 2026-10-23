@@ -1,4 +1,5 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
+import { PrintHeader } from '../components/print-header';
 import { LOCALE_TAGS, Link, buttonClass } from '@devquake/ui';
 import { orgScope } from '../components/guard';
 import { PrintButton } from '../components/meals';
@@ -7,6 +8,8 @@ import { Panel } from '../components/ui';
 import { localeOf, translator } from '../i18n';
 import { addDays, isIsoDate } from '../lib/dates';
 import { DELIVERY_MEAL, countByDiet, dishLines, formatTime, portionsFor } from '../lib/meals';
+import { dishFor, linesToCook, scaledDish } from '../lib/dishes';
+import { listDishes } from '../lib/dishes-data';
 import { dayMenus, eatersOf, listMealTimes } from '../lib/meals-data';
 import { DIETS } from '../lib/model';
 
@@ -24,10 +27,11 @@ export default async function KitchenPage({ ctx, params, searchParams }: PluginP
   const t = translator(scope.locale);
   const asked = (await searchParams).day;
   const day = typeof asked === 'string' && isIsoDate(asked) ? asked : scope.today;
-  const [mealTimes, menus, eaters] = await Promise.all([
+  const [mealTimes, menus, eaters, dishes] = await Promise.all([
     listMealTimes(scope.db, scope.org.id, scope.user.id),
     dayMenus(scope.db, scope.org.id, scope.user.id, day),
     eatersOf(scope.db, scope.org.id, scope.user.id),
+    listDishes(scope.db, scope.org.id, scope.user.id),
   ]);
   const meals = [
     { id: DELIVERY_MEAL, name: t('meals.delivered') },
@@ -48,8 +52,10 @@ export default async function KitchenPage({ ctx, params, searchParams }: PluginP
 
   return (
     <>
+      <PrintHeader scope={scope} />
       <OrgNav
         orgId={scope.org.id}
+        demo={scope.org.demo ? scope.staff.role : undefined}
         orgName={scope.org.name}
         current="kitchen"
         can={scope.can}
@@ -78,6 +84,17 @@ export default async function KitchenPage({ ctx, params, searchParams }: PluginP
           const menu = menus.find((m) => m.meal === meal.id);
           const counts = countByDiet(portions);
           const allergies = portions.filter((p) => p.allergies);
+          // Dishes from Cookbook: their ingredients for the portions that eat them.
+          const toCook = menu
+            ? linesToCook({
+                dishes: menu.dishes,
+                variants: menu.variants,
+                portions: counts,
+              }).flatMap(({ line, portions: n }) => {
+                const dish = dishFor(line, dishes);
+                return dish ? [{ dish, portions: n }] : [];
+              })
+            : [];
           return (
             <Panel key={meal.id} className="break-inside-avoid">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -123,6 +140,33 @@ export default async function KitchenPage({ ctx, params, searchParams }: PluginP
                   </ul>
                 </div>
               </div>
+              {toCook.length ? (
+                <div className="mt-4">
+                  <h3 className="mb-1 text-sm font-semibold">{t('kitchenApps.ingredients')}</h3>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {toCook.map(({ dish, portions: n }) => (
+                      <div key={dish.id} className="break-inside-avoid text-sm">
+                        <p className="font-medium">
+                          {dish.title}{' '}
+                          <span className="font-normal text-ink/60 dark:text-paper/60">
+                            · {t('kitchen.portions', { count: n })}
+                          </span>
+                        </p>
+                        <ul className="mt-0.5">
+                          {scaledDish(dish, n).map((i, k) => (
+                            <li key={k} className="flex justify-between gap-3">
+                              <span>{i.name}</span>
+                              <span className="tabular-nums">
+                                {i.qty === null ? '—' : `${i.qty} ${i.unit ?? ''}`}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
               {allergies.length ? (
                 <div className="mt-4 rounded-md border border-red-300 bg-red-50 p-3 text-sm text-red-950 dark:border-red-800 dark:bg-red-950 dark:text-red-100">
                   <h3 className="mb-1 font-semibold">{t('kitchen.allergies')}</h3>

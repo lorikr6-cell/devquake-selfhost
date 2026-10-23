@@ -1,4 +1,5 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
+import { PrintHeader } from '../components/print-header';
 import { LOCALE_TAGS, Link, buttonClass, cn } from '@devquake/ui';
 import { orgScope } from '../components/guard';
 import { PrintButton } from '../components/meals';
@@ -95,18 +96,17 @@ export default async function CalendarPage({ ctx, params, searchParams }: Plugin
 
   return (
     <>
+      <PrintHeader scope={scope} />
       <OrgNav
         orgId={scope.org.id}
+        demo={scope.org.demo ? scope.staff.role : undefined}
         orgName={scope.org.name}
         current="calendar"
         can={scope.can}
         t={t}
       />
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-display text-2xl font-bold capitalize">
-          <span className="hidden print:inline">{scope.org.name} · </span>
-          {title}
-        </h1>
+        <h1 className="font-display text-2xl font-bold capitalize">{title}</h1>
         <div className="flex flex-wrap gap-2 print:hidden">
           <Link href={`${base}?month=${shiftMonth(month, -1)}`} className={buttonClass('ghost')}>
             ← {t('calendar.previous')}

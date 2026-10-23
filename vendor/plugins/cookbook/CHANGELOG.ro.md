@@ -1,5 +1,9 @@
 # Modificări — Carte de bucate
 
+## 0.8.0
+
+- Rețetele pot acum hrăni o Cantină socială: când alegi una acolo, este calculată pentru până la 500 de porții, iar cantina păstrează o copie pentru bucătărie.
+
 ## 0.7.1
 
 - Rândul de file nu mai arată o mică bară de derulare când încap toate filele; se derulează lateral doar când nu încap.

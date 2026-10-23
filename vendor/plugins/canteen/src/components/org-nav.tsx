@@ -1,5 +1,6 @@
 import { Link, cn, type Translate } from '@devquake/ui';
-import type { Action } from '../lib/roles';
+import type { Action, Role } from '../lib/roles';
+import { DemoRoleSwitch } from './demo-role';
 
 const TABS: { key: string; path: string; action: Action }[] = [
   { key: 'people', path: '', action: 'people.view' },
@@ -19,17 +20,21 @@ export function OrgNav({
   current,
   can,
   t,
+  demo,
 }: {
   orgId: number;
   orgName: string;
   current: string;
   can: (action: Action) => boolean;
   t: Translate;
+  /** In a demo organisation: the visitor's role there, with the "View as" switch. */
+  demo?: Role;
 }) {
   const tabs = TABS.filter((tab) => can(tab.action));
   return (
     <div className="mb-6 print:hidden">
       <p className="text-sm text-ink/60 dark:text-paper/60">{orgName}</p>
+      {demo ? <DemoRoleSwitch orgId={orgId} role={demo} /> : null}
       {tabs.length > 1 ? (
         <nav
           aria-label={orgName}

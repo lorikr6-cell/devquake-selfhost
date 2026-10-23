@@ -79,7 +79,11 @@ export function ProductList({
 
   return (
     <div className="space-y-4">
-      <form onSubmit={apply} className="grid gap-2 sm:grid-cols-[1fr_auto_auto_auto_auto]">
+      <form
+        data-dq-submit="always"
+        onSubmit={apply}
+        className="grid gap-2 sm:grid-cols-[1fr_auto_auto_auto_auto]"
+      >
         <label className="sr-only" htmlFor="product-search">
           {t('search')}
         </label>

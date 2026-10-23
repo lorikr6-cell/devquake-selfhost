@@ -1,5 +1,13 @@
 # Registro delle modifiche: Liste della spesa
 
+## 0.23.0
+
+- Le app collegate come la Mensa sociale ora possono proporre anche le tue liste ancora vuote, così una nuova lista d’acquisto si riempie subito.
+
+## 0.22.1
+
+- La barra di caricamento in alto ora compare ogni volta che l’app attende il server e non più durante i controlli automatici delle novità.
+
 ## 0.22.0
 
 - L’app ora è anche in italiano e in spagnolo: scegli la lingua in alto nella pagina.

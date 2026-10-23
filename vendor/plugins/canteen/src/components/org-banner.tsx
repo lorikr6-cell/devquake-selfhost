@@ -19,6 +19,14 @@ export function OrgBanner({ page, logoUrl }: { page: OrgPage; logoUrl: string })
             {page.description}
           </p>
         ) : null}
+        <p className="mt-2 text-sm">
+          <a
+            href={`mailto:${page.contactEmail}`}
+            className="underline decoration-quake/50 underline-offset-2 hover:decoration-quake"
+          >
+            {page.contactEmail}
+          </a>
+        </p>
       </div>
     </section>
   );

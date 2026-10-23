@@ -1,5 +1,13 @@
 # Noutăți: Liste de cumpărături comune
 
+## 0.23.0
+
+- Aplicațiile conectate, precum Cantina socială, pot acum oferi și listele tale încă goale, ca o listă nouă de achiziții să poată fi completată imediat.
+
+## 0.22.1
+
+- Bara de încărcare de sus apare acum de fiecare dată când aplicația așteaptă serverul și nu mai apare la verificările automate de modificări noi.
+
 ## 0.22.0
 
 - Aplicația este acum și în italiană și spaniolă: alege limba din partea de sus a paginii.
