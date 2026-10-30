@@ -24,6 +24,7 @@ export default async function Menu({ ctx }: PluginPageProps) {
         </Link>
       </header>
       <MenuEditor
+        cookbook={ctx.links ? await ctx.links.isConnected('cookbook').catch(() => false) : false}
         initial={await menuOf(db, venue.id)}
         venue={{ currency: venue.currency, decimals: venue.decimals, vatRates: venue.vatRates }}
       />

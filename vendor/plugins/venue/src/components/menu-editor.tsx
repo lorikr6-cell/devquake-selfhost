@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useT } from '@devquake/ui';
 import { ALLERGENS, STATIONS, allergensOf, formatMinor, type Station } from '../lib/model';
 import { call, dangerLink, errorText, fieldClass, primaryButton } from './client';
+import { CookbookPicker, type RecipeItem } from './cookbook-picker';
 import { Status } from './status';
 
 interface Category {
@@ -35,7 +36,16 @@ interface VenueMoney {
 }
 
 /** The menu: categories in order, each with its items (price, VAT, station, allergens). */
-export function MenuEditor({ initial, venue }: { initial: Menu; venue: VenueMoney }) {
+export function MenuEditor({
+  initial,
+  venue,
+  cookbook = false,
+}: {
+  initial: Menu;
+  venue: VenueMoney;
+  /** The cookbook is connected: offer "Add from your cookbook". */
+  cookbook?: boolean;
+}) {
   const t = useT('menu');
   const [menu, setMenu] = useState(initial);
   const [newCategory, setNewCategory] = useState('');
@@ -43,6 +53,8 @@ export function MenuEditor({ initial, venue }: { initial: Menu; venue: VenueMone
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<{ text: string; ok: boolean } | null>(null);
   const [q, setQ] = useState('');
+  const [prefill, setPrefill] = useState<RecipeItem | null>(null);
+  const [formKey, setFormKey] = useState(0);
   const query = q.trim().toLowerCase();
   const matches = (i: Item, category: string) =>
     !query ||
@@ -167,14 +179,27 @@ export function MenuEditor({ initial, venue }: { initial: Menu; venue: VenueMone
         editing === 'new' ? (
           <section className="rounded-lg border border-ink/10 p-4 dark:border-paper/10">
             <h2 className="mb-3 font-semibold">{t('newItem')}</h2>
+            {cookbook ? (
+              <CookbookPicker
+                onPick={(r) => {
+                  setPrefill(r);
+                  setFormKey((k) => k + 1);
+                }}
+              />
+            ) : null}
             <ItemForm
+              key={formKey}
+              prefill={prefill}
               categories={menu.categories}
               venue={venue}
               busy={busy}
               onSave={async (body) => {
                 if (await run('/api/items', 'POST', body, t('added'))) setEditing(null);
               }}
-              onCancel={() => setEditing(null)}
+              onCancel={() => {
+                setEditing(null);
+                setPrefill(null);
+              }}
             />
           </section>
         ) : (
@@ -215,6 +240,7 @@ export function MenuEditor({ initial, venue }: { initial: Menu; venue: VenueMone
 /** One item's fields; Save sends them, the checkboxes go with the form. */
 function ItemForm({
   item,
+  prefill,
   categories,
   venue,
   busy,
@@ -223,6 +249,8 @@ function ItemForm({
   onRemove,
 }: {
   item?: Item;
+  /** A recipe picked from the cookbook: its name, ingredients and allergens. */
+  prefill?: RecipeItem | null;
   categories: Category[];
   venue: VenueMoney;
   busy: boolean;
@@ -232,12 +260,14 @@ function ItemForm({
 }) {
   const t = useT('menu');
   const [categoryId, setCategoryId] = useState(item?.categoryId ?? categories[0]?.id ?? 0);
-  const [name, setName] = useState(item?.name ?? '');
-  const [description, setDescription] = useState(item?.description ?? '');
+  const [name, setName] = useState(item?.name ?? prefill?.name ?? '');
+  const [description, setDescription] = useState(item?.description ?? prefill?.description ?? '');
   const [price, setPrice] = useState(item ? formatMinor(item.priceMinor, venue.decimals) : '');
   const [vatRate, setVatRate] = useState(item?.vatRate ?? venue.vatRates[0] ?? 0);
   const [station, setStation] = useState<Station>(item?.station ?? 'kitchen');
-  const [allergens, setAllergens] = useState<string[]>(item ? allergensOf(item.allergens) : []);
+  const [allergens, setAllergens] = useState<string[]>(
+    item ? allergensOf(item.allergens) : prefill ? allergensOf(prefill.allergens) : [],
+  );
   const [available, setAvailable] = useState(item?.available ?? true);
 
   return (

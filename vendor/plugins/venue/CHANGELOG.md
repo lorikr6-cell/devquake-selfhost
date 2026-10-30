@@ -1,5 +1,9 @@
 # Changelog — Venue
 
+## 0.4.0
+
+- Connect Shopping and choose your purchasing list: the reports show what was bought each month next to your takings. Connect your Cookbook and add a recipe to the menu with its name, ingredients and allergens filled in.
+
 ## 0.3.0
 
 - Design your menu: place up to 5 pictures on an A4 page, drag and size them, choose the font, colours, a panel behind the texts and one or two columns. Saving turns the pictures into one background; print the menu from the print view, and show the same design on your online menu.

@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'venue',
     name: 'Venue',
-    version: '0.3.0',
+    version: '0.4.0',
     description:
       'The business side of a café, bistro, fast food or bar: the venue with its country’s VAT rates, a menu with allergens, staff with PINs for a shared tablet, and a public menu for guests.',
     status: 'active',
@@ -32,6 +32,37 @@ export default definePlugin({
       '/guest/:code',
     ],
     about,
+    // Links with other apps (ADR 0035): costs from Shopping, recipes from the Cookbook.
+    links: {
+      uses: [
+        {
+          app: 'shopping',
+          points: ['lists.overview', 'list.purchases'],
+          targets: ['list'],
+          benefit: {
+            en: 'What you buy for the venue on your purchasing list shows up as costs in the reports, next to your takings.',
+            de: 'Was du auf deiner Einkaufsliste für das Lokal kaufst, erscheint in den Berichten als Kosten, neben deinen Einnahmen.',
+            ro: 'Ce cumperi pentru local pe lista de achiziții apare ca și costuri în rapoarte, lângă încasări.',
+            hu: 'Amit a beszerzési listádon a helynek vásárolsz, költségként jelenik meg a kimutatásokban a bevételek mellett.',
+            it: 'Ciò che compri per il locale nella lista degli acquisti compare come costi nei resoconti, accanto agli incassi.',
+            es: 'Lo que compras para el local en tu lista de compras aparece como costes en los informes, junto a tus ingresos.',
+          },
+        },
+        {
+          app: 'cookbook',
+          points: ['recipes.search', 'recipe.get'],
+          targets: ['recipe'],
+          benefit: {
+            en: 'Add a recipe from your cookbook to the menu: its name, ingredients and allergens are filled in.',
+            de: 'Füge ein Rezept aus deinem Kochbuch zur Karte hinzu: Name, Zutaten und Allergene werden eingetragen.',
+            ro: 'Adaugă în meniu o rețetă din cartea ta de bucate: numele, ingredientele și alergenii se completează singure.',
+            hu: 'Tegyél fel egy receptet a szakácskönyvedből az étlapra: a neve, a hozzávalói és az allergénjei kitöltődnek.',
+            it: 'Aggiungi al menu una ricetta del tuo ricettario: nome, ingredienti e allergeni si compilano da soli.',
+            es: 'Añade a la carta una receta de tu recetario: su nombre, ingredientes y alérgenos se rellenan solos.',
+          },
+        },
+      ],
+    },
   },
   layout: () => import('./layout'),
   platform: () => import('./platform'),
@@ -78,5 +109,7 @@ export default definePlugin({
     '/menu/design': () => import('./api/menu-design'),
     '/menu/design/background': () => import('./api/menu-background'),
     '/menu-bg/:slug': () => import('./api/public-background'),
+    '/links/shopping': () => import('./api/links-shopping'),
+    '/links/recipes': () => import('./api/links-recipes'),
   },
 });

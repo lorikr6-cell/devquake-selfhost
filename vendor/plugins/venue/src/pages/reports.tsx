@@ -4,6 +4,7 @@ import { localeOf, translator } from '../i18n';
 import { addDays, todayIn } from '../lib/dates';
 import { salesDays, searchBills, topItems } from '../lib/floor';
 import { formatMinor } from '../lib/model';
+import { purchases, topPurchases, venueLink } from '../lib/links';
 import { ownVenue } from '../lib/page';
 
 export async function generateMetadata({ ctx }: PluginPageProps) {
@@ -28,11 +29,21 @@ export default async function Reports({ ctx, searchParams }: PluginPageProps) {
   const nextFirst = m === 12 ? `${y + 1}-01-01` : `${y}-${String(m + 1).padStart(2, '0')}-01`;
   const last = addDays(nextFirst, -1);
   const q = typeof searchParams.q === 'string' ? searchParams.q.trim().slice(0, 60) : '';
-  const [days, items, bills] = await Promise.all([
+  const [days, items, bills, list] = await Promise.all([
     salesDays(db, venue.id, first, last),
     topItems(db, venue.id, month, month),
     searchBills(db, venue.id, q, 50),
+    venueLink(db, venue.id, 'shoppingList'),
   ]);
+  // The month's costs: what was bought on the venue's purchasing list in Shopping (ADR 0035).
+  const bought =
+    list && ctx.links
+      ? await purchases(ctx.links, Number(list.ref), first, last).catch(() => null)
+      : null;
+  const listUrl =
+    list && ctx.links
+      ? ctx.links.deepLink('shopping', 'list', { id: list.ref }, { returnTo: '/reports' })
+      : null;
   const money = (m: number) => `${formatMinor(m, venue.decimals)} ${venue.currency}`;
   const sum = (k: 'gross' | 'net' | 'tip' | 'cash' | 'card' | 'other' | 'bills') =>
     days.reduce((a, d) => a + d[k], 0);
@@ -83,6 +94,46 @@ export default async function Reports({ ctx, searchParams }: PluginPageProps) {
           <p className="text-lg font-semibold tabular-nums">{sum('bills')}</p>
         </div>
       </section>
+      {list ? (
+        <section className="space-y-2 rounded-lg border border-ink/10 p-4 dark:border-paper/10">
+          <h2 className="font-semibold">{t('reports.costsTitle', { name: list.name })}</h2>
+          {bought ? (
+            <>
+              <p className="flex flex-wrap justify-between gap-3">
+                <span>{t('reports.purchases')}</span>
+                <span className="font-semibold tabular-nums">
+                  {bought.total.toFixed(2)} {bought.currency}
+                </span>
+              </p>
+              {bought.currency === venue.currency ? (
+                <p className="flex flex-wrap justify-between gap-3">
+                  <span>{t('reports.afterCosts')}</span>
+                  <span className="font-semibold tabular-nums">
+                    {money(sum('gross') - Math.round(bought.total * 10 ** venue.decimals))}
+                  </span>
+                </p>
+              ) : null}
+              <ol className="space-y-0.5 text-sm">
+                {topPurchases(bought.items).map((p) => (
+                  <li key={p.name} className="flex justify-between gap-3">
+                    <span>{p.name}</span>
+                    <span className="tabular-nums">{p.total.toFixed(2)}</span>
+                  </li>
+                ))}
+              </ol>
+            </>
+          ) : (
+            <p className="text-sm text-ink/70 dark:text-paper/70">
+              {t('reports.costsUnavailable')}
+            </p>
+          )}
+          {listUrl ? (
+            <a href={listUrl} className="text-sm underline">
+              {t('reports.openList')}
+            </a>
+          ) : null}
+        </section>
+      ) : null}
       <section>
         <h2 className="mb-2 font-semibold">{t('reports.byDay')}</h2>
         {days.length ? (

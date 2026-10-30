@@ -59,6 +59,16 @@ tablets). The scheduled run deletes finalised bills after 183 days (`deleteOldBi
 `0004_venue_menu_design.sql` (menu_designs: the menu's look and its flattened background). Next stages: tables and orders on the tablet with PIN switching,
 kitchen and bar screens, payments and the daily closing, stock, shifts, reservations, HACCP.
 
+## Links with other apps (ADR 0035)
+
+| With     | Uses                                       | For                                                            |
+| -------- | ------------------------------------------ | -------------------------------------------------------------- |
+| shopping | `lists.overview`, `list.purchases`; `list` | The purchasing list (settings) and the month's costs (reports) |
+| cookbook | `recipes.search`, `recipe.get`; `recipe`   | "Add from your cookbook" in the menu editor                    |
+
+The chosen list is kept in `venue_links` (migration `0005_venue_links.sql`); purchases are read
+when the reports open, never stored here. API: `/links/shopping` (GET, PUT), `/links/recipes` (GET).
+
 ## Development
 
 ```bash
