@@ -21,6 +21,7 @@
     "@devquake/plugin-shopping": "workspace:*",
     "@devquake/plugin-store": "workspace:*",
     "@devquake/plugin-utilities": "workspace:*",
+    "@devquake/plugin-venue": "workspace:*",
     "@devquake/ui": "workspace:*",
     "mysql2": "^3.24.4",
     "next": "^16.0.0",

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { CloseIcon } from './close-icon';
 import { cn } from './cn';
 import { useT } from './i18n-react';
 import { thumbUrl } from './photo';
@@ -81,9 +82,9 @@ export function ZoomableImage({
             type="button"
             onClick={() => setOpen(false)}
             aria-label={t('close')}
-            className="absolute top-3 right-3 grid size-11 place-items-center rounded-full bg-white/15 text-2xl text-white hover:bg-white/25 focus-visible:outline-2 focus-visible:outline-white"
+            className="absolute top-3 right-3 grid size-11 place-items-center rounded-full bg-white/15 text-white hover:bg-white/25 focus-visible:outline-2 focus-visible:outline-white"
           >
-            ×
+            <CloseIcon size={22} />
           </button>
         </div>
       ) : null}

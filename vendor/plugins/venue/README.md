@@ -1,0 +1,49 @@
+# Venue
+
+DevQuake plugin served at `https://venue.devquake.com`
+(local: `http://venue.localhost:3000`). Spec: [docs/plugins/ideas/venue.md](../../docs/plugins/ideas/venue.md),
+staff PINs and tablets: [ADR 0080](../../docs/adr/0080-venue-tablets-and-staff-pins.md).
+Also runs on its own server from [devquake-selfhost](https://github.com/lorikr6-cell/devquake-selfhost)
+(`apps/venue`, ADR 0054).
+
+The business side of a café, bistro, fast food or bar. Stage 1 (0.1.0): the venue with its
+country's currency and VAT rates (presets for Hungary and Romania), the menu with prices, VAT,
+station and the 14 EU allergens, staff with PINs, the shared tablets, and a public menu for guests.
+The admin settings are the venue owner's only (a signed-in member, never a PIN).
+
+## Routes
+
+| Type | Pattern           | Access                    | File                                        |
+| ---- | ----------------- | ------------------------- | ------------------------------------------- |
+| Page | `/`               | members (else sign in)    | `src/pages/home.tsx` (setup, then overview) |
+| Page | `/settings`       | the venue's owner         | `src/pages/settings.tsx`                    |
+| Page | `/menu`           | the venue's owner         | `src/pages/menu.tsx` (menu editor)          |
+| Page | `/staff`          | the venue's owner         | `src/pages/staff.tsx` (staff and PINs)      |
+| Page | `/tablets`        | the venue's owner         | `src/pages/tablets.tsx` (enable, disable)   |
+| Page | `/m/:slug`        | open route (anyone)       | `src/pages/public-menu.tsx` (while public)  |
+| Page | `/help`           | public                    | `src/pages/help.tsx` (user manual)          |
+| Page | `/about`          | public                    | `src/pages/about.tsx`                       |
+| API  | `/venue`          | POST (create), PUT        | `src/api/venue.ts`                          |
+| API  | `/staff`          | GET, POST                 | `src/api/staff.ts`                          |
+| API  | `/staff/:id`      | PUT (new PIN), DELETE     | `src/api/staff-member.ts`                   |
+| API  | `/tablets`        | POST (enable this device) | `src/api/tablets.ts` (sets `venue_tablet`)  |
+| API  | `/tablets/:id`    | DELETE (disable)          | `src/api/tablet.ts`                         |
+| API  | `/categories`     | POST                      | `src/api/categories.ts`                     |
+| API  | `/categories/:id` | PUT (rename), DELETE      | `src/api/category.ts`                       |
+| API  | `/items`          | POST                      | `src/api/items.ts`                          |
+| API  | `/items/:id`      | PUT, DELETE               | `src/api/item.ts`                           |
+| API  | `/tips`           | PUT (tips on the bill)    | `src/api/tips.ts`                           |
+| API  | `/health`         | public                    | `src/api/health.ts`                         |
+
+Every API route but `/health` is the owner's (`ownerApi` in `src/lib/api.ts`); every page but
+the public ones goes through `ownVenue` (`src/lib/page.tsx`).
+
+Database (own, `VENUE_DB_*`): `db/migrations/0001_venue.sql` (venues, staff, tablets,
+menu_categories, menu_items), `0002_venue_tips.sql` (the venue's tip settings). Next stages: tables and orders on the tablet with PIN switching,
+kitchen and bar screens, payments and the daily closing, stock, shifts, reservations, HACCP.
+
+## Development
+
+```bash
+pnpm dev   # from the repo root, then open http://venue.localhost:3000
+```

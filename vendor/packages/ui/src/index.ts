@@ -43,6 +43,8 @@ export { BackLink, NavTracker, ReturnLink } from './navigation';
 export { rich } from './i18n-nodes';
 export { FullscreenButton } from './fullscreen';
 export { Sheet } from './sheet';
+export { CloseIcon } from './close-icon';
+export { ArtGalleryLogo, GalleryEasel } from './art-gallery-logo';
 export { WorksWith, type WorksWithApp, type WorksWithLabels } from './works-with';
 export {
   LinkedEventRow,
@@ -90,3 +92,5 @@ export {
   type CropFrame,
   type CropView,
 } from './crop';
+export { PageTips, TipsToggle, useTips } from './page-tips';
+export { pageTips, tipsForPath, type PageTip, type PageTipsEntry } from './page-tips-data';

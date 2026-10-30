@@ -18,6 +18,7 @@ name. No dependency on DevQuake's servers.
 | [Household](apps/household/README.md)    | Shared expenses, utility bills, recipes, meal plans and shopping lists, working together                              | [README](apps/household/README.md#deploy) |
 | [Store](apps/store/README.md)            | A small online shop: products, sales, card, PayPal, bank transfer or cash on delivery, shipping                       | [README](apps/store/README.md#deploy)     |
 | [Social canteen](apps/canteen/README.md) | Organisations feeding elderly people: profiles, menus, kitchen sheet, delivery routes with drivers' map, medical file | [README](apps/canteen/README.md#deploy)   |
+| [Venue](apps/venue/README.md)            | Cafés, bistros, fast food and bars: the menu with VAT and allergens, staff PINs on a shared tablet, a public menu     | [README](apps/venue/README.md#deploy)     |
 
 Each app's README has the **Deploy on Hostinger** button, the first run and every setting.
 

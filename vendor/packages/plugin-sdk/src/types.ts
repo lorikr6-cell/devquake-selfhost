@@ -52,6 +52,11 @@ export interface PluginManifest {
    */
   mailWithoutAccess?: boolean;
   /**
+   * The app makes claims the platform asks for (ADR 0079): a product a member may take for
+   * free, e.g. a challenge prize. Implement the claim hooks of `PluginPlatformModule`.
+   */
+  claims?: boolean;
+  /**
    * The app may email an invitation to an address a member typed (ADR 0073): a link to one of its
    * `signedInRoutes.pages`, with a QR code and, optionally, its native app links. The host owns
    * the address, the layout and the limits; `perMemberPerDay` defaults to 10 (at most 20).
@@ -263,6 +268,11 @@ export interface PluginContext {
   npsWallet?: PluginNpsWallet;
   /** The app's settings from /admin-cp (`manifest.adminSettings`, ADR 0050). Server only. */
   settings?: PluginSettings;
+  /**
+   * Apps with `manifest.claims` (ADR 0079), for the signed-in member: redeems the NPS points of a
+   * claim the platform made for them. Undefined otherwise and on older hosts.
+   */
+  claimRewards?: PluginClaimRewardsApi;
 }
 
 /** One setting of `PluginManifest.adminSettings`. /admin-cp is in English. */
@@ -630,6 +640,61 @@ export interface PluginStat {
   value: number;
 }
 
+/** What a claim is for and who may take it (ADR 0079). */
+export interface PluginClaimInput {
+  /** The DevQuake member who may claim it. */
+  userId: number;
+  /** Shown on the claim page, in the email and on the order ("Prize: Autumn light, 1st place"). */
+  reason: PluginLocalizedText;
+  /** The product (and option) offered, as the app's own references. */
+  product: { shop: string; product: string; option?: string };
+  /** Who asks and their own reference, to find the claim again (e.g. "art-gallery", "challenge-12-1"). */
+  source: string;
+  ref: string;
+  /** UTC ISO time after which it can no longer be claimed (90 days by default). */
+  expiresAt: string;
+}
+
+export type PluginClaimStatus = 'open' | 'claimed' | 'expired' | 'locked' | 'cancelled';
+
+export interface PluginClaim {
+  id: string;
+  /** The claim page (on the app's subdomain), unlisted and not indexed. */
+  url: string;
+  status: PluginClaimStatus;
+  expiresAt: string;
+}
+
+/** A product a claim may offer, for the platform's picker. */
+export interface PluginClaimableProduct {
+  shop: string;
+  product: string;
+  option?: string;
+  name: string;
+  /** An NPS point package (ADR 0079): the DevQuake NPS points the claim gives, nothing shipped. */
+  points?: number;
+}
+
+/**
+ * Redeeming a claim's NPS points (ADR 0079), for apps with `manifest.claims` and a signed-in
+ * member: the host adds the points it recorded for that claim, once, and only for its member.
+ */
+export interface PluginClaimRewardsApi {
+  redeem(
+    claimId: string,
+  ): Promise<
+    | { ok: true; points: number }
+    | { ok: false; error: 'not-yours' | 'used' | 'unknown' | 'unavailable' }
+  >;
+}
+
+/** Context of the claim hooks: the platform context with the app's mailer and address. */
+export interface PluginClaimContext extends PluginPlatformContext {
+  mail: PluginMailer;
+  /** Absolute URL of this app, e.g. "https://store.devquake.com". */
+  baseUrl: string;
+}
+
 /**
  * Optional hooks the platform calls in-process (ADR 0007). Keep them fast and idempotent.
  */
@@ -678,6 +743,23 @@ export interface PluginPlatformModule {
    * (ADR 0035): drop anything kept about that link (cached ids, settings). Idempotent.
    */
   onDisconnected?: (userId: number, otherApp: string, ctx: PluginPlatformContext) => Promise<void>;
+  /**
+   * Apps with `manifest.claims` (ADR 0079): makes a claim and emails the member its link and
+   * secret code in their language. The code never leaves the app. Idempotent per source and ref.
+   */
+  createClaim?: (input: PluginClaimInput, ctx: PluginClaimContext) => Promise<PluginClaim>;
+  /** The claims a source made, by their refs. */
+  listClaims?: (
+    source: string,
+    refs: string[],
+    ctx: PluginClaimContext,
+  ) => Promise<Array<PluginClaim & { ref: string }>>;
+  /** Withdraws an open claim; idempotent. */
+  cancelClaim?: (id: string, ctx: PluginClaimContext) => Promise<void>;
+  /** Moves an open, expired or locked claim's end (and unlocks it); idempotent. */
+  extendClaim?: (id: string, expiresAt: string, ctx: PluginClaimContext) => Promise<void>;
+  /** The products a claim may offer from one of the app's shops. */
+  claimableProducts?: (shop: string, ctx: PluginClaimContext) => Promise<PluginClaimableProduct[]>;
 }
 
 export type SearchParams = Record<string, string | string[] | undefined>;

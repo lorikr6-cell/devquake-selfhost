@@ -1,0 +1,17 @@
+{
+  "id": "venue",
+  "name": "Venue",
+  "tagline": "Your café, bistro, fast food or bar on its own server: the menu with VAT rates and the 14 allergens, staff with PINs on a shared tablet, and a public menu for your guests.",
+  "features": [
+    "Hungary and Romania ready with their currency and VAT rates; any other country set up by hand",
+    "A menu in categories with prices, VAT rates, where each item is prepared and the 14 EU allergens",
+    "Staff with a role and a PIN for the shared tablet, without accounts of their own",
+    "Tablets enabled by the owner and disabled at once when one is lost",
+    "A public menu for guests, for a QR code on the tables"
+  ],
+  "audience": "Cafés, bistros, fast food places, small restaurants and bars.",
+  "plugins": ["venue"],
+  "hostedUrl": "https://venue.devquake.com",
+  "secrets": {},
+  "env": []
+}
