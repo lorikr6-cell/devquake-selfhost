@@ -1,5 +1,19 @@
 # Changelog — Venue
 
+## 0.2.0
+
+- Tables with QR stickers to print: on your tablet or phone a table's sticker opens its order;
+  guests who scan it see your menu.
+- Take orders at the table, search the menu as you type, and tick off what was brought. The floor
+  shows every table, what is still to bring and the amount so far.
+- Each seating gets its own bill QR: guests see their whole order without an account, what is
+  still coming, the VAT, the tip they choose and the total.
+- Finalise a bill with cash, card or other: the table is free again and the bill's code stops
+  working. Bills are deleted after six months; the sales numbers stay.
+- Staff switch in on a tablet with their PIN. New reports: sales and income by day and month,
+  tips, the best-selling items, and a search through the bills.
+- Search bars on the menu, the menu editor, the floor and the tables.
+
 ## 0.1.0
 
 - The first version, for cafés, bistros, fast food places and bars. Set up your venue with its

@@ -62,6 +62,11 @@ export async function venueOfOwner(db: Db, userId: number): Promise<Venue | null
   return r ? toVenue(r) : null;
 }
 
+export async function venueById(db: Db, id: number): Promise<Venue | null> {
+  const [r] = await db.query<VenueRow>(`SELECT ${VENUE_COLS} FROM venues WHERE id = ?`, [id]);
+  return r ? toVenue(r) : null;
+}
+
 export async function venueBySlug(db: Db, slug: string): Promise<Venue | null> {
   const [r] = await db.query<VenueRow>(`SELECT ${VENUE_COLS} FROM venues WHERE slug = ?`, [slug]);
   return r ? toVenue(r) : null;

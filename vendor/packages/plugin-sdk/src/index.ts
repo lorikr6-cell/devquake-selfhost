@@ -12,3 +12,13 @@ export {
   type CalendarFeedInput,
   type LinkedCalendarEvent,
 } from './linked-calendar';
+export {
+  ACTIVITY_MAX_ITEMS,
+  ACTIVITY_POINT,
+  activityRange,
+  linkedActivity,
+  localDayOf,
+  utcSearchWindow,
+  type ActivityFeedItem,
+  type LinkedActivity,
+} from './linked-activity';

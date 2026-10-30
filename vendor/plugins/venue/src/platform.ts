@@ -51,3 +51,13 @@ export const deleteUserData: PluginPlatformModule['deleteUserData'] = async (use
   const { deleteVenueOf } = await import('./lib/data');
   await deleteVenueOf(db, userId);
 };
+
+/**
+ * The scheduled run (ADR 0014; no timers of our own): finalised bills older than six months go;
+ * the sales numbers stay for the owner's reports.
+ */
+export const scheduled: PluginPlatformModule['scheduled'] = async ({ db }) => {
+  if (!db) return;
+  const { deleteOldBills } = await import('./lib/floor');
+  await deleteOldBills(db);
+};

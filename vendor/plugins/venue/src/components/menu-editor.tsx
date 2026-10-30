@@ -42,6 +42,13 @@ export function MenuEditor({ initial, venue }: { initial: Menu; venue: VenueMone
   const [editing, setEditing] = useState<number | 'new' | null>(null);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<{ text: string; ok: boolean } | null>(null);
+  const [q, setQ] = useState('');
+  const query = q.trim().toLowerCase();
+  const matches = (i: Item, category: string) =>
+    !query ||
+    i.name.toLowerCase().includes(query) ||
+    (i.description ?? '').toLowerCase().includes(query) ||
+    category.toLowerCase().includes(query);
 
   async function run(url: string, method: 'POST' | 'PUT' | 'DELETE', body: unknown, ok: string) {
     setBusy(true);
@@ -63,8 +70,19 @@ export function MenuEditor({ initial, venue }: { initial: Menu; venue: VenueMone
       {menu.categories.length ? null : (
         <p className="text-ink/70 dark:text-paper/70">{t('empty')}</p>
       )}
+      {menu.items.length > 5 ? (
+        <input
+          type="search"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder={t('search')}
+          aria-label={t('search')}
+          className={`${fieldClass} max-w-sm`}
+        />
+      ) : null}
       {menu.categories.map((c) => {
-        const items = menu.items.filter((i) => i.categoryId === c.id);
+        const items = menu.items.filter((i) => i.categoryId === c.id && matches(i, c.name));
+        if (query && !items.length) return null;
         return (
           <section key={c.id} className="space-y-3">
             <div className="flex flex-wrap items-center gap-3">

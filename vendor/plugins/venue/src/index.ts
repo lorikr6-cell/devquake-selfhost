@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'venue',
     name: 'Venue',
-    version: '0.1.0',
+    version: '0.2.0',
     description:
       'The business side of a café, bistro, fast food or bar: the venue with its country’s VAT rates, a menu with allergens, staff with PINs for a shared tablet, and a public menu for guests.',
     status: 'active',
@@ -13,8 +13,21 @@ export default definePlugin({
     database: true,
     // Open to everyone and listed in the app's sitemap (ADR 0009).
     publicPages: [{ path: '/help', title: 'User manual' }],
-    // The venue's menu for guests (ADR 0047): shown only while the owner keeps it public.
-    openRoutes: { pages: ['/m/:slug'] },
+    // For guests and staff tablets, without a DevQuake account (ADR 0047, 0080): the public menu
+    // (while the owner keeps it public), a table's sticker, the guests' bill, the tablet's floor.
+    openRoutes: { pages: ['/m/:slug', '/t/:code', '/b/:code', '/tablet'] },
+    // The floor's API (the owner's browser or an enabled tablet; the app checks the tablet cookie
+    // and the Origin itself) and the guests' bill (its code is the key; ADR 0080).
+    keyRoutes: [
+      '/floor/session',
+      '/floor/tables',
+      '/floor/tables/:id/bill',
+      '/floor/bills/:id',
+      '/floor/bills/:id/lines',
+      '/floor/bills/:id/finalize',
+      '/floor/lines/:id',
+      '/guest/:code',
+    ],
     about,
   },
   layout: () => import('./layout'),
@@ -25,6 +38,12 @@ export default definePlugin({
     '/menu': () => import('./pages/menu'),
     '/staff': () => import('./pages/staff'),
     '/tablets': () => import('./pages/tablets'),
+    '/tables': () => import('./pages/tables'),
+    '/floor': () => import('./pages/floor'),
+    '/tablet': () => import('./pages/floor'),
+    '/t/:code': () => import('./pages/table'),
+    '/b/:code': () => import('./pages/bill'),
+    '/reports': () => import('./pages/reports'),
     '/m/:slug': () => import('./pages/public-menu'),
     '/help': () => import('./pages/help'),
     '/about': () => import('./pages/about'),
@@ -41,5 +60,15 @@ export default definePlugin({
     '/items': () => import('./api/items'),
     '/items/:id': () => import('./api/item'),
     '/tips': () => import('./api/tips'),
+    '/tables': () => import('./api/tables'),
+    '/tables/:id': () => import('./api/table'),
+    '/floor/session': () => import('./api/floor-session'),
+    '/floor/tables': () => import('./api/floor-tables'),
+    '/floor/tables/:id/bill': () => import('./api/floor-table-bill'),
+    '/floor/bills/:id': () => import('./api/floor-bill'),
+    '/floor/bills/:id/lines': () => import('./api/floor-lines'),
+    '/floor/bills/:id/finalize': () => import('./api/floor-finalize'),
+    '/floor/lines/:id': () => import('./api/floor-line'),
+    '/guest/:code': () => import('./api/guest-bill'),
   },
 });

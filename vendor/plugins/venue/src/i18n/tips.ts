@@ -10,6 +10,12 @@ export const TIPS_PAGES: Record<string, string> = {
   '/m/:slug': 'publicMenu',
   '/help': 'help',
   '/about': 'about',
+  '/floor': 'floor',
+  '/tablet': 'floor',
+  '/tables': 'tables',
+  '/reports': 'reports',
+  '/t/:code': 'table',
+  '/b/:code': 'guestBill',
 };
 
 /** How-to tips for each page: how to see the details, how to add, how to change. */
@@ -56,6 +62,31 @@ export const tips = defineMessages(
         create: 'Open the overview to start.',
         edit: 'Your venue’s data is deleted with your account.',
       },
+      floor: {
+        see: 'Every table: free, or its bill with what is still to bring.',
+        create: 'Tap a table to open a bill or add to the order.',
+        edit: 'Find a table with the search bar; switch user on a tablet.',
+      },
+      tables: {
+        see: 'Your tables with their QR stickers.',
+        create: 'Add a table, then print the stickers.',
+        edit: 'Rename a table, make a new sticker or remove it.',
+      },
+      reports: {
+        see: 'Sales, VAT, tips and payments for a month, by day.',
+        create: 'Sales add up as bills are finalised.',
+        edit: 'Go to another month or search the bills.',
+      },
+      table: {
+        see: 'The table’s order: brought and still to bring, with the totals.',
+        create: 'Search the menu to add items, with a note for the kitchen.',
+        edit: 'Tick off what was brought; finalise when the guests pay.',
+      },
+      guestBill: {
+        see: 'Your order, what is still coming, the VAT and the total.',
+        create: 'Choose a tip if you like.',
+        edit: 'It refreshes by itself until the bill is paid.',
+      },
     },
   },
   {
@@ -101,6 +132,31 @@ export const tips = defineMessages(
           create: 'Öffne die Übersicht, um zu beginnen.',
           edit: 'Die Daten deines Lokals werden mit deinem Konto gelöscht.',
         },
+        floor: {
+          see: 'Jeder Tisch: frei oder seine Rechnung mit dem, was noch zu bringen ist.',
+          create: 'Tippe auf einen Tisch, um eine Rechnung zu öffnen oder zu bestellen.',
+          edit: 'Finde einen Tisch mit der Suche; wechsle am Tablet die Person.',
+        },
+        tables: {
+          see: 'Deine Tische mit ihren QR-Stickern.',
+          create: 'Füge einen Tisch hinzu und drucke die Sticker.',
+          edit: 'Benenne einen Tisch um, erstelle einen neuen Sticker oder entferne ihn.',
+        },
+        reports: {
+          see: 'Umsatz, MwSt., Trinkgeld und Zahlungen eines Monats, nach Tagen.',
+          create: 'Der Umsatz entsteht, wenn Rechnungen abgeschlossen werden.',
+          edit: 'Wechsle den Monat oder durchsuche die Rechnungen.',
+        },
+        table: {
+          see: 'Die Bestellung des Tisches: gebracht und noch zu bringen, mit Summen.',
+          create: 'Durchsuche die Karte und füge hinzu, mit Notiz für die Küche.',
+          edit: 'Hake ab, was gebracht wurde; schließe ab, wenn die Gäste zahlen.',
+        },
+        guestBill: {
+          see: 'Deine Bestellung, was noch kommt, die MwSt. und die Summe.',
+          create: 'Wähle auf Wunsch ein Trinkgeld.',
+          edit: 'Sie aktualisiert sich selbst, bis bezahlt ist.',
+        },
       },
     },
     ro: {
@@ -144,6 +200,31 @@ export const tips = defineMessages(
           see: 'La ce folosește această aplicație.',
           create: 'Deschide prezentarea ca să începi.',
           edit: 'Datele localului se șterg odată cu contul tău.',
+        },
+        floor: {
+          see: 'Fiecare masă: liberă sau nota ei cu ce mai e de adus.',
+          create: 'Atinge o masă ca să deschizi o notă sau să adaugi la comandă.',
+          edit: 'Găsește o masă cu căutarea; schimbă persoana pe tabletă.',
+        },
+        tables: {
+          see: 'Mesele tale cu abțibildurile QR.',
+          create: 'Adaugă o masă, apoi tipărește abțibildurile.',
+          edit: 'Redenumește o masă, fă un abțibild nou sau elimin-o.',
+        },
+        reports: {
+          see: 'Vânzări, TVA, bacșiș și plăți pe o lună, pe zile.',
+          create: 'Vânzările se adună când se închid notele.',
+          edit: 'Treci la altă lună sau caută în note.',
+        },
+        table: {
+          see: 'Comanda mesei: adus și de adus, cu totalurile.',
+          create: 'Caută în meniu ca să adaugi, cu o notă pentru bucătărie.',
+          edit: 'Bifează ce a fost adus; închide nota când clienții plătesc.',
+        },
+        guestBill: {
+          see: 'Comanda ta, ce mai vine, TVA-ul și totalul.',
+          create: 'Alege un bacșiș dacă vrei.',
+          edit: 'Se actualizează singură până la plată.',
         },
       },
     },
@@ -189,6 +270,31 @@ export const tips = defineMessages(
           create: 'Nyisd meg az áttekintést a kezdéshez.',
           edit: 'A hely adatai a fiókoddal együtt törlődnek.',
         },
+        floor: {
+          see: 'Minden asztal: szabad, vagy a számlája azzal, ami még kihozandó.',
+          create: 'Koppints egy asztalra számlanyitáshoz vagy rendeléshez.',
+          edit: 'Keress asztalt a keresővel; a tableten válts személyt.',
+        },
+        tables: {
+          see: 'Az asztalaid a QR-matricáikkal.',
+          create: 'Adj hozzá egy asztalt, aztán nyomtasd ki a matricákat.',
+          edit: 'Nevezz át egy asztalt, készíts új matricát, vagy távolítsd el.',
+        },
+        reports: {
+          see: 'Egy hónap forgalma, áfája, borravalója és fizetései naponként.',
+          create: 'A forgalom a számlák lezárásával gyűlik.',
+          edit: 'Válts hónapot, vagy keress a számlák között.',
+        },
+        table: {
+          see: 'Az asztal rendelése: kihozva és kihozandó, összegekkel.',
+          create: 'Keress az étlapon a hozzáadáshoz, megjegyzéssel a konyhának.',
+          edit: 'Jelöld, mi került ki; zárd le, amikor a vendégek fizetnek.',
+        },
+        guestBill: {
+          see: 'A rendelésed, ami még jön, az áfa és a végösszeg.',
+          create: 'Ha szeretnél, válassz borravalót.',
+          edit: 'Fizetésig magától frissül.',
+        },
       },
     },
     it: {
@@ -233,6 +339,31 @@ export const tips = defineMessages(
           create: 'Apri la panoramica per iniziare.',
           edit: 'I dati del locale vengono eliminati con il tuo account.',
         },
+        floor: {
+          see: 'Ogni tavolo: libero o il suo conto con cosa resta da portare.',
+          create: 'Tocca un tavolo per aprire un conto o aggiungere all’ordine.',
+          edit: 'Trova un tavolo con la ricerca; cambia persona sul tablet.',
+        },
+        tables: {
+          see: 'I tuoi tavoli con i loro adesivi QR.',
+          create: 'Aggiungi un tavolo, poi stampa gli adesivi.',
+          edit: 'Rinomina un tavolo, crea un nuovo adesivo o rimuovilo.',
+        },
+        reports: {
+          see: 'Vendite, IVA, mance e pagamenti di un mese, per giorno.',
+          create: 'Le vendite si sommano quando i conti vengono chiusi.',
+          edit: 'Passa a un altro mese o cerca tra i conti.',
+        },
+        table: {
+          see: 'L’ordine del tavolo: portato e da portare, con i totali.',
+          create: 'Cerca nel menu per aggiungere, con una nota per la cucina.',
+          edit: 'Segna ciò che è stato portato; chiudi quando i clienti pagano.',
+        },
+        guestBill: {
+          see: 'Il tuo ordine, cosa arriva ancora, l’IVA e il totale.',
+          create: 'Scegli una mancia se vuoi.',
+          edit: 'Si aggiorna da solo fino al pagamento.',
+        },
       },
     },
     es: {
@@ -276,6 +407,31 @@ export const tips = defineMessages(
           see: 'Para qué sirve esta app.',
           create: 'Abre el resumen para empezar.',
           edit: 'Los datos de tu local se eliminan con tu cuenta.',
+        },
+        floor: {
+          see: 'Cada mesa: libre o su cuenta con lo que falta por llevar.',
+          create: 'Toca una mesa para abrir una cuenta o añadir al pedido.',
+          edit: 'Busca una mesa con el buscador; cambia de persona en la tableta.',
+        },
+        tables: {
+          see: 'Tus mesas con sus pegatinas QR.',
+          create: 'Añade una mesa y luego imprime las pegatinas.',
+          edit: 'Renombra una mesa, crea una pegatina nueva o quítala.',
+        },
+        reports: {
+          see: 'Ventas, IVA, propinas y pagos de un mes, por día.',
+          create: 'Las ventas se suman al cerrar las cuentas.',
+          edit: 'Cambia de mes o busca en las cuentas.',
+        },
+        table: {
+          see: 'El pedido de la mesa: servido y por servir, con los totales.',
+          create: 'Busca en la carta para añadir, con una nota para la cocina.',
+          edit: 'Marca lo servido; cierra cuando los clientes paguen.',
+        },
+        guestBill: {
+          see: 'Tu pedido, lo que falta, el IVA y el total.',
+          create: 'Elige una propina si quieres.',
+          edit: 'Se actualiza sola hasta el pago.',
         },
       },
     },

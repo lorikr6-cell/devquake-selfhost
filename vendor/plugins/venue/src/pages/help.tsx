@@ -5,7 +5,7 @@ export async function generateMetadata({ ctx }: PluginPageProps) {
   return { title: translator(localeOf(ctx))('help.title') };
 }
 
-const STEPS = ['s1', 's2', 's3', 's4', 's5', 's6', 's7'];
+const STEPS = ['s1', 's2', 's3', 's4', 's5', 's6', 's8', 's9', 's10', 's7'];
 
 /** The user manual (public). */
 export default function Help({ ctx }: PluginPageProps) {
