@@ -1,4 +1,5 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
+import { Link } from '@devquake/ui';
 import { MenuEditor } from '../components/menu-editor';
 import { localeOf, translator } from '../i18n';
 import { menuOf } from '../lib/data';
@@ -16,7 +17,12 @@ export default async function Menu({ ctx }: PluginPageProps) {
   const { venue, db } = own;
   return (
     <div className="space-y-6">
-      <h1 className="font-display text-3xl font-bold">{t('nav.menu')}</h1>
+      <header className="flex flex-wrap items-baseline justify-between gap-3">
+        <h1 className="font-display text-3xl font-bold">{t('nav.menu')}</h1>
+        <Link href="/menu/design" className="text-sm font-medium text-quake underline">
+          🎨 {t('design.openDesigner')}
+        </Link>
+      </header>
       <MenuEditor
         initial={await menuOf(db, venue.id)}
         venue={{ currency: venue.currency, decimals: venue.decimals, vatRates: venue.vatRates }}

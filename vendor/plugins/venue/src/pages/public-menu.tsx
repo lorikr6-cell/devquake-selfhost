@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { MenuBrowser, type PublicMenuData } from '../components/menu-browser';
+import { panelStyle, sheetStyle } from '../components/menu-sheet';
 import { localeOf, translator } from '../i18n';
 import { menuOf, venueBySlug, type Venue } from '../lib/data';
+import { designOf } from '../lib/design';
 
 type Db = NonNullable<PluginPageProps['ctx']['db']>;
 
@@ -26,6 +28,30 @@ export async function publicMenu(db: Db, venue: Venue): Promise<PublicMenuData> 
   };
 }
 
+/**
+ * The public menu in the owner's design (when they show it there): their background, font and
+ * colours around the searchable menu.
+ */
+export async function DesignedMenu({ db, venue, intro }: { db: Db; venue: Venue; intro?: string }) {
+  const [menu, design] = await Promise.all([publicMenu(db, venue), designOf(db, venue.id)]);
+  if (!design.onPublic) return <MenuBrowser menu={menu} intro={intro} />;
+  const bg =
+    design.background !== null ? `/api/menu-bg/${venue.slug}?v=${design.background}` : null;
+  return (
+    <div
+      className="-mx-4 rounded-none p-4 sm:mx-0 sm:rounded-xl sm:p-8"
+      style={sheetStyle(design, bg)}
+    >
+      <div style={panelStyle(design)}>
+        <MenuBrowser
+          menu={{ ...menu, name: design.title || menu.name }}
+          intro={intro || design.subtitle}
+        />
+      </div>
+    </div>
+  );
+}
+
 /** A venue whose menu is public, or null (also without the database). */
 async function load({ ctx, params }: PluginPageProps) {
   if (!ctx.db) return null;
@@ -46,13 +72,14 @@ export async function generateMetadata(props: PluginPageProps): Promise<Metadata
 /** The menu for guests (an open route, ADR 0047): only what is on it, nothing about people. */
 export default async function PublicMenu(props: PluginPageProps) {
   const t = translator(localeOf(props.ctx));
-  const menu = await load(props);
-  if (!menu)
+  const db = props.ctx.db;
+  const venue = db ? await venueBySlug(db, props.params.slug ?? '').catch(() => null) : null;
+  if (!db || !venue || !venue.menuPublic)
     return (
       <section className="space-y-3">
         <h1 className="font-display text-3xl font-bold">{t('publicMenu.goneTitle')}</h1>
         <p>{t('publicMenu.goneBody')}</p>
       </section>
     );
-  return <MenuBrowser menu={menu} />;
+  return <DesignedMenu db={db} venue={venue} />;
 }

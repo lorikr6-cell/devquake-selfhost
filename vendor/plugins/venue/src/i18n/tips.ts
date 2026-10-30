@@ -16,6 +16,8 @@ export const TIPS_PAGES: Record<string, string> = {
   '/reports': 'reports',
   '/t/:code': 'table',
   '/b/:code': 'guestBill',
+  '/menu/design': 'menuDesign',
+  '/menu/print': 'menuPrint',
 };
 
 /** How-to tips for each page: how to see the details, how to add, how to change. */
@@ -87,6 +89,16 @@ export const tips = defineMessages(
         create: 'Choose a tip if you like.',
         edit: 'It refreshes by itself until the bill is paid.',
       },
+      menuDesign: {
+        see: 'The menu page as it will print, with your pictures and texts.',
+        create: 'Add up to 5 pictures, drag them into place and size them.',
+        edit: 'Change the font, colours, panel and columns, then save.',
+      },
+      menuPrint: {
+        see: 'Your menu in its design, ready for A4.',
+        create: 'Print it from here; the background repeats on each page.',
+        edit: 'Change the design or the items, and print again.',
+      },
     },
   },
   {
@@ -157,6 +169,16 @@ export const tips = defineMessages(
           create: 'Wähle auf Wunsch ein Trinkgeld.',
           edit: 'Sie aktualisiert sich selbst, bis bezahlt ist.',
         },
+        menuDesign: {
+          see: 'Die Kartenseite, wie sie gedruckt wird, mit deinen Bildern und Texten.',
+          create: 'Füge bis zu 5 Bilder hinzu, zieh sie an ihren Platz und ändere die Größe.',
+          edit: 'Ändere Schrift, Farben, Fläche und Spalten und speichere.',
+        },
+        menuPrint: {
+          see: 'Deine Karte in ihrer Gestaltung, bereit für A4.',
+          create: 'Drucke sie von hier; der Hintergrund wiederholt sich auf jeder Seite.',
+          edit: 'Ändere Gestaltung oder Einträge und drucke erneut.',
+        },
       },
     },
     ro: {
@@ -225,6 +247,16 @@ export const tips = defineMessages(
           see: 'Comanda ta, ce mai vine, TVA-ul și totalul.',
           create: 'Alege un bacșiș dacă vrei.',
           edit: 'Se actualizează singură până la plată.',
+        },
+        menuDesign: {
+          see: 'Pagina meniului așa cum se va tipări, cu imaginile și textele tale.',
+          create: 'Adaugă până la 5 imagini, trage-le la locul lor și redimensionează-le.',
+          edit: 'Schimbă fontul, culorile, panoul și coloanele, apoi salvează.',
+        },
+        menuPrint: {
+          see: 'Meniul tău în designul lui, gata pentru A4.',
+          create: 'Tipărește-l de aici; fundalul se repetă pe fiecare pagină.',
+          edit: 'Schimbă designul sau produsele și tipărește din nou.',
         },
       },
     },
@@ -295,6 +327,16 @@ export const tips = defineMessages(
           create: 'Ha szeretnél, válassz borravalót.',
           edit: 'Fizetésig magától frissül.',
         },
+        menuDesign: {
+          see: 'Az étlap oldala úgy, ahogy nyomtatásban lesz, a képeiddel és szövegeiddel.',
+          create: 'Adj hozzá legfeljebb 5 képet, húzd a helyükre és méretezd őket.',
+          edit: 'Módosítsd a betűtípust, a színeket, a panelt és az oszlopokat, majd ments.',
+        },
+        menuPrint: {
+          see: 'Az étlapod a saját dizájnjában, A4-re készen.',
+          create: 'Innen nyomtathatod; a háttér minden oldalon ismétlődik.',
+          edit: 'Módosítsd a dizájnt vagy a tételeket, és nyomtass újra.',
+        },
       },
     },
     it: {
@@ -364,6 +406,16 @@ export const tips = defineMessages(
           create: 'Scegli una mancia se vuoi.',
           edit: 'Si aggiorna da solo fino al pagamento.',
         },
+        menuDesign: {
+          see: 'La pagina del menu come verrà stampata, con le tue immagini e i testi.',
+          create: 'Aggiungi fino a 5 immagini, trascinale al loro posto e ridimensionale.',
+          edit: 'Cambia carattere, colori, pannello e colonne, poi salva.',
+        },
+        menuPrint: {
+          see: 'Il tuo menu nel suo design, pronto per l’A4.',
+          create: 'Stampalo da qui; lo sfondo si ripete su ogni pagina.',
+          edit: 'Cambia il design o le voci e stampa di nuovo.',
+        },
       },
     },
     es: {
@@ -432,6 +484,16 @@ export const tips = defineMessages(
           see: 'Tu pedido, lo que falta, el IVA y el total.',
           create: 'Elige una propina si quieres.',
           edit: 'Se actualiza sola hasta el pago.',
+        },
+        menuDesign: {
+          see: 'La página de la carta tal como se imprimirá, con tus imágenes y textos.',
+          create: 'Añade hasta 5 imágenes, arrástralas a su sitio y ajusta su tamaño.',
+          edit: 'Cambia la letra, los colores, el panel y las columnas, y guarda.',
+        },
+        menuPrint: {
+          see: 'Tu carta con su diseño, lista para A4.',
+          create: 'Imprímela desde aquí; el fondo se repite en cada página.',
+          edit: 'Cambia el diseño o los productos e imprime de nuevo.',
         },
       },
     },

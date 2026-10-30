@@ -1,6 +1,5 @@
 import { cookies } from 'next/headers';
 import type { PluginPageProps } from '@devquake/plugin-sdk';
-import { MenuBrowser } from '../components/menu-browser';
 import { TableView } from '../components/table-view';
 import { TabletStaff } from '../components/tablet-staff';
 import { localeOf, translator } from '../i18n';
@@ -10,7 +9,7 @@ import { menuOf, venueById } from '../lib/data';
 import { openBillOfTable, staffList, tableByCode } from '../lib/floor';
 import { floorActor } from '../lib/floor-api';
 import { TABLET_COOKIE } from '../lib/secure';
-import { publicMenu } from './public-menu';
+import { DesignedMenu } from './public-menu';
 
 export async function generateMetadata({ ctx }: PluginPageProps) {
   return { title: translator(localeOf(ctx))('appName'), robots: { index: false, follow: false } };
@@ -49,7 +48,7 @@ export default async function TablePage({ ctx, params }: PluginPageProps) {
           <p>{t('table.askStaff')}</p>
         </section>
       );
-    return <MenuBrowser menu={await publicMenu(ctx.db, venue)} intro={t('table.guestIntro')} />;
+    return <DesignedMenu db={ctx.db} venue={venue} intro={t('table.guestIntro')} />;
   }
   const venue = found.venue;
   const [bill, menu] = await Promise.all([

@@ -1,5 +1,9 @@
 # Changelog — Venue
 
+## 0.3.0
+
+- Design your menu: place up to 5 pictures on an A4 page, drag and size them, choose the font, colours, a panel behind the texts and one or two columns. Saving turns the pictures into one background; print the menu from the print view, and show the same design on your online menu.
+
 ## 0.2.0
 
 - Tables with QR stickers to print: on your tablet or phone a table's sticker opens its order;

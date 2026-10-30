@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'venue',
     name: 'Venue',
-    version: '0.2.0',
+    version: '0.3.0',
     description:
       'The business side of a café, bistro, fast food or bar: the venue with its country’s VAT rates, a menu with allergens, staff with PINs for a shared tablet, and a public menu for guests.',
     status: 'active',
@@ -15,7 +15,10 @@ export default definePlugin({
     publicPages: [{ path: '/help', title: 'User manual' }],
     // For guests and staff tablets, without a DevQuake account (ADR 0047, 0080): the public menu
     // (while the owner keeps it public), a table's sticker, the guests' bill, the tablet's floor.
-    openRoutes: { pages: ['/m/:slug', '/t/:code', '/b/:code', '/tablet'] },
+    openRoutes: {
+      pages: ['/m/:slug', '/t/:code', '/b/:code', '/tablet'],
+      api: ['/menu-bg/:slug'],
+    },
     // The floor's API (the owner's browser or an enabled tablet; the app checks the tablet cookie
     // and the Origin itself) and the guests' bill (its code is the key; ADR 0080).
     keyRoutes: [
@@ -36,6 +39,8 @@ export default definePlugin({
     '/': () => import('./pages/home'),
     '/settings': () => import('./pages/settings'),
     '/menu': () => import('./pages/menu'),
+    '/menu/design': () => import('./pages/menu-design'),
+    '/menu/print': () => import('./pages/menu-print'),
     '/staff': () => import('./pages/staff'),
     '/tablets': () => import('./pages/tablets'),
     '/tables': () => import('./pages/tables'),
@@ -70,5 +75,8 @@ export default definePlugin({
     '/floor/bills/:id/finalize': () => import('./api/floor-finalize'),
     '/floor/lines/:id': () => import('./api/floor-line'),
     '/guest/:code': () => import('./api/guest-bill'),
+    '/menu/design': () => import('./api/menu-design'),
+    '/menu/design/background': () => import('./api/menu-background'),
+    '/menu-bg/:slug': () => import('./api/public-background'),
   },
 });
