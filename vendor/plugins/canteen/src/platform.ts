@@ -7,12 +7,12 @@ export const getStats: PluginPlatformModule['getStats'] = async ({ db }) => {
   const [row] = await db.query<{ orgs: number; staff: number; people: number }>(
     `SELECT (SELECT COUNT(*) FROM canteen_orgs) AS orgs,
             (SELECT COUNT(*) FROM canteen_staff) AS staff,
-            (SELECT COUNT(*) FROM canteen_people WHERE status <> 'ended') AS people`,
+            (SELECT COUNT(*) FROM canteen_people WHERE status IN ('active','paused')) AS people`,
   );
   return [
     { label: 'Organisations', value: Number(row?.orgs ?? 0) },
     { label: 'Staff', value: Number(row?.staff ?? 0) },
-    { label: 'People fed', value: Number(row?.people ?? 0) },
+    { label: 'People in care', value: Number(row?.people ?? 0) },
   ];
 };
 
@@ -40,10 +40,10 @@ export const getHighlights: PluginPlatformModule['getHighlights'] = async ({ db 
     {
       value: n(row?.people),
       label: {
-        en: 'People fed',
+        en: 'People in care',
         de: 'Versorgte Menschen',
-        ro: 'Persoane hrănite',
-        hu: 'Étkeztetett ember',
+        ro: 'Persoane în grijă',
+        hu: 'Gondozott ember',
         it: 'Persone servite',
         es: 'Personas atendidas',
       },
@@ -54,8 +54,8 @@ export const getHighlights: PluginPlatformModule['getHighlights'] = async ({ db 
 
 /**
  * A staff member's account is deleted, or they unsubscribe: their staff rows go; an organisation
- * left without an organiser passes on or is deleted (forgetUser). The people the organisations
- * feed are not platform users: they are removed by the organisers in the app.
+ * left without an organiser passes on or is deleted (forgetUser). The people in the
+ * organisations' care are not platform users: they are removed by the organisers in the app.
  */
 export const deleteUserData: PluginPlatformModule['deleteUserData'] = async (userId, { db }) => {
   if (!db) {

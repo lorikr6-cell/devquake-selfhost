@@ -1,5 +1,9 @@
 # Változások — Pulse
 
+## 0.9.0
+
+- Tippek minden oldalon: hogyan látod a részleteket, hogyan adsz hozzá és hogyan módosítasz. Felül a 💡 gombbal kapcsolhatod be vagy ki; a választás ezen az eszközön marad. Az élő bemutatóban kezdetben be vannak kapcsolva.
+
 ## 0.8.0
 
 - Az alkalmazás mostantól olaszul és spanyolul is elérhető: a nyelvet az oldal tetején választhatod ki.

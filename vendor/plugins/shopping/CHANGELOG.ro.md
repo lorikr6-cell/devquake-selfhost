@@ -1,5 +1,17 @@
 # Noutăți: Liste de cumpărături comune
 
+## 0.26.0
+
+- Un local din aplicația Venue poate număra ce s-a cumpărat pe lista lui de achiziții ca fiind costurile sale (tu alegi lista; trec doar cumpărăturile de acolo și prețurile).
+
+## 0.25.0
+
+- Aplicațiile conectate, precum Obiceiuri și jurnal, pot arăta acum ce ai cumpărat în fiecare zi, pe liste, cu un link înapoi la listă aici.
+
+## 0.24.0
+
+- Sfaturi pe fiecare pagină: cum vezi detaliile, cum adaugi și cum modifici. Pornește-le sau oprește-le cu 💡 din partea de sus; alegerea rămâne pe acest dispozitiv.
+
 ## 0.23.0
 
 - Aplicațiile conectate, precum Cantina socială, pot acum oferi și listele tale încă goale, ca o listă nouă de achiziții să poată fi completată imediat.

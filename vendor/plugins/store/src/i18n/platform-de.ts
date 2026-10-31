@@ -45,6 +45,23 @@ export const platformDe: MessagesOf<typeof platformEn> = {
     fxNote:
       'Preise in {currency} sind ungefähr, zu den Kursen der Europäischen Zentralbank vom {date}. Du zahlst in {base}; deine Bank oder Karte rechnet um.',
   },
+  artPromo: {
+    logoText: '{art}galerie',
+    logoArt: 'kunst',
+    title: 'Kunst aus der DevQuake-Kunstgalerie',
+    body: 'DevQuake-Mitglieder zeigen ihre digitale Kunst in der DevQuake-Kunstgalerie, jedes Werk mit der Idee dahinter. Mit der Zeit können einige der meistgeschätzten Werke auch hier erscheinen, als Motive für ausgewählte DevQuake-Produkte.',
+    consent:
+      'Nur mit Zustimmung der Künstlerin oder des Künstlers: Ein Werk kommt nur in Frage, wenn sie oder er zugestimmt hat, und DevQuake wählt unter den meistgeschätzten aus.',
+    copyright:
+      'Das Urheberrecht bleibt bei der Künstlerin oder dem Künstler. DevQuake erhält nur das Recht, das Motiv auf die betreffenden Produkte zu drucken, so lange wie vereinbart.',
+    share:
+      'Wer ein verkauftes Motiv geschaffen hat, kann einen Anteil am Erlös erhalten, zu vorab vereinbarten Bedingungen.',
+    credit:
+      'Jedes Produkt nennt seine Künstlerin oder seinen Künstler und trägt den Namen DevQuake.',
+    visit: 'Zur Kunstgalerie',
+    show: 'Zeige deine eigene Kunst',
+    note: 'Motive auf Produkten und ein etwaiger Anteil am Erlös unterliegen gesonderten, mit jeder Künstlerin und jedem Künstler vereinbarten Bedingungen; sie sind kein Versprechen von Verkäufen oder Einnahmen.',
+  },
   promo: {
     title: 'Gemacht von DevQuake',
     body: 'Dieser Shop gehört zu DevQuake, einer Entwicklerwerkstatt mit Web-Apps für Alltagsprobleme. Ein kostenloses Konto meldet dich bei allen an, und bei diesem Shop.',

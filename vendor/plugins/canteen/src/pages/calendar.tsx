@@ -1,4 +1,5 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
+import { takesPlace } from '../lib/social';
 import { PrintHeader } from '../components/print-header';
 import { LOCALE_TAGS, Link, buttonClass, cn } from '@devquake/ui';
 import { orgScope } from '../components/guard';
@@ -40,7 +41,7 @@ export default async function CalendarPage({ ctx, params, searchParams }: Plugin
     kitchen ? eatersOf(scope.db, scope.org.id, scope.user.id) : [],
     planner ? routesBetween(scope.db, scope.org.id, scope.user.id, days[0]!, days.at(-1)!) : [],
   ]);
-  const people = allPeople.filter((p) => p.status !== 'ended' && p.birthDate);
+  const people = allPeople.filter((p) => takesPlace(p.status) && p.birthDate);
   const byDay = new Map<string, { id: number; name: string; age: number }[]>();
   for (const p of people) {
     const day = birthdayIn(p.birthDate!, year);

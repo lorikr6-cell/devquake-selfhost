@@ -1,5 +1,13 @@
 # Változások — Darts
 
+## 0.9.0
+
+- A csatlakoztatott alkalmazások, például a Szokások és napló, mostantól megmutathatják, milyen játékokat játszottál naponta és ki nyert, egy linkkel vissza ide a játékhoz.
+
+## 0.8.0
+
+- Tippek minden oldalon: hogyan látod a részleteket, hogyan adsz hozzá és hogyan módosítasz. Felül a 💡 gombbal kapcsolhatod be vagy ki; a választás ezen az eszközön marad.
+
 ## 0.7.1
 
 - A felső töltésjelző most mindig megjelenik, amikor az alkalmazás a szerverre vár, az új változások automatikus ellenőrzésekor viszont már nem.

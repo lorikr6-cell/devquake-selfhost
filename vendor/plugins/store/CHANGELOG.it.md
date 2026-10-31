@@ -1,5 +1,30 @@
 # Registro delle modifiche — Negozio
 
+## 0.16.1
+
+- Lo staff di DevQuake trova i pacchetti di punti NPS in Marketing, accanto a Promozioni e Newsletter.
+
+## 0.16.0
+
+- Riscatti: DevQuake può dare a un membro qualcosa da riscattare, per esempio il premio di una sfida. Riceve un’e-mail con un link e un codice segreto; dopo aver effettuato l’accesso con il proprio account, scrive il codice ed è suo. Cinque codici sbagliati bloccano il riscatto; vale 90 giorni.
+- Per ora un riscatto dà punti NPS DevQuake: lo staff di DevQuake tiene pacchetti di punti NPS nel suo negozio. I pacchetti non compaiono mai nel negozio e non si vendono, perché i punti NPS non si possono comprare.
+
+## 0.15.0
+
+- Il negozio può mostrare cos’è la galleria d’arte DevQuake: l’arte digitale dei membri, una parte della quale col tempo potrà diventare decorazione per prodotti DevQuake, sempre con il consenso dell’artista e alle condizioni concordate con lui. La sezione appare sopra “Made by DevQuake” quando è attivata.
+
+## 0.14.2
+
+- Le email degli ordini e della newsletter partono con una libreria di posta aggiornata che legge gli indirizzi email in modo più rigoroso, chiudendo tre modi in cui un indirizzo malformato avrebbe potuto raggiungere il destinatario sbagliato.
+
+## 0.14.1
+
+- Le chiavi di pagamento nelle impostazioni di pagamento del negozio non fanno più proporre al browser di salvarle come password.
+
+## 0.14.0
+
+- Suggerimenti su ogni pagina: come vedere i dettagli, come aggiungere e come modificare. Attivali o disattivali con 💡 in alto; la scelta resta su questo dispositivo.
+
 ## 0.13.1
 
 - I pulsanti che al momento non si possono usare mostrano la normale freccia invece del segno di divieto.

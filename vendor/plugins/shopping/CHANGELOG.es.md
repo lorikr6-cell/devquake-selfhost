@@ -1,5 +1,17 @@
 # Registro de cambios: Listas de la compra
 
+## 0.26.0
+
+- Un local de la app Venue puede contar como costes lo que se compró en su lista de compras (tú eliges la lista; solo pasan las compras de esa lista y los precios).
+
+## 0.25.0
+
+- Las apps conectadas, como Hábitos y diario, ya pueden mostrar lo que compraste cada día, por lista, con un enlace de vuelta a la lista aquí.
+
+## 0.24.0
+
+- Consejos en cada página: cómo ver los detalles, cómo añadir y cómo cambiar. Actívalos o desactívalos con 💡 arriba; la elección se guarda en este dispositivo.
+
 ## 0.23.0
 
 - Las aplicaciones conectadas, como el Comedor social, ahora también pueden ofrecer tus listas aún vacías, para llenar enseguida una nueva lista de compras.

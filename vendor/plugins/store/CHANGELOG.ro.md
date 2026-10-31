@@ -1,5 +1,30 @@
 # Jurnal de modificări — Magazin
 
+## 0.16.1
+
+- Echipa DevQuake găsește pachetele de puncte NPS la Marketing, lângă Promoții și Newslettere.
+
+## 0.16.0
+
+- Revendicări: DevQuake îi poate da unui membru ceva de revendicat, de exemplu premiul unei provocări. Primește un e-mail cu un link și un cod secret; conectat cu contul său, scrie codul și este al lui. Cinci coduri greșite blochează revendicarea; ea este valabilă 90 de zile.
+- Deocamdată o revendicare aduce puncte NPS DevQuake: echipa DevQuake ține pachete de puncte NPS în magazinul său. Pachetele nu apar niciodată în magazin și nu se vând, pentru că punctele NPS nu se pot cumpăra.
+
+## 0.15.0
+
+- Magazinul poate arăta ce este galeria de artă DevQuake: arta digitală a membrilor, din care o parte poate deveni cu timpul model pentru produse DevQuake, mereu cu acordul artistului și în condițiile convenite cu el. Secțiunea apare deasupra „Made by DevQuake” după ce este activată.
+
+## 0.14.2
+
+- E-mailurile pentru comenzi și newsletter sunt trimise cu o bibliotecă de e-mail actualizată, care citește adresele mai strict. Astfel sunt închise trei căi prin care o adresă greșit formată ar fi putut ajunge la un destinatar greșit.
+
+## 0.14.1
+
+- Cheile de plată din setările de plată ale magazinului nu mai fac browserul să propună salvarea lor ca parole.
+
+## 0.14.0
+
+- Sfaturi pe fiecare pagină: cum vezi detaliile, cum adaugi și cum modifici. Pornește-le sau oprește-le cu 💡 din partea de sus; alegerea rămâne pe acest dispozitiv.
+
 ## 0.13.1
 
 - Butoanele care nu pot fi folosite acum arată săgeata obișnuită în loc de semnul „interzis”.

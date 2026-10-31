@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'darts',
     name: 'Darts',
-    version: '0.7.1',
+    version: '0.9.0',
     description:
       'Darts on your phone: practise alone with drills made from your weak spots, play casual games with friends who join by QR code, or run tournaments on your boards with a knock-out bracket, entry fees and live scores. 501/301, Cricket, Shanghai, Around the Clock, Killer and more, with finishing suggestions.',
     status: 'active',
@@ -16,6 +16,38 @@ export default definePlugin({
     about,
     // A shared match can be watched by any signed-in member with its link (ADR 0022).
     signedInRoutes: { pages: ['/watch/:code'], api: ['/watch/:code'] },
+    // Links with other apps (ADR 0035): the games you played, for apps such as the journal.
+    links: {
+      offers: [
+        {
+          id: 'activity.day',
+          kind: 'read',
+          perMinute: 60,
+          title: {
+            en: 'See the darts games you played and who won',
+            de: 'Die Dartspiele sehen, die du gespielt hast, und wer gewonnen hat',
+            ro: 'Să vadă jocurile de darts pe care le-ai jucat și cine a câștigat',
+            hu: 'Lássa a lejátszott darts játékaidat és hogy ki nyert',
+            it: 'Vedere le partite di freccette che hai giocato e chi ha vinto',
+            es: 'Ver las partidas de dardos que jugaste y quién ganó',
+          },
+        },
+      ],
+      targets: [
+        {
+          id: 'game',
+          path: '/games/:id',
+          title: {
+            en: 'a darts game',
+            de: 'ein Dartspiel',
+            ro: 'un joc de darts',
+            hu: 'egy darts játékot',
+            it: 'una partita di freccette',
+            es: 'una partida de dardos',
+          },
+        },
+      ],
+    },
   },
   layout: () => import('./layout'),
   pages: {
@@ -52,4 +84,7 @@ export default definePlugin({
     '/drills/:id': () => import('./api/drill'),
   },
   platform: () => import('./platform'),
+  linkHandlers: {
+    'activity.day': () => import('./links/activity-day'),
+  },
 });

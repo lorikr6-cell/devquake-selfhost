@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'utilities',
     name: 'Utility bill manager',
-    version: '0.12.0',
+    version: '0.13.0',
     description:
       'Shared utility bills: upload the provider’s PDF, send meter readings with a photo, split the bill by consumption or equally, record who paid what with carry-over, and follow consumption, payments and prices in a calendar and statistics.',
     status: 'active',

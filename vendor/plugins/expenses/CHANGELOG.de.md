@@ -1,5 +1,9 @@
 # Änderungsprotokoll — Geteilte Ausgaben
 
+## 0.4.0
+
+- Tipps auf jeder Seite: wie du Details siehst, etwas hinzufügst und änderst. Schalte sie oben mit 💡 ein oder aus; die Wahl bleibt auf diesem Gerät.
+
 ## 0.3.1
 
 - Die Reihe der Reiter zeigt keinen kleinen Scrollbalken mehr, wenn alle Reiter passen; sie lässt sich nur seitlich scrollen, wenn sie nicht passen.

@@ -44,7 +44,13 @@ export default async function NewslettersPage({ ctx }: PluginPageProps) {
           {t('new')}
         </Link>
       </div>
-      <SubNav group="marketing" current="/newsletters" roles={roles} locale={locale} />
+      <SubNav
+        group="marketing"
+        current="/newsletters"
+        roles={roles}
+        locale={locale}
+        isAdmin={scope.user.isAdmin}
+      />
       {!shopMailConfigured() ? (
         <Notice title={t('mailOffTitle')}>
           <p>{t('mailOffBody')}</p>

@@ -1,5 +1,6 @@
 'use client';
 
+import { connectLabel } from './connect-cost';
 import { useEffect, useState } from 'react';
 import { buttonClass } from './button';
 import { useT } from './i18n-react';
@@ -10,6 +11,9 @@ export interface PartnerPromoApp {
   name: string;
   iconUrl: string;
   state: 'connected' | 'available' | 'needs-access';
+  /** NPS points connecting costs (ADR 0082). */
+  npsCost?: number;
+  affordable?: boolean;
   openUrl: string;
   connectUrl: string;
 }
@@ -52,7 +56,8 @@ export function PartnerPromo({ partner, message }: { partner: PartnerPromoApp; m
         href={partner.state === 'available' ? partner.connectUrl : partner.openUrl}
         className={buttonClass('primary')}
       >
-        {partner.state === 'available' ? t('connect') : t('tryIt')}
+        {connectLabel(partner, t('connect')) ??
+          (partner.state === 'available' ? t('connect') : t('tryIt'))}
       </a>
       <button
         type="button"

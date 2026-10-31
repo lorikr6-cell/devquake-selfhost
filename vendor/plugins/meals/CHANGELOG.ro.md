@@ -1,5 +1,13 @@
 # Modificări — Planificator de mese
 
+## 0.7.0
+
+- Aplicațiile conectate, precum Obiceiuri și jurnal, pot arăta acum mesele fiecărei zile și care au fost gătite, cu un link înapoi la săptămâna de aici.
+
+## 0.6.0
+
+- Sfaturi pe fiecare pagină: cum vezi detaliile, cum adaugi și cum modifici. Pornește-le sau oprește-le cu 💡 din partea de sus; alegerea rămâne pe acest dispozitiv.
+
 ## 0.5.0
 
 - Aplicația este acum și în italiană și spaniolă: alege limba în partea de sus a paginii.

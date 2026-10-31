@@ -1,5 +1,9 @@
 # Változásnapló — Közös kiadások
 
+## 0.4.0
+
+- Tippek minden oldalon: hogyan látod a részleteket, hogyan adsz hozzá és hogyan módosítasz. Felül a 💡 gombbal kapcsolhatod be vagy ki; a választás ezen az eszközön marad.
+
 ## 0.3.1
 
 - A fülek sora már nem mutat apró görgetősávot, ha minden fül elfér; csak akkor görgethető oldalra, ha nem férnek el.

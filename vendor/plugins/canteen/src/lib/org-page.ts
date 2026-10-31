@@ -1,6 +1,14 @@
 import type { PluginDatabase } from '@devquake/plugin-sdk';
 import { requireCan } from './data';
 import { DEFAULT_CONTACT_EMAIL } from './contact-email';
+import {
+  DEFAULT_LOOK,
+  hexColor,
+  isHeaderAlign,
+  isHeaderFont,
+  isHeaderText,
+  type HeaderLook,
+} from './header-style';
 import { HttpError } from './http';
 import type { Picture } from './picture';
 
@@ -22,6 +30,8 @@ export interface OrgPage {
   contactEmail: string;
   /** The organisers set their own address. */
   ownContact: boolean;
+  /** How the header looks (font, colours, picture), on screen and in print. */
+  look: HeaderLook;
 }
 
 async function pageOf(db: Db, orgId: number): Promise<OrgPage | null> {
@@ -32,9 +42,16 @@ async function pageOf(db: Db, orgId: number): Promise<OrgPage | null> {
     public_page: number;
     logo_version: string | null;
     contact_email: string | null;
+    header_font: string | null;
+    header_bg: string | null;
+    header_text: string;
+    header_align: string;
+    header_image_version: string | null;
   }>(
     `SELECT id, name, description, public_page, contact_email,
-            DATE_FORMAT(logo_updated_at, '%Y%m%d%H%i%s') AS logo_version
+            DATE_FORMAT(logo_updated_at, '%Y%m%d%H%i%s') AS logo_version,
+            header_font, header_bg, header_text, header_align,
+            DATE_FORMAT(header_image_updated_at, '%Y%m%d%H%i%s') AS header_image_version
        FROM canteen_orgs WHERE id = ?`,
     [orgId],
   );
@@ -47,6 +64,13 @@ async function pageOf(db: Db, orgId: number): Promise<OrgPage | null> {
         logoVersion: row.logo_version,
         contactEmail: row.contact_email ?? DEFAULT_CONTACT_EMAIL,
         ownContact: row.contact_email !== null,
+        look: {
+          font: isHeaderFont(row.header_font) ? row.header_font : DEFAULT_LOOK.font,
+          bg: hexColor(row.header_bg),
+          text: isHeaderText(row.header_text) ? row.header_text : DEFAULT_LOOK.text,
+          align: isHeaderAlign(row.header_align) ? row.header_align : DEFAULT_LOOK.align,
+          imageVersion: row.header_image_version,
+        },
       }
     : null;
 }
@@ -115,6 +139,65 @@ export async function readLogo(
 ): Promise<{ mime: string; data: Buffer }> {
   const [row] = await db.query<{ mime: string | null; data: Buffer | null; public_page: number }>(
     'SELECT logo_mime AS mime, logo AS data, public_page FROM canteen_orgs WHERE id = ?',
+    [orgId],
+  );
+  if (!row?.mime || !row.data) throw new HttpError(404, 'notFound');
+  if (Number(row.public_page) !== 1) {
+    if (userId === null) throw new HttpError(404, 'notFound');
+    await requireCan(db, orgId, userId, 'org.view');
+  }
+  return { mime: row.mime, data: row.data };
+}
+
+/** The header's font, colours and alignment (organisers); unknown values fall back to the default. */
+export async function saveHeaderLook(
+  db: Db,
+  orgId: number,
+  userId: number,
+  look: { font: unknown; bg: unknown; text: unknown; align: unknown },
+) {
+  await requireCan(db, orgId, userId, 'org.manage');
+  if (look.bg !== null && look.bg !== '' && hexColor(look.bg) === null) {
+    throw new HttpError(400, 'invalidRequest');
+  }
+  await db.execute(
+    'UPDATE canteen_orgs SET header_font = ?, header_bg = ?, header_text = ?, header_align = ? WHERE id = ?',
+    [
+      isHeaderFont(look.font) ? look.font : null,
+      hexColor(look.bg),
+      isHeaderText(look.text) ? look.text : DEFAULT_LOOK.text,
+      isHeaderAlign(look.align) ? look.align : DEFAULT_LOOK.align,
+      orgId,
+    ],
+  );
+}
+
+export async function saveHeaderImage(db: Db, orgId: number, userId: number, picture: Picture) {
+  await requireCan(db, orgId, userId, 'org.manage');
+  await db.execute(
+    `UPDATE canteen_orgs SET header_image_mime = ?, header_image = ?,
+            header_image_updated_at = UTC_TIMESTAMP() WHERE id = ?`,
+    [picture.mime, Buffer.from(picture.data), orgId],
+  );
+}
+
+export async function deleteHeaderImage(db: Db, orgId: number, userId: number) {
+  await requireCan(db, orgId, userId, 'org.manage');
+  await db.execute(
+    `UPDATE canteen_orgs SET header_image_mime = NULL, header_image = NULL,
+            header_image_updated_at = NULL WHERE id = ?`,
+    [orgId],
+  );
+}
+
+/** The header picture for staff, or for anyone once the page is public (like the logo). */
+export async function readHeaderImage(
+  db: Db,
+  orgId: number,
+  userId: number | null,
+): Promise<{ mime: string; data: Buffer }> {
+  const [row] = await db.query<{ mime: string | null; data: Buffer | null; public_page: number }>(
+    'SELECT header_image_mime AS mime, header_image AS data, public_page FROM canteen_orgs WHERE id = ?',
     [orgId],
   );
   if (!row?.mime || !row.data) throw new HttpError(404, 'notFound');

@@ -1,11 +1,12 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
+import { takesPlace } from '../lib/social';
 import { PrintHeader } from '../components/print-header';
 import { redirect } from 'next/navigation';
 import { Link, buttonClass, localizePath } from '@devquake/ui';
 import { OrgForm } from '../components/forms';
 import { DeleteOrg } from '../components/delete-org';
 import { OrgBanner } from '../components/org-banner';
-import { OrgPageSettings } from '../components/org-settings';
+import { HeaderLookSettings, OrgPageSettings } from '../components/org-settings';
 import { OrgTransfer } from '../components/org-transfer';
 import { orgScope } from '../components/guard';
 import { OrgNav } from '../components/org-nav';
@@ -60,7 +61,7 @@ export default async function OrgPage({ ctx, params }: PluginPageProps) {
     orgPage(scope.db, scope.org.id, scope.user.id),
   ]);
   const birthdays = people
-    .filter((p) => p.status !== 'ended')
+    .filter((p) => takesPlace(p.status))
     .flatMap((person) => {
       const days = daysToBirthday(person.birthDate, scope.today);
       return days !== null && days <= 7 ? [{ person, days }] : [];
@@ -84,7 +85,11 @@ export default async function OrgPage({ ctx, params }: PluginPageProps) {
       />
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div className="min-w-0 flex-1">
-          <OrgBanner page={page} logoUrl={`/api/orgs/${scope.org.id}/logo`} />
+          <OrgBanner
+            page={page}
+            logoUrl={`/api/orgs/${scope.org.id}/logo`}
+            imageUrl={`/api/orgs/${scope.org.id}/header-image`}
+          />
         </div>
         {scope.can('people.edit') ? (
           <Link href={`/orgs/${scope.org.id}/people/new`} className={buttonClass('primary')}>
@@ -137,6 +142,9 @@ export default async function OrgPage({ ctx, params }: PluginPageProps) {
               <OrgForm org={scope.org} />
               <div className="mt-4 border-t border-ink/10 pt-4 dark:border-paper/10">
                 <OrgPageSettings page={page} />
+              </div>
+              <div className="mt-4 border-t border-ink/10 pt-4 dark:border-paper/10">
+                <HeaderLookSettings page={page} />
               </div>
               <div className="mt-4 border-t border-ink/10 pt-4 dark:border-paper/10">
                 <h3 className="mb-2 text-sm font-semibold">{t('transfer.title')}</h3>

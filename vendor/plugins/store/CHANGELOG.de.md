@@ -1,5 +1,30 @@
 # Änderungsprotokoll — Shop
 
+## 0.16.1
+
+- Das DevQuake-Team findet die NPS-Punktepakete unter Marketing, neben Aktionen und Newslettern.
+
+## 0.16.0
+
+- Einlösungen: DevQuake kann einem Mitglied etwas zum Einlösen geben, etwa einen Challenge-Preis. Es bekommt eine E-Mail mit einem Link und einem geheimen Code; als es selbst angemeldet gibt es den Code ein, und es gehört ihm. Fünf falsche Codes sperren die Einlösung; sie gilt 90 Tage.
+- Vorerst bringt eine Einlösung DevQuake-NPS-Punkte: Das DevQuake-Team führt NPS-Punktepakete in seinem Shop. Die Pakete erscheinen nie im Shop und werden nie verkauft, denn NPS-Punkte kann man nicht kaufen.
+
+## 0.15.0
+
+- Der Shop kann zeigen, was die DevQuake-Kunstgalerie ist: digitale Kunst der Mitglieder, von der einiges mit der Zeit zu Motiven für DevQuake-Produkte werden kann, immer mit Zustimmung der Künstlerin oder des Künstlers und zu vereinbarten Bedingungen. Der Abschnitt erscheint über „Made by DevQuake“, sobald er eingeschaltet ist.
+
+## 0.14.2
+
+- Bestell- und Newsletter-E-Mails werden mit einer aktualisierten Mail-Bibliothek versendet, die E-Mail-Adressen strenger liest. Damit sind drei Wege geschlossen, auf denen eine fehlerhafte Adresse einen falschen Empfänger hätte erreichen können.
+
+## 0.14.1
+
+- Die Zahlungsschlüssel in den Zahlungseinstellungen des Shops lassen den Browser nicht mehr anbieten, sie als Passwörter zu speichern.
+
+## 0.14.0
+
+- Tipps auf jeder Seite: wie du Details siehst, etwas hinzufügst und änderst. Schalte sie oben mit 💡 ein oder aus; die Wahl bleibt auf diesem Gerät.
+
 ## 0.13.1
 
 - Schaltflächen, die gerade nicht nutzbar sind, zeigen den normalen Pfeil statt eines Verbotszeichens.

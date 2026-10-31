@@ -1,5 +1,13 @@
 # Modificări — Darts
 
+## 0.9.0
+
+- Aplicațiile conectate, precum Obiceiuri și jurnal, pot arăta acum jocurile pe care le-ai jucat în fiecare zi și cine a câștigat, cu un link înapoi la joc aici.
+
+## 0.8.0
+
+- Sfaturi pe fiecare pagină: cum vezi detaliile, cum adaugi și cum modifici. Pornește-le sau oprește-le cu 💡 din partea de sus; alegerea rămâne pe acest dispozitiv.
+
 ## 0.7.1
 
 - Bara de încărcare de sus apare acum de fiecare dată când aplicația așteaptă serverul și nu mai apare la verificările automate de modificări noi.

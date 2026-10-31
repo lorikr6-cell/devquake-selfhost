@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'meals',
     name: 'Meal planner',
-    version: '0.5.0',
+    version: '0.7.0',
     description:
       'Plan the week’s meals for your household with recipes from your cookbook: servings for the people eating, a suggested week for your diet, nutrition per day and one shopping list for the week.',
     status: 'active',
@@ -52,6 +52,19 @@ export default definePlugin({
             hu: 'Lássa a megtervezett étkezéseid nevét',
             it: 'Vedere i nomi dei pasti che hai pianificato',
             es: 'Ver los nombres de las comidas que has planificado',
+          },
+        },
+        {
+          id: 'activity.day',
+          kind: 'read',
+          perMinute: 60,
+          title: {
+            en: 'See the meals of your plan on each day and which were cooked',
+            de: 'Die Mahlzeiten deines Plans an jedem Tag sehen und welche gekocht wurden',
+            ro: 'Să vadă mesele din planul tău în fiecare zi și care au fost gătite',
+            hu: 'Lássa a terved étkezéseit naponta, és hogy melyik készült el',
+            it: 'Vedere i pasti del tuo piano ogni giorno e quali sono stati cucinati',
+            es: 'Ver las comidas de tu plan cada día y cuáles se cocinaron',
           },
         },
       ],
@@ -133,6 +146,7 @@ export default definePlugin({
     '/recipes': () => import('./api/recipes'),
   },
   linkHandlers: {
+    'activity.day': () => import('./links/activity-day'),
     'households.list': () => import('./links/households-list'),
     'meal.add': () => import('./links/meal-add'),
     'calendar.events': () => import('./links/calendar-events'),

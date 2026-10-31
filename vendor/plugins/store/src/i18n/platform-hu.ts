@@ -44,6 +44,22 @@ export const platformHu: MessagesOf<typeof platformEn> = {
     fxNote:
       'A(z) {currency} árak hozzávetőlegesek, az Európai Központi Bank {date} árfolyamán. {base} pénznemben fizetsz; a bankod vagy a kártyád váltja át.',
   },
+  artPromo: {
+    logoText: '{art} galéria',
+    logoArt: 'művészeti',
+    title: 'Művészet a DevQuake művészeti galériából',
+    body: 'A DevQuake-tagok a DevQuake művészeti galériában mutatják be digitális alkotásaikat, minden művet a mögötte álló ötlettel. Idővel a legnagyobb elismerést kapott művek közül néhány itt is megjelenhet, kiválasztott DevQuake-termékek mintájaként.',
+    consent:
+      'Csak az alkotó beleegyezésével: egy mű csak akkor jöhet szóba, ha alkotója hozzájárult, és a DevQuake a legnagyobb elismerést kapott művek közül választ.',
+    copyright:
+      'A szerzői jog az alkotónál marad. A DevQuake csak arra kap jogot, hogy a mintát az érintett termékekre nyomtassa, a megállapodás szerinti ideig.',
+    share:
+      'Azok az alkotók, akiknek a mintáival termék kel el, részesedést kaphatnak a bevételből, az előre velük egyeztetett feltételek szerint.',
+    credit: 'Minden termék feltünteti az alkotóját, és viseli a DevQuake nevet.',
+    visit: 'A művészeti galéria megtekintése',
+    show: 'Mutasd meg a saját alkotásaidat',
+    note: 'A termékeken megjelenő minták és a bevételből járó esetleges részesedés minden alkotóval külön egyeztetett feltételek szerint alakul; ezek nem jelentenek ígéretet eladásra vagy bevételre.',
+  },
   promo: {
     title: 'A DevQuake készítette',
     body: 'Ez a bolt a DevQuake-é, egy fejlesztői műhelyé, amely webes alkalmazásokat készít a mindennapi gondokra. Egyetlen ingyenes fiókkal mindegyikbe belépsz, és ebbe a boltba is.',

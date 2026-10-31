@@ -1,5 +1,30 @@
 # Változásnapló — Bolt
 
+## 0.16.1
+
+- A DevQuake csapata a Marketing alatt találja az NPS-pontcsomagokat, az Akciók és a Hírlevelek mellett.
+
+## 0.16.0
+
+- Beváltások: a DevQuake adhat egy tagnak beváltható dolgot, például egy kihívás díját. A tag e-mailt kap egy linkkel és egy titkos kóddal; a saját fiókjával bejelentkezve beírja a kódot, és az övé. Öt rossz kód zárolja a beváltást; 90 napig érvényes.
+- Egyelőre a beváltás DevQuake NPS-pontot ad: a DevQuake csapata NPS-pontcsomagokat tart a boltjában. A csomagok soha nem jelennek meg a boltban és nem eladók, mert NPS-pontot nem lehet vásárolni.
+
+## 0.15.0
+
+- A bolt megmutathatja, mi a DevQuake művészeti galéria: a tagok digitális alkotásai, amelyek közül néhány idővel DevQuake-termékek mintája lehet, mindig az alkotó beleegyezésével és a vele egyeztetett feltételek szerint. A rész a „Made by DevQuake” fölött jelenik meg, ha be van kapcsolva.
+
+## 0.14.2
+
+- A rendelési és hírlevél-e-maileket egy frissített levelezőkönyvtár küldi, amely szigorúbban olvassa az e-mail-címeket. Ezzel lezárult három út, amelyen egy hibás cím rossz címzetthez juthatott volna.
+
+## 0.14.1
+
+- A bolt fizetési beállításaiban lévő fizetési kulcsokat a böngésző már nem ajánlja fel jelszóként menteni.
+
+## 0.14.0
+
+- Tippek minden oldalon: hogyan látod a részleteket, hogyan adsz hozzá és hogyan módosítasz. Felül a 💡 gombbal kapcsolhatod be vagy ki; a választás ezen az eszközön marad.
+
 ## 0.13.1
 
 - Az éppen nem használható gombok a szokásos nyilat mutatják a „tiltott” jel helyett.

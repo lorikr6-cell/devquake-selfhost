@@ -1,5 +1,9 @@
 # Változások — Közműszámlák
 
+## 0.13.0
+
+- Tippek minden oldalon: hogyan látod a részleteket, hogyan adsz hozzá és hogyan módosítasz. Felül a 💡 gombbal kapcsolhatod be vagy ki; a választás ezen az eszközön marad.
+
 ## 0.12.0
 
 - Az alkalmazás mostantól olaszul és spanyolul is elérhető: a nyelvet az oldal tetején választhatod ki.

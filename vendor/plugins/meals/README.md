@@ -57,6 +57,7 @@ reached only through link points while the member has connected the apps (ADR 00
 | Direction        | Point / target                               | What                                                       |
 | ---------------- | -------------------------------------------- | ---------------------------------------------------------- |
 | offers           | `calendar.events` (read)                     | Planned meals as all-day events (slot emoji and name)      |
+| offers           | `activity.day` (read, ADR 0081)              | The day's meals and whether they were cooked               |
 | offers           | target `week` → `/h/:id`                     | Opens a household's week                                   |
 | offers           | `households.list` (read), `meal.add` (write) | "Plan this recipe" in the cookbook (joins that day's meal) |
 | uses `cookbook`  | `recipes.search`, `recipe.get`; `recipe`     | Search, suggestions, copied nutrition, ingredients         |

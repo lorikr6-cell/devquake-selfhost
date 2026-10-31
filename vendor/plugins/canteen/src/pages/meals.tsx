@@ -31,7 +31,9 @@ export default async function MealsPage({ ctx, params, searchParams }: PluginPag
   ]);
   const linkOf = (app: string): AppLink | null => {
     const l = linked.find((a) => a.app === app);
-    return l ? { state: l.state, connectUrl: l.connectUrl } : null;
+    return l
+      ? { state: l.state, connectUrl: l.connectUrl, npsCost: l.npsCost, affordable: l.affordable }
+      : null;
   };
   const canEdit = scope.can('meals.edit');
   const tag = LOCALE_TAGS[scope.locale];

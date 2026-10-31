@@ -5,12 +5,16 @@ export default definePlugin({
   manifest: {
     id: 'store',
     name: 'Store',
-    version: '0.13.1',
+    version: '0.16.1',
     description:
       'A lightweight shop: products of any type with their own fields, vendors, campaigns, vouchers, announcements and newsletters, reviews, product comparison, QR codes and sharing, the shop’s own design, automatic discounts, a team with several roles per member and a task board, maintenance mode, the shop in any language, buyer accounts with messages and order history, statistics, card (Stripe), PayPal, bank transfer or cash on delivery, and pages search engines can index.',
     status: 'active',
     // Own MySQL database from STORE_DB_* (ADR 0007).
     database: true,
+    // Claims the platform asks for, e.g. a challenge prize of NPS points (ADR 0079); their
+    // email goes to winners who need not use the store.
+    claims: true,
+    mailWithoutAccess: true,
     publicPages: [{ path: '/help', title: 'User manual' }],
     about,
     // The shop, for buyers (ADR 0047, 0057, 0058): the root shows the instance's open shop to
@@ -30,6 +34,8 @@ export default definePlugin({
         '/s/:slug/account',
         '/s/:slug/account/messages/:id',
         '/s/:slug/newsletter',
+        // A claim's page (ADR 0079): winners need not use the store; it checks the member itself.
+        '/claim/:token',
       ],
       api: [
         '/s/:slug/photos/:photoId',
@@ -37,6 +43,7 @@ export default definePlugin({
         '/s/:slug/p/:product/qr',
         '/s/:slug/cart',
         '/sitemap.xml',
+        '/claim/:token',
       ],
     },
     // Calls from the shop's own pages and from email links, and the payment providers' returns
@@ -103,6 +110,12 @@ export default definePlugin({
         help: 'Buyers pick a currency at the bottom of the shop (Romanian and Hungarian pages start with lei and forint) and see approximate prices next to the real ones, at the European Central Bank’s daily rates. Orders and payments stay in the shop’s currency.',
       },
       {
+        key: 'promoteArtGallery',
+        kind: 'toggle',
+        label: 'Show the art gallery section in the shop',
+        help: 'Everyone sees what the DevQuake art gallery is and that some of its most appreciated works may become designs for DevQuake products (always with the artist’s consent, under terms agreed with them), above "Made by DevQuake". Turn it on once the gallery’s doors are open.',
+      },
+      {
         key: 'promoteDevQuake',
         kind: 'toggle',
         label: 'Show the DevQuake promotion in the shop',
@@ -118,6 +131,8 @@ export default definePlugin({
     '/products/types': () => import('./pages/types'),
     '/products/:id': () => import('./pages/product'),
     '/vendors': () => import('./pages/vendors'),
+    '/packages': () => import('./pages/packages'),
+    '/claim/:token': () => import('./pages/claim'),
     '/orders': () => import('./pages/orders'),
     '/orders/:id': () => import('./pages/order'),
     '/messages': () => import('./pages/messages'),
@@ -223,6 +238,8 @@ export default definePlugin({
     '/s/:slug/account/messages': () => import('./api/shop-threads'),
     '/s/:slug/account/messages/:id': () => import('./api/shop-thread'),
     '/sitemap.xml': () => import('./api/sitemap'),
+    '/packages': () => import('./api/packages'),
+    '/claim/:token': () => import('./api/claim'),
   },
   platform: () => import('./platform'),
 });

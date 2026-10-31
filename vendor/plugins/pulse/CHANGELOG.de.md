@@ -1,5 +1,9 @@
 # Änderungen — Pulse
 
+## 0.9.0
+
+- Tipps auf jeder Seite: wie du Details siehst, etwas hinzufügst und änderst. Schalte sie oben mit 💡 ein oder aus; die Wahl bleibt auf diesem Gerät. In der Live-Demo sind sie zu Beginn an.
+
 ## 0.8.0
 
 - Die App gibt es jetzt auch auf Italienisch und Spanisch: Wähle die Sprache oben auf der Seite.

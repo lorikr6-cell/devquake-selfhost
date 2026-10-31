@@ -1,5 +1,17 @@
 # Registro delle modifiche: Liste della spesa
 
+## 0.26.0
+
+- Un locale nell’app Venue può contare come costi ciò che è stato comprato nella sua lista degli acquisti (scegli tu la lista; passano solo gli acquisti di quella lista e i prezzi).
+
+## 0.25.0
+
+- Le app collegate, come Abitudini e diario, ora possono mostrare cosa hai comprato ogni giorno, per lista, con un link per tornare qui alla lista.
+
+## 0.24.0
+
+- Suggerimenti su ogni pagina: come vedere i dettagli, come aggiungere e come modificare. Attivali o disattivali con 💡 in alto; la scelta resta su questo dispositivo.
+
 ## 0.23.0
 
 - Le app collegate come la Mensa sociale ora possono proporre anche le tue liste ancora vuote, così una nuova lista d’acquisto si riempie subito.

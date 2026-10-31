@@ -5,7 +5,7 @@ import { dishLines } from '../lib/meals';
 import { can } from '../lib/roles';
 import { licenceState } from '../lib/licence';
 import { myLicence } from '../lib/licence-data';
-import { myRoute, packagesOf } from '../lib/routes-data';
+import { drives, myRoute, packagesOf } from '../lib/routes-data';
 import { routeDay } from '../lib/validate';
 
 /** Versioned like Workout's app state (ADR 0066): a breaking change gets a new format. */
@@ -19,7 +19,12 @@ export const APP_DRIVER_FORMAT = 1;
 export const GET = api(async ({ request, db, user, today, locale }) => {
   const day = routeDay(new URL(request.url).searchParams.get('day') ?? today);
   const t = translator(locale);
-  const orgs = (await orgsOf(db, user.id)).filter((o) => can(o.role, 'route.own'));
+  // Drivers, and the maker of a demo linked as its driver (to try the app).
+  const all = await orgsOf(db, user.id);
+  const driving = await Promise.all(
+    all.map((o) => (o.roles.some((r) => can(r, 'route.own')) ? true : drives(db, o.id, user.id))),
+  );
+  const orgs = all.filter((_, i) => driving[i]);
   const routes = [];
   for (const org of orgs) {
     const [route, packages, me] = await Promise.all([

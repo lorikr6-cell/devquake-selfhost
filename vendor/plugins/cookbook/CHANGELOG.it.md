@@ -1,5 +1,9 @@
 # Registro delle modifiche — Ricettario
 
+## 0.9.0
+
+- Suggerimenti su ogni pagina: come vedere i dettagli, come aggiungere e come modificare. Attivali o disattivali con 💡 in alto; la scelta resta su questo dispositivo.
+
 ## 0.8.0
 
 - Le ricette ora possono servire una Mensa sociale: quando ne scegli una lì, viene calcolata fino a 500 porzioni e la mensa ne tiene una copia per la cucina.

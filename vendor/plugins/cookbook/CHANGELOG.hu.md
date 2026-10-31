@@ -1,5 +1,9 @@
 # Változások — Szakácskönyv
 
+## 0.9.0
+
+- Tippek minden oldalon: hogyan látod a részleteket, hogyan adsz hozzá és hogyan módosítasz. Felül a 💡 gombbal kapcsolhatod be vagy ki; a választás ezen az eszközön marad.
+
 ## 0.8.0
 
 - A receptek mostantól egy Szociális konyhát is kiszolgálhatnak: ha ott kiválasztasz egyet, akár 500 adagra is átszámolja, és a konyha megtart egy másolatot.

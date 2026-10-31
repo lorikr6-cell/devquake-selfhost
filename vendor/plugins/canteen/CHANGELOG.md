@@ -1,5 +1,46 @@
 # Changelog — Social canteen
 
+## 0.27.3
+
+- Connecting the Cookbook or Shopping shows the NPS points it costs; without enough points the link says how many are needed.
+
+## 0.27.2
+
+- Kinder wording: the app now says it is for organisations that care for elderly people (no longer “feed”), in every language, in the app, its description and its manual.
+
+## 0.27.1
+
+- Social work: the two place limits (residents and home deliveries) now sit side by side on the same line.
+
+## 0.27.0
+
+- Give the organisation's header its own look: a font, a background colour or picture, the text colour and the alignment, with a live preview (Organisation → Header look).
+- The same header tops your pages, the organisation's public page and every printout: reports, route sheets, menus, the kitchen sheet and profiles, also when saved as PDF.
+
+## 0.26.0
+
+- A user manual in every language of the app, open to everyone at /help and linked at the bottom of every page: from the first organisation to menus, routes, the drivers' phone view, the medical file, social work, reports and Excel.
+
+## 0.25.0
+
+- Reports for organisers: what the staff did in a span of days, for one person or a whole group (all drivers, the kitchen, all social workers, everyone). A table counts the changes per person and area (people, social work, kitchen, routes, medical, staff, organisation), and a list shows each change with its time.
+- Reports print with the organisation's header. For the medical area they never name the person concerned.
+- The demo comes with two weeks of sample activity to try the reports.
+
+## 0.24.0
+
+- Social work: a new "Social work" page with the free places, the waiting list, new applicants and visits. Organisers set the maximum number of residents and of home deliveries separately; when the places are full, new people go on the waiting list, and "Admit" gives them a place as soon as one is free.
+- Plan visits (assessment, home visit, follow-up) to applicants or to people already served, for yourself or a colleague, and record what happened. "Mine / Everyone" shows only your own.
+- A social assessment questionnaire (living situation, housing, income, mobility, help, needs, priority) is filled in on each person's profile and kept with them; earlier ones stay in the history. The priority shows on the waiting list.
+- Several social workers can share the work: each person can have a responsible social worker. Organisers tick who works as a social worker on the staff page, also themselves ("I'm a social worker").
+- Staff can have several roles, even all of them: tick the roles of each person on the staff page; they see everything each of their roles allows.
+
+## 0.23.0
+
+- Tips on every page: how to see the details, how to add and how to change. They float in a corner, are on in demo organisations and are switched on or off with 💡 in the header.
+- The demo has more to try: people placed on a map with driver areas, routes from three days ago to next week with deliveries already handed over and the drivers' comments, and a coordinator, a kitchen worker, a medical staff member and a second driver on the staff page.
+- Try the drivers' app with the demo: whoever made it is one of its drivers and sees the demo route in the app without switching role.
+
 ## 0.22.0
 
 - Driver areas (Routes → Driver areas): propose from the addresses which driver delivers to whom, so drivers do not cross each other's streets, sized to how much each one works. Look at the proposal, move people to another driver, then save.
@@ -124,6 +165,6 @@
 
 ## 0.1.0
 
-- First version: create your organisation and keep a profile for each person you feed, living at home or in your care home, with their address, diet, allergies and a note for the driver.
+- First version: create your organisation and keep a profile for each person in your care, living at home or in your care home, with their address, diet, allergies and a note for the driver.
 - Add a profile photo and the ID card (both required), and up to two more papers such as the pension coupon. Pictures and personal numbers are stored encrypted, and you see who opened them and when.
 - Write down incidents, and see the birthdays of the next seven days.

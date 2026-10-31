@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
-import { Button, useT } from '@devquake/ui';
+import { Button, connectBlocked, connectLabel, useT } from '@devquake/ui';
 import type { ShoppingItem } from '../lib/dishes';
 import { callApi } from './call-api';
 import { ErrorText, Input, Panel } from './ui';
@@ -11,6 +11,9 @@ import { useAction } from './use-action';
 export interface AppLink {
   state: 'connected' | 'available' | 'needs-access';
   connectUrl: string;
+  /** NPS points connecting costs (ADR 0082). */
+  npsCost?: number;
+  affordable?: boolean;
 }
 
 export interface DishSummary {
@@ -27,9 +30,14 @@ function Connect({ link, text }: { link: AppLink | null; text: string }) {
   return (
     <p className="text-sm text-ink/70 dark:text-paper/70">
       {text}{' '}
-      <a href={link.connectUrl} className="font-medium text-quake underline underline-offset-2">
-        {link.state === 'needs-access' ? t('getIt') : t('connect')}
-      </a>
+      {connectBlocked(link) ? (
+        <span className="font-medium">{connectLabel(link, t('connect'))}</span>
+      ) : (
+        <a href={link.connectUrl} className="font-medium text-quake underline underline-offset-2">
+          {connectLabel(link, t('connect')) ??
+            (link.state === 'needs-access' ? t('getIt') : t('connect'))}
+        </a>
+      )}
     </p>
   );
 }

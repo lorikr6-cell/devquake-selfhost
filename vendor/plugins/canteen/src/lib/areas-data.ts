@@ -47,7 +47,7 @@ async function peopleAtHome(db: Db, orgId: number): Promise<PersonRow[]> {
   return db.query<PersonRow>(
     `SELECT id, first_name, last_name, address, area_driver_id, geo_lat, geo_lng, geo_address
        FROM canteen_people
-      WHERE org_id = ? AND kind = 'delivery' AND status <> 'ended'
+      WHERE org_id = ? AND kind = 'delivery' AND status IN ('active','paused')
       ORDER BY last_name, first_name`,
     [orgId],
   );

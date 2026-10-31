@@ -1,5 +1,9 @@
 # Änderungen — Kochbuch
 
+## 0.9.0
+
+- Tipps auf jeder Seite: wie du Details siehst, etwas hinzufügst und änderst. Schalte sie oben mit 💡 ein oder aus; die Wahl bleibt auf diesem Gerät.
+
 ## 0.8.0
 
 - Rezepte können jetzt eine Sozialküche versorgen: Wählst du dort eines aus, wird es für bis zu 500 Portionen umgerechnet, und die Küche behält eine Kopie.

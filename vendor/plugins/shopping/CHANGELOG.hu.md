@@ -1,5 +1,17 @@
 # Változások: Közös bevásárlólisták
 
+## 0.26.0
+
+- A Venue alkalmazás egy vendéglátóhelye a beszerzési listáján vásároltakat a költségeiként számolhatja (te választod a listát; csak az ott vásároltak és az árak mennek át).
+
+## 0.25.0
+
+- A csatlakoztatott alkalmazások, például a Szokások és napló, mostantól megmutathatják, mit vásároltál naponta, listánként, egy linkkel vissza ide a listához.
+
+## 0.24.0
+
+- Tippek minden oldalon: hogyan látod a részleteket, hogyan adsz hozzá és hogyan módosítasz. Felül a 💡 gombbal kapcsolhatod be vagy ki; a választás ezen az eszközön marad.
+
 ## 0.23.0
 
 - A kapcsolt alkalmazások, például a Szociális konyha, mostantól a még üres listáidat is felajánlhatják, így egy új beszerzési lista azonnal feltölthető.

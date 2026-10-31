@@ -1,5 +1,5 @@
 import type { PluginLayoutProps } from '@devquake/plugin-sdk';
-import { AppToolbar, I18nProvider, ReleaseNotes, WorksWith } from '@devquake/ui';
+import { AppToolbar, I18nProvider, Link, ReleaseNotes, WorksWith } from '@devquake/ui';
 import { FeedbackProvider } from './components/feedback';
 import { FALLBACK_MESSAGES, appMessages, localeOf, translator } from './i18n';
 
@@ -52,6 +52,9 @@ export default async function Layout({ children, ctx }: PluginLayoutProps) {
                 cancel: t('worksWith.cancel'),
               }}
             />
+            <Link href="/help" className="underline hover:text-quake">
+              {t('nav.manual')}
+            </Link>
             <a href={ctx.hostUrl} className="underline hover:text-quake">
               {t('nav.devquake')}
             </a>

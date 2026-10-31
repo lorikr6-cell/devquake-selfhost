@@ -1,5 +1,9 @@
 # Modificări — Facturi utilități
 
+## 0.13.0
+
+- Sfaturi pe fiecare pagină: cum vezi detaliile, cum adaugi și cum modifici. Pornește-le sau oprește-le cu 💡 din partea de sus; alegerea rămâne pe acest dispozitiv.
+
 ## 0.12.0
 
 - Aplicația este acum și în italiană și spaniolă: alege limba din partea de sus a paginii.

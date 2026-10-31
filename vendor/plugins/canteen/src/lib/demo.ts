@@ -7,9 +7,18 @@ import { saveLicence } from './licence-data';
 import { saveMealTime, saveMenu } from './meals-data';
 import { addMedNote, saveMedication, saveProfile, saveStay } from './medical-data';
 import type { Diet } from './model';
-import { saveDescription } from './org-page';
+import { saveDescription, saveHeaderLook } from './org-page';
 import { isRole, type Role } from './roles';
-import { saveDriver, setKitchenAddress, setMinutesPerStop, setRoute } from './routes-data';
+import { buildRoutes, proposeAreas, saveAreas } from './areas-data';
+import { saveDriver, setKitchenAddress, setMinutesPerStop } from './routes-data';
+import {
+  addApplicant,
+  assignSocialWorker,
+  planVisit,
+  saveAssessment,
+  saveLimits,
+  updateVisit,
+} from './social-data';
 import type { PersonInput } from './validate';
 
 // Demo organisations (migration 0013): anyone with the app makes one (just one each; asking
@@ -19,6 +28,12 @@ import type { PersonInput } from './validate';
 // any role. Sample data only: invented names, addresses and numbers.
 
 type Db = Omit<PluginDatabase, 'transaction'>;
+
+/**
+ * Account numbers of the demo's invented staff: far above any real DevQuake account, so they
+ * never meet one; they are deleted with the demo organisation.
+ */
+const DEMO_STAFF_IDS = 4_290_000_000;
 
 const cnp = (first12: string) => first12 + cnpChecksum(first12);
 const time = (h: number, m = 0) => h * 60 + m;
@@ -81,6 +96,13 @@ export async function createDemoOrg(
     me,
     'Cantina socială din cartierul Mărăști: prânz cald pentru vârstnici, livrat acasă sau servit în cămin.',
   );
+  // A header in the organisation's own colours, as on every printout.
+  await saveHeaderLook(db, orgId, me, {
+    font: 'rounded',
+    bg: '#0f5e4b',
+    text: 'auto',
+    align: 'left',
+  });
   await setKitchenAddress(db, orgId, me, 'Str. Memorandumului 28, Cluj-Napoca');
   await setMinutesPerStop(db, orgId, me, 6);
 
@@ -397,29 +419,235 @@ export async function createDemoOrg(
     { mime: 'image/png', data: PIXEL, thumb: null },
     { expiresOn: addDays(today, 40), number: 'B1234567', nameChecked: true },
   );
-  for (let d = 0; d < 7; d++) {
+  // Map positions around the kitchen (invented, so the map, the areas and the routes work
+  // without a map key), the areas proposed from them, and the routes of the days around today
+  // built from the areas: past days delivered with the drivers' comments, today half done.
+  const KITCHEN = { lat: 46.7712, lng: 23.6236 };
+  await db.execute(
+    `UPDATE canteen_orgs SET kitchen_lat = ?, kitchen_lng = ?, kitchen_geo_address = kitchen_address
+      WHERE id = ?`,
+    [KITCHEN.lat, KITCHEN.lng, orgId],
+  );
+  const homes = await db.query<{ id: number }>(
+    "SELECT id FROM canteen_people WHERE org_id = ? AND kind = 'delivery' ORDER BY id",
+    [orgId],
+  );
+  for (const [i, h] of homes.entries()) {
+    // A ring of streets 1 to 4 km out, spread all around the kitchen.
+    const turn = (i * 137.5 * Math.PI) / 180;
+    const dist = 0.01 + (i % 5) * 0.006;
+    await db.execute(
+      `UPDATE canteen_people SET geo_lat = ?, geo_lng = ?, geo_address = address WHERE id = ?`,
+      [
+        KITCHEN.lat + dist * Math.sin(turn),
+        KITCHEN.lng + dist * 1.45 * Math.cos(turn),
+        Number(h.id),
+      ],
+    );
+  }
+  const proposal = await proposeAreas(db, orgId, me);
+  await saveAreas(db, orgId, me, proposal);
+  await buildRoutes(db, orgId, me, addDays(today, -3), addDays(today, 6));
+  const notes = [
+    'Predat personal, totul în regulă.',
+    'Lăsat la vecina de la etajul 2, cum s-a cerut.',
+    'A cerut încă o porție de supă pentru mâine.',
+    null,
+    null,
+  ];
+  for (let d = -3; d < 0; d++) {
     const day = addDays(today, d);
-    const weekday = ((new Date(`${day}T12:00:00Z`).getUTCDay() + 6) % 7) + 1;
-    // Who gets a delivery that day: active, at home, and it is one of their days.
-    const due = (
-      await db.query<{ id: number }>(
-        `SELECT p.id FROM canteen_people p
-           JOIN canteen_delivery_days w ON w.person_id = p.id AND w.weekday = ?
-          WHERE p.org_id = ? AND p.kind = 'delivery' AND p.status = 'active' ORDER BY p.id`,
-        [weekday, orgId],
-      )
-    ).map((r) => Number(r.id));
-    const team = weekday >= 6 ? [andrei, mihai] : [andrei, mihai, daniela];
-    const size = Math.ceil(due.length / team.length);
-    for (let k = 0; k < team.length; k++) {
-      const stops = due.slice(k * size, (k + 1) * size);
-      if (stops.length) await setRoute(db, orgId, me, day, team[k]!, stops);
+    const stops = await db.query<{ person_id: number }>(
+      'SELECT person_id FROM canteen_route_stops WHERE org_id = ? AND day = ? ORDER BY driver_id, position',
+      [orgId, day],
+    );
+    for (const [i, stop] of stops.entries()) {
+      await db.execute(
+        `UPDATE canteen_route_stops SET delivered_at = ? , delivery_note = ?
+          WHERE org_id = ? AND day = ? AND person_id = ?`,
+        [
+          `${day} ${String(10 + Math.floor(i / 4)).padStart(2, '0')}:${String((i * 13) % 60).padStart(2, '0')}:00`,
+          notes[i % notes.length],
+          orgId,
+          day,
+          Number(stop.person_id),
+        ],
+      );
     }
   }
+  // Today: the demo driver's first two stops are already handed over.
+  const firstStops = await db.query<{ person_id: number }>(
+    'SELECT person_id FROM canteen_route_stops WHERE org_id = ? AND day = ? AND driver_id = ? ORDER BY position LIMIT 2',
+    [orgId, today, andrei],
+  );
+  for (const [i, stop] of firstStops.entries()) {
+    await db.execute(
+      `UPDATE canteen_route_stops SET delivered_at = UTC_TIMESTAMP(), delivery_note = ?
+        WHERE org_id = ? AND day = ? AND person_id = ?`,
+      [notes[i], orgId, today, Number(stop.person_id)],
+    );
+  }
+
+  // The rest of the team, to see each role's view of the staff page (invented: they are not
+  // DevQuake accounts, and go with the demo).
+  for (const [k, [name, role]] of (
+    [
+      ['Ioana Rus', 'coordinator'],
+      ['Elena Kovács', 'kitchen'],
+      ['Dr. Radu Pop', 'medical'],
+      ['Mihai Rusu', 'driver'],
+    ] as const
+  ).entries()) {
+    await db.execute(
+      `INSERT INTO canteen_staff (org_id, user_id, display_name, role, roles) VALUES (?, ?, ?, ?, ?)`,
+      [orgId, DEMO_STAFF_IDS + k, name, role, role],
+    );
+  }
+
+  // Social work: the maker and an invented colleague share it; the residents' places are full,
+  // so applicants wait; visits planned, one done, questionnaires filled in.
+  const colleague = DEMO_STAFF_IDS + 4;
   await db.execute(
-    `UPDATE canteen_route_stops SET delivered_at = UTC_TIMESTAMP(), delivery_note = ?
-      WHERE org_id = ? AND day = ? AND person_id = ?`,
-    ['Predat personal, totul în regulă.', orgId, today, maria],
+    `INSERT INTO canteen_staff (org_id, user_id, display_name, role, roles, social_worker)
+     VALUES (?, ?, 'Andreea Matei', 'coordinator', 'coordinator', 1)`,
+    [orgId, colleague],
+  );
+  await db.execute('UPDATE canteen_staff SET social_worker = 1 WHERE org_id = ? AND user_id = ?', [
+    orgId,
+    me,
+  ]);
+  const residents = people.filter((p) => p.kind === 'resident').length;
+  await saveLimits(db, orgId, me, {
+    maxResidents: residents,
+    maxDelivery: people.length - residents + 3,
+  });
+  const applicant = async (p: PersonInput, waitingDays: number, worker: number) => {
+    const id = await addApplicant(db, orgId, me, p);
+    await db.execute('UPDATE canteen_people SET waiting_since = ? WHERE id = ?', [
+      addDays(today, -waitingDays),
+      id,
+    ]);
+    await assignSocialWorker(db, orgId, me, id, worker);
+    return id;
+  };
+  const elisabeta = await applicant(
+    person('Elisabeta', 'Crișan', {
+      birthDate: '1939-04-12',
+      kind: 'resident',
+      address: 'Str. Fabricii 14, Cluj-Napoca',
+      phone: '0744 555 101',
+    }),
+    21,
+    me,
+  );
+  const gavril = await applicant(
+    person('Gavril', 'Morar', {
+      birthDate: '1948-11-30',
+      address: 'Str. Oașului 52, Cluj-Napoca',
+      phone: '0745 555 102',
+      diet: 'diabetic',
+    }),
+    9,
+    colleague,
+  );
+  await applicant(
+    person('Rozalia', 'Szabó', {
+      birthDate: '1944-06-02',
+      address: 'Str. Bucium 7, Cluj-Napoca',
+    }),
+    2,
+    me,
+  );
+  const at = (day: IsoDate, h: number) => new Date(`${day}T${String(h).padStart(2, '0')}:00:00Z`);
+  const firstVisit = await planVisit(db, orgId, me, {
+    personId: elisabeta,
+    plannedAt: at(addDays(today, -14), 9),
+    kind: 'assessment',
+    assignedTo: me,
+  });
+  await updateVisit(db, orgId, me, firstVisit, {
+    status: 'done',
+    notes: 'Locuiește singură la etajul 3 fără lift; fiica vine o dată pe săptămână.',
+  });
+  await saveAssessment(
+    db,
+    orgId,
+    me,
+    elisabeta,
+    {
+      livesWith: 'alone',
+      housing: 'own',
+      income: 'pension',
+      mobility: 'aid',
+      cooking: 'no',
+      support: 'weekly',
+      health: 'Artroză, vede slab.',
+      needs: 'resident',
+      priority: 'high',
+    },
+    firstVisit,
+  );
+  await planVisit(db, orgId, me, {
+    personId: gavril,
+    plannedAt: at(addDays(today, 1), 8),
+    kind: 'assessment',
+    assignedTo: colleague,
+  });
+  await planVisit(db, orgId, me, {
+    personId: maria,
+    plannedAt: at(addDays(today, 3), 10),
+    kind: 'follow_up',
+    assignedTo: me,
+  });
+  await saveAssessment(
+    db,
+    orgId,
+    me,
+    maria,
+    {
+      livesWith: 'partner',
+      housing: 'own',
+      income: 'pension',
+      mobility: 'independent',
+      cooking: 'partly',
+      support: 'daily',
+      needs: 'delivery',
+      priority: 'medium',
+    },
+    null,
+  );
+
+  // A fortnight of activity for the reports: each role's usual work (invented, like the staff).
+  const usual: [number, string[]][] = [
+    [me, ['people.edit', 'social.visitPlan', 'social.assessment', 'staff.invite']],
+    [DEMO_STAFF_IDS, ['routes.plan', 'people.edit', 'routes.driver']],
+    [DEMO_STAFF_IDS + 1, ['meals.menu', 'meals.menu', 'meals.dish']],
+    [DEMO_STAFF_IDS + 2, ['medical.dose', 'medical.dose', 'medical.note']],
+    [DEMO_STAFF_IDS + 3, ['routes.delivery', 'routes.delivery', 'routes.delivery']],
+    [colleague, ['social.visitUpdate', 'social.applicant', 'social.service']],
+  ];
+  const lines: unknown[] = [];
+  for (let day = 13; day >= 0; day--) {
+    for (const [who, actions] of usual) {
+      actions.forEach((action, k) => {
+        if ((day + k) % 3 === 2) return; // not every task every day
+        const hour = 7 + ((k * 3 + day) % 9);
+        lines.push(
+          orgId,
+          who,
+          action,
+          `${addDays(today, -day)} ${String(hour).padStart(2, '0')}:${String((k * 17 + day * 7) % 60).padStart(2, '0')}:00`,
+        );
+      });
+    }
+  }
+  // sql-safe: marks — only "(?, ?, ?, ?)" groups, one per row.
+  const marks = Array(lines.length / 4)
+    .fill('(?, ?, ?, ?)')
+    .join(', ');
+  await db.execute(
+    `INSERT INTO canteen_activity (org_id, user_id, action, created_at) VALUES ${marks}`,
+    lines,
   );
 
   // The medical file is the medical staff's alone: written in that role, then back.
@@ -477,11 +705,10 @@ async function ownDemo(db: Db, orgId: number, userId: number): Promise<boolean> 
 }
 
 async function setOwnRole(db: Db, orgId: number, userId: number, role: Role) {
-  await db.execute('UPDATE canteen_staff SET role = ? WHERE org_id = ? AND user_id = ?', [
-    role,
-    orgId,
-    userId,
-  ]);
+  await db.execute(
+    'UPDATE canteen_staff SET role = ?, roles = ? WHERE org_id = ? AND user_id = ?',
+    [role, role, orgId, userId],
+  );
 }
 
 /** "View as": the demo's maker takes another role in it (any role, also the last organiser). */

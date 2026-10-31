@@ -2,6 +2,7 @@
 
 import { useId, useState } from 'react';
 import { buttonClass } from './button';
+import { connectBlocked, connectLabel } from './connect-cost';
 import { Sheet } from './sheet';
 
 export interface WorksWithApp {
@@ -12,6 +13,9 @@ export interface WorksWithApp {
   state: 'connected' | 'available' | 'needs-access';
   openUrl: string;
   connectUrl: string;
+  /** NPS points connecting costs (ADR 0082); the button shows them. */
+  npsCost?: number;
+  affordable?: boolean;
 }
 
 export interface WorksWithLabels {
@@ -96,22 +100,27 @@ export function WorksWith({ apps, labels }: { apps: WorksWithApp[]; labels: Work
                     {labels.disconnect}
                   </button>
                 ) : null}
-                <a
-                  href={
-                    a.state === 'connected'
-                      ? a.openUrl
-                      : a.state === 'available'
-                        ? a.connectUrl
-                        : a.openUrl
-                  }
-                  className={buttonClass(a.state === 'connected' ? 'secondary' : 'primary')}
-                >
-                  {a.state === 'connected'
-                    ? labels.open
-                    : a.state === 'available'
-                      ? labels.connect
-                      : labels.getIt}
-                </a>
+                {connectBlocked(a) ? (
+                  <button type="button" disabled className={buttonClass('primary')}>
+                    {connectLabel(a, labels.connect)}
+                  </button>
+                ) : (
+                  <a
+                    href={
+                      a.state === 'connected'
+                        ? a.openUrl
+                        : a.state === 'available'
+                          ? a.connectUrl
+                          : a.openUrl
+                    }
+                    className={buttonClass(a.state === 'connected' ? 'secondary' : 'primary')}
+                  >
+                    {a.state === 'connected'
+                      ? labels.open
+                      : (connectLabel(a, labels.connect) ??
+                        (a.state === 'available' ? labels.connect : labels.getIt))}
+                  </a>
+                )}
               </li>
             ))}
           </ul>

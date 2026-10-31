@@ -1,5 +1,9 @@
 # Registro de cambios — Recetario
 
+## 0.9.0
+
+- Consejos en cada página: cómo ver los detalles, cómo añadir y cómo cambiar. Actívalos o desactívalos con 💡 arriba; la elección se guarda en este dispositivo.
+
 ## 0.8.0
 
 - Las recetas ahora pueden alimentar un Comedor social: cuando eliges una allí, se calcula para hasta 500 raciones y el comedor guarda una copia para su cocina.

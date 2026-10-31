@@ -1,5 +1,13 @@
 # Registro delle modifiche — Darts
 
+## 0.9.0
+
+- Le app collegate, come Abitudini e diario, ora possono mostrare le partite che hai giocato ogni giorno e chi ha vinto, con un link per tornare qui alla partita.
+
+## 0.8.0
+
+- Suggerimenti su ogni pagina: come vedere i dettagli, come aggiungere e come modificare. Attivali o disattivali con 💡 in alto; la scelta resta su questo dispositivo.
+
 ## 0.7.1
 
 - La barra di caricamento in alto ora compare ogni volta che l’app attende il server e non più durante i controlli automatici delle novità.

@@ -107,6 +107,6 @@ only asks that the licence and copyright notice stay with copies of the code.
 
 ## About
 
-Social canteen is a [DevQuake](https://devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=canteen) app (canteen 0.22.0),
+Social canteen is a [DevQuake](https://devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=canteen) app (canteen 0.27.3),
 packaged to run on its own. Licence: [MIT](../../LICENSE). Problems and ideas:
 [GitHub issues](https://github.com/lorikr6-cell/devquake-selfhost/issues).

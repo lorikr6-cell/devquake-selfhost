@@ -5,19 +5,21 @@ export default definePlugin({
   manifest: {
     id: 'canteen',
     name: 'Social canteen',
-    version: '0.22.0',
+    version: '0.27.3',
     description:
-      'For organisations that feed elderly people: profiles with photo and ID card, personal numbers and papers stored encrypted, incidents and birthdays; meals, routes and the medical file follow.',
+      'For organisations that care for elderly people: profiles and papers stored encrypted, menus by diet and the kitchen sheet, delivery routes with a drivers’ view, the medical file, a waiting list with social work, and reports.',
     status: 'active',
     // Own MySQL database from CANTEEN_DB_* (ADR 0007); documents encrypted with CANTEEN_MASTER_KEY.
     database: true,
+    // The user manual: open to everyone and listed in the app's sitemap (ADR 0009).
+    publicPages: [{ path: '/help', title: 'User manual' }],
     about,
     // Staff invited by an organiser open the join link before they have access; the app is
     // free for them (ADR 0043).
     signedInRoutes: { pages: ['/join/:code'], api: ['/join'] },
     // An organisation's own page, when its organisers make it public (ADR 0047): its banner
     // only, never anything about the people it serves.
-    openRoutes: { pages: ['/o/:id'], api: ['/o/:id/logo'] },
+    openRoutes: { pages: ['/o/:id'], api: ['/o/:id/logo', '/o/:id/header-image'] },
     freeForInvited: true,
     // Staff invitations by email with their QR code; drivers get the app's download (ADR 0073).
     invitationEmails: { perMemberPerDay: 10 },
@@ -62,6 +64,9 @@ export default definePlugin({
     '/orgs/:id/staff': () => import('./pages/staff'),
     '/orgs/:id/meals': () => import('./pages/meals'),
     '/orgs/:id/kitchen': () => import('./pages/kitchen'),
+    '/orgs/:id/social': () => import('./pages/social'),
+    '/orgs/:id/reports': () => import('./pages/reports'),
+    '/help': () => import('./pages/help'),
     '/orgs/:id/routes': () => import('./pages/routes'),
     '/orgs/:id/routes/areas': () => import('./pages/areas'),
     '/orgs/:id/routes/print': () => import('./pages/routes-print'),
@@ -86,6 +91,14 @@ export default definePlugin({
     '/orgs/:id/staff/:staffId': () => import('./api/staff'),
     '/orgs/:id/invites': () => import('./api/invites'),
     '/orgs/:id/demo-role': () => import('./api/demo-role'),
+    '/orgs/:id/social': () => import('./api/social'),
+    '/orgs/:id/social/limits': () => import('./api/social-limits'),
+    '/orgs/:id/social/applicants': () => import('./api/social-applicants'),
+    '/orgs/:id/social/people/:personId': () => import('./api/social-person'),
+    '/orgs/:id/visits': () => import('./api/visits'),
+    '/orgs/:id/visits/:visitId': () => import('./api/visit'),
+    '/orgs/:id/people/:personId/social': () => import('./api/assessments'),
+    '/orgs/:id/staff/:staffId/social': () => import('./api/staff-social'),
     '/orgs/:id/areas': () => import('./api/areas'),
     '/orgs/:id/areas/:action': () => import('./api/areas-action'),
     '/orgs/:id/dishes': () => import('./api/dishes'),
@@ -97,8 +110,11 @@ export default definePlugin({
     '/orgs/:id/invites/:inviteId/email': () => import('./api/invite-email'),
     '/join': () => import('./api/join'),
     '/o/:id/logo': () => import('./api/public-logo'),
+    '/o/:id/header-image': () => import('./api/public-header-image'),
     '/orgs/:id/page': () => import('./api/org-page'),
     '/orgs/:id/logo': () => import('./api/org-logo'),
+    '/orgs/:id/header': () => import('./api/org-header'),
+    '/orgs/:id/header-image': () => import('./api/org-header-image'),
     '/orgs/:id/export': () => import('./api/export'),
     '/orgs/:id/import': () => import('./api/import'),
     '/orgs/:id/meal-times': () => import('./api/meal-times'),

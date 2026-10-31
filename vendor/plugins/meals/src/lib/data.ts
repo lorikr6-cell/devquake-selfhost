@@ -1052,8 +1052,10 @@ export async function mealsOfUser(db: Db, userId: number, from: IsoDate, to: Iso
     slot: Slot;
     title: string;
     household: string;
+    cooked: number;
   }>(
-    `SELECT m.id, m.household_id, ${DAY('m.day', 'day')}, m.slot, m.title, h.name AS household
+    `SELECT m.id, m.household_id, ${DAY('m.day', 'day')}, m.slot, m.title, h.name AS household,
+            m.cooked
        FROM meals m JOIN households h ON h.id = m.household_id
        JOIN household_members hm ON hm.household_id = h.id AND hm.user_id = ?
       WHERE m.day BETWEEN ? AND ?
@@ -1067,6 +1069,7 @@ export async function mealsOfUser(db: Db, userId: number, from: IsoDate, to: Iso
     slot: r.slot,
     title: r.title,
     household: r.household,
+    cooked: num(r.cooked) === 1,
   }));
 }
 

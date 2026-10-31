@@ -1,5 +1,17 @@
 # Changelog: Shared shopping lists
 
+## 0.26.0
+
+- A venue in the Venue app can count what was bought on its purchasing list as its costs (you choose the list; only what was bought there and the prices go over).
+
+## 0.25.0
+
+- Connected apps such as Habits and journal can now show what you bought on each day, by list, with a link back to the list here.
+
+## 0.24.0
+
+- Tips on every page: how to see the details, how to add and how to change. Turn them on or off with 💡 at the top; the choice is kept on this device.
+
 ## 0.23.0
 
 - Connected apps such as the Social canteen can now also offer your lists that are still empty, so a new purchasing list can be filled straight away.

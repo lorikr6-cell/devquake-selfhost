@@ -45,7 +45,13 @@ export default async function MarketingPage({ ctx }: PluginPageProps) {
         <h1 className="font-display text-3xl font-bold">{t('title')}</h1>
         <p className="mt-1 max-w-2xl text-ink/70 dark:text-paper/70">{t('intro')}</p>
       </div>
-      <SubNav group="marketing" current="/marketing" roles={roles} locale={locale} />
+      <SubNav
+        group="marketing"
+        current="/marketing"
+        roles={roles}
+        locale={locale}
+        isAdmin={scope.user.isAdmin}
+      />
       <RulesEditor
         currency={store.currency}
         rules={rules.map((r) => ({

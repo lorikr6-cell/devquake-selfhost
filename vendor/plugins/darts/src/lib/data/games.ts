@@ -555,3 +555,32 @@ export async function habitVisits(db: Db, userId: number, limit = 6): Promise<st
     .slice(0, limit)
     .map(([k]) => k);
 }
+
+/** Games the member played that finished between two instants (the `activity.day` link point). */
+export async function finishedGamesOf(db: Db, userId: number, start: Date, end: Date) {
+  const rows = await db.query<{
+    id: number;
+    game_type: string;
+    mode: string;
+    finished_at: Date;
+    winner_player_id: number | null;
+    my_player: number;
+    winner_name: string | null;
+  }>(
+    `SELECT g.id, g.game_type, g.mode, g.finished_at, g.winner_player_id, gp.id AS my_player,
+            w.display_name AS winner_name
+       FROM games g JOIN game_players gp ON gp.game_id = g.id AND gp.user_id = ?
+       LEFT JOIN game_players w ON w.id = g.winner_player_id
+      WHERE g.status = 'finished' AND g.finished_at >= ? AND g.finished_at < ?
+      ORDER BY g.finished_at LIMIT 200`,
+    [userId, start, end],
+  );
+  return rows.map((r) => ({
+    id: Number(r.id),
+    type: r.game_type,
+    mode: r.mode,
+    finishedAt: new Date(r.finished_at),
+    won: r.winner_player_id !== null && Number(r.winner_player_id) === Number(r.my_player),
+    winner: r.winner_name,
+  }));
+}

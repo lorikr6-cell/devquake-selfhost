@@ -1,5 +1,9 @@
 # Modificări — Carte de bucate
 
+## 0.9.0
+
+- Sfaturi pe fiecare pagină: cum vezi detaliile, cum adaugi și cum modifici. Pornește-le sau oprește-le cu 💡 din partea de sus; alegerea rămâne pe acest dispozitiv.
+
 ## 0.8.0
 
 - Rețetele pot acum hrăni o Cantină socială: când alegi una acolo, este calculată pentru până la 500 de porții, iar cantina păstrează o copie pentru bucătărie.

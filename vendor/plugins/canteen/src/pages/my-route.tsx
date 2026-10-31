@@ -8,7 +8,8 @@ import { OrgNav } from '../components/org-nav';
 import { localeOf, translator } from '../i18n';
 import { addDays, isIsoDate } from '../lib/dates';
 import { myLicence } from '../lib/licence-data';
-import { myRoute, packagesOf } from '../lib/routes-data';
+import { drives, myRoute, packagesOf } from '../lib/routes-data';
+import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ ctx }: PluginPageProps) {
   return { title: translator(localeOf(ctx))('orgNav.myRoute') };
@@ -16,8 +17,9 @@ export async function generateMetadata({ ctx }: PluginPageProps) {
 
 /** The signed-in driver's route of the day, on their phone. */
 export default async function MyRoutePage({ ctx, params, searchParams }: PluginPageProps) {
-  const scope = await orgScope(ctx, params, 'route.own');
+  const scope = await orgScope(ctx, params, 'org.view');
   if (!scope.ok) return scope.notice;
+  if (!(await drives(scope.db, scope.org.id, scope.user.id))) notFound();
   const t = translator(scope.locale);
   const asked = (await searchParams).day;
   const day = typeof asked === 'string' && isIsoDate(asked) ? asked : scope.today;

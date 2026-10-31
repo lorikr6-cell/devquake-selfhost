@@ -119,3 +119,118 @@ export const scheduled: PluginPlatformModule['scheduled'] = async ({ db, mail, b
   await db.execute('DELETE FROM buyer_tokens WHERE expires_at <= UTC_TIMESTAMP()');
   await db.execute('DELETE FROM store_invites WHERE expires_at <= UTC_TIMESTAMP()');
 };
+
+// --- claims (ADR 0079) -----------------------------------------------------------------------
+
+/** How long a claim may be taken when the platform does not say otherwise. */
+const CLAIM_DAYS = 90;
+
+/** The packages one shop offers for claims (NPS point packages; shipped products come later). */
+export const claimableProducts: PluginPlatformModule['claimableProducts'] = async (
+  shop,
+  { db },
+) => {
+  if (!db) return [];
+  const { packagesOfShop } = await import('./lib/claims-data');
+  return (await packagesOfShop(db, shop)).map((p) => ({
+    shop,
+    product: `nps:${p.id}`,
+    name: p.name,
+    points: p.points,
+  }));
+};
+
+/**
+ * Makes a claim for an NPS point package of the named shop and emails the member the link and
+ * the secret code in their language (the store sends it, owner's decision). The same source
+ * and ref give the existing claim back without a second email.
+ */
+export const createClaim: PluginPlatformModule['createClaim'] = async (input, ctx) => {
+  if (!ctx.db) throw new Error('The store has no database');
+  const { parseClaimProduct } = await import('./lib/claims');
+  const { createClaimRow, packagesOfShop } = await import('./lib/claims-data');
+  const ref = parseClaimProduct(input.product.product);
+  const pkg = ref
+    ? (await packagesOfShop(ctx.db, input.product.shop)).find((p) => p.id === ref.id)
+    : null;
+  if (!pkg) throw new Error('No such package in this shop');
+  const expiresAt = new Date(input.expiresAt);
+  const made = await createClaimRow(ctx.db, {
+    storeId: pkg.storeId,
+    packageId: pkg.id,
+    points: pkg.points,
+    title: pkg.name,
+    userId: input.userId,
+    reason: input.reason,
+    source: input.source,
+    ref: input.ref,
+    expiresAt: Number.isNaN(expiresAt.getTime())
+      ? new Date(Date.now() + CLAIM_DAYS * 86_400_000)
+      : expiresAt,
+  });
+  const url = (token: string) => `${ctx.baseUrl}/claim/${token}`;
+  if (made.created) {
+    const { translator } = await import('./i18n');
+    const days = Math.max(1, Math.round((made.row.expires_at.getTime() - Date.now()) / 86_400_000));
+    await ctx.mail.sendToUser(
+      input.userId,
+      (locale) => {
+        const t = translator(locale, 'claims.email');
+        return {
+          subject: t('subject', { title: pkg.name }),
+          preheader: input.reason[locale] ?? input.reason.en,
+          heading: t('heading'),
+          paragraphs: [
+            input.reason[locale] ?? input.reason.en,
+            t('how'),
+            t('code', { code: made.code }),
+            t('expires', { days }),
+          ],
+          button: { label: t('button'), url: url(made.token) },
+        };
+      },
+      // Winners need not use the store, and must not miss their claim.
+      { withoutAccess: true },
+    );
+  }
+  const { claimState } = await import('./lib/claims');
+  return {
+    id: made.row.public_id,
+    // The link holds the token, which only the email had: known again only when just made.
+    url: made.created ? url(made.token) : `${ctx.baseUrl}/claim`,
+    status: claimState(made.row, new Date()),
+    expiresAt: made.row.expires_at.toISOString(),
+  };
+};
+
+export const listClaims: PluginPlatformModule['listClaims'] = async (
+  source,
+  refs,
+  { db, baseUrl },
+) => {
+  if (!db) return [];
+  const { claimsBySource } = await import('./lib/claims-data');
+  const { claimState } = await import('./lib/claims');
+  const now = new Date();
+  return (await claimsBySource(db, source, refs)).map((r) => ({
+    id: r.public_id,
+    ref: r.ref,
+    url: `${baseUrl}/claim`,
+    status: claimState(r, now),
+    expiresAt: r.expires_at.toISOString(),
+  }));
+};
+
+export const cancelClaim: PluginPlatformModule['cancelClaim'] = async (id, { db }) => {
+  if (!db) return;
+  const { cancelClaimRow } = await import('./lib/claims-data');
+  await cancelClaimRow(db, id);
+};
+
+export const extendClaim: PluginPlatformModule['extendClaim'] = async (id, expiresAt, { db }) => {
+  if (!db) return;
+  const at = new Date(expiresAt);
+  if (Number.isNaN(at.getTime())) return;
+  const { extendClaimRow } = await import('./lib/claims-data');
+  await extendClaimRow(db, id, at);
+};

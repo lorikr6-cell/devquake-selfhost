@@ -1,5 +1,9 @@
 # Registro delle modifiche — Spese condivise
 
+## 0.4.0
+
+- Suggerimenti su ogni pagina: come vedere i dettagli, come aggiungere e come modificare. Attivali o disattivali con 💡 in alto; la scelta resta su questo dispositivo.
+
 ## 0.3.1
 
 - La riga delle schede non mostra più una piccola barra di scorrimento quando ci stanno tutte; scorre di lato solo quando non ci stanno.

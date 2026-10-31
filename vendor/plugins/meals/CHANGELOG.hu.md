@@ -1,5 +1,13 @@
 # Változások — Étkezéstervező
 
+## 0.7.0
+
+- A csatlakoztatott alkalmazások, például a Szokások és napló, mostantól megmutathatják az egyes napok étkezéseit és azt, melyik készült el, egy linkkel vissza ide a héthez.
+
+## 0.6.0
+
+- Tippek minden oldalon: hogyan látod a részleteket, hogyan adsz hozzá és hogyan módosítasz. Felül a 💡 gombbal kapcsolhatod be vagy ki; a választás ezen az eszközön marad.
+
 ## 0.5.0
 
 - Az alkalmazás mostantól olaszul és spanyolul is elérhető: a nyelvet az oldal tetején választhatod ki.

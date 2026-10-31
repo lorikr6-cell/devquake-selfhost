@@ -1,5 +1,33 @@
 # Changelog — Store
 
+## 0.16.1
+
+- DevQuake staff find the NPS point packages under Marketing, next to Promotions and Newsletters.
+
+## 0.16.0
+
+- Claims: DevQuake can give a member something to claim, such as a challenge prize. They get an
+  email with a link and a secret code; signed in as themselves, they type the code and it is
+  theirs. Five wrong codes lock it, and it can be claimed for 90 days.
+- For now a claim gives DevQuake NPS points: DevQuake's staff keep NPS point packages in their
+  shop. The packages are never shown in the shop or sold, because NPS points cannot be bought.
+
+## 0.15.0
+
+- The shop can show what the DevQuake art gallery is: members’ digital art, some of which may in time become designs for DevQuake products, always with the artist’s consent and under terms agreed with them. It appears above “Made by DevQuake” once switched on.
+
+## 0.14.2
+
+- Order and newsletter emails are sent with an updated mail library that reads email addresses more strictly, closing three ways a malformed address could have reached the wrong recipient.
+
+## 0.14.1
+
+- The payment keys in the shop’s payment settings no longer make the browser offer to save them as passwords.
+
+## 0.14.0
+
+- Tips on every page: how to see the details, how to add and how to change. Turn them on or off with 💡 at the top; the choice is kept on this device.
+
 ## 0.13.1
 
 - Buttons that cannot be used right now show the normal arrow instead of a “forbidden” sign.

@@ -1,6 +1,6 @@
 {
   "name": "@devquake/plugin-store",
-  "version": "0.13.1",
+  "version": "0.16.1",
   "private": true,
   "type": "module",
   "exports": {
@@ -18,7 +18,7 @@
   "dependencies": {
     "@devquake/plugin-sdk": "workspace:*",
     "@devquake/ui": "workspace:*",
-    "nodemailer": "^10.0.10"
+    "nodemailer": "^10.2.1"
   },
   "peerDependencies": {
     "next": ">=16",

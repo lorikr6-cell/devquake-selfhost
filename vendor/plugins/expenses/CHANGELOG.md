@@ -1,5 +1,9 @@
 # Changelog — Shared expenses
 
+## 0.4.0
+
+- Tips on every page: how to see the details, how to add and how to change. Turn them on or off with 💡 at the top; the choice is kept on this device.
+
 ## 0.3.1
 
 - The row of tabs no longer shows a small scroll bar when all tabs fit; it scrolls sideways only when they do not.

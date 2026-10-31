@@ -1,4 +1,5 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
+import { PageTips, TipsToggle } from '../components/tips';
 import { PrintHeader } from '../components/print-header';
 import { Link, localizePath } from '@devquake/ui';
 import { brandedQrSvg } from '@devquake/ui/qr';
@@ -27,7 +28,11 @@ export default async function StaffPage({ ctx, params }: PluginPageProps) {
       <Link href={`/orgs/${scope.org.id}`} className="text-sm underline hover:text-quake">
         ← {scope.org.name}
       </Link>
-      <h1 className="mt-2 mb-2 font-display text-3xl font-bold">{t('staff.title')}</h1>
+      <div className="mt-2 mb-2 flex flex-wrap items-center justify-between gap-2">
+        <h1 className="font-display text-3xl font-bold">{t('staff.title')}</h1>
+        <TipsToggle demo={scope.org.demo} />
+      </div>
+      <PageTips page="staff" demo={scope.org.demo} />
       <p className="mb-6 max-w-2xl text-sm text-ink/70 dark:text-paper/70">{t('staff.intro')}</p>
       <div className="grid gap-6 lg:grid-cols-[1fr_22rem]">
         <StaffList orgId={scope.org.id} staff={staff} myUserId={scope.user.id} />

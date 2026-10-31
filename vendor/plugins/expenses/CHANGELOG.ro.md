@@ -1,5 +1,9 @@
 # Jurnal de modificări — Cheltuieli comune
 
+## 0.4.0
+
+- Sfaturi pe fiecare pagină: cum vezi detaliile, cum adaugi și cum modifici. Pornește-le sau oprește-le cu 💡 din partea de sus; alegerea rămâne pe acest dispozitiv.
+
 ## 0.3.1
 
 - Rândul de file nu mai arată o mică bară de derulare când încap toate filele; se derulează lateral doar când nu încap.

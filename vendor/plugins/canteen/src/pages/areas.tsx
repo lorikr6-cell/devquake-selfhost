@@ -28,6 +28,7 @@ export default async function AreasPage({ ctx, params }: PluginPageProps) {
         demo={scope.org.demo ? scope.staff.role : undefined}
         orgName={scope.org.name}
         current="routes"
+        tipsPage="areas"
         can={scope.can}
         t={t}
       />

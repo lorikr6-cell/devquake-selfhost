@@ -14,7 +14,8 @@ import {
   type PersonStatus,
 } from './model';
 import type { Picture } from './picture';
-import { can, isRole, type Action, type Role } from './roles';
+import { hasPlace, takesPlace } from './social';
+import { can, isRole, mainRole, rolesOf, staffCan, type Action, type Role } from './roles';
 import type { IdentityInput, PersonInput } from './validate';
 
 /**
@@ -39,16 +40,29 @@ export interface Staff {
   id: number;
   orgId: number;
   userId: number;
+  /** The main role (ordering, "View as"); `roles` has them all (migration 0019). */
   role: Role;
+  roles: Role[];
+  /** Ticked as the organisation's social worker (migration 0019). */
+  socialWorker: boolean;
 }
 
 /** The visitor's place in an organisation, or null when they are not its staff. */
 export async function staffOf(db: Db, orgId: number, userId: number): Promise<Staff | null> {
-  const [row] = await db.query<{ id: number; role: Role }>(
-    'SELECT id, role FROM canteen_staff WHERE org_id = ? AND user_id = ?',
+  const [row] = await db.query<{ id: number; role: Role; roles: string; social_worker: number }>(
+    'SELECT id, role, roles, social_worker FROM canteen_staff WHERE org_id = ? AND user_id = ?',
     [orgId, userId],
   );
-  return row ? { id: num(row.id), orgId, userId, role: row.role } : null;
+  return row
+    ? {
+        id: num(row.id),
+        orgId,
+        userId,
+        role: row.role,
+        roles: rolesOf(row.roles, row.role),
+        socialWorker: num(row.social_worker) === 1,
+      }
+    : null;
 }
 
 /** Staff allowed to do `action`; 404 for outsiders (no hint the organisation exists), else 403. */
@@ -60,7 +74,7 @@ export async function requireCan(
 ): Promise<Staff> {
   const staff = await staffOf(db, orgId, userId);
   if (!staff) throw new HttpError(404, 'orgNotFound');
-  if (!can(staff.role, action)) throw new HttpError(403, 'notAllowed');
+  if (!staffCan(staff, action)) throw new HttpError(403, 'notAllowed');
   return staff;
 }
 
@@ -82,20 +96,34 @@ export function requireKey() {
 export interface Org {
   id: number;
   name: string;
+  /** The main role; `roles` has them all. */
   role: Role;
+  roles: Role[];
   people: number;
 }
 
 export async function orgsOf(db: Db, userId: number): Promise<Org[]> {
-  const rows = await db.query<{ id: number; name: string; role: Role; people: number }>(
-    `SELECT o.id, o.name, s.role,
-            (SELECT COUNT(*) FROM canteen_people p WHERE p.org_id = o.id AND p.status <> 'ended') AS people
+  const rows = await db.query<{
+    id: number;
+    name: string;
+    role: Role;
+    roles: string;
+    people: number;
+  }>(
+    `SELECT o.id, o.name, s.role, s.roles,
+            (SELECT COUNT(*) FROM canteen_people p WHERE p.org_id = o.id AND p.status IN ('active','paused')) AS people
        FROM canteen_staff s JOIN canteen_orgs o ON o.id = s.org_id
       WHERE s.user_id = ?
       ORDER BY o.name`,
     [userId],
   );
-  return rows.map((r) => ({ id: num(r.id), name: r.name, role: r.role, people: num(r.people) }));
+  return rows.map((r) => ({
+    id: num(r.id),
+    name: r.name,
+    role: r.role,
+    roles: rolesOf(r.roles, r.role),
+    people: num(r.people),
+  }));
 }
 
 export async function orgById(
@@ -116,7 +144,7 @@ export async function createOrg(
   input: { name: string },
 ): Promise<number> {
   const [count] = await db.query<{ n: number }>(
-    "SELECT COUNT(*) AS n FROM canteen_staff WHERE user_id = ? AND role = 'organiser'",
+    "SELECT COUNT(*) AS n FROM canteen_staff WHERE user_id = ? AND FIND_IN_SET('organiser', roles)",
     [user.id],
   );
   if (num(count?.n ?? 0) >= 5) throw new HttpError(400, 'tooManyOrgs', { max: 5 });
@@ -126,7 +154,8 @@ export async function createOrg(
       user.id,
     ]);
     await tx.execute(
-      `INSERT INTO canteen_staff (org_id, user_id, display_name, role) VALUES (?, ?, ?, 'organiser')`,
+      `INSERT INTO canteen_staff (org_id, user_id, display_name, role, roles)
+       VALUES (?, ?, ?, 'organiser', 'organiser')`,
       [res.insertId, user.id, user.displayName.slice(0, LIMITS.displayName)],
     );
     return res.insertId;
@@ -295,13 +324,41 @@ const personValues = (p: PersonInput) => [
   p.windowToMin,
 ];
 
+/**
+ * Refuses a person taking a place of `kind` when the organisation's limit for it is reached
+ * (migration 0019); `except` is the person being changed (their own place does not count).
+ */
+export async function requirePlace(db: Db, orgId: number, kind: PersonKind, except: number | null) {
+  const [row] = await db.query<{
+    max_residents: number | null;
+    max_delivery: number | null;
+    used: number;
+  }>(
+    `SELECT o.max_residents, o.max_delivery,
+            (SELECT COUNT(*) FROM canteen_people p
+              WHERE p.org_id = o.id AND p.kind = ? AND p.status IN ('active','paused') AND p.id <> ?) AS used
+       FROM canteen_orgs o WHERE o.id = ?`,
+    [kind, except ?? 0, orgId],
+  );
+  if (!row) throw new HttpError(404, 'orgNotFound');
+  const limit = kind === 'resident' ? row.max_residents : row.max_delivery;
+  if (!hasPlace(limit === null ? null : num(limit), num(row.used))) {
+    throw new HttpError(409, kind === 'resident' ? 'placesFullResident' : 'placesFullDelivery', {
+      max: num(limit),
+    });
+  }
+}
+
 export async function createPerson(
   db: Db,
   orgId: number,
   userId: number,
   input: PersonInput,
+  /** Social workers add applicants to the waiting list without the people.edit role. */
+  action: Action = 'people.edit',
 ): Promise<number> {
-  await requireCan(db, orgId, userId, 'people.edit');
+  await requireCan(db, orgId, userId, action);
+  if (takesPlace(input.status)) await requirePlace(db, orgId, input.kind, null);
   const res = await db.execute(
     `INSERT INTO canteen_people (first_name, last_name, birth_date, kind, status, address, phone,
        contact_name, contact_phone, diet, allergies, observation, window_from_min, window_to_min,
@@ -309,6 +366,11 @@ export async function createPerson(
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [...personValues(input), orgId, userId],
   );
+  if (input.status === 'waiting') {
+    await db.execute('UPDATE canteen_people SET waiting_since = UTC_DATE() WHERE id = ?', [
+      res.insertId,
+    ]);
+  }
   await saveDeliveryDays(db, res.insertId, input.deliveryDays);
   return res.insertId;
 }
@@ -332,7 +394,19 @@ export async function updatePerson(
   input: PersonInput,
 ) {
   await requireCan(db, orgId, userId, 'people.edit');
-  await personOf(db, orgId, personId);
+  const before = await personOf(db, orgId, personId);
+  // Taking a place (back), or moving to the other kind: only when there is room.
+  if (takesPlace(input.status) && (!takesPlace(before.status) || before.kind !== input.kind)) {
+    await requirePlace(db, orgId, input.kind, personId);
+  }
+  if (input.status !== before.status) {
+    await db.execute(
+      // sql-safe: one of two fixed fragments; the values are ? params.
+      `UPDATE canteen_people SET waiting_since = ${input.status === 'waiting' ? 'UTC_DATE()' : 'NULL'}
+        WHERE id = ? AND org_id = ?`,
+      [personId, orgId],
+    );
+  }
   await db.execute(
     `UPDATE canteen_people SET first_name = ?, last_name = ?, birth_date = ?, kind = ?, status = ?,
        address = ?, phone = ?, contact_name = ?, contact_phone = ?, diet = ?, allergies = ?,
@@ -574,7 +648,7 @@ export async function deleteIncident(
     [incidentId, personId, orgId],
   );
   if (!row) throw new HttpError(404, 'notFound');
-  if (num(row.created_by) !== userId && staff.role !== 'organiser') {
+  if (num(row.created_by) !== userId && !staff.roles.includes('organiser')) {
     throw new HttpError(403, 'notAllowed');
   }
   await db.execute('DELETE FROM canteen_incidents WHERE id = ?', [incidentId]);
@@ -615,7 +689,10 @@ export interface StaffMember {
   userId: number;
   name: string;
   role: Role;
+  roles: Role[];
   since: string;
+  /** Ticked as the organisation's social worker. */
+  socialWorker: boolean;
 }
 
 export async function listStaff(db: Db, orgId: number, userId: number): Promise<StaffMember[]> {
@@ -625,9 +702,11 @@ export async function listStaff(db: Db, orgId: number, userId: number): Promise<
     user_id: number;
     display_name: string;
     role: Role;
+    roles: string;
     created_at: Date | string;
+    social_worker: number;
   }>(
-    `SELECT id, user_id, display_name, role, created_at FROM canteen_staff WHERE org_id = ?
+    `SELECT id, user_id, display_name, role, roles, created_at, social_worker FROM canteen_staff WHERE org_id = ?
       ORDER BY FIELD(role, 'organiser', 'coordinator', 'medical', 'kitchen', 'driver'), display_name`,
     [orgId],
   );
@@ -636,28 +715,67 @@ export async function listStaff(db: Db, orgId: number, userId: number): Promise<
     userId: num(r.user_id),
     name: r.display_name,
     role: r.role,
+    roles: rolesOf(r.roles, r.role),
     since: iso(r.created_at),
+    socialWorker: num(r.social_worker) === 1,
   }));
 }
 
 async function organisers(db: Db, orgId: number): Promise<number> {
   const [row] = await db.query<{ n: number }>(
-    "SELECT COUNT(*) AS n FROM canteen_staff WHERE org_id = ? AND role = 'organiser'",
+    "SELECT COUNT(*) AS n FROM canteen_staff WHERE org_id = ? AND FIND_IN_SET('organiser', roles)",
     [orgId],
   );
   return num(row?.n ?? 0);
 }
 
 async function staffRow(db: Db, orgId: number, staffId: number) {
-  const [row] = await db.query<{ role: Role; user_id: number }>(
-    'SELECT role, user_id FROM canteen_staff WHERE id = ? AND org_id = ?',
+  const [row] = await db.query<{ role: Role; roles: string; user_id: number }>(
+    'SELECT role, roles, user_id FROM canteen_staff WHERE id = ? AND org_id = ?',
     [staffId, orgId],
   );
   if (!row) throw new HttpError(404, 'notFound');
-  return row;
+  return { ...row, roles: rolesOf(row.roles, row.role) };
 }
 
-/** Changes someone's role; an organisation always keeps at least one organiser. */
+/** Stores a staff member's roles (and the main one among them). */
+export async function writeRoles(db: Db, orgId: number, staffId: number, roles: readonly Role[]) {
+  await db.execute('UPDATE canteen_staff SET role = ?, roles = ? WHERE id = ? AND org_id = ?', [
+    mainRole(roles),
+    roles.join(','),
+    staffId,
+    orgId,
+  ]);
+}
+
+/**
+ * Gives someone a role or takes it away (a person may have several, even all). Everyone keeps
+ * at least one role, and an organisation always keeps at least one organiser.
+ */
+export async function setStaffRole(
+  db: Db,
+  orgId: number,
+  staffId: number,
+  userId: number,
+  role: Role,
+  on: boolean,
+) {
+  await requireCan(db, orgId, userId, 'org.manage');
+  const row = await staffRow(db, orgId, staffId);
+  const roles = on ? [...new Set([...row.roles, role])] : row.roles.filter((r) => r !== role);
+  if (roles.length === 0) throw new HttpError(400, 'lastRole');
+  if (
+    !on &&
+    role === 'organiser' &&
+    row.roles.includes('organiser') &&
+    (await organisers(db, orgId)) <= 1
+  ) {
+    throw new HttpError(400, 'lastOrganiser');
+  }
+  await writeRoles(db, orgId, staffId, roles);
+}
+
+/** Changes someone's roles to just this one (the older one-role change). */
 export async function changeRole(
   db: Db,
   orgId: number,
@@ -667,20 +785,20 @@ export async function changeRole(
 ) {
   await requireCan(db, orgId, userId, 'org.manage');
   const row = await staffRow(db, orgId, staffId);
-  if (row.role === 'organiser' && role !== 'organiser' && (await organisers(db, orgId)) <= 1) {
+  if (
+    row.roles.includes('organiser') &&
+    role !== 'organiser' &&
+    (await organisers(db, orgId)) <= 1
+  ) {
     throw new HttpError(400, 'lastOrganiser');
   }
-  await db.execute('UPDATE canteen_staff SET role = ? WHERE id = ? AND org_id = ?', [
-    role,
-    staffId,
-    orgId,
-  ]);
+  await writeRoles(db, orgId, staffId, [role]);
 }
 
 export async function removeStaff(db: Db, orgId: number, staffId: number, userId: number) {
   await requireCan(db, orgId, userId, 'org.manage');
   const row = await staffRow(db, orgId, staffId);
-  if (row.role === 'organiser' && (await organisers(db, orgId)) <= 1) {
+  if (row.roles.includes('organiser') && (await organisers(db, orgId)) <= 1) {
     throw new HttpError(400, 'lastOrganiser');
   }
   await db.execute('DELETE FROM canteen_staff WHERE id = ? AND org_id = ?', [staffId, orgId]);
@@ -853,16 +971,27 @@ export async function joinByInvite(
     if (!invite) throw new HttpError(404, 'inviteInvalid');
     const orgId = num(invite.org_id);
     const inviter = num(invite.created_by) !== user.id ? num(invite.created_by) : null;
-    const [already] = await tx.query<{ id: number }>(
-      'SELECT id FROM canteen_staff WHERE org_id = ? AND user_id = ?',
+    const [already] = await tx.query<{ id: number; role: Role; roles: string }>(
+      'SELECT id, role, roles FROM canteen_staff WHERE org_id = ? AND user_id = ?',
       [orgId, user.id],
     );
     if (!already) {
       await tx.execute(
-        `INSERT INTO canteen_staff (org_id, user_id, display_name, role, invited_by)
-         VALUES (?, ?, ?, ?, ?)`,
-        [orgId, user.id, user.displayName.slice(0, LIMITS.displayName), invite.role, inviter],
+        `INSERT INTO canteen_staff (org_id, user_id, display_name, role, roles, invited_by)
+         VALUES (?, ?, ?, ?, ?, ?)`,
+        [
+          orgId,
+          user.id,
+          user.displayName.slice(0, LIMITS.displayName),
+          invite.role,
+          invite.role,
+          inviter,
+        ],
       );
+    } else {
+      // Already on the staff: the invitation adds its role to theirs.
+      const roles = [...new Set([...rolesOf(already.roles, already.role), invite.role])];
+      await writeRoles(tx, orgId, num(already.id), roles);
     }
     // Used up, and kept in the history: who accepted it and when.
     await tx.execute(
@@ -910,29 +1039,45 @@ export async function forgetUser(db: PluginDatabase, userId: number) {
     userId,
   ]);
   await db.execute('DELETE FROM canteen_org_links WHERE set_by = ?', [userId]);
-  const orgs = await db.query<{ org_id: number; role: Role }>(
-    'SELECT org_id, role FROM canteen_staff WHERE user_id = ?',
+  // Social work stays with the organisation; who planned, did or wrote it is forgotten, and so
+  // is who made each change in the activity reports.
+  await db.execute('UPDATE canteen_activity SET user_id = NULL WHERE user_id = ?', [userId]);
+  await db.execute('UPDATE canteen_visits SET assigned_to = NULL WHERE assigned_to = ?', [userId]);
+  await db.execute('UPDATE canteen_visits SET created_by = NULL WHERE created_by = ?', [userId]);
+  await db.execute('UPDATE canteen_assessments SET created_by = NULL WHERE created_by = ?', [
+    userId,
+  ]);
+  await db.execute(
+    'UPDATE canteen_people SET social_worker_user = NULL WHERE social_worker_user = ?',
     [userId],
   );
-  for (const { org_id: orgId, role } of orgs) {
+  const orgs = await db.query<{ org_id: number; role: Role; roles: string }>(
+    'SELECT org_id, role, roles FROM canteen_staff WHERE user_id = ?',
+    [userId],
+  );
+  for (const { org_id: orgId, role, roles } of orgs) {
     await db.transaction(async (tx) => {
       await tx.execute('DELETE FROM canteen_staff WHERE org_id = ? AND user_id = ?', [
         orgId,
         userId,
       ]);
-      if (role !== 'organiser') return;
+      if (!rolesOf(roles, role).includes('organiser')) return;
       const [left] = await tx.query<{ n: number }>(
-        "SELECT COUNT(*) AS n FROM canteen_staff WHERE org_id = ? AND role = 'organiser'",
+        "SELECT COUNT(*) AS n FROM canteen_staff WHERE org_id = ? AND FIND_IN_SET('organiser', roles)",
         [orgId],
       );
       if (num(left?.n ?? 0) > 0) return;
       const [next] = await tx.query<{ id: number }>(
-        `SELECT id FROM canteen_staff WHERE org_id = ? AND role IN ('coordinator','medical')
+        `SELECT id FROM canteen_staff
+          WHERE org_id = ? AND (FIND_IN_SET('coordinator', roles) OR FIND_IN_SET('medical', roles))
           ORDER BY created_at, id LIMIT 1`,
         [orgId],
       );
       if (next) {
-        await tx.execute("UPDATE canteen_staff SET role = 'organiser' WHERE id = ?", [next.id]);
+        await tx.execute(
+          "UPDATE canteen_staff SET role = 'organiser', roles = CONCAT_WS(',', roles, 'organiser') WHERE id = ?",
+          [next.id],
+        );
       } else {
         await tx.execute('DELETE FROM canteen_orgs WHERE id = ?', [orgId]);
       }

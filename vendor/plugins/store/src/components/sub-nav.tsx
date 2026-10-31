@@ -5,7 +5,8 @@ import { can, type Area, type Role } from '../lib/roles';
 // Tabs inside a section (Products · Types · Vendors; Settings · Payments · …), for the roles
 // that may open each one.
 
-type Tab = { href: string; key: string; area: Area };
+/** `adminOnly`: DevQuake staff only (ctx.user.isAdmin), e.g. the NPS point packages (ADR 0079). */
+type Tab = { href: string; key: string; area: Area; adminOnly?: boolean };
 
 const GROUPS = {
   products: [
@@ -16,6 +17,7 @@ const GROUPS = {
   marketing: [
     { href: '/marketing', key: 'promotions', area: 'marketing' },
     { href: '/newsletters', key: 'newsletters', area: 'marketing' },
+    { href: '/packages', key: 'packages', area: 'marketing', adminOnly: true },
   ],
   settings: [
     { href: '/settings', key: 'shop', area: 'settings' },
@@ -33,14 +35,19 @@ export function SubNav({
   current,
   roles,
   locale,
+  isAdmin = false,
 }: {
   group: keyof typeof GROUPS;
   current: string;
   roles: readonly Role[];
   locale: Locale;
+  /** The member is DevQuake staff: shows the staff-only tabs. */
+  isAdmin?: boolean;
 }) {
   const t = translator(locale, 'subNav');
-  const tabs = (GROUPS[group] as Tab[]).filter((tab) => can(roles, tab.area));
+  const tabs = (GROUPS[group] as Tab[]).filter(
+    (tab) => can(roles, tab.area) && (!tab.adminOnly || isAdmin),
+  );
   if (tabs.length < 2) return null;
   return (
     <nav aria-label={t(group)} className="-mt-2 flex flex-wrap gap-2">

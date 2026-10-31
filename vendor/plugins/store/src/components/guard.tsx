@@ -11,6 +11,7 @@ import { subscriberByEmail } from '../lib/newsletter-data';
 import { storeBySlug, storeOfMember, type Store } from '../lib/data';
 import { formatCents } from '../lib/pricing';
 import { can, type Area, type Role } from '../lib/roles';
+import { prepareArtPromo } from './art-gallery-promo';
 import { preparePromo } from './devquake-promo';
 import { prepareCurrency } from './shop-currency';
 import { Notice } from './ui';
@@ -171,7 +172,7 @@ export async function shopScope(ctx: PluginContext, slug: string | undefined): P
   const store = await storeBySlug(ctx.db, slug ?? '');
   if (!store) notFound();
   await chooseShopLanguage(ctx.db, store, localeOf(ctx));
-  await preparePromo(ctx);
+  await Promise.all([preparePromo(ctx), prepareArtPromo(ctx)]);
   await prepareCurrency(ctx, store.currency, localeOf(ctx));
   const team = ctx.user
     ? ctx.user.id === store.ownerUserId ||

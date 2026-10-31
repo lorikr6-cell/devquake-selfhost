@@ -1,5 +1,13 @@
 # Changelog — Darts
 
+## 0.9.0
+
+- Connected apps such as Habits and journal can now show the games you played on each day and who won, with a link back to the game here.
+
+## 0.8.0
+
+- Tips on every page: how to see the details, how to add and how to change. Turn them on or off with 💡 at the top; the choice is kept on this device.
+
 ## 0.7.1
 
 - The loading bar at the top now shows whenever the app is waiting for the server, and no longer appears for the automatic checks for new changes.

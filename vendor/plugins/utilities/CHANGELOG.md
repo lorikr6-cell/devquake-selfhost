@@ -1,5 +1,9 @@
 # Changelog — Utility bill manager
 
+## 0.13.0
+
+- Tips on every page: how to see the details, how to add and how to change. Turn them on or off with 💡 at the top; the choice is kept on this device.
+
 ## 0.12.0
 
 - The app is now also in Italian and Spanish: pick the language at the top of the page.

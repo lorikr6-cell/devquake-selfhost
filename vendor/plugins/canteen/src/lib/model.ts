@@ -3,7 +3,8 @@
 export const PERSON_KINDS = ['delivery', 'resident'] as const;
 export type PersonKind = (typeof PERSON_KINDS)[number];
 
-export const STATUSES = ['active', 'paused', 'ended'] as const;
+/** 'waiting': on the waiting list for a place (migration 0019): no meals, no routes. */
+export const STATUSES = ['active', 'paused', 'ended', 'waiting'] as const;
 export type PersonStatus = (typeof STATUSES)[number];
 
 export const DIETS = ['normal', 'diabetic', 'low_salt', 'soft', 'pureed', 'vegetarian'] as const;

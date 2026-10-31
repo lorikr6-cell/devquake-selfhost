@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'pulse',
     name: 'Pulse',
-    version: '0.8.0',
+    version: '0.9.0',
     description:
       'A realtime events API: your website or server sends events with your own key:value data, and every connected browser receives them live. Secured with website verification, secret keys and short-lived client tokens.',
     status: 'active',

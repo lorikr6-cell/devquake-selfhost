@@ -1,5 +1,30 @@
 # Registro de cambios — Tienda
 
+## 0.16.1
+
+- El equipo de DevQuake encuentra los paquetes de puntos NPS en Marketing, junto a Promociones y Boletines.
+
+## 0.16.0
+
+- Canjes: DevQuake puede dar a un miembro algo para canjear, por ejemplo el premio de un reto. Recibe un correo con un enlace y un código secreto; con su sesión iniciada, escribe el código y es suyo. Cinco códigos erróneos bloquean el canje; vale 90 días.
+- Por ahora un canje da puntos NPS de DevQuake: el equipo de DevQuake guarda paquetes de puntos NPS en su tienda. Los paquetes nunca se muestran en la tienda ni se venden, porque los puntos NPS no se pueden comprar.
+
+## 0.15.0
+
+- La tienda puede mostrar qué es la galería de arte de DevQuake: el arte digital de los miembros, parte del cual con el tiempo podrá convertirse en diseños para productos DevQuake, siempre con el consentimiento del artista y en las condiciones acordadas con él. La sección aparece encima de «Made by DevQuake» cuando está activada.
+
+## 0.14.2
+
+- Los correos de pedidos y del boletín se envían con una biblioteca de correo actualizada que lee las direcciones de forma más estricta, cerrando tres vías por las que una dirección mal formada podía llegar al destinatario equivocado.
+
+## 0.14.1
+
+- Las claves de pago en los ajustes de pago de la tienda ya no hacen que el navegador ofrezca guardarlas como contraseñas.
+
+## 0.14.0
+
+- Consejos en cada página: cómo ver los detalles, cómo añadir y cómo cambiar. Actívalos o desactívalos con 💡 arriba; la elección se guarda en este dispositivo.
+
 ## 0.13.1
 
 - Los botones que no se pueden usar ahora muestran la flecha normal en lugar de la señal de prohibido.

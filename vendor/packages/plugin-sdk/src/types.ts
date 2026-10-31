@@ -406,8 +406,18 @@ export interface PluginLinkedApp {
   iconUrl: string;
   /** Why they work well together, in the page language. */
   benefit: string;
-  /** 'connected'; 'available' (can connect now); 'needs-access' (subscribe or try it first). */
+  /**
+   * 'connected'; 'available' (can connect now, paying `npsCost` if any); 'needs-access' (not
+   * enough NPS points for `npsCost`, or the app cannot be subscribed to).
+   */
   state: 'connected' | 'available' | 'needs-access';
+  /**
+   * NPS points connecting costs (ADR 0082): connecting subscribes the member to that app, paying
+   * its cost. 0 or absent when it is free or they can use the app already.
+   */
+  npsCost?: number;
+  /** The member has enough NPS points for `npsCost` (absent on older hosts). */
+  affordable?: boolean;
   /** The other app's start page. */
   openUrl: string;
   /** devquake.com page to connect the two, coming back to the current app. */
@@ -739,8 +749,10 @@ export interface PluginPlatformModule {
    */
   scheduled?: (ctx: PluginScheduledContext) => Promise<void>;
   /**
-   * The member disconnected this app from `otherApp`, or unsubscribed from one of the two
-   * (ADR 0035): drop anything kept about that link (cached ids, settings). Idempotent.
+   * The member disconnected this app from `otherApp` (ADR 0035): drop anything kept about that
+   * link (cached ids, settings). Idempotent. Not called when the connection ends because the
+   * member unsubscribed from one of the two (ADR 0082): then the data stays, so connecting again
+   * later loses nothing.
    */
   onDisconnected?: (userId: number, otherApp: string, ctx: PluginPlatformContext) => Promise<void>;
   /**

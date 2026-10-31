@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'expenses',
     name: 'Shared expenses',
-    version: '0.3.1',
+    version: '0.4.0',
     description:
       'Who paid what on a trip, in a flat, for a couple or an event, who owes whom, and the fewest transfers to settle up. Split equally, by shares, by percent or exact amounts; friends join by link or QR.',
     status: 'active',

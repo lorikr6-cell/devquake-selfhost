@@ -108,6 +108,6 @@ only asks that the licence and copyright notice stay with copies of the code.
 
 ## About
 
-Store is a [DevQuake](https://devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=store) app (store 0.13.1),
+Store is a [DevQuake](https://devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=store) app (store 0.16.1),
 packaged to run on its own. Licence: [MIT](../../LICENSE). Problems and ideas:
 [GitHub issues](https://github.com/lorikr6-cell/devquake-selfhost/issues).

@@ -1,4 +1,5 @@
 import { LOCALES, LOCALE_TAGS, type Locale, type Translate } from '@devquake/ui';
+import { takesPlace } from './social';
 import { translator } from '../i18n';
 import { birthdayIn, monthGrid } from './calendar';
 import type { Person } from './data';
@@ -247,7 +248,13 @@ export function buildSheets(data: OrgData, locale: Locale, today: string): Sheet
       rows: [
         [t('transfer.readOnly')],
         [t('fields.driverName'), t('staff.role')],
-        ...data.staff.map((s) => [s.name, t(`roles.${s.role}`)]),
+        ...data.staff.map((s) => [
+          s.name,
+          s.role
+            .split(',')
+            .map((r) => t(`roles.${r}`))
+            .join(', '),
+        ]),
       ],
       boldRows: [1],
       widths: [28, 20],
@@ -276,7 +283,7 @@ function calendarSheet(people: Person[], locale: Locale, today: string, t: Trans
     const cells = monthGrid(month).map((day) => {
       if (!day) return '';
       const born = people
-        .filter((p) => p.status !== 'ended' && p.birthDate && birthdayIn(p.birthDate, year) === day)
+        .filter((p) => takesPlace(p.status) && p.birthDate && birthdayIn(p.birthDate, year) === day)
         .map((p) => `🎂 ${p.firstName} ${p.lastName} (${ageOn(p.birthDate!, day)})`);
       return [String(Number(day.slice(8))), ...born].join('\n');
     });

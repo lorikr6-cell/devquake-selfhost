@@ -61,14 +61,21 @@ function SecretField({
   return (
     <Field label={label} hint={hint}>
       <div className="flex flex-wrap items-center gap-2">
+        {/* A payment key, not a password: masked text, so browsers neither treat the form's
+            several keys as several sign-in forms nor offer to save them as passwords. */}
         <Input
-          type="password"
+          type="text"
           autoComplete="off"
+          autoCapitalize="off"
+          autoCorrect="off"
+          data-1p-ignore
+          data-lpignore="true"
+          data-bwignore
           spellCheck={false}
           value={value ?? ''}
           placeholder={saved && !removing ? '••••••••' : placeholder}
           onChange={(e) => onChange(e.target.value === '' ? undefined : e.target.value)}
-          className="min-w-0 flex-1 font-mono"
+          className="min-w-0 flex-1 font-mono [-webkit-text-security:disc]"
         />
         {saved ? (
           <Button

@@ -117,7 +117,7 @@ export async function exportOrg(
       mealTimes,
       menus,
       drivers,
-      staff: staff.map((s) => ({ name: s.name, role: s.role })),
+      staff: staff.map((s) => ({ name: s.name, role: s.roles.join(',') })),
       routes: routes.map((r) => ({
         day: r.day,
         driver: r.driver,

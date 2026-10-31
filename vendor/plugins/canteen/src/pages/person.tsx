@@ -1,4 +1,5 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
+import { PageTips, TipsToggle } from '../components/tips';
 import { PrintHeader } from '../components/print-header';
 import { notFound } from 'next/navigation';
 import { LOCALE_TAGS, Link, buttonClass, formatDateTime } from '@devquake/ui';
@@ -9,6 +10,7 @@ import { IdentityPanel } from '../components/identity-panel';
 import { Incidents } from '../components/incidents';
 import { Avatar } from '../components/people-list';
 import { PictureUpload } from '../components/picture-upload';
+import { PersonSocial } from '../components/social';
 import { Panel } from '../components/ui';
 import { localeOf, translator } from '../i18n';
 import {
@@ -22,6 +24,7 @@ import {
   type Incident,
 } from '../lib/data';
 import { formatTime } from '../lib/meals';
+import { personSocial } from '../lib/social-data';
 import { DOCUMENT_KINDS, REQUIRED_DOCUMENTS, ageOn, documentSlug } from '../lib/model';
 
 export async function generateMetadata({ ctx, params }: PluginPageProps) {
@@ -53,13 +56,14 @@ export default async function PersonPage({ ctx, params }: PluginPageProps) {
   );
   const base = `/orgs/${orgId}/people/${person.id}`;
   const identity = scope.can('identity.view');
-  const [incidents, access] = await Promise.all([
+  const [incidents, access, social] = await Promise.all([
     scope.can('incidents.view')
       ? listIncidents(scope.db, orgId, person.id, scope.user.id)
       : ([] as Incident[]),
     scope.can('access.view')
       ? accessLog(scope.db, orgId, person.id, scope.user.id)
       : ([] as AccessEntry[]),
+    scope.can('social.view') ? personSocial(scope.db, orgId, scope.user.id, person.id) : null,
   ]);
   const name = `${person.lastName} ${person.firstName}`;
   const birth = person.birthDate
@@ -99,6 +103,8 @@ export default async function PersonPage({ ctx, params }: PluginPageProps) {
         <Avatar orgId={orgId} person={person} size={72} />
         <div className="min-w-0 flex-1">
           <h1 className="font-display text-3xl font-bold">{name}</h1>
+          <PageTips page="person" demo={scope.org.demo} />
+          <TipsToggle demo={scope.org.demo} />
           {person.inHospital ? (
             <p className="mt-1 mr-2 inline-block rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-950 dark:bg-amber-900/60 dark:text-amber-100">
               {t('medical.inHospital')}
@@ -205,6 +211,20 @@ export default async function PersonPage({ ctx, params }: PluginPageProps) {
               incidents={incidents}
               timeZone={scope.timeZone}
               canWrite={scope.can('incidents.write')}
+            />
+          </div>
+        ) : null}
+
+        {social ? (
+          <div className="lg:col-span-2">
+            <PersonSocial
+              orgId={orgId}
+              personId={person.id}
+              status={person.status}
+              data={social}
+              canEdit={scope.can('social.edit')}
+              timeZone={scope.timeZone}
+              myUserId={scope.user.id}
             />
           </div>
         ) : null}

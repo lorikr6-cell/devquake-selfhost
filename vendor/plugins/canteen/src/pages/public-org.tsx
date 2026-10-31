@@ -53,6 +53,7 @@ export default async function PublicOrgPage({ ctx, params }: PluginPageProps) {
       <OrgBanner
         page={page}
         logoUrl={preview ? `/api/orgs/${page.id}/logo` : `/api/o/${page.id}/logo`}
+        imageUrl={preview ? `/api/orgs/${page.id}/header-image` : `/api/o/${page.id}/header-image`}
       />
       <p className="text-xs text-ink/60 dark:text-paper/60">{t('orgPage.poweredBy')}</p>
     </>

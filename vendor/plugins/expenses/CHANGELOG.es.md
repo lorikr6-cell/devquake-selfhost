@@ -1,5 +1,9 @@
 # Registro de cambios — Gastos compartidos
 
+## 0.4.0
+
+- Consejos en cada página: cómo ver los detalles, cómo añadir y cómo cambiar. Actívalos o desactívalos con 💡 arriba; la elección se guarda en este dispositivo.
+
 ## 0.3.1
 
 - La fila de pestañas ya no muestra una pequeña barra de desplazamiento cuando caben todas; solo se desplaza de lado cuando no caben.

@@ -1,5 +1,9 @@
 # Registro de cambios — Facturas del hogar
 
+## 0.13.0
+
+- Consejos en cada página: cómo ver los detalles, cómo añadir y cómo cambiar. Actívalos o desactívalos con 💡 arriba; la elección se guarda en este dispositivo.
+
 ## 0.12.0
 
 - La app ya está también en italiano y español: elige el idioma en la parte superior de la página.

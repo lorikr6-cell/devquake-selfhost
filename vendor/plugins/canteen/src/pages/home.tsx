@@ -35,7 +35,8 @@ export default async function Home({ ctx }: PluginPageProps) {
               >
                 <span className="block font-semibold">{o.name}</span>
                 <span className="mt-1 block text-xs text-ink/60 dark:text-paper/60">
-                  {t(`roles.${o.role}`)} · {t('home.people', { count: o.people })}
+                  {o.roles.map((r) => t(`roles.${r}`)).join(', ')} ·{' '}
+                  {t('home.people', { count: o.people })}
                 </span>
               </Link>
             </li>

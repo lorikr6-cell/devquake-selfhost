@@ -1,5 +1,17 @@
 # Änderungen: Gemeinsame Einkaufslisten
 
+## 0.26.0
+
+- Ein Lokal in der App Venue kann zählen, was auf seiner Einkaufsliste gekauft wurde, als seine Kosten (du wählst die Liste; nur die Einkäufe dort und die Preise gehen hinüber).
+
+## 0.25.0
+
+- Verbundene Apps wie Gewohnheiten und Tagebuch können jetzt zeigen, was du an jedem Tag gekauft hast, nach Listen, mit einem Link zurück zur Liste hier.
+
+## 0.24.0
+
+- Tipps auf jeder Seite: wie du Details siehst, etwas hinzufügst und änderst. Schalte sie oben mit 💡 ein oder aus; die Wahl bleibt auf diesem Gerät.
+
 ## 0.23.0
 
 - Verbundene Apps wie die Sozialküche können jetzt auch deine noch leeren Listen anbieten, damit eine neue Einkaufsliste sofort gefüllt werden kann.

@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'shopping',
     name: 'Shared shopping lists',
-    version: '0.23.0',
+    version: '0.26.0',
     description:
       'Shared shopping carts planned by date: a calendar, items grouped by store (type, location, description), prices, totals and statistics, shared with invite links or your DevQuake referrals.',
     status: 'active',
@@ -52,6 +52,31 @@ export default definePlugin({
             hu: 'Tételeket adjon a bevásárlólistáidhoz',
             it: 'Aggiungere prodotti alle tue liste della spesa',
             es: 'Añadir productos a tus listas de la compra',
+          },
+        },
+        {
+          id: 'activity.day',
+          kind: 'read',
+          perMinute: 60,
+          title: {
+            en: 'See what you ticked off on your lists, by day',
+            de: 'Sehen, was du auf deinen Listen abgehakt hast, nach Tagen',
+            ro: 'Să vadă ce ai bifat pe listele tale, pe zile',
+            hu: 'Lássa, mit pipáltál ki a listáidon, naponként',
+            it: 'Vedere cosa hai spuntato nelle tue liste, giorno per giorno',
+            es: 'Ver lo que marcaste en tus listas, por días',
+          },
+        },
+        {
+          id: 'list.purchases',
+          kind: 'read',
+          title: {
+            en: 'See what was bought on a list you choose, with the prices',
+            de: 'Sehen, was auf einer gewählten Liste gekauft wurde, mit den Preisen',
+            ro: 'Să vadă ce s-a cumpărat pe o listă aleasă de tine, cu prețurile',
+            hu: 'Lássa, mit vásároltak egy általad választott listán, az árakkal',
+            it: 'Vedere cosa è stato comprato in una lista che scegli, con i prezzi',
+            es: 'Ver lo que se compró en una lista que elijas, con los precios',
           },
         },
       ],
@@ -159,6 +184,8 @@ export default definePlugin({
   },
   platform: () => import('./platform'),
   linkHandlers: {
+    'list.purchases': () => import('./links/list-purchases'),
+    'activity.day': () => import('./links/activity-day'),
     'calendar.events': () => import('./links/calendar-events'),
     'lists.overview': () => import('./links/lists-overview'),
     'list.add-items': () => import('./links/add-items'),

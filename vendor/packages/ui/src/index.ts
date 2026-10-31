@@ -94,3 +94,4 @@ export {
 } from './crop';
 export { PageTips, TipsToggle, useTips } from './page-tips';
 export { pageTips, tipsForPath, type PageTip, type PageTipsEntry } from './page-tips-data';
+export { connectBlocked, connectLabel, type ConnectCost } from './connect-cost';

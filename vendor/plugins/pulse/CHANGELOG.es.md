@@ -1,5 +1,9 @@
 # Registro de cambios — Pulse
 
+## 0.9.0
+
+- Consejos en cada página: cómo ver los detalles, cómo añadir y cómo cambiar. Actívalos o desactívalos con 💡 arriba; la elección se guarda en este dispositivo. En la demostración en directo empiezan activados.
+
 ## 0.8.0
 
 - La app ya está también en italiano y en español: elige el idioma en la parte superior de la página.

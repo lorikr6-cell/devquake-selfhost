@@ -45,6 +45,22 @@ export const platformEn = {
     fxNote:
       'Prices in {currency} are approximate, at the European Central Bank’s rates of {date}. You pay in {base}; your bank or card converts it.',
   },
+  artPromo: {
+    logoText: '{art} gallery',
+    logoArt: 'art',
+    title: 'Art from the DevQuake art gallery',
+    body: 'DevQuake members show their digital art in the DevQuake art gallery, each work with the idea behind it. In time, some of the most appreciated works may also appear here, as designs for selected DevQuake products.',
+    consent:
+      'Only with the artist’s consent: a work is considered only when its artist has agreed, and DevQuake chooses among the most appreciated.',
+    copyright:
+      'The artist keeps the copyright. DevQuake receives only the right to print the design on the products concerned, for as long as agreed.',
+    share:
+      'Artists whose designs are sold may receive a share of the proceeds, under terms agreed with them in advance.',
+    credit: 'Every product names its artist and carries the DevQuake name.',
+    visit: 'Visit the art gallery',
+    show: 'Show your own art',
+    note: 'Designs on products and any share of the proceeds are subject to separate terms agreed with each artist; they are not a promise of sales or earnings.',
+  },
   promo: {
     title: 'Made by DevQuake',
     body: 'This shop belongs to DevQuake, a developer’s workshop of web apps for everyday problems. One free account signs you in to all of them, and to this shop.',

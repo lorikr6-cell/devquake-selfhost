@@ -1,5 +1,13 @@
 # Changelog — Meal planner
 
+## 0.7.0
+
+- Connected apps such as Habits and journal can now show the meals of each day and which were cooked, with a link back to the week here.
+
+## 0.6.0
+
+- Tips on every page: how to see the details, how to add and how to change. Turn them on or off with 💡 at the top; the choice is kept on this device.
+
 ## 0.5.0
 
 - The app is now also in Italian and Spanish: pick the language at the top of the page.

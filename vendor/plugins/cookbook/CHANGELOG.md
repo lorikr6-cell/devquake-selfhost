@@ -1,5 +1,9 @@
 # Changelog — Cookbook
 
+## 0.9.0
+
+- Tips on every page: how to see the details, how to add and how to change. Turn them on or off with 💡 at the top; the choice is kept on this device.
+
 ## 0.8.0
 
 - Recipes can now feed a Social canteen: when you pick one there, it is scaled for up to 500 portions, and the canteen keeps a copy for its kitchen.

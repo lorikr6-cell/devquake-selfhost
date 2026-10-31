@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useT } from '@devquake/ui';
+import { connectBlocked, connectLabel, useT } from '@devquake/ui';
 import { call, errorText, fieldClass } from './client';
 import { Status } from './status';
 
@@ -13,6 +13,8 @@ interface LinkedApp {
   state: 'connected' | 'available' | 'needs-access';
   openUrl: string;
   connectUrl: string;
+  npsCost?: number;
+  affordable?: boolean;
 }
 
 /** The venue's purchasing list in Shopping: chosen here, saved at once (its costs). */
@@ -93,12 +95,21 @@ export function Connections({ apps }: { apps: LinkedApp[] }) {
                 <p className="text-sm text-green-700 dark:text-green-400">✓ {t('connected')}</p>
                 {a.app === 'shopping' ? <ShoppingList /> : null}
               </>
+            ) : connectBlocked(a) ? (
+              <button
+                type="button"
+                disabled
+                className="inline-block rounded-md bg-quake px-3 py-1 text-sm font-medium text-white opacity-50"
+              >
+                {connectLabel(a, t('connect'))}
+              </button>
             ) : (
               <a
                 href={a.state === 'available' ? a.connectUrl : a.openUrl}
                 className="inline-block rounded-md bg-quake px-3 py-1 text-sm font-medium text-white"
               >
-                {a.state === 'available' ? t('connect') : t('getApp', { name: a.name })}
+                {connectLabel(a, t('connect')) ??
+                  (a.state === 'available' ? t('connect') : t('getApp', { name: a.name }))}
               </a>
             )}
           </div>

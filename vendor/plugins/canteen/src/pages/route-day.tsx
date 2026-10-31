@@ -45,6 +45,7 @@ export default async function RouteDayPage({ ctx, params }: PluginPageProps) {
           demo={scope.org.demo ? scope.staff.role : undefined}
           orgName={scope.org.name}
           current="routes"
+          tipsPage="routeDay"
           can={scope.can}
           t={t}
         />

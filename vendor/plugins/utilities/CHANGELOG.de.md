@@ -1,5 +1,9 @@
 # Änderungen — Nebenkosten
 
+## 0.13.0
+
+- Tipps auf jeder Seite: wie du Details siehst, etwas hinzufügst und änderst. Schalte sie oben mit 💡 ein oder aus; die Wahl bleibt auf diesem Gerät.
+
 ## 0.12.0
 
 - Die App gibt es jetzt auch auf Italienisch und Spanisch: Wähle die Sprache oben auf der Seite.

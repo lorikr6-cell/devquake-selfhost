@@ -4,6 +4,7 @@ import type { PluginDatabase } from '@devquake/plugin-sdk';
 import { I18nProvider, LOCALE_TAGS, Link, ReturnLink, cn, type Locale } from '@devquake/ui';
 import { FALLBACK_MESSAGES, shopLanguageState, translator } from '../i18n';
 import { cookies } from 'next/headers';
+import { ArtGalleryPromo } from './art-gallery-promo';
 import { DevQuakePromo } from './devquake-promo';
 import { ThemeSwitch, type ShopTheme } from './theme-switch';
 import { CurrencyPicker, FxNote, FxProvider } from './currency-client';
@@ -168,6 +169,7 @@ export async function ShopFrame({
       </header>
       {children}
       <FxNote className={cn('text-xs', S.muted)} />
+      {preview || team ? null : <ArtGalleryPromo locale={locale} />}
       {preview || team ? null : <DevQuakePromo locale={locale} />}
       <footer className={cn('space-y-4 border-t pt-6 text-xs', S.line, S.muted)}>
         {shopMailConfigured() && !preview && viewer?.newsletter ? (

@@ -65,7 +65,7 @@ describe('portions', () => {
     expect(portionsFor(people, tuesday, DELIVERY_MEAL)).toEqual([]);
   });
 
-  it('feeds every active resident at every meal time', () => {
+  it('serves every active resident at every meal time', () => {
     const people = [
       eater({ id: 1, kind: 'resident', deliveryDays: [] }),
       eater({ id: 2, kind: 'resident', status: 'ended' }),

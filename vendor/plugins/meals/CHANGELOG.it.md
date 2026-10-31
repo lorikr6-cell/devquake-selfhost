@@ -1,5 +1,13 @@
 # Registro delle modifiche — Pianificatore dei pasti
 
+## 0.7.0
+
+- Le app collegate, come Abitudini e diario, ora possono mostrare i pasti di ogni giorno e quali sono stati cucinati, con un link per tornare qui alla settimana.
+
+## 0.6.0
+
+- Suggerimenti su ogni pagina: come vedere i dettagli, come aggiungere e come modificare. Attivali o disattivali con 💡 in alto; la scelta resta su questo dispositivo.
+
 ## 0.5.0
 
 - L’app ora è disponibile anche in italiano e in spagnolo: scegli la lingua in cima alla pagina.

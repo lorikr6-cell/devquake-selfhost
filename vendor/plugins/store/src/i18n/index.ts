@@ -13,7 +13,9 @@ import { ops } from './ops';
 import { platform } from './platform';
 import { interest } from './interest';
 import { customers } from './customers';
+import { claims } from './claims';
 import { screens } from './screens';
+import { tips } from './tips';
 
 // The app's texts in every language (ADR 0011). The host gives each page and API call the
 // visitor's language in ctx.locale; the layout hands the catalog to client components.
@@ -36,10 +38,13 @@ const CATALOGS = Object.fromEntries(
     l,
     merge(
       merge(
-        merge(merge(merge(merge(screens[l]!, appTexts[l]!), growth[l]!), ops[l]!), platform[l]!),
-        interest[l]!,
+        merge(
+          merge(merge(merge(merge(screens[l]!, appTexts[l]!), growth[l]!), ops[l]!), platform[l]!),
+          interest[l]!,
+        ),
+        customers[l]!,
       ),
-      customers[l]!,
+      merge(tips[l]!, claims[l]!),
     ),
   ]),
 ) as Record<Locale, Messages>;

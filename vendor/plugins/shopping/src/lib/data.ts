@@ -579,3 +579,70 @@ export async function priceHistory(db: Db, userId: number): Promise<PriceObserva
     itemId: r.item_id === null ? null : Number(r.item_id),
   }));
 }
+
+/**
+ * Items the member ticked off between two instants, on lists they are on (the `activity.day`
+ * link point): the item's name, its list and when.
+ */
+export async function boughtBy(db: Db, userId: number, start: Date, end: Date) {
+  const rows = await db.query<{ name: string; done_at: Date; list_id: number; list: string }>(
+    `SELECT i.name, i.done_at, l.id AS list_id, l.name AS list
+       FROM items i JOIN lists l ON l.id = i.list_id
+       JOIN list_members m ON m.list_id = l.id AND m.user_id = ?
+      WHERE i.done_by = ? AND i.done_at >= ? AND i.done_at < ?
+      ORDER BY i.done_at LIMIT 500`,
+    [userId, userId, start, end],
+  );
+  return rows.map((r) => ({
+    name: r.name,
+    doneAt: new Date(r.done_at),
+    listId: Number(r.list_id),
+    list: r.list,
+  }));
+}
+
+/**
+ * What was bought on one list (the member must be on it) between two instants, with each line's
+ * total (price × quantity), for the `list.purchases` link point. Unpriced items count as 0.
+ */
+export async function purchasesOfList(
+  db: Db,
+  userId: number,
+  listId: number,
+  start: Date,
+  end: Date,
+) {
+  const [list] = await db.query<{ id: number; name: string; currency: string }>(
+    `SELECT l.id, l.name, l.currency FROM lists l
+       JOIN list_members m ON m.list_id = l.id AND m.user_id = ?
+      WHERE l.id = ?`,
+    [userId, listId],
+  );
+  if (!list) return null;
+  const rows = await db.query<{
+    name: string;
+    quantity: string | number | null;
+    unit: string | null;
+    price: string | number | null;
+    done_at: Date;
+  }>(
+    `SELECT name, quantity, unit, price, done_at FROM items
+      WHERE list_id = ? AND done_at >= ? AND done_at < ? AND dropped_at IS NULL
+      ORDER BY done_at LIMIT 1000`,
+    [listId, start, end],
+  );
+  return {
+    list: { id: Number(list.id), name: list.name, currency: list.currency },
+    items: rows.map((r) => {
+      const price = r.price === null ? null : Number(r.price);
+      const quantity = r.quantity === null ? null : Number(r.quantity);
+      return {
+        name: r.name,
+        quantity,
+        unit: r.unit,
+        doneAt: new Date(r.done_at),
+        total: price === null ? 0 : Math.round(price * (quantity ?? 1) * 100) / 100,
+      };
+    }),
+  };
+}

@@ -76,7 +76,7 @@ export interface Portion {
 
 /**
  * The portions of one meal on `day`: the delivered meal goes to active people living at home on
- * their delivery days; a meal time feeds every active resident.
+ * their delivery days; every active resident has every meal time.
  */
 export function portionsFor(eaters: readonly Eater[], day: string, meal: number): Portion[] {
   const weekday = weekdayOfDay(day);

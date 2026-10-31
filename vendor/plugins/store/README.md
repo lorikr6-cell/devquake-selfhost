@@ -44,6 +44,12 @@ Growing the shop (ADR 0058):
   `membersOpenShops` (off: only administrators open shops, members shop like visitors) and
   `promoteDevQuake` (off: a DevQuake promotion for visitors above the shop footer); the shops'
   pages and sitemap are `searchable` for robots.txt.
+- **Art gallery section** (0.15.0, owner's request): with the admin setting `promoteArtGallery` on,
+  everyone sees above "Made by DevQuake" what the DevQuake art gallery is and that some of its
+  most appreciated works may become designs for DevQuake products (artist's consent, copyright
+  kept, a possible share under terms agreed in advance, the DevQuake name on every product),
+  with links to the gallery. The full flow (artists opting in, the shop choosing works, buyers
+  personalising with a preview, artists' shares) is planned in `docs/art-gallery-plan.md`.
 - **Members' account page** (0.11.0): a member signed in on DevQuake sees their DevQuake name
   and email (changed on DevQuake), counters of favourites, purchases (`#orders`) and cart items
   (counted in the browser) that open each list and their delivery details. Buyers without
@@ -98,91 +104,95 @@ indexable (canonical URLs, Open Graph, schema.org `Product`/`Offer`/`AggregateRa
 
 Owner and team pages need a member with a role allowing the page's area (`lib/roles.ts`).
 
-| Type | Pattern                                                              | Access                | File                                                            |
-| ---- | -------------------------------------------------------------------- | --------------------- | --------------------------------------------------------------- |
-| Page | `/`                                                                  | open (see top)        | `src/pages/home.tsx`                                            |
-| Page | `/products`, `/products/new`, `/products/:id`                        | products              | `src/pages/products.tsx`, `src/pages/product.tsx`               |
-| Page | `/products/types`                                                    | products              | `src/pages/types.tsx`                                           |
-| Page | `/vendors`                                                           | products              | `src/pages/vendors.tsx`                                         |
-| Page | `/orders`, `/orders/:id`                                             | orders                | `src/pages/orders.tsx`, `src/pages/order.tsx`                   |
-| Page | `/messages`, `/messages/:id`                                         | messages              | `src/pages/messages.tsx`, `src/pages/message.tsx`               |
-| Page | `/customers`, `/customers/:key`                                      | customers             | `src/pages/customers.tsx`, `src/pages/customer.tsx`             |
-| Page | `/reviews`                                                           | reviews               | `src/pages/reviews.tsx`                                         |
-| Page | `/marketing`                                                         | marketing             | `src/pages/marketing.tsx`                                       |
-| Page | `/newsletters`, `/newsletters/new`, `/newsletters/:id`               | marketing             | `src/pages/newsletters.tsx`, `src/pages/newsletter.tsx`         |
-| Page | `/stats`                                                             | stats                 | `src/pages/stats.tsx`                                           |
-| Page | `/settings`                                                          | settings              | `src/pages/settings.tsx`                                        |
-| Page | `/settings/design`                                                   | design                | `src/pages/design.tsx`                                          |
-| Page | `/settings/seo`                                                      | seo (tracking: owner) | `src/pages/seo.tsx`                                             |
-| Page | `/settings/languages`                                                | settings              | `src/pages/languages.tsx`                                       |
-| Page | `/settings/payments`                                                 | payments              | `src/pages/payments.tsx`                                        |
-| Page | `/settings/shipping`                                                 | shipping              | `src/pages/shipping.tsx`                                        |
-| Page | `/team`                                                              | team (owner)          | `src/pages/team.tsx`                                            |
-| Page | `/join/:code`                                                        | member                | `src/pages/join.tsx`                                            |
-| Page | `/help`                                                              | public                | `src/pages/help.tsx`                                            |
-| Page | `/s/:slug`                                                           | open                  | `src/pages/shop.tsx`                                            |
-| Page | `/s/:slug/p/:product`                                                | open                  | `src/pages/shop-product.tsx`                                    |
-| Page | `/s/:slug/cart`                                                      | open                  | `src/pages/shop-cart.tsx`                                       |
-| Page | `/s/:slug/checkout`                                                  | open                  | `src/pages/shop-checkout.tsx`                                   |
-| Page | `/s/:slug/orders/:code`                                              | open (secret)         | `src/pages/shop-order.tsx`                                      |
-| Page | `/s/:slug/info`                                                      | open                  | `src/pages/shop-info.tsx`                                       |
-| Page | `/s/:slug/compare`                                                   | open                  | `src/pages/shop-compare.tsx`                                    |
-| Page | `/s/:slug/favorites`                                                 | open (signed in)      | `src/pages/shop-favorites.tsx`                                  |
-| Page | `/s/:slug/account`, `/s/:slug/account/messages/:id`                  | open (buyer cookie)   | `src/pages/shop-account.tsx`, `src/pages/shop-thread.tsx`       |
-| Page | `/s/:slug/newsletter`                                                | open                  | `src/pages/shop-newsletter.tsx`                                 |
-| API  | `/health`                                                            | member                | `src/api/health.ts`                                             |
-| API  | `/store` GET, POST, PUT                                              | member / settings     | `src/api/store.ts`                                              |
-| API  | `/store/legal` PUT                                                   | settings              | `src/api/store-legal.ts`                                        |
-| API  | `/store/payments` PUT                                                | payments              | `src/api/store-payments.ts`                                     |
-| API  | `/store/shipping` PUT                                                | shipping              | `src/api/store-shipping.ts`                                     |
-| API  | `/store/seo` PUT                                                     | seo                   | `src/api/store-seo.ts`                                          |
-| API  | `/store/theme` PUT                                                   | design                | `src/api/store-theme.ts`                                        |
-| API  | `/store/assets/:kind` GET, POST, DELETE                              | design                | `src/api/store-asset.ts`                                        |
-| API  | `/store/reviews` PUT                                                 | reviews               | `src/api/store-reviews.ts`                                      |
-| API  | `/store/tracking` PUT                                                | owner                 | `src/api/store-tracking.ts`                                     |
-| API  | `/store/maintenance` PUT                                             | settings              | `src/api/store-maintenance.ts`                                  |
-| API  | `/store/languages` GET (export), POST, PUT                           | settings              | `src/api/store-languages.ts`                                    |
-| API  | `/store/languages/:code` GET, DELETE                                 | settings              | `src/api/store-language.ts`                                     |
-| API  | `/rules` POST, `/rules/:id` PUT, DELETE                              | marketing             | `src/api/rules.ts`, `src/api/rule.ts`                           |
-| API  | `/products` POST, `/products/bulk` POST                              | products              | `src/api/products.ts`, `src/api/products-bulk.ts`               |
-| API  | `/products/:id` PUT, DELETE; `/:id/duplicate` POST                   | products              | `src/api/product.ts`, `src/api/product-duplicate.ts`            |
-| API  | `/products/:id/photos` POST                                          | products              | `src/api/product-photos.ts`                                     |
-| API  | `/products/:id/photos/:photoId` GET, PATCH, DELETE                   | products              | `src/api/product-photo.ts`                                      |
-| API  | `/types` POST, `/types/:id` PUT, DELETE                              | products              | `src/api/types.ts`, `src/api/type.ts`                           |
-| API  | `/vendors` POST, `/vendors/:id` PUT, DELETE                          | products              | `src/api/vendors.ts`, `src/api/vendor.ts`                       |
-| API  | `/orders/:id` PATCH                                                  | orders                | `src/api/order.ts`                                              |
-| API  | `/messages/:id` POST, PATCH                                          | messages              | `src/api/message.ts`                                            |
-| API  | `/customers/:key` PATCH (block), DELETE                              | customers (manage)    | `src/api/customer.ts`                                           |
-| API  | `/reviews/:id` PATCH, DELETE                                         | reviews               | `src/api/review.ts`                                             |
-| API  | `/campaigns`, `/vouchers`, `/announcements` POST; `/:id` PUT, DELETE | marketing             | `src/api/campaign(s).ts`, `voucher(s).ts`, `announcement(s).ts` |
-| API  | `/newsletters` POST, `/newsletters/:id` PUT, DELETE                  | marketing             | `src/api/newsletters.ts`, `src/api/newsletter.ts`               |
-| API  | `/newsletters/:id/send`, `/batch`, `/test` POST                      | marketing             | `src/api/newsletter-send.ts`, `-batch.ts`, `-test.ts`           |
-| API  | `/subscribers` GET (CSV), `/subscribers/:id` DELETE                  | marketing             | `src/api/subscribers.ts`, `src/api/subscriber.ts`               |
-| API  | `/team/invites` POST, `/team/invites/:id` DELETE                     | team                  | `src/api/team-invites.ts`, `src/api/team-invite.ts`             |
-| API  | `/team/:userId` PATCH, DELETE; `/team/leave` POST                    | team / member         | `src/api/team-member.ts`, `src/api/team-leave.ts`               |
-| API  | `/join` POST                                                         | member                | `src/api/join.ts`                                               |
-| API  | `/s/:slug/photos/:photoId` GET                                       | open                  | `src/api/shop-photo.ts`                                         |
-| API  | `/s/:slug/assets/:kind` GET                                          | open                  | `src/api/shop-asset.ts`                                         |
-| API  | `/s/:slug/p/:product/qr` GET                                         | open                  | `src/api/shop-qr.ts`                                            |
-| API  | `/s/:slug/cart` GET                                                  | open                  | `src/api/shop-cart.ts`                                          |
-| API  | `/sitemap.xml` GET                                                   | open                  | `src/api/sitemap.ts`                                            |
-| API  | `/s/:slug/checkout` POST                                             | key route             | `src/api/shop-checkout.ts`                                      |
-| API  | `/s/:slug/voucher` POST                                              | key route             | `src/api/shop-voucher.ts`                                       |
-| API  | `/s/:slug/orders/:code/pay` POST                                     | key route             | `src/api/shop-pay.ts`                                           |
-| API  | `/s/:slug/orders/:code/paypal` GET                                   | key route             | `src/api/shop-paypal.ts`                                        |
-| API  | `/s/:slug/orders/:code/reviews` POST                                 | key route             | `src/api/shop-order-review.ts`                                  |
-| API  | `/s/:slug/p/:product/reviews` POST                                   | key route             | `src/api/shop-review.ts`                                        |
-| API  | `/s/:slug/stripe` POST (Stripe webhook)                              | key route             | `src/api/shop-stripe.ts`                                        |
-| API  | `/s/:slug/newsletter` POST, `/confirm` POST                          | key route             | `src/api/shop-newsletter.ts`, `-confirm.ts`                     |
-| API  | `/s/:slug/newsletter/unsubscribe` POST (one-click), GET              | key route             | `src/api/shop-unsubscribe.ts`                                   |
-| API  | `/s/:slug/account/signin` POST, GET (email link)                     | key route             | `src/api/shop-signin.ts`                                        |
-| API  | `/s/:slug/account` PATCH, PUT (details), DELETE, POST (sign out)     | key route             | `src/api/shop-account.ts`                                       |
-| API  | `/s/:slug/account/connect` POST (Continue with DevQuake)             | key route             | `src/api/shop-connect.ts`                                       |
-| API  | `/s/:slug/p/:product/interest` POST, DELETE (interest vote)          | key route             | `src/api/shop-interest.ts`                                      |
-| API  | `/s/:slug/p/:product/favorite` POST, DELETE                          | key route             | `src/api/shop-favorite.ts`                                      |
-| API  | `/s/:slug/favorites/:id` DELETE                                      | key route             | `src/api/shop-favorites.ts`                                     |
-| API  | `/products/:id/interest` PUT (vote mode and cost estimates)          | owner, products       | `src/api/product-interest.ts`                                   |
-| API  | `/s/:slug/account/messages` POST, `/:id` POST                        | key route             | `src/api/shop-threads.ts`, `src/api/shop-thread.ts`             |
+| Type | Pattern                                                              | Access                                                     | File                                                               |
+| ---- | -------------------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------ |
+| Page | `/`                                                                  | open (see top)                                             | `src/pages/home.tsx`                                               |
+| Page | `/products`, `/products/new`, `/products/:id`                        | products                                                   | `src/pages/products.tsx`, `src/pages/product.tsx`                  |
+| Page | `/products/types`                                                    | products                                                   | `src/pages/types.tsx`                                              |
+| Page | `/vendors`                                                           | products                                                   | `src/pages/vendors.tsx`                                            |
+| Page | `/packages`                                                          | marketing, DevQuake staff only                             | `src/pages/packages.tsx` (NPS point packages for claims, ADR 0079) |
+| Page | `/claim/:token`                                                      | open: the member the claim is for, signed in               | `src/pages/claim.tsx`                                              |
+| Page | `/orders`, `/orders/:id`                                             | orders                                                     | `src/pages/orders.tsx`, `src/pages/order.tsx`                      |
+| Page | `/messages`, `/messages/:id`                                         | messages                                                   | `src/pages/messages.tsx`, `src/pages/message.tsx`                  |
+| Page | `/customers`, `/customers/:key`                                      | customers                                                  | `src/pages/customers.tsx`, `src/pages/customer.tsx`                |
+| Page | `/reviews`                                                           | reviews                                                    | `src/pages/reviews.tsx`                                            |
+| Page | `/marketing`                                                         | marketing                                                  | `src/pages/marketing.tsx`                                          |
+| Page | `/newsletters`, `/newsletters/new`, `/newsletters/:id`               | marketing                                                  | `src/pages/newsletters.tsx`, `src/pages/newsletter.tsx`            |
+| Page | `/stats`                                                             | stats                                                      | `src/pages/stats.tsx`                                              |
+| Page | `/settings`                                                          | settings                                                   | `src/pages/settings.tsx`                                           |
+| Page | `/settings/design`                                                   | design                                                     | `src/pages/design.tsx`                                             |
+| Page | `/settings/seo`                                                      | seo (tracking: owner)                                      | `src/pages/seo.tsx`                                                |
+| Page | `/settings/languages`                                                | settings                                                   | `src/pages/languages.tsx`                                          |
+| Page | `/settings/payments`                                                 | payments                                                   | `src/pages/payments.tsx`                                           |
+| Page | `/settings/shipping`                                                 | shipping                                                   | `src/pages/shipping.tsx`                                           |
+| Page | `/team`                                                              | team (owner)                                               | `src/pages/team.tsx`                                               |
+| Page | `/join/:code`                                                        | member                                                     | `src/pages/join.tsx`                                               |
+| Page | `/help`                                                              | public                                                     | `src/pages/help.tsx`                                               |
+| Page | `/s/:slug`                                                           | open                                                       | `src/pages/shop.tsx`                                               |
+| Page | `/s/:slug/p/:product`                                                | open                                                       | `src/pages/shop-product.tsx`                                       |
+| Page | `/s/:slug/cart`                                                      | open                                                       | `src/pages/shop-cart.tsx`                                          |
+| Page | `/s/:slug/checkout`                                                  | open                                                       | `src/pages/shop-checkout.tsx`                                      |
+| Page | `/s/:slug/orders/:code`                                              | open (secret)                                              | `src/pages/shop-order.tsx`                                         |
+| Page | `/s/:slug/info`                                                      | open                                                       | `src/pages/shop-info.tsx`                                          |
+| Page | `/s/:slug/compare`                                                   | open                                                       | `src/pages/shop-compare.tsx`                                       |
+| Page | `/s/:slug/favorites`                                                 | open (signed in)                                           | `src/pages/shop-favorites.tsx`                                     |
+| Page | `/s/:slug/account`, `/s/:slug/account/messages/:id`                  | open (buyer cookie)                                        | `src/pages/shop-account.tsx`, `src/pages/shop-thread.tsx`          |
+| Page | `/s/:slug/newsletter`                                                | open                                                       | `src/pages/shop-newsletter.tsx`                                    |
+| API  | `/health`                                                            | member                                                     | `src/api/health.ts`                                                |
+| API  | `/store` GET, POST, PUT                                              | member / settings                                          | `src/api/store.ts`                                                 |
+| API  | `/store/legal` PUT                                                   | settings                                                   | `src/api/store-legal.ts`                                           |
+| API  | `/store/payments` PUT                                                | payments                                                   | `src/api/store-payments.ts`                                        |
+| API  | `/store/shipping` PUT                                                | shipping                                                   | `src/api/store-shipping.ts`                                        |
+| API  | `/store/seo` PUT                                                     | seo                                                        | `src/api/store-seo.ts`                                             |
+| API  | `/store/theme` PUT                                                   | design                                                     | `src/api/store-theme.ts`                                           |
+| API  | `/store/assets/:kind` GET, POST, DELETE                              | design                                                     | `src/api/store-asset.ts`                                           |
+| API  | `/store/reviews` PUT                                                 | reviews                                                    | `src/api/store-reviews.ts`                                         |
+| API  | `/store/tracking` PUT                                                | owner                                                      | `src/api/store-tracking.ts`                                        |
+| API  | `/store/maintenance` PUT                                             | settings                                                   | `src/api/store-maintenance.ts`                                     |
+| API  | `/store/languages` GET (export), POST, PUT                           | settings                                                   | `src/api/store-languages.ts`                                       |
+| API  | `/store/languages/:code` GET, DELETE                                 | settings                                                   | `src/api/store-language.ts`                                        |
+| API  | `/rules` POST, `/rules/:id` PUT, DELETE                              | marketing                                                  | `src/api/rules.ts`, `src/api/rule.ts`                              |
+| API  | `/products` POST, `/products/bulk` POST                              | products                                                   | `src/api/products.ts`, `src/api/products-bulk.ts`                  |
+| API  | `/products/:id` PUT, DELETE; `/:id/duplicate` POST                   | products                                                   | `src/api/product.ts`, `src/api/product-duplicate.ts`               |
+| API  | `/products/:id/photos` POST                                          | products                                                   | `src/api/product-photos.ts`                                        |
+| API  | `/products/:id/photos/:photoId` GET, PATCH, DELETE                   | products                                                   | `src/api/product-photo.ts`                                         |
+| API  | `/types` POST, `/types/:id` PUT, DELETE                              | products                                                   | `src/api/types.ts`, `src/api/type.ts`                              |
+| API  | `/vendors` POST, `/vendors/:id` PUT, DELETE                          | products                                                   | `src/api/vendors.ts`, `src/api/vendor.ts`                          |
+| API  | `/packages` GET, POST, DELETE                                        | marketing, DevQuake staff only                             | `src/api/packages.ts`                                              |
+| API  | `/claim/:token` POST                                                 | open: the claim's member, signed in, Origin, 10/min per IP | `src/api/claim.ts`                                                 |
+| API  | `/orders/:id` PATCH                                                  | orders                                                     | `src/api/order.ts`                                                 |
+| API  | `/messages/:id` POST, PATCH                                          | messages                                                   | `src/api/message.ts`                                               |
+| API  | `/customers/:key` PATCH (block), DELETE                              | customers (manage)                                         | `src/api/customer.ts`                                              |
+| API  | `/reviews/:id` PATCH, DELETE                                         | reviews                                                    | `src/api/review.ts`                                                |
+| API  | `/campaigns`, `/vouchers`, `/announcements` POST; `/:id` PUT, DELETE | marketing                                                  | `src/api/campaign(s).ts`, `voucher(s).ts`, `announcement(s).ts`    |
+| API  | `/newsletters` POST, `/newsletters/:id` PUT, DELETE                  | marketing                                                  | `src/api/newsletters.ts`, `src/api/newsletter.ts`                  |
+| API  | `/newsletters/:id/send`, `/batch`, `/test` POST                      | marketing                                                  | `src/api/newsletter-send.ts`, `-batch.ts`, `-test.ts`              |
+| API  | `/subscribers` GET (CSV), `/subscribers/:id` DELETE                  | marketing                                                  | `src/api/subscribers.ts`, `src/api/subscriber.ts`                  |
+| API  | `/team/invites` POST, `/team/invites/:id` DELETE                     | team                                                       | `src/api/team-invites.ts`, `src/api/team-invite.ts`                |
+| API  | `/team/:userId` PATCH, DELETE; `/team/leave` POST                    | team / member                                              | `src/api/team-member.ts`, `src/api/team-leave.ts`                  |
+| API  | `/join` POST                                                         | member                                                     | `src/api/join.ts`                                                  |
+| API  | `/s/:slug/photos/:photoId` GET                                       | open                                                       | `src/api/shop-photo.ts`                                            |
+| API  | `/s/:slug/assets/:kind` GET                                          | open                                                       | `src/api/shop-asset.ts`                                            |
+| API  | `/s/:slug/p/:product/qr` GET                                         | open                                                       | `src/api/shop-qr.ts`                                               |
+| API  | `/s/:slug/cart` GET                                                  | open                                                       | `src/api/shop-cart.ts`                                             |
+| API  | `/sitemap.xml` GET                                                   | open                                                       | `src/api/sitemap.ts`                                               |
+| API  | `/s/:slug/checkout` POST                                             | key route                                                  | `src/api/shop-checkout.ts`                                         |
+| API  | `/s/:slug/voucher` POST                                              | key route                                                  | `src/api/shop-voucher.ts`                                          |
+| API  | `/s/:slug/orders/:code/pay` POST                                     | key route                                                  | `src/api/shop-pay.ts`                                              |
+| API  | `/s/:slug/orders/:code/paypal` GET                                   | key route                                                  | `src/api/shop-paypal.ts`                                           |
+| API  | `/s/:slug/orders/:code/reviews` POST                                 | key route                                                  | `src/api/shop-order-review.ts`                                     |
+| API  | `/s/:slug/p/:product/reviews` POST                                   | key route                                                  | `src/api/shop-review.ts`                                           |
+| API  | `/s/:slug/stripe` POST (Stripe webhook)                              | key route                                                  | `src/api/shop-stripe.ts`                                           |
+| API  | `/s/:slug/newsletter` POST, `/confirm` POST                          | key route                                                  | `src/api/shop-newsletter.ts`, `-confirm.ts`                        |
+| API  | `/s/:slug/newsletter/unsubscribe` POST (one-click), GET              | key route                                                  | `src/api/shop-unsubscribe.ts`                                      |
+| API  | `/s/:slug/account/signin` POST, GET (email link)                     | key route                                                  | `src/api/shop-signin.ts`                                           |
+| API  | `/s/:slug/account` PATCH, PUT (details), DELETE, POST (sign out)     | key route                                                  | `src/api/shop-account.ts`                                          |
+| API  | `/s/:slug/account/connect` POST (Continue with DevQuake)             | key route                                                  | `src/api/shop-connect.ts`                                          |
+| API  | `/s/:slug/p/:product/interest` POST, DELETE (interest vote)          | key route                                                  | `src/api/shop-interest.ts`                                         |
+| API  | `/s/:slug/p/:product/favorite` POST, DELETE                          | key route                                                  | `src/api/shop-favorite.ts`                                         |
+| API  | `/s/:slug/favorites/:id` DELETE                                      | key route                                                  | `src/api/shop-favorites.ts`                                        |
+| API  | `/products/:id/interest` PUT (vote mode and cost estimates)          | owner, products                                            | `src/api/product-interest.ts`                                      |
+| API  | `/s/:slug/account/messages` POST, `/:id` POST                        | key route                                                  | `src/api/shop-threads.ts`, `src/api/shop-thread.ts`                |
 
 ## Configuration
 

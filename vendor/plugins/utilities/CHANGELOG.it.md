@@ -1,5 +1,9 @@
 # Registro delle modifiche — Bollette
 
+## 0.13.0
+
+- Suggerimenti su ogni pagina: come vedere i dettagli, come aggiungere e come modificare. Attivali o disattivali con 💡 in alto; la scelta resta su questo dispositivo.
+
 ## 0.12.0
 
 - L’app è ora anche in italiano e spagnolo: scegli la lingua in alto nella pagina.

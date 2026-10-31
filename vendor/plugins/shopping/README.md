@@ -135,6 +135,8 @@ Offered to connected apps (`src/links/`, declared in `manifest.links`):
 | `lists.overview`  | read  | `{ limit?, includeEmpty? }` (1–20, default 5)            | `{ lists: [{ id, name, shopDate, open, done }] }` (lists with open items from a week ago on; `includeEmpty` adds those without) |
 | `list.add-items`  | write | `{ listId, items: [{ name, quantity?, unit? }] }` (≤ 30) | `{ listId, added }` (added as the member)                                                                                       |
 | `calendar.events` | read  | `{ from, to }` (`YYYY-MM-DD`, ≤ 62 days)                 | `{ events }`: the member's lists by shopping date (names only, all-day)                                                         |
+| `activity.day`    | read  | `{ from, to }` (`YYYY-MM-DD`, ≤ 62 days)                 | `{ items }`: what the member ticked off, one item per list and day (first names), ADR 0081                                      |
+| `list.purchases`  | read  | `{ listId, from, to }` (≤ 62 days)                       | `{ list, items, total }`: what was bought on a list the member is on, with line totals (Venue's costs)                          |
 
 Target `list` → `/lists/:id`. Used by the family planner. Change these only by adding.
 

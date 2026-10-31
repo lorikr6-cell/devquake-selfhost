@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 import { localeOf, translator } from '../i18n';
 import { orgById, staffOf, type Staff } from '../lib/data';
 import { todayIn } from '../lib/dates';
-import { can, type Action } from '../lib/roles';
+import { staffCan, type Action } from '../lib/roles';
 import { Notice } from './ui';
 
 export type PageScope =
@@ -83,10 +83,10 @@ export async function orgScope(
   const orgId = Number(params.id);
   if (!Number.isSafeInteger(orgId) || orgId <= 0) notFound();
   const staff = await staffOf(scope.db, orgId, scope.user.id);
-  if (!staff || !can(staff.role, action)) notFound();
+  if (!staff || !staffCan(staff, action)) notFound();
   const org = await orgById(scope.db, orgId);
   if (!org) notFound();
-  return { ...scope, org, staff, can: (a: Action) => can(staff.role, a) };
+  return { ...scope, org, staff, can: (a: Action) => staffCan(staff, a) };
 }
 
 /** A person id from the URL, or 404. */

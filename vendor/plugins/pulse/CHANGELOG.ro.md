@@ -1,5 +1,9 @@
 # Noutăți — Pulse
 
+## 0.9.0
+
+- Sfaturi pe fiecare pagină: cum vezi detaliile, cum adaugi și cum modifici. Pornește-le sau oprește-le cu 💡 din partea de sus; alegerea rămâne pe acest dispozitiv. În demo-ul în direct sunt pornite de la început.
+
 ## 0.8.0
 
 - Aplicația este acum și în italiană și spaniolă: alege limba din partea de sus a paginii.

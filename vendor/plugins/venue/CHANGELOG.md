@@ -1,5 +1,9 @@
 # Changelog — Venue
 
+## 0.4.1
+
+- Connecting another app shows its NPS points on the button; without enough points the button says how many are needed.
+
 ## 0.4.0
 
 - Connect Shopping and choose your purchasing list: the reports show what was bought each month next to your takings. Connect your Cookbook and add a recipe to the menu with its name, ingredients and allergens filled in.

@@ -95,3 +95,8 @@ pnpm dev                                 # from the repo root, then http://darts
 pnpm --filter @devquake/plugin-darts test
 pnpm db:migrate --plugin darts           # needs DARTS_DB_* in the environment
 ```
+
+## Links with other apps (ADR 0035, 0081)
+
+Offers `activity.day` (read; `links/activity-day.ts`): the games the member finished, by their day,
+with who won, each linking to `/games/:id` (target `game`). Habits and journal shows them.

@@ -8,6 +8,7 @@ import type {
   PluginUser,
 } from '@devquake/plugin-sdk';
 import { localeOf, translator } from '../i18n';
+import { recordActivity } from './activity-data';
 import { todayIn } from './dates';
 import { HttpError } from './http';
 
@@ -34,7 +35,8 @@ export interface ApiScope {
 /**
  * Wraps an API handler: requires a signed-in user and the plugin database, turns HttpError into
  * JSON errors in the visitor's language and plain return values into JSON (undefined → 204).
- * Nothing the app answers is cached: it is personal data.
+ * Nothing the app answers is cached: it is personal data. Every change that succeeds is recorded
+ * for the activity reports (`recordActivity`).
  */
 export function api(fn: (scope: ApiScope) => Promise<unknown>): PluginApiHandler {
   return async (request: Request, { params, ctx }: PluginApiArgs) => {
@@ -55,6 +57,9 @@ export function api(fn: (scope: ApiScope) => Promise<unknown>): PluginApiHandler
         invitations: ctx.invitations,
         baseUrl: ctx.baseUrl,
       });
+      if (!(result instanceof Response) || result.ok) {
+        await recordActivity(ctx.db, request, params, ctx.user.id);
+      }
       if (result instanceof Response) return result;
       if (result === undefined) return new Response(null, { status: 204 });
       return Response.json(result, { headers: { 'Cache-Control': 'no-store' } });

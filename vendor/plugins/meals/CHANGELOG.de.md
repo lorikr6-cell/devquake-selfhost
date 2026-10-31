@@ -1,5 +1,13 @@
 # Änderungen — Essensplaner
 
+## 0.7.0
+
+- Verbundene Apps wie Gewohnheiten und Tagebuch können jetzt die Mahlzeiten jedes Tages zeigen und welche gekocht wurden, mit einem Link zurück zur Woche hier.
+
+## 0.6.0
+
+- Tipps auf jeder Seite: wie du Details siehst, etwas hinzufügst und änderst. Schalte sie oben mit 💡 ein oder aus; die Wahl bleibt auf diesem Gerät.
+
 ## 0.5.0
 
 - Die App gibt es jetzt auch auf Italienisch und Spanisch: Wähle die Sprache oben auf der Seite.

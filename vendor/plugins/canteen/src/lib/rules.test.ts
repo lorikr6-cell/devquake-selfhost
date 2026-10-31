@@ -2,7 +2,7 @@ import { randomBytes } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
 import { cnpChecksum, parseCnp } from './cnp';
 import { canEncrypt, openBytes, openText, sealBytes, sealText } from './crypto';
-import { ROLES, can } from './roles';
+import { ROLES, can, mainRole, rolesOf, staffCan } from './roles';
 import { personInput } from './validate';
 import { INVITE_CODE_PATTERN, newInviteCode } from './model';
 
@@ -81,6 +81,25 @@ describe('roles', () => {
       expect(can(r, 'people.view')).toBe(false);
       expect(can(r, 'incidents.view')).toBe(false);
     }
+  });
+
+  it('opens social work to organisers and to staff ticked as social workers', () => {
+    expect(ROLES.filter((r) => can(r, 'social.view'))).toEqual(['organiser']);
+    const driver = { role: 'driver' as const, roles: ['driver' as const] };
+    expect(staffCan(driver, 'social.edit')).toBe(false);
+    expect(staffCan({ ...driver, socialWorker: true }, 'social.edit')).toBe(true);
+    expect(staffCan({ ...driver, socialWorker: true }, 'people.view')).toBe(true);
+    expect(staffCan({ ...driver, socialWorker: true }, 'identity.view')).toBe(false);
+  });
+
+  it('adds up the rights of several roles', () => {
+    const both = { role: 'kitchen' as const, roles: ['kitchen' as const, 'medical' as const] };
+    expect(staffCan(both, 'kitchen.view')).toBe(true);
+    expect(staffCan(both, 'medical.edit')).toBe(true);
+    expect(staffCan(both, 'org.manage')).toBe(false);
+    expect(rolesOf('driver,organiser,nonsense')).toEqual(['organiser', 'driver']);
+    expect(rolesOf('', 'kitchen')).toEqual(['kitchen']);
+    expect(mainRole(['driver', 'coordinator'])).toBe('coordinator');
   });
 });
 

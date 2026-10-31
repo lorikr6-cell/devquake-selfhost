@@ -1,6 +1,7 @@
 import { Link, cn, type Translate } from '@devquake/ui';
 import type { Action, Role } from '../lib/roles';
 import { DemoRoleSwitch } from './demo-role';
+import { PageTips, TipsToggle } from './tips';
 
 const TABS: { key: string; path: string; action: Action }[] = [
   { key: 'people', path: '', action: 'people.view' },
@@ -10,6 +11,8 @@ const TABS: { key: string; path: string; action: Action }[] = [
   { key: 'routes', path: '/routes', action: 'routes.edit' },
   { key: 'myRoute', path: '/my-route', action: 'route.own' },
   { key: 'medication', path: '/medication', action: 'medical.view' },
+  { key: 'social', path: '/social', action: 'social.view' },
+  { key: 'reports', path: '/reports', action: 'org.manage' },
   { key: 'staff', path: '/staff', action: 'org.manage' },
 ];
 
@@ -21,6 +24,7 @@ export function OrgNav({
   can,
   t,
   demo,
+  tipsPage,
 }: {
   orgId: number;
   orgName: string;
@@ -29,11 +33,17 @@ export function OrgNav({
   t: Translate;
   /** In a demo organisation: the visitor's role there, with the "View as" switch. */
   demo?: Role;
+  /** Which page's tips to show (default: the tab, `current`). */
+  tipsPage?: string;
 }) {
   const tabs = TABS.filter((tab) => can(tab.action));
   return (
     <div className="mb-6 print:hidden">
-      <p className="text-sm text-ink/60 dark:text-paper/60">{orgName}</p>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <p className="text-sm text-ink/60 dark:text-paper/60">{orgName}</p>
+        <TipsToggle demo={Boolean(demo)} />
+      </div>
+      <PageTips page={tipsPage ?? current} demo={Boolean(demo)} />
       {demo ? <DemoRoleSwitch orgId={orgId} role={demo} /> : null}
       {tabs.length > 1 ? (
         <nav

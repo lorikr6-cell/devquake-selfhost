@@ -1,12 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, formatDateTime, useLocale, useT } from '@devquake/ui';
+import { AutoCheckbox, Button, formatDateTime, useLocale, useT } from '@devquake/ui';
 import type { SentInvite, StaffMember } from '../lib/data';
 import { ROLES, type Role } from '../lib/roles';
 import { callApi } from './call-api';
 import { InviteCard, type InviteWithQr } from './invite-card';
 import { ErrorText, Field, Input, Panel, Select } from './ui';
+import { useAppRouter } from './use-app-router';
 import { useAction } from './use-action';
 
 /** The organisation's staff with their roles (organisers change and remove them). */
@@ -21,12 +22,7 @@ export function StaffList({
 }) {
   const t = useT();
   const { busy, act, confirm } = useAction();
-
-  async function setRole(member: StaffMember, role: Role) {
-    await act(() => callApi(`/orgs/${orgId}/staff/${member.id}`, 'PATCH', { role }), {
-      success: t('staff.roleSaved', { name: member.name, role: t(`roles.${role}`) }),
-    });
-  }
+  const router = useAppRouter();
 
   async function remove(member: StaffMember) {
     const ok = await confirm({
@@ -46,7 +42,7 @@ export function StaffList({
   return (
     <div className="space-y-4">
       {ROLES.map((role) => {
-        const members = staff.filter((m) => m.role === role);
+        const members = staff.filter((m) => m.roles.includes(role));
         return (
           <section key={role}>
             <h3 className="mb-1 text-sm font-semibold">
@@ -67,19 +63,58 @@ export function StaffList({
                         </span>
                       ) : null}
                     </span>
-                    <Select
-                      value={m.role}
-                      disabled={busy}
-                      aria-label={t('staff.roleOf', { name: m.name })}
-                      onChange={(e) => setRole(m, e.target.value as Role)}
-                      className="w-auto"
-                    >
-                      {ROLES.map((r) => (
-                        <option key={r} value={r}>
-                          {t(`roles.${r}`)}
-                        </option>
-                      ))}
-                    </Select>
+                    {m.roles.length > 1 || m.socialWorker ? (
+                      <span className="text-xs text-ink/60 dark:text-paper/60">
+                        {[
+                          ...m.roles.map((r) => t(`roles.${r}`)),
+                          ...(m.socialWorker ? [t('staff.socialWorker')] : []),
+                        ].join(' · ')}
+                      </span>
+                    ) : null}
+                    <details className="w-full sm:w-auto">
+                      <summary className="cursor-pointer text-sm underline hover:text-quake">
+                        {t('staff.rolesOf', { name: m.name })}
+                      </summary>
+                      <div className="mt-2 space-y-1">
+                        {ROLES.map((r) => (
+                          <AutoCheckbox
+                            key={r}
+                            checked={m.roles.includes(r)}
+                            label={t(`roles.${r}`)}
+                            messages={{
+                              on: t('staff.roleOn', { name: m.name, role: t(`roles.${r}`) }),
+                              off: t('staff.roleOff', { name: m.name, role: t(`roles.${r}`) }),
+                              failed: t('staff.roleFailed'),
+                            }}
+                            onSave={async (on) => {
+                              await callApi(`/orgs/${orgId}/staff/${m.id}`, 'PATCH', {
+                                role: r,
+                                on,
+                              });
+                              router.refresh();
+                            }}
+                          />
+                        ))}
+                        <AutoCheckbox
+                          checked={m.socialWorker}
+                          label={
+                            m.userId === myUserId
+                              ? t('staff.imSocialWorker')
+                              : t('staff.socialWorker')
+                          }
+                          hint={t('staff.socialWorkerHint')}
+                          messages={{
+                            on: t('staff.socialOn', { name: m.name }),
+                            off: t('staff.socialOff', { name: m.name }),
+                            failed: t('staff.roleFailed'),
+                          }}
+                          onSave={async (on) => {
+                            await callApi(`/orgs/${orgId}/staff/${m.id}/social`, 'PUT', { on });
+                            router.refresh();
+                          }}
+                        />
+                      </div>
+                    </details>
                     <Button type="button" variant="ghost" disabled={busy} onClick={() => remove(m)}>
                       {t('staff.remove')}
                     </Button>

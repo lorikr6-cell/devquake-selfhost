@@ -5,6 +5,7 @@ import { localeOf, translator } from '../i18n';
 import { appIcons } from '../components/app-icons';
 import { moneyIn, ownerScope } from '../components/guard';
 import { mayOpenShop } from '../lib/api';
+import { prepareArtPromo } from '../components/art-gallery-promo';
 import { preparePromo } from '../components/devquake-promo';
 import { prepareCurrency } from '../components/shop-currency';
 import { StatusBadge } from '../components/order-view';
@@ -55,7 +56,7 @@ export default async function Home(props: PluginPageProps) {
   if (!ctx.user) {
     const shop = await rootShop(props);
     if (shop) {
-      await preparePromo(ctx);
+      await Promise.all([preparePromo(ctx), prepareArtPromo(ctx)]);
       await prepareCurrency(ctx, shop.currency, locale);
       return (
         <StoreFront

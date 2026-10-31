@@ -1,5 +1,13 @@
 # Änderungen — Darts
 
+## 0.9.0
+
+- Verbundene Apps wie Gewohnheiten und Tagebuch können jetzt die Spiele zeigen, die du an jedem Tag gespielt hast, und wer gewonnen hat, mit einem Link zurück zum Spiel hier.
+
+## 0.8.0
+
+- Tipps auf jeder Seite: wie du Details siehst, etwas hinzufügst und änderst. Schalte sie oben mit 💡 ein oder aus; die Wahl bleibt auf diesem Gerät.
+
 ## 0.7.1
 
 - Der Ladebalken oben erscheint jetzt immer, wenn die App auf den Server wartet, und nicht mehr bei den automatischen Prüfungen auf neue Änderungen.

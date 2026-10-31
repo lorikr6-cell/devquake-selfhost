@@ -1,7 +1,17 @@
 import type { PluginLayoutProps } from '@devquake/plugin-sdk';
-import { AppToolbar, I18nProvider, Link, ReleaseNotes, WorksWith } from '@devquake/ui';
+import {
+  AppToolbar,
+  I18nProvider,
+  Link,
+  ReleaseNotes,
+  WorksWith,
+  PageTips,
+  TipsToggle,
+  pageTips,
+} from '@devquake/ui';
 import { FeedbackProvider } from './components/feedback';
 import { FALLBACK_MESSAGES, appMessages, localeOf, translator } from './i18n';
+import { TIPS_PAGES } from './i18n/tips';
 
 export default async function Layout({ children, ctx }: PluginLayoutProps) {
   const locale = localeOf(ctx);
@@ -24,7 +34,9 @@ export default async function Layout({ children, ctx }: PluginLayoutProps) {
               language: t('nav.language'),
               devquake: t('nav.devquake'),
             }}
+            actions={<TipsToggle />}
           />
+          <PageTips pages={pageTips(t, TIPS_PAGES)} />
           <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6">{children}</main>
           <footer className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-3 gap-y-1 px-4 pb-10 text-xs text-ink/60 sm:px-6 dark:text-paper/60">
             <span>{appName}</span>

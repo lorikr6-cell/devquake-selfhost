@@ -4,7 +4,7 @@ import { addDays, type IsoDate } from './dates';
 import { HttpError } from './http';
 import { weekdayOfDay } from './meals';
 import type { Diet } from './model';
-import { can as roleCan, type Role } from './roles';
+import { staffCan, type Role } from './roles';
 import { estimate, routeOk, type TimedStop, type Window } from './routes';
 
 /**
@@ -378,7 +378,7 @@ async function driverAccountsOf(
   orgId: number,
 ): Promise<{ userId: number; name: string }[]> {
   const rows = await db.query<{ user_id: number; display_name: string }>(
-    "SELECT user_id, display_name FROM canteen_staff WHERE org_id = ? AND role = 'driver' ORDER BY display_name",
+    "SELECT user_id, display_name FROM canteen_staff WHERE org_id = ? AND FIND_IN_SET('driver', roles) ORDER BY display_name",
     [orgId],
   );
   return rows.map((r) => ({ userId: num(r.user_id), name: r.display_name }));
@@ -389,6 +389,22 @@ export async function driverAccounts(db: Db, orgId: number, userId: number) {
   return driverAccountsOf(db, orgId);
 }
 
+/**
+ * Whether the visitor drives in this organisation: the driver role, or the maker of a demo
+ * organisation who is linked as one of its drivers (so the drivers' app can be tried without
+ * switching role).
+ */
+export async function drives(db: Db, orgId: number, userId: number): Promise<boolean> {
+  const staff = await requireCan(db, orgId, userId, 'org.view');
+  if (staffCan(staff, 'route.own')) return true;
+  const [row] = await db.query<{ ok: number }>(
+    `SELECT 1 AS ok FROM canteen_drivers d JOIN canteen_orgs o ON o.id = d.org_id
+      WHERE d.org_id = ? AND d.user_id = ? AND o.is_demo = 1 AND o.created_by = ? LIMIT 1`,
+    [orgId, userId, userId],
+  );
+  return Boolean(row);
+}
+
 /** The signed-in driver's route on `day` (their stops only), or null when they have none. */
 export async function myRoute(
   db: Db,
@@ -396,7 +412,7 @@ export async function myRoute(
   userId: number,
   day: IsoDate,
 ): Promise<DayRoute | null> {
-  await requireCan(db, orgId, userId, 'route.own');
+  if (!(await drives(db, orgId, userId))) throw new HttpError(403, 'notAllowed');
   const plan = await planOf(db, orgId, day);
   return plan.routes.find((r) => r.driver.userId === userId) ?? null;
 }
@@ -421,7 +437,7 @@ export async function markDelivered(
   );
   if (!stop) throw new HttpError(404, 'notFound');
   const ownStop = stop.user_id !== null && num(stop.user_id) === userId;
-  if (!ownStop && !(await canPlan(staff.role))) throw new HttpError(403, 'notAllowed');
+  if (!ownStop && !staffCan(staff, 'routes.edit')) throw new HttpError(403, 'notAllowed');
   if (change.delivered !== undefined) {
     await db.execute(
       // sql-safe: delivered — one of two fixed fragments; the values are ? params.
@@ -449,7 +465,7 @@ export async function packagesOf(
   day: IsoDate,
 ): Promise<{ menu: string | null; variants: Partial<Record<Diet, string>> }> {
   const staff = await requireCan(db, orgId, userId, 'org.view');
-  if (!roleCan(staff.role, 'route.own') && !roleCan(staff.role, 'routes.edit')) {
+  if (!staffCan(staff, 'route.own') && !staffCan(staff, 'routes.edit')) {
     throw new HttpError(403, 'notAllowed');
   }
   const [menu] = await db.query<{ id: number; dishes: string }>(
@@ -466,8 +482,6 @@ export async function packagesOf(
     variants: Object.fromEntries(rows.map((r) => [r.diet, r.dishes])),
   };
 }
-
-const canPlan = async (role: Role) => roleCan(role, 'routes.edit');
 
 // ---------------------------------------------------------------------------------------------
 // The order of stops from the map (OpenRouteService)

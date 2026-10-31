@@ -4,7 +4,7 @@ import { requireCan, requireKey } from './data';
 import { isIsoDate, type IsoDate } from './dates';
 import { HttpError } from './http';
 import type { Picture } from './picture';
-import { can } from './roles';
+import { staffCan } from './roles';
 
 // Drivers' licences on the app's own database (migration 0011). Planners (routes.edit) handle
 // every driver's licence; a driver handles their own (the driver record linked to their account).
@@ -28,7 +28,7 @@ async function requireLicenceAccess(db: Db, orgId: number, driverId: number, use
   );
   if (!driver) throw new HttpError(404, 'notFound');
   const own = driver.user_id !== null && num(driver.user_id) === userId;
-  if (!own && !can(staff.role, 'routes.edit')) throw new HttpError(403, 'notAllowed');
+  if (!own && !staffCan(staff, 'routes.edit')) throw new HttpError(403, 'notAllowed');
 }
 
 /** Every driver's licence state for the drivers list (planners). */
