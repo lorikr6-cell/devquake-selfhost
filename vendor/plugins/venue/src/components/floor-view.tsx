@@ -4,6 +4,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { Link, useT } from '@devquake/ui';
 import { formatMinor } from '../lib/model';
 import { call, errorText, fieldClass, primaryButton } from './client';
+import type { Call } from '../lib/calls';
+import { CallsPanel, PushToggle } from './calls-panel';
 import { Status } from './status';
 
 interface FloorTable {
@@ -15,6 +17,7 @@ interface FloorTable {
     id: number;
     code: string;
     openedBy: string;
+    waiterName?: string | null;
     pending: number;
     ready: number;
     gross: number;
@@ -133,12 +136,15 @@ export function StaffPicker({
  */
 export function FloorView({
   initial,
+  initialCalls = [],
   currency,
   decimals,
   actorName,
   onTablet,
 }: {
   initial: FloorTable[];
+  /** The tables calling now (guests raised a hand). */
+  initialCalls?: Call[];
   currency: string;
   decimals: number;
   actorName: string;
@@ -146,12 +152,14 @@ export function FloorView({
 }) {
   const t = useT('floor');
   const [tables, setTables] = useState(initial);
+  const [calls, setCalls] = useState(initialCalls);
   const [q, setQ] = useState('');
   const refresh = useCallback(async () => {
     const res = await fetch('/api/floor/tables', { cache: 'no-store' }).catch(() => null);
     if (!res?.ok) return;
-    const data = (await res.json()) as { tables: FloorTable[] };
+    const data = (await res.json()) as { tables: FloorTable[]; calls?: Call[] };
     setTables(data.tables);
+    if (data.calls) setCalls(data.calls);
   }, []);
   useVisibleInterval(refresh, 10_000);
   const query = q.trim().toLowerCase();
@@ -159,6 +167,7 @@ export function FloorView({
 
   return (
     <div className="space-y-4">
+      <CallsPanel calls={calls} onChange={setCalls} />
       <div className="flex flex-wrap items-center gap-3">
         <input
           type="search"
@@ -171,6 +180,10 @@ export function FloorView({
         <span className="text-sm text-ink/60 dark:text-paper/60">
           {t('on', { name: actorName })}
         </span>
+        <PushToggle />
+        <Link href="/calls" className="text-sm underline">
+          {t('history')}
+        </Link>
         {onTablet ? (
           <button
             type="button"
@@ -198,7 +211,10 @@ export function FloorView({
                     : 'border-ink/10 dark:border-paper/15'
                 }`}
               >
-                <span className="block text-lg font-semibold">{x.name}</span>
+                <span className="block text-lg font-semibold">
+                  {x.name}
+                  {calls.some((c) => c.tableId === x.id) ? ' 🙋' : ''}
+                </span>
                 <span className="block text-sm text-ink/70 dark:text-paper/70">
                   {x.bill
                     ? `${formatMinor(x.bill.gross, decimals)} ${currency}`
@@ -212,7 +228,7 @@ export function FloorView({
                         ? t('toBring', { count: x.bill.pending })
                         : t('allBrought')}
                     {' · '}
-                    {x.bill.openedBy}
+                    {x.bill.waiterName ?? x.bill.openedBy}
                   </span>
                 ) : null}
               </Link>

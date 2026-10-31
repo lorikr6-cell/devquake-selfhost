@@ -4,10 +4,10 @@ import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Link, useT } from '@devquake/ui';
 import {
-  BG_HEIGHT,
   BG_MAX_BYTES,
-  BG_WIDTH,
   DESIGN_FONTS,
+  FORMATS,
+  formatSize,
   DESIGN_FONT_STACK,
   DESIGN_PICTURES_MAX,
   PANELS,
@@ -98,6 +98,7 @@ export function MenuDesigner({
   /** Flattens the background (if kept) and the pictures into one A4 image. */
   async function flatten(): Promise<Blob> {
     const canvas = document.createElement('canvas');
+    const { width: BG_WIDTH, height: BG_HEIGHT } = formatSize(design.format);
     canvas.width = BG_WIDTH;
     canvas.height = BG_HEIGHT;
     const ctx = canvas.getContext('2d')!;
@@ -172,7 +173,7 @@ export function MenuDesigner({
           ref={page}
           className="relative w-full overflow-hidden rounded-md shadow-lg"
           style={{
-            aspectRatio: `${BG_WIDTH} / ${BG_HEIGHT}`,
+            aspectRatio: `${formatSize(design.format).width} / ${formatSize(design.format).height}`,
             touchAction: layers.length ? 'none' : undefined,
           }}
           onPointerMove={(e) => {
@@ -292,6 +293,42 @@ export function MenuDesigner({
             </div>
           ) : layers.length ? (
             <p className="text-xs text-ink/60 dark:text-paper/60">{t('dragHint')}</p>
+          ) : null}
+        </section>
+
+        <section className="space-y-2">
+          <h2 className="font-semibold">{t('format')}</h2>
+          <div className="grid grid-cols-5 gap-2" role="radiogroup" aria-label={t('format')}>
+            {FORMATS.map((f) => {
+              // Each choice drawn to scale in a 40 px box.
+              const scale = 40 / Math.max(f.w, f.h);
+              return (
+                <button
+                  key={f.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={design.format === f.id}
+                  title={f.id === 'a4' ? 'A4' : f.id}
+                  onClick={() => set('format', f.id)}
+                  className={`flex flex-col items-center gap-1 rounded-md border p-1.5 text-xs ${
+                    design.format === f.id
+                      ? 'border-quake ring-2 ring-quake'
+                      : 'border-ink/15 dark:border-paper/20'
+                  }`}
+                >
+                  <span className="flex h-10 w-10 items-center justify-center">
+                    <span
+                      className="block rounded-sm border-2 border-current"
+                      style={{ width: f.w * scale, height: f.h * scale }}
+                    />
+                  </span>
+                  {f.id === 'a4' ? 'A4' : f.id}
+                </button>
+              );
+            })}
+          </div>
+          {design.format !== initial.format && backgroundUrl ? (
+            <p className="text-xs text-ink/60 dark:text-paper/60">{t('formatChanged')}</p>
           ) : null}
         </section>
 

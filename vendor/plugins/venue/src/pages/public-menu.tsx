@@ -24,7 +24,7 @@ export async function publicMenu(db: Db, venue: Venue): Promise<PublicMenuData> 
       description: i.description,
       priceMinor: i.priceMinor,
       allergens: i.allergens,
-      available: i.available,
+      available: i.available && i.short.length === 0,
     })),
   };
 }

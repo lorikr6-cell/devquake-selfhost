@@ -13,14 +13,53 @@ export type Panel = (typeof PANELS)[number];
 
 /** The pictures the owner may place before they are flattened into one background. */
 export const DESIGN_PICTURES_MAX = 5;
-/** The flattened background: an A4 page at 150 dpi, at most this many bytes. */
-export const BG_WIDTH = 1240;
-export const BG_HEIGHT = 1754;
+/** The flattened background: at most this many bytes. */
 export const BG_MAX_BYTES = 2 * 1024 * 1024;
+
+/**
+ * The menu's page shapes (owner's request): A4, or a ratio for screens, posters and social posts.
+ * Each is width:height; the flattened background's longest side is 1754 px (A4 at 150 dpi).
+ */
+export const FORMATS = [
+  { id: 'a4', w: 210, h: 297 },
+  { id: '1:1', w: 1, h: 1 },
+  { id: '4:3', w: 4, h: 3 },
+  { id: '3:4', w: 3, h: 4 },
+  { id: '16:9', w: 16, h: 9 },
+  { id: '9:16', w: 9, h: 16 },
+  { id: '3:2', w: 3, h: 2 },
+  { id: '2:3', w: 2, h: 3 },
+  { id: '5:4', w: 5, h: 4 },
+  { id: '4:5', w: 4, h: 5 },
+] as const;
+export type MenuFormat = (typeof FORMATS)[number]['id'];
+export const isFormat = (v: unknown): v is MenuFormat => FORMATS.some((f) => f.id === v);
+
+const LONG_SIDE = 1754;
+
+/** The background's pixel size for a format (the longest side 1754 px). */
+export function formatSize(format: MenuFormat): { width: number; height: number } {
+  const f = FORMATS.find((x) => x.id === format) ?? FORMATS[0];
+  return f.w >= f.h
+    ? { width: LONG_SIDE, height: Math.round((LONG_SIDE * f.h) / f.w) }
+    : { width: Math.round((LONG_SIDE * f.w) / f.h), height: LONG_SIDE };
+}
+
+/** The printed page for a format: A4, or the ratio with its long side 297 mm. */
+export function formatPage(format: MenuFormat): string {
+  if (format === 'a4') return 'A4';
+  const f = FORMATS.find((x) => x.id === format)!;
+  const long = 297;
+  const [w, h] =
+    f.w >= f.h ? [long, Math.round((long * f.h) / f.w)] : [Math.round((long * f.w) / f.h), long];
+  return `${w}mm ${h}mm`;
+}
 
 export interface MenuDesign {
   title: string;
   subtitle: string;
+  /** The page shape (A4 or a ratio). */
+  format: MenuFormat;
   font: DesignFont;
   textColor: string;
   accentColor: string;
@@ -35,6 +74,7 @@ export interface MenuDesign {
 export const DEFAULT_DESIGN: MenuDesign = {
   title: '',
   subtitle: '',
+  format: 'a4',
   font: 'serif',
   textColor: '#1f1f1f',
   accentColor: '#b4532a',
@@ -71,6 +111,7 @@ export function checkDesign(raw: Record<string, unknown>): Check<Omit<MenuDesign
     value: {
       title: line(raw.title, 80),
       subtitle: line(raw.subtitle, 120),
+      format: isFormat(raw.format) ? raw.format : 'a4',
       font,
       textColor: colors[0]!,
       accentColor: colors[1]!,
@@ -99,6 +140,7 @@ export async function designOf(db: Db, venueId: number): Promise<MenuDesign> {
   const [r] = await db.query<{
     title: string | null;
     subtitle: string | null;
+    format: string;
     font: DesignFont;
     text_color: string;
     accent_color: string;
@@ -108,7 +150,7 @@ export async function designOf(db: Db, venueId: number): Promise<MenuDesign> {
     on_public: number;
     v: number | null;
   }>(
-    `SELECT title, subtitle, font, text_color, accent_color, panel, columns, show_allergens,
+    `SELECT title, subtitle, format, font, text_color, accent_color, panel, columns, show_allergens,
             on_public, IF(bg_data IS NULL, NULL, UNIX_TIMESTAMP(updated_at)) AS v
        FROM menu_designs WHERE venue_id = ?`,
     [venueId],
@@ -117,6 +159,7 @@ export async function designOf(db: Db, venueId: number): Promise<MenuDesign> {
   return {
     title: r.title ?? '',
     subtitle: r.subtitle ?? '',
+    format: isFormat(r.format) ? r.format : 'a4',
     font: r.font,
     textColor: r.text_color,
     accentColor: r.accent_color,
@@ -130,10 +173,11 @@ export async function designOf(db: Db, venueId: number): Promise<MenuDesign> {
 
 export async function saveDesign(db: Db, venueId: number, d: Omit<MenuDesign, 'background'>) {
   await db.execute(
-    `INSERT INTO menu_designs (venue_id, title, subtitle, font, text_color, accent_color, panel,
-                               columns, show_allergens, on_public)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-     ON DUPLICATE KEY UPDATE title = VALUES(title), subtitle = VALUES(subtitle), font = VALUES(font),
+    `INSERT INTO menu_designs (venue_id, title, subtitle, format, font, text_color, accent_color,
+                               panel, columns, show_allergens, on_public)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+     ON DUPLICATE KEY UPDATE title = VALUES(title), subtitle = VALUES(subtitle),
+       format = VALUES(format), font = VALUES(font),
        text_color = VALUES(text_color), accent_color = VALUES(accent_color), panel = VALUES(panel),
        columns = VALUES(columns), show_allergens = VALUES(show_allergens),
        on_public = VALUES(on_public)`,
@@ -141,6 +185,7 @@ export async function saveDesign(db: Db, venueId: number, d: Omit<MenuDesign, 'b
       venueId,
       d.title || null,
       d.subtitle || null,
+      d.format,
       d.font,
       d.textColor,
       d.accentColor,

@@ -2,7 +2,7 @@ import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { MenuSheet } from '../components/menu-sheet';
 import { PrintButton } from '../components/print-button';
 import { localeOf, translator } from '../i18n';
-import { designOf } from '../lib/design';
+import { designOf, formatPage, formatSize } from '../lib/design';
 import { ownVenue } from '../lib/page';
 import { publicMenu } from './public-menu';
 
@@ -24,13 +24,14 @@ export default async function MenuPrint({ ctx }: PluginPageProps) {
   ]);
   const bg =
     design.background !== null ? `/api/menu/design/background?v=${design.background}` : null;
+  const size = formatSize(design.format);
   return (
     <div>
-      <style>{`@page { size: A4; margin: 0; }
+      <style>{`@page { size: ${formatPage(design.format)}; margin: 0; }
 @media print {
   header, footer, nav, .dq-tips, .no-print { display: none !important; }
   main { max-width: none !important; padding: 0 !important; }
-  .menu-print { box-shadow: none !important; min-height: 297mm; padding: 18mm 16mm !important;
+  .menu-print { box-shadow: none !important; padding: 18mm 16mm !important;
     -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .menu-print-bg { position: fixed !important; inset: 0; z-index: -1; }
 }`}</style>
@@ -53,7 +54,8 @@ export default async function MenuPrint({ ctx }: PluginPageProps) {
         backgroundUrl={bg}
         allergenName={(a) => t(`menu.allergens.${a}`)}
         soldOut={t('menu.soldOut')}
-        className="menu-print mx-auto max-w-[210mm] p-10 shadow-lg"
+        className="menu-print mx-auto w-full max-w-[210mm] p-10 shadow-lg"
+        style={{ aspectRatio: `${size.width} / ${size.height}`, overflow: 'hidden' }}
       />
     </div>
   );

@@ -3,10 +3,14 @@ import { billView } from '../lib/bill-view';
 import { addLine, billOfVenue } from '../lib/floor';
 import { floorApi } from '../lib/floor-api';
 import { HttpError } from '../lib/http';
+import { shortNow } from '../lib/stock';
 
 // POST /api/floor/bills/:id/lines { itemId, qty, note }: adds a menu item to the open bill.
 export const POST = floorApi(async ({ request, params, db, venue, actor }) => {
   const body = await jsonBody(request);
+  // What the stock cannot make cannot be ordered (staff see why).
+  const short = (await shortNow(db, venue.id)).get(Number(body.itemId));
+  if (short?.length) throw new HttpError(409, 'outOfStock', { names: short.join(', ') });
   const note = typeof body.note === 'string' ? body.note.replace(/\s+/g, ' ').trim() : '';
   const ok = await addLine(
     db,

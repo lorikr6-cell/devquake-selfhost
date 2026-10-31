@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'venue',
     name: 'Venue',
-    version: '0.6.0',
+    version: '0.8.0',
     description:
       'The business side of a café, bistro, fast food or bar: the venue with its country’s VAT rates, a menu with allergens, staff with PINs for a shared tablet, and a public menu for guests.',
     status: 'active',
@@ -16,7 +16,7 @@ export default definePlugin({
     // For guests and staff tablets, without a DevQuake account (ADR 0047, 0080): the public menu
     // (while the owner keeps it public), a table's sticker, the guests' bill, the tablet's floor.
     openRoutes: {
-      pages: ['/m/:slug', '/t/:code', '/b/:code', '/tablet', '/station/:station'],
+      pages: ['/m/:slug', '/t/:code', '/b/:code', '/tablet', '/station/:station', '/calls'],
       api: ['/menu-bg/:slug'],
     },
     // The floor's API (the owner's browser or an enabled tablet; the app checks the tablet cookie
@@ -30,6 +30,12 @@ export default definePlugin({
       '/floor/bills/:id/finalize',
       '/floor/lines/:id',
       '/floor/station/:station',
+      '/floor/bills/:id/waiter',
+      '/floor/calls',
+      '/floor/calls/:id',
+      '/floor/push',
+      '/push-sw',
+      '/guest-call/:code',
       '/guest/:code',
     ],
     about,
@@ -119,6 +125,8 @@ export default definePlugin({
     '/b/:code': () => import('./pages/bill'),
     '/reports': () => import('./pages/reports'),
     '/station/:station': () => import('./pages/station'),
+    '/calls': () => import('./pages/calls'),
+    '/stock': () => import('./pages/stock'),
     '/m/:slug': () => import('./pages/public-menu'),
     '/help': () => import('./pages/help'),
     '/about': () => import('./pages/about'),
@@ -145,6 +153,12 @@ export default definePlugin({
     '/floor/bills/:id/finalize': () => import('./api/floor-finalize'),
     '/floor/lines/:id': () => import('./api/floor-line'),
     '/floor/station/:station': () => import('./api/floor-station'),
+    '/floor/bills/:id/waiter': () => import('./api/floor-bill-waiter'),
+    '/floor/calls': () => import('./api/floor-calls'),
+    '/floor/calls/:id': () => import('./api/floor-call'),
+    '/floor/push': () => import('./api/floor-push'),
+    '/push-sw': () => import('./api/push-sw'),
+    '/guest-call/:code': () => import('./api/guest-call'),
     '/guest/:code': () => import('./api/guest-bill'),
     '/menu/design': () => import('./api/menu-design'),
     '/menu/design/background': () => import('./api/menu-background'),
@@ -154,5 +168,9 @@ export default definePlugin({
     '/links/expenses': () => import('./api/links-expenses'),
     '/links/utilities': () => import('./api/links-utilities'),
     '/links/darts': () => import('./api/links-darts'),
+    '/stock': () => import('./api/stock'),
+    '/stock/buy': () => import('./api/stock-buy'),
+    '/stock/:id': () => import('./api/stock-item'),
+    '/items/:id/recipe': () => import('./api/item-recipe'),
   },
 });

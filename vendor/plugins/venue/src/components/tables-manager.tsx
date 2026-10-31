@@ -10,6 +10,7 @@ interface TableRow {
   name: string;
   seats: number;
   code: string;
+  waiterId: number | null;
   /** The sticker's QR (SVG made on the server from the table's address). */
   qr: string;
   url: string;
@@ -19,7 +20,14 @@ interface TableRow {
  * The venue's tables: add, rename, remove, a new sticker code for a lost one, and the stickers to
  * print (each QR opens the table on a staff device and the menu for guests). With a search bar.
  */
-export function TablesManager({ initial }: { initial: TableRow[] }) {
+export function TablesManager({
+  initial,
+  waiters,
+}: {
+  initial: TableRow[];
+  /** Who can have a section (waiters and managers). */
+  waiters: { id: number; name: string }[];
+}) {
   const t = useT('tables');
   const [tables, setTables] = useState(initial);
   const [name, setName] = useState('');
@@ -111,6 +119,43 @@ export function TablesManager({ initial }: { initial: TableRow[] }) {
                 dangerouslySetInnerHTML={{ __html: x.qr }}
               />
               <p className="text-xs">{t('stickerHint')}</p>
+              <label className="mt-2 block text-xs print:hidden">
+                {t('section')}
+                <select
+                  value={x.waiterId ?? ''}
+                  onChange={async (e) => {
+                    const value = e.target.value;
+                    const before = x.waiterId;
+                    setTables((all) =>
+                      all.map((r) =>
+                        r.id === x.id ? { ...r, waiterId: value ? Number(value) : null } : r,
+                      ),
+                    );
+                    try {
+                      await call(
+                        `/api/tables/${x.id}`,
+                        'PUT',
+                        { waiterId: value ? Number(value) : null },
+                        t('failed'),
+                      );
+                      setMessage({ text: t('sectionSaved', { name: x.name }), ok: true });
+                    } catch (err) {
+                      setTables((all) =>
+                        all.map((r) => (r.id === x.id ? { ...r, waiterId: before } : r)),
+                      );
+                      setMessage({ text: errorText(err, t('failed')), ok: false });
+                    }
+                  }}
+                  className={`${fieldClass} mt-0.5 py-1 text-sm`}
+                >
+                  <option value="">{t('noSection')}</option>
+                  {waiters.map((w) => (
+                    <option key={w.id} value={w.id}>
+                      {w.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
               <p className="mt-2 flex flex-wrap justify-center gap-3 text-sm print:hidden">
                 <span>{t('seatsCount', { count: x.seats })}</span>
                 <button

@@ -59,5 +59,9 @@ export const deleteUserData: PluginPlatformModule['deleteUserData'] = async (use
 export const scheduled: PluginPlatformModule['scheduled'] = async ({ db }) => {
   if (!db) return;
   const { deleteOldBills } = await import('./lib/floor');
+  const { deleteOldCalls } = await import('./lib/calls');
+  const { deleteOldMoves } = await import('./lib/stock');
   await deleteOldBills(db);
+  await deleteOldCalls(db);
+  await deleteOldMoves(db);
 };

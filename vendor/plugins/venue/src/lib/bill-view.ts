@@ -10,6 +10,7 @@ export function billView(bill: Bill, venue: Venue) {
     status: bill.status,
     tableName: bill.tableName,
     openedBy: bill.openedBy,
+    waiterName: bill.waiterName,
     openedAt: bill.openedAt.toISOString(),
     finalizedAt: bill.finalizedAt?.toISOString() ?? null,
     finalizedBy: bill.finalizedBy,

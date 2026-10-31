@@ -8,6 +8,7 @@ import { formatMinor, type TipSettings } from '../lib/model';
 import { call, errorText, fieldClass, primaryButton } from './client';
 import { useVisibleInterval } from './floor-view';
 import { Status } from './status';
+import { WaiterHandover } from './waiter-handover';
 
 interface MenuItem {
   id: number;
@@ -15,6 +16,8 @@ interface MenuItem {
   category: string;
   priceMinor: number;
   available: boolean;
+  /** Ingredients that are short (why it is unavailable). */
+  short?: string[];
 }
 
 /**
@@ -79,8 +82,7 @@ export function TableView({
         ? menu
             .filter(
               (m) =>
-                m.available &&
-                (m.name.toLowerCase().includes(query) || m.category.toLowerCase().includes(query)),
+                m.name.toLowerCase().includes(query) || m.category.toLowerCase().includes(query),
             )
             .slice(0, 12)
         : [],
@@ -131,6 +133,7 @@ export function TableView({
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_18rem]">
       <div className="space-y-5">
+        <WaiterHandover key={bill.id} billId={bill.id} initial={bill.waiterName} />
         <section className="space-y-2">
           <label className="block text-sm font-medium">
             {t('add')}
@@ -158,7 +161,7 @@ export function TableView({
                   <li key={m.id}>
                     <button
                       type="button"
-                      disabled={busy}
+                      disabled={busy || !m.available}
                       onClick={() =>
                         void run(async () => {
                           const r = await call<{ bill: BillView }>(
@@ -171,9 +174,19 @@ export function TableView({
                           return r;
                         })
                       }
-                      className="flex w-full items-baseline justify-between gap-2 rounded-lg border border-ink/15 p-3 text-left hover:border-quake dark:border-paper/20"
+                      className="flex w-full items-baseline justify-between gap-2 rounded-lg border border-ink/15 p-3 text-left hover:border-quake disabled:opacity-60 dark:border-paper/20"
                     >
-                      <span className="font-medium">+ {m.name}</span>
+                      <span className="font-medium">
+                        {m.available ? '+ ' : ''}
+                        {m.name}
+                        {m.available ? null : (
+                          <span className="block text-xs font-normal text-red-700 dark:text-red-400">
+                            {m.short?.length
+                              ? t('outOfStock', { names: m.short.join(', ') })
+                              : t('soldOut')}
+                          </span>
+                        )}
+                      </span>
                       <span className="text-sm tabular-nums">{money(m.priceMinor)}</span>
                     </button>
                   </li>

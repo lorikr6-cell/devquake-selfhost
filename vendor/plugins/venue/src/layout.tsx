@@ -16,6 +16,7 @@ const ADMIN_LINKS = [
   ['/floor', 'nav.floor'],
   ['/station/kitchen', 'nav.kitchen'],
   ['/menu', 'nav.menu'],
+  ['/stock', 'nav.stock'],
   ['/tables', 'nav.tables'],
   ['/reports', 'nav.reports'],
   ['/staff', 'nav.staff'],

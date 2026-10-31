@@ -11,7 +11,7 @@ export const PUT = floorApi(async ({ request, params, db, venue }) => {
   await setDelivered(db, venue.id, Number(params.id), delivered);
 });
 
-export const DELETE = floorApi(async ({ params, db, venue }) => {
-  if (!(await removeLine(db, venue.id, Number(params.id))))
+export const DELETE = floorApi(async ({ params, db, venue, actor }) => {
+  if (!(await removeLine(db, venue.id, Number(params.id), actor.name)))
     throw new HttpError(409, 'lineDelivered');
 });

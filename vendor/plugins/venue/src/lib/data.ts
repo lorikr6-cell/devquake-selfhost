@@ -1,6 +1,7 @@
 import type { PluginDatabase } from '@devquake/plugin-sdk';
 import type { ItemInput, Station, StaffRole, TipMode, TipSettings, VenueInput } from './model';
 import { hashPin, newTabletToken, tokenHash } from './secure';
+import { shortNow } from './stock';
 
 // The venue database (migration 0001). Every function takes the venue's id from the caller,
 // who found it by its owner (venueOfOwner): nothing reaches another venue's rows.
@@ -250,13 +251,15 @@ export interface Item {
   station: Station;
   allergens: number;
   available: boolean;
+  /** Ingredients of its recipe that are short now (empty: it can be made). */
+  short: string[];
 }
 
 export async function menuOf(
   db: Db,
   venueId: number,
 ): Promise<{ categories: Category[]; items: Item[] }> {
-  const [categories, items] = await Promise.all([
+  const [categories, items, short] = await Promise.all([
     db.query<{ id: number; name: string }>(
       'SELECT id, name FROM menu_categories WHERE venue_id = ? ORDER BY sort_order, id',
       [venueId],
@@ -276,6 +279,8 @@ export async function menuOf(
          FROM menu_items WHERE venue_id = ? ORDER BY sort_order, id`,
       [venueId],
     ),
+    // What the stock cannot make now (venue migration 0009).
+    shortNow(db, venueId).catch(() => new Map<number, string[]>()),
   ]);
   return {
     categories,
@@ -289,6 +294,7 @@ export async function menuOf(
       station: r.station,
       allergens: Number(r.allergens),
       available: r.available === 1,
+      short: short.get(Number(r.id)) ?? [],
     })),
   };
 }

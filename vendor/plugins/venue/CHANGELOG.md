@@ -1,5 +1,13 @@
 # Changelog — Venue
 
+## 0.8.0
+
+- Stock: keep your ingredients and drinks with what is on hand and a daily and a weekly level, note deliveries and waste, and count daily or weekly. Give menu items a recipe and each order takes it off the stock; an item whose ingredient runs short is unavailable on its own, on the menu, the sticker page and for the waiter. “What to buy” fills up to the daily or weekly level and goes onto your purchasing list in Shopping with one tap.
+
+## 0.7.0
+
+- Guests can call their waiter: scanning a table’s sticker gives them the table’s waiter (their section, or the least busy one on shift) and a “Call the waiter” button. The waiter hears it on the floor, answers “I’m coming”, and can get it as a notification on the phone too; the calls of the last 30 days are listed. Waiters get sections under Tables and can hand a table to a colleague. The menu design now comes in A4 or nine other formats (1:1, 4:3, 3:4, 16:9, 9:16, 3:2, 2:3, 5:4, 4:5).
+
 ## 0.6.0
 
 - Kitchen, bar and coffee screens: each table’s order waits there, oldest first, with how long it has waited; tap what is made, and the waiter sees it ready to bring on the table and the floor.

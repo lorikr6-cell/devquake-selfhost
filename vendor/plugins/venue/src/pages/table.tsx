@@ -1,12 +1,14 @@
 import { cookies } from 'next/headers';
 import type { PluginPageProps } from '@devquake/plugin-sdk';
+import { GuestCall } from '../components/guest-call';
 import { TableView } from '../components/table-view';
 import { TabletStaff } from '../components/tablet-staff';
 import { localeOf, translator } from '../i18n';
 import { TABLE_CODE } from '../lib/bill';
 import { billView } from '../lib/bill-view';
 import { menuOf, venueById } from '../lib/data';
-import { openBillOfTable, staffList, tableByCode } from '../lib/floor';
+import { lastCallOfTable, waiterFor } from '../lib/calls';
+import { openBill, openBillOfTable, staffList, tableByCode } from '../lib/floor';
 import { floorActor } from '../lib/floor-api';
 import { TABLET_COOKIE } from '../lib/secure';
 import { DesignedMenu } from './public-menu';
@@ -48,7 +50,26 @@ export default async function TablePage({ ctx, params }: PluginPageProps) {
           <p>{t('table.askStaff')}</p>
         </section>
       );
-    return <DesignedMenu db={ctx.db} venue={venue} intro={t('table.guestIntro')} t={t} />;
+    // Guests at the table get its waiter at once (owner's rule: the section's waiter on shift,
+    // else the least busy one), and can call them (raise a hand).
+    const bill = await openBill(
+      ctx.db,
+      venue.id,
+      table.id,
+      t('call.guest'),
+      await waiterFor(ctx.db, venue.id, table.id),
+    );
+    const last = await lastCallOfTable(ctx.db, venue.id, table.id);
+    return (
+      <>
+        <DesignedMenu db={ctx.db} venue={venue} intro={t('table.guestIntro')} t={t} />
+        <GuestCall
+          code={code}
+          waiterName={bill?.waiterName ?? null}
+          initial={last ? { status: last.status, at: last.createdAt, by: last.answeredBy } : null}
+        />
+      </>
+    );
   }
   const venue = found.venue;
   const [bill, menu] = await Promise.all([
@@ -72,7 +93,8 @@ export default async function TablePage({ ctx, params }: PluginPageProps) {
           name: i.name,
           category: categories.get(i.categoryId) ?? '',
           priceMinor: i.priceMinor,
-          available: i.available,
+          available: i.available && i.short.length === 0,
+          short: i.short,
         }))}
         currency={venue.currency}
         decimals={venue.decimals}

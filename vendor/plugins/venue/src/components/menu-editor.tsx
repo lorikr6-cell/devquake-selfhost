@@ -5,6 +5,7 @@ import { useT } from '@devquake/ui';
 import { ALLERGENS, STATIONS, allergensOf, formatMinor, type Station } from '../lib/model';
 import { call, dangerLink, errorText, fieldClass, primaryButton } from './client';
 import { CookbookPicker, type RecipeItem } from './cookbook-picker';
+import { RecipeEditor } from './recipe-editor';
 import { Status } from './status';
 
 interface Category {
@@ -22,6 +23,8 @@ interface Item {
   station: Station;
   allergens: number;
   available: boolean;
+  /** Ingredients that are short now (the stock cannot make it). */
+  short?: string[];
 }
 
 interface Menu {
@@ -159,6 +162,9 @@ export function MenuEditor({
                               .join(', ')}`
                           : ''}
                         {i.available ? '' : ` · ${t('soldOut')}`}
+                        {i.short?.length
+                          ? ` · ⚠️ ${t('shortOf', { names: i.short.join(', ') })}`
+                          : ''}
                       </span>
                       <span className="ml-auto tabular-nums">
                         {formatMinor(i.priceMinor, venue.decimals)} {venue.currency}
@@ -377,6 +383,7 @@ function ItemForm({
           ))}
         </div>
       </fieldset>
+      {item ? <RecipeEditor itemId={item.id} /> : null}
       <div className="flex flex-wrap items-center gap-3 sm:col-span-2">
         <button type="submit" disabled={busy} className={primaryButton}>
           {item ? t('save') : t('add')}

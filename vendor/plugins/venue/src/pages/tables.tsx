@@ -2,6 +2,7 @@ import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { plainQrSvg } from '@devquake/ui/qr';
 import { TablesManager } from '../components/tables-manager';
 import { localeOf, translator } from '../i18n';
+import { waiters } from '../lib/calls';
 import { listTables } from '../lib/floor';
 import { ownVenue } from '../lib/page';
 
@@ -14,7 +15,10 @@ export default async function Tables({ ctx }: PluginPageProps) {
   const t = translator(localeOf(ctx));
   const own = await ownVenue(ctx);
   if ('blocked' in own) return own.blocked;
-  const tables = await listTables(own.db, own.venue.id);
+  const [tables, staff] = await Promise.all([
+    listTables(own.db, own.venue.id),
+    waiters(own.db, own.venue.id),
+  ]);
   return (
     <div className="space-y-6">
       <header className="space-y-2 print:hidden">
@@ -22,9 +26,18 @@ export default async function Tables({ ctx }: PluginPageProps) {
         <p className="text-ink/70 dark:text-paper/70">{t('tables.intro')}</p>
       </header>
       <TablesManager
+        waiters={staff}
         initial={tables.map((x) => {
           const url = `${ctx.baseUrl}/t/${x.code}`;
-          return { id: x.id, name: x.name, seats: x.seats, code: x.code, url, qr: plainQrSvg(url) };
+          return {
+            id: x.id,
+            name: x.name,
+            seats: x.seats,
+            code: x.code,
+            waiterId: x.waiterId,
+            url,
+            qr: plainQrSvg(url),
+          };
         })}
       />
     </div>

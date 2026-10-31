@@ -3,6 +3,7 @@ import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { FloorView } from '../components/floor-view';
 import { TabletStaff } from '../components/tablet-staff';
 import { localeOf, translator } from '../i18n';
+import { openCalls } from '../lib/calls';
 import { listTables, staffList } from '../lib/floor';
 import { floorActor } from '../lib/floor-api';
 import { TABLET_COOKIE } from '../lib/secure';
@@ -32,7 +33,10 @@ export default async function Floor({ ctx }: PluginPageProps) {
         <TabletStaff staff={await staffList(ctx.db, found.venue.id)} />
       </section>
     );
-  const tables = await listTables(ctx.db, found.venue.id);
+  const [tables, calls] = await Promise.all([
+    listTables(ctx.db, found.venue.id),
+    openCalls(ctx.db, found.venue.id),
+  ]);
   return (
     <div className="space-y-6">
       <h1 className="font-display text-3xl font-bold">
@@ -46,12 +50,14 @@ export default async function Floor({ ctx }: PluginPageProps) {
                 id: x.bill.id,
                 code: x.bill.code,
                 openedBy: x.bill.openedBy,
+                waiterName: x.bill.waiterName,
                 pending: x.bill.pending,
                 ready: x.bill.ready,
                 gross: x.bill.gross,
               }
             : null,
         }))}
+        initialCalls={calls}
         currency={found.venue.currency}
         decimals={found.venue.decimals}
         actorName={found.actor.name}

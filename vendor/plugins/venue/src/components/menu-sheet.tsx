@@ -51,6 +51,7 @@ export function MenuSheet({
   allergenName,
   soldOut,
   className,
+  style,
   children,
 }: {
   menu: SheetMenu;
@@ -60,13 +61,15 @@ export function MenuSheet({
   allergenName: (code: string) => string;
   soldOut: string;
   className?: string;
+  /** Merged over the design's look (e.g. the page's shape). */
+  style?: CSSProperties;
   children?: ReactNode;
 }) {
   const sections = menu.categories
     .map((c) => ({ c, items: menu.items.filter((i) => i.categoryId === c.id) }))
     .filter((s) => s.items.length);
   return (
-    <div className={className} style={sheetStyle(design, backgroundUrl)}>
+    <div className={className} style={{ ...sheetStyle(design, backgroundUrl), ...style }}>
       <div style={panelStyle(design)}>
         <header style={{ textAlign: 'center', marginBottom: 24 }}>
           <h1 style={{ fontSize: '2.4rem', fontWeight: 700, color: design.accentColor, margin: 0 }}>

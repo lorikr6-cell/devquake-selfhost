@@ -19,6 +19,8 @@ export const TIPS_PAGES: Record<string, string> = {
   '/menu/design': 'menuDesign',
   '/menu/print': 'menuPrint',
   '/station/:station': 'station',
+  '/calls': 'calls',
+  '/stock': 'stock',
 };
 
 /** How-to tips for each page: how to see the details, how to add, how to change. */
@@ -105,6 +107,16 @@ export const tips = defineMessages(
         create: 'New orders appear by themselves within seconds.',
         edit: 'Tap a line or “All ready” when it is made.',
       },
+      calls: {
+        see: 'The calls of the last 30 days, newest first.',
+        create: 'Guests call from the sticker on their table.',
+        edit: 'Find a table or a waiter with the search bar.',
+      },
+      stock: {
+        see: 'Every ingredient with what is on hand and its daily and weekly level.',
+        create: 'Add an ingredient below; give items a recipe in the menu editor.',
+        edit: 'Note deliveries and waste, count daily or weekly, send what to buy to Shopping.',
+      },
     },
   },
   {
@@ -190,6 +202,16 @@ export const tips = defineMessages(
           create: 'Neue Bestellungen erscheinen von selbst innerhalb von Sekunden.',
           edit: 'Tippe eine Zeile oder „Alles fertig“ an, wenn es fertig ist.',
         },
+        calls: {
+          see: 'Die Rufe der letzten 30 Tage, die neuesten zuerst.',
+          create: 'Gäste rufen über den Sticker auf ihrem Tisch.',
+          edit: 'Finde einen Tisch oder eine Bedienung mit der Suche.',
+        },
+        stock: {
+          see: 'Jede Zutat mit Bestand, Tages- und Wochenstand.',
+          create: 'Füge unten eine Zutat hinzu; Rezepte gibst du Einträgen im Karten-Editor.',
+          edit: 'Trage Lieferungen und Verluste ein, zähle täglich oder wöchentlich, sende den Einkauf an Einkaufen.',
+        },
       },
     },
     ro: {
@@ -273,6 +295,16 @@ export const tips = defineMessages(
           see: 'Ce mai e de pregătit aici, un bon pe masă, cel mai vechi întâi.',
           create: 'Comenzile noi apar singure în câteva secunde.',
           edit: 'Atinge o linie sau „Tot e gata” când e gata.',
+        },
+        calls: {
+          see: 'Chemările din ultimele 30 de zile, cele mai noi întâi.',
+          create: 'Clienții cheamă din abțibildul de pe masă.',
+          edit: 'Găsește o masă sau un ospătar cu căutarea.',
+        },
+        stock: {
+          see: 'Fiecare ingredient cu stocul și nivelurile zilnic și săptămânal.',
+          create: 'Adaugă un ingredient mai jos; rețetele le dai produselor în editorul de meniu.',
+          edit: 'Notează livrări și pierderi, fă inventar, trimite ce trebuie cumpărat în Cumpărături.',
         },
       },
     },
@@ -358,6 +390,16 @@ export const tips = defineMessages(
           create: 'Az új rendelések néhány másodpercen belül maguktól megjelennek.',
           edit: 'Koppints egy sorra vagy a „Minden kész” gombra, ha elkészült.',
         },
+        calls: {
+          see: 'Az elmúlt 30 nap hívásai, a legújabb elöl.',
+          create: 'A vendégek az asztalukon lévő matricáról hívnak.',
+          edit: 'Keress asztalt vagy felszolgálót a keresővel.',
+        },
+        stock: {
+          see: 'Minden hozzávaló a készlettel, a napi és a heti szinttel.',
+          create: 'Adj hozzá lent egy hozzávalót; a receptet az étlapszerkesztőben adod meg.',
+          edit: 'Rögzítsd a szállítást és a selejtet, leltározz, küldd a vásárlást a Bevásárlásba.',
+        },
       },
     },
     it: {
@@ -442,6 +484,17 @@ export const tips = defineMessages(
           create: 'I nuovi ordini compaiono da soli in pochi secondi.',
           edit: 'Tocca una riga o «Tutto pronto» quando è pronto.',
         },
+        calls: {
+          see: 'Le chiamate degli ultimi 30 giorni, le più recenti per prime.',
+          create: 'I clienti chiamano dall’adesivo sul loro tavolo.',
+          edit: 'Trova un tavolo o un cameriere con la ricerca.',
+        },
+        stock: {
+          see: 'Ogni ingrediente con la giacenza e i livelli giornaliero e settimanale.',
+          create:
+            'Aggiungi un ingrediente qui sotto; le ricette si danno alle voci nell’editor del menu.',
+          edit: 'Registra consegne e scarti, conta, invia cosa comprare a Spesa.',
+        },
       },
     },
     es: {
@@ -525,6 +578,17 @@ export const tips = defineMessages(
           see: 'Lo que queda por preparar aquí, una comanda por mesa, la más antigua primero.',
           create: 'Los pedidos nuevos aparecen solos en segundos.',
           edit: 'Toca una línea o «Todo listo» cuando esté hecho.',
+        },
+        calls: {
+          see: 'Las llamadas de los últimos 30 días, las más recientes primero.',
+          create: 'Los clientes llaman desde la pegatina de su mesa.',
+          edit: 'Busca una mesa o un camarero con el buscador.',
+        },
+        stock: {
+          see: 'Cada ingrediente con lo que hay y sus niveles diario y semanal.',
+          create:
+            'Añade un ingrediente abajo; las recetas se dan a los productos en el editor de la carta.',
+          edit: 'Anota entregas y mermas, haz recuento, envía lo que comprar a Compras.',
         },
       },
     },

@@ -16,6 +16,7 @@ import {
 import type { Station, StaffRole } from './model';
 import type { Venue } from './data';
 import { pinMatches } from './secure';
+import { applyRecipe } from './stock';
 
 // Tables, bills and the staff on tablets (venue migration 0003). Every function takes the venue
 // from its caller (the owner's own venue, or the venue of the tablet in use): nothing reaches
@@ -31,12 +32,16 @@ export interface VenueTable {
   name: string;
   seats: number;
   code: string;
+  /** The waiter whose section it is. */
+  waiterId: number | null;
   /** The open bill on it, if any. */
   bill: {
     id: number;
     code: string;
     openedAt: Date;
     openedBy: string;
+    /** Who looks after this seating (assigned or handed over). */
+    waiterName: string | null;
     pending: number;
     /** Made at their station and not brought yet. */
     ready: number;
@@ -46,8 +51,14 @@ export interface VenueTable {
 
 export async function listTables(db: Db, venueId: number): Promise<VenueTable[]> {
   const [tables, open] = await Promise.all([
-    db.query<{ id: number; name: string; seats: number; code: string }>(
-      'SELECT id, name, seats, code FROM venue_tables WHERE venue_id = ? ORDER BY sort_order, id',
+    db.query<{
+      id: number;
+      name: string;
+      seats: number;
+      code: string;
+      waiter_staff_id: number | null;
+    }>(
+      'SELECT id, name, seats, code, waiter_staff_id FROM venue_tables WHERE venue_id = ? ORDER BY sort_order, id',
       [venueId],
     ),
     db.query<{
@@ -56,11 +67,12 @@ export async function listTables(db: Db, venueId: number): Promise<VenueTable[]>
       code: string;
       opened_at: Date;
       opened_by: string;
+      waiter_name: string | null;
       pending: number | null;
       ready: number | null;
       gross: number | null;
     }>(
-      `SELECT b.id, b.table_id, b.code, b.opened_at, b.opened_by,
+      `SELECT b.id, b.table_id, b.code, b.opened_at, b.opened_by, b.waiter_name,
               SUM(GREATEST(l.qty - l.delivered, 0)) AS pending,
               SUM(GREATEST(LEAST(l.ready, l.qty) - l.delivered, 0)) AS ready,
               SUM(l.price_minor * l.qty) AS gross
@@ -78,12 +90,14 @@ export async function listTables(db: Db, venueId: number): Promise<VenueTable[]>
       name: t.name,
       seats: Number(t.seats),
       code: t.code,
+      waiterId: t.waiter_staff_id === null ? null : Number(t.waiter_staff_id),
       bill: b
         ? {
             id: Number(b.id),
             code: b.code,
             openedAt: new Date(b.opened_at),
             openedBy: b.opened_by,
+            waiterName: b.waiter_name,
             pending: Number(b.pending ?? 0),
             ready: Number(b.ready ?? 0),
             gross: Number(b.gross ?? 0),
@@ -170,6 +184,8 @@ export interface Bill {
   code: string;
   status: 'open' | 'final';
   openedBy: string;
+  waiterStaffId: number | null;
+  waiterName: string | null;
   openedAt: Date;
   tip: TipChoice;
   finalizedAt: Date | null;
@@ -187,6 +203,8 @@ async function billWhere(db: Db, where: string, args: unknown[]): Promise<Bill |
     code: string;
     status: 'open' | 'final';
     opened_by: string;
+    waiter_staff_id: number | null;
+    waiter_name: string | null;
     opened_at: Date;
     tip_percent: number | null;
     tip_fixed: number;
@@ -195,7 +213,8 @@ async function billWhere(db: Db, where: string, args: unknown[]): Promise<Bill |
     payment: Payment | null;
   }>(
     // sql-safe: where — fixed conditions written in this file (billOfVenue, billByCode, …)
-    `SELECT id, venue_id, table_id, table_name, code, status, opened_by, opened_at, tip_percent,
+    `SELECT id, venue_id, table_id, table_name, code, status, opened_by, waiter_staff_id,
+            waiter_name, opened_at, tip_percent,
             tip_fixed, finalized_at, finalized_by, payment FROM bills WHERE ${where}`,
     args,
   );
@@ -225,6 +244,8 @@ async function billWhere(db: Db, where: string, args: unknown[]): Promise<Bill |
     code: b.code,
     status: b.status,
     openedBy: b.opened_by,
+    waiterStaffId: b.waiter_staff_id === null ? null : Number(b.waiter_staff_id),
+    waiterName: b.waiter_name,
     openedAt: new Date(b.opened_at),
     tip: {
       percent: b.tip_percent === null ? null : Number(b.tip_percent),
@@ -264,17 +285,34 @@ export const openBillOfTable = (db: Db, venueId: number, tableId: number) =>
   ]);
 
 /** Opens a bill on a table (or returns the one already open there), with a fresh guest code. */
-export async function openBill(db: Db, venueId: number, tableId: number, by: string) {
+export async function openBill(
+  db: Db,
+  venueId: number,
+  tableId: number,
+  by: string,
+  waiter: { id: number; name: string } | null = null,
+) {
   const open = await openBillOfTable(db, venueId, tableId);
-  if (open) return open;
+  if (open) {
+    // A bill without a waiter gets one as soon as someone is known.
+    if (!open.waiterStaffId && waiter) {
+      await db.execute(
+        "UPDATE bills SET waiter_staff_id = ?, waiter_name = ? WHERE id = ? AND status = 'open'",
+        [waiter.id, waiter.name, open.id],
+      );
+      return billOfVenue(db, venueId, open.id);
+    }
+    return open;
+  }
   const [t] = await db.query<{ name: string }>(
     'SELECT name FROM venue_tables WHERE id = ? AND venue_id = ?',
     [tableId, venueId],
   );
   if (!t) return null;
   const r = await db.execute(
-    'INSERT INTO bills (venue_id, table_id, table_name, code, opened_by) VALUES (?, ?, ?, ?, ?)',
-    [venueId, tableId, t.name, code(12), by],
+    `INSERT INTO bills (venue_id, table_id, table_name, code, opened_by, waiter_staff_id, waiter_name)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    [venueId, tableId, t.name, code(12), by, waiter?.id ?? null, waiter?.name ?? null],
   );
   return billOfVenue(db, venueId, r.insertId);
 }
@@ -316,6 +354,15 @@ export async function addLine(
       by,
     ],
   );
+  await applyRecipe(
+    db,
+    venueId,
+    itemId,
+    Math.min(QTY_MAX, Math.max(1, qty)),
+    1,
+    by,
+    `bill:${billId}`,
+  );
   return true;
 }
 
@@ -330,12 +377,27 @@ export async function setDelivered(db: Db, venueId: number, lineId: number, deli
 }
 
 /** Removes a line not yet brought (a mistake), on an open bill. */
-export async function removeLine(db: Db, venueId: number, lineId: number) {
+export async function removeLine(db: Db, venueId: number, lineId: number, by = '') {
+  const [line] = await db.query<{ item_id: number | null; qty: number; bill_id: number }>(
+    'SELECT l.item_id, l.qty, l.bill_id FROM bill_lines l JOIN bills b ON b.id = l.bill_id WHERE l.id = ? AND b.venue_id = ?',
+    [lineId, venueId],
+  );
   const r = await db.execute(
     `DELETE l FROM bill_lines l JOIN bills b ON b.id = l.bill_id
       WHERE l.id = ? AND b.venue_id = ? AND b.status = 'open' AND l.delivered = 0`,
     [lineId, venueId],
   );
+  // A mistake taken back: its ingredients go back into the stock.
+  if (r.affectedRows === 1 && line?.item_id)
+    await applyRecipe(
+      db,
+      venueId,
+      Number(line.item_id),
+      Number(line.qty),
+      -1,
+      by,
+      `bill:${line.bill_id}`,
+    );
   return r.affectedRows === 1;
 }
 
