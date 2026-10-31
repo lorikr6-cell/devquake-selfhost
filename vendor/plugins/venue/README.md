@@ -54,6 +54,11 @@ The admin settings are the venue owner's only (a signed-in member, never a PIN).
 | API  | `/menu/design/background`          | GET, PUT (flattened image), DELETE (owner)                    | `src/api/menu-background.ts`                        |
 | API  | `/menu-bg/:slug`                   | open route: GET the public menu's background                  | `src/api/public-background.ts`                      |
 | API  | `/floor/station/:station`          | key route: GET tickets, POST made                             | `src/api/floor-station.ts`                          |
+| API  | `/phone/pair`                      | key route: POST { code } → the phone's token (ADR 0083)       | `src/api/phone-pair.ts`                             |
+| API  | `/tablets/pairing`                 | POST { name }: a one-time pairing code and its QR             | `src/api/tablets-pairing.ts`                        |
+| API  | `/floor/device`                    | key route: PUT { platform, token } / DELETE (push)            | `src/api/floor-device.ts`                           |
+| API  | `/floor/menu`                      | key route: the menu with details and availability             | `src/api/floor-menu.ts`                             |
+| API  | `/floor/sticker/:code`             | key route: the table of a scanned sticker                     | `src/api/floor-sticker.ts`                          |
 | API  | `/floor/calls`, `/floor/calls/:id` | key routes: open calls (+ history); PUT coming / done         | `src/api/floor-calls.ts`, `floor-call.ts`           |
 | API  | `/floor/bills/:id/waiter`          | key route: GET waiters, PUT hand over                         | `src/api/floor-bill-waiter.ts`                      |
 | API  | `/floor/push`                      | key route: GET public key, POST / DELETE a device             | `src/api/floor-push.ts`                             |
@@ -72,7 +77,8 @@ tablets). The scheduled run deletes finalised bills after 183 days (`deleteOldBi
 `0007_venue_stations.sql` (bill_lines.ready: what a station has made).
 `0008_venue_calls.sql` (sections, the bill's waiter, venue_calls, push_subscriptions, push_keys,
 menu_designs.format). `0009_venue_stock.sql` (ingredients, recipe_lines, stock_moves; moves are
-deleted after 90 days by the scheduled run). Next stages: tables and orders on the tablet with PIN switching,
+deleted after 90 days by the scheduled run). `0010_venue_phones.sql` (tablets.kind, phone_pairings,
+phone_push). Next stages: tables and orders on the tablet with PIN switching,
 kitchen and bar screens, payments and the daily closing, stock, shifts, reservations, HACCP.
 
 ## Links with other apps (ADR 0035)

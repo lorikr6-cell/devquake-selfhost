@@ -109,6 +109,17 @@ export const screens = defineMessages(
       enable: 'Enable this device',
       enabled: 'This device is now a tablet of your venue.',
       failed: 'Not saved. Please try again.',
+      phone: 'waiter’s phone',
+      pairTitle: 'Pair a waiter’s phone',
+      pairHint:
+        'Waiters can use the DevQuake Venue app on their own phone: tables, orders, calls with notifications, and the menu with what is out of stock. Give the phone a name, then scan the code with the app. The waiter then picks their name and types their PIN, as on a tablet.',
+      phonePlaceholder: 'Anna’s phone',
+      pairButton: 'Show the pairing code',
+      pairScan: 'Scan this code in the Venue app (Pair this phone).',
+      pairCode: 'Or type the code:',
+      pairServer: 'server {server}',
+      pairUntil: 'Valid until {time}, once.',
+      pairDone: 'Done',
     },
     menu: {
       empty: 'Your menu is empty. Start with a category, such as Coffee or Main courses.',
@@ -225,6 +236,8 @@ export const screens = defineMessages(
       unit: 'Choose a unit.',
       qty: 'Enter a quantity, such as 1.5.',
       nothingToBuy: 'Nothing is below that level.',
+      pairCode: 'That pairing code is wrong or has expired. Ask for a new one.',
+      pairTooMany: 'Five pairing codes are open. Wait 10 minutes or use one of them.',
     },
     fields: {
       name: 'The name',
@@ -259,6 +272,7 @@ export const screens = defineMessages(
       s12: 'Open the kitchen, bar or coffee screen on a tablet: each table’s order waits there, oldest first; tap what is made, and the waiter sees it ready to bring.',
       s13: 'Give each waiter a section under Tables. Guests who scan a table’s sticker get its waiter and can tap “Call the waiter”; the waiter hears it on the floor and, with notifications on, gets it on the phone too.',
       s14: 'Under Stock, add your ingredients and drinks with a daily and a weekly level, and give menu items their recipes. Each order takes its recipe off the stock; an item is unavailable on its own when an ingredient runs short. Count daily or weekly, and send what to buy to your purchasing list.',
+      s15: 'Waiters can use the Venue app on their own phone. Under Tablets, give the phone a name and show the pairing code; the app scans it once. The waiter switches in with their PIN and sees the tables, takes orders, marks what was brought, and gets a notification when a guest calls, even with the screen off. Disable a lost phone under Tablets at once.',
     },
     tipsForm: {
       title: 'Tips on the bill',
@@ -706,6 +720,17 @@ export const screens = defineMessages(
         enable: 'Dieses Gerät freischalten',
         enabled: 'Dieses Gerät ist jetzt ein Tablet deines Lokals.',
         failed: 'Nicht gespeichert. Bitte versuche es noch einmal.',
+        phone: 'Handy einer Bedienung',
+        pairTitle: 'Handy einer Bedienung koppeln',
+        pairHint:
+          'Die Bedienung kann die DevQuake-Venue-App auf dem eigenen Handy nutzen: Tische, Bestellungen, Rufe mit Benachrichtigung und die Karte mit dem, was ausgegangen ist. Gib dem Handy einen Namen und scanne den Code mit der App. Danach wählt die Bedienung ihren Namen und gibt ihre PIN ein, wie am Tablet.',
+        phonePlaceholder: 'Annas Handy',
+        pairButton: 'Kopplungscode zeigen',
+        pairScan: 'Scanne diesen Code in der Venue-App („Dieses Handy koppeln“).',
+        pairCode: 'Oder gib den Code ein:',
+        pairServer: 'Server {server}',
+        pairUntil: 'Gültig bis {time}, einmal.',
+        pairDone: 'Fertig',
       },
       menu: {
         empty: 'Deine Karte ist leer. Beginne mit einer Kategorie, etwa Kaffee oder Hauptgerichte.',
@@ -824,6 +849,8 @@ export const screens = defineMessages(
         unit: 'Wähle eine Einheit.',
         qty: 'Gib eine Menge ein, etwa 1,5.',
         nothingToBuy: 'Nichts liegt unter diesem Stand.',
+        pairCode: 'Dieser Kopplungscode ist falsch oder abgelaufen. Lass dir einen neuen geben.',
+        pairTooMany: 'Fünf Kopplungscodes sind offen. Warte 10 Minuten oder nutze einen davon.',
       },
       fields: {
         name: 'Der Name',
@@ -858,6 +885,7 @@ export const screens = defineMessages(
         s12: 'Öffne den Bildschirm für Küche, Bar oder Kaffee auf einem Tablet: Dort wartet die Bestellung jedes Tisches, die älteste zuerst; tippe an, was fertig ist, und die Bedienung sieht es bereit zum Bringen.',
         s13: 'Gib jeder Bedienung unter „Tische“ ein Revier. Gäste, die den Sticker eines Tisches scannen, bekommen dessen Bedienung und können „Bedienung rufen“ antippen; die Bedienung hört es im Gastraum und bekommt es mit Benachrichtigungen auch aufs Handy.',
         s14: 'Lege unter „Lager“ Zutaten und Getränke mit Tages- und Wochenstand an und gib Einträgen ihre Rezepte. Jede Bestellung nimmt ihr Rezept vom Lager; ein Eintrag ist von selbst nicht verfügbar, wenn eine Zutat knapp wird. Zähle täglich oder wöchentlich und sende, was zu kaufen ist, an deine Einkaufsliste.',
+        s15: 'Die Bedienung kann die Venue-App auf dem eigenen Handy nutzen. Gib dem Handy unter „Tablets“ einen Namen und zeige den Kopplungscode; die App scannt ihn einmal. Die Bedienung meldet sich mit ihrer PIN an, sieht die Tische, nimmt Bestellungen auf, hakt Gebrachtes ab und bekommt eine Benachrichtigung, wenn ein Gast ruft, auch bei ausgeschaltetem Bildschirm. Ein verlorenes Handy sperrst du unter „Tablets“ sofort.',
       },
       tipsForm: {
         title: 'Trinkgeld auf der Rechnung',
@@ -1305,6 +1333,17 @@ export const screens = defineMessages(
         enable: 'Activează acest dispozitiv',
         enabled: 'Acest dispozitiv este acum o tabletă a localului tău.',
         failed: 'Nu s-a salvat. Te rugăm să încerci din nou.',
+        phone: 'telefonul unui ospătar',
+        pairTitle: 'Asociază telefonul unui ospătar',
+        pairHint:
+          'Ospătarii pot folosi aplicația DevQuake Venue pe propriul telefon: mese, comenzi, chemări cu notificări și meniul cu ce s-a terminat. Dă telefonului un nume, apoi scanează codul cu aplicația. Ospătarul își alege apoi numele și introduce PIN-ul, ca pe tabletă.',
+        phonePlaceholder: 'Telefonul Annei',
+        pairButton: 'Arată codul de asociere',
+        pairScan: 'Scanează acest cod în aplicația Venue („Asociază acest telefon”).',
+        pairCode: 'Sau introdu codul:',
+        pairServer: 'serverul {server}',
+        pairUntil: 'Valabil până la {time}, o singură dată.',
+        pairDone: 'Gata',
       },
       menu: {
         empty:
@@ -1422,6 +1461,9 @@ export const screens = defineMessages(
         unit: 'Alege o unitate.',
         qty: 'Introdu o cantitate, de exemplu 1,5.',
         nothingToBuy: 'Nimic nu e sub acel nivel.',
+        pairCode: 'Codul de asociere e greșit sau a expirat. Cere unul nou.',
+        pairTooMany:
+          'Sunt deschise cinci coduri de asociere. Așteaptă 10 minute sau folosește unul dintre ele.',
       },
       fields: {
         name: 'Numele',
@@ -1456,6 +1498,7 @@ export const screens = defineMessages(
         s12: 'Deschide ecranul pentru bucătărie, bar sau cafea pe o tabletă: acolo așteaptă comanda fiecărei mese, cea mai veche întâi; atinge ce e gata, iar ospătarul o vede gata de adus.',
         s13: 'Dă fiecărui ospătar un sector la Mese. Clienții care scanează abțibildul unei mese primesc ospătarul ei și pot atinge „Cheamă ospătarul”; ospătarul aude în sală și, cu notificările pornite, primește și pe telefon.',
         s14: 'La Stoc, adaugă ingredientele și băuturile cu un nivel zilnic și unul săptămânal și dă produselor din meniu rețetele lor. Fiecare comandă scade rețeta din stoc; un produs devine singur indisponibil când un ingredient se termină. Fă inventar zilnic sau săptămânal și trimite ce trebuie cumpărat pe lista de achiziții.',
+        s15: 'Ospătarii pot folosi aplicația Venue pe propriul telefon. La Tablete, dă telefonului un nume și arată codul de asociere; aplicația îl scanează o dată. Ospătarul intră cu PIN-ul, vede mesele, ia comenzi, bifează ce a adus și primește o notificare când un oaspete cheamă, chiar și cu ecranul stins. Un telefon pierdut îl dezactivezi imediat la Tablete.',
       },
       tipsForm: {
         title: 'Bacșișul pe notă',
@@ -1904,6 +1947,17 @@ export const screens = defineMessages(
         enable: 'Az eszköz engedélyezése',
         enabled: 'Ez az eszköz mostantól a helyed tabletje.',
         failed: 'Nem sikerült menteni. Kérjük, próbáld újra.',
+        phone: 'pincér telefonja',
+        pairTitle: 'Pincér telefonjának párosítása',
+        pairHint:
+          'A pincérek a saját telefonjukon is használhatják a DevQuake Venue alkalmazást: asztalok, rendelések, hívások értesítéssel, és az étlap azzal, ami elfogyott. Adj nevet a telefonnak, majd olvasd be a kódot az alkalmazással. Ezután a pincér kiválasztja a nevét és beírja a PIN-kódját, mint a tableten.',
+        phonePlaceholder: 'Anna telefonja',
+        pairButton: 'A párosító kód megjelenítése',
+        pairScan: 'Olvasd be ezt a kódot a Venue alkalmazásban (A telefon párosítása).',
+        pairCode: 'Vagy írd be a kódot:',
+        pairServer: 'szerver: {server}',
+        pairUntil: '{time}-ig érvényes, egyszer.',
+        pairDone: 'Kész',
       },
       menu: {
         empty: 'Az étlapod üres. Kezdd egy kategóriával, például Kávé vagy Főételek.',
@@ -2020,6 +2074,8 @@ export const screens = defineMessages(
         unit: 'Válassz mértékegységet.',
         qty: 'Adj meg mennyiséget, például 1,5.',
         nothingToBuy: 'Semmi sincs e szint alatt.',
+        pairCode: 'Ez a párosító kód hibás vagy lejárt. Kérj újat.',
+        pairTooMany: 'Öt párosító kód van nyitva. Várj 10 percet, vagy használd valamelyiket.',
       },
       fields: {
         name: 'A név',
@@ -2054,6 +2110,7 @@ export const screens = defineMessages(
         s12: 'Nyisd meg a konyha, a pult vagy a kávé kijelzőjét egy tableten: ott vár minden asztal rendelése, a legrégebbi elöl; koppints arra, ami elkészült, és a felszolgáló látja, hogy kivihető.',
         s13: 'Adj minden felszolgálónak körzetet az Asztalok alatt. Aki beolvassa egy asztal matricáját, annak felszolgálója lesz, és megérintheti a „Felszolgáló hívása” gombot; a felszolgáló hallja a vendégtérben, és bekapcsolt értesítésekkel a telefonján is megkapja.',
         s14: 'A Készlet alatt add meg a hozzávalókat és italokat napi és heti szinttel, és adj receptet az étlap tételeinek. Minden rendelés levonja a receptjét a készletből; egy tétel magától nem rendelhető, ha egy hozzávaló kifogy. Leltározz naponta vagy hetente, és küldd a beszerzési listára, amit venni kell.',
+        s15: 'A pincérek a saját telefonjukon is használhatják a Venue alkalmazást. A Tabletek alatt adj nevet a telefonnak, és jelenítsd meg a párosító kódot; az alkalmazás egyszer beolvassa. A pincér a PIN-kódjával lép be, látja az asztalokat, rendelést vesz fel, kipipálja, amit kivitt, és értesítést kap, ha egy vendég hívja, kikapcsolt képernyőnél is. Az elveszett telefont a Tabletek alatt azonnal letilthatod.',
       },
       tipsForm: {
         title: 'Borravaló a számlán',
@@ -2498,6 +2555,17 @@ export const screens = defineMessages(
         enable: 'Abilita questo dispositivo',
         enabled: 'Questo dispositivo è ora un tablet del tuo locale.',
         failed: 'Non salvato. Riprova.',
+        phone: 'telefono di un cameriere',
+        pairTitle: 'Abbina il telefono di un cameriere',
+        pairHint:
+          'I camerieri possono usare l’app DevQuake Venue sul proprio telefono: tavoli, ordini, chiamate con notifiche e il menu con ciò che è esaurito. Dai un nome al telefono, poi scansiona il codice con l’app. Il cameriere sceglie poi il suo nome e digita il PIN, come sul tablet.',
+        phonePlaceholder: 'Il telefono di Anna',
+        pairButton: 'Mostra il codice di abbinamento',
+        pairScan: 'Scansiona questo codice nell’app Venue (Abbina questo telefono).',
+        pairCode: 'Oppure digita il codice:',
+        pairServer: 'server {server}',
+        pairUntil: 'Valido fino alle {time}, una volta.',
+        pairDone: 'Fatto',
       },
       menu: {
         empty: 'Il tuo menu è vuoto. Inizia con una categoria, come Caffè o Secondi.',
@@ -2615,6 +2683,8 @@ export const screens = defineMessages(
         unit: 'Scegli un’unità.',
         qty: 'Inserisci una quantità, ad esempio 1,5.',
         nothingToBuy: 'Niente è sotto quel livello.',
+        pairCode: 'Questo codice di abbinamento è errato o scaduto. Chiedine uno nuovo.',
+        pairTooMany: 'Ci sono cinque codici di abbinamento aperti. Aspetta 10 minuti o usane uno.',
       },
       fields: {
         name: 'Il nome',
@@ -2649,6 +2719,7 @@ export const screens = defineMessages(
         s12: 'Apri lo schermo di cucina, bar o caffè su un tablet: lì aspetta l’ordine di ogni tavolo, il più vecchio per primo; tocca ciò che è pronto e il cameriere lo vede pronto da portare.',
         s13: 'Dai a ogni cameriere un settore in Tavoli. I clienti che scansionano l’adesivo di un tavolo ricevono il suo cameriere e possono toccare «Chiama il cameriere»; il cameriere lo sente in sala e, con le notifiche accese, lo riceve anche sul telefono.',
         s14: 'In Magazzino aggiungi ingredienti e bevande con un livello giornaliero e uno settimanale e dai alle voci del menu le loro ricette. Ogni ordine scala la ricetta dal magazzino; una voce diventa da sola non disponibile quando un ingrediente finisce. Conta ogni giorno o ogni settimana e invia cosa comprare alla lista degli acquisti.',
+        s15: 'I camerieri possono usare l’app Venue sul proprio telefono. In Tablet dai un nome al telefono e mostra il codice di abbinamento; l’app lo scansiona una volta. Il cameriere entra con il PIN, vede i tavoli, prende gli ordini, segna ciò che ha portato e riceve una notifica quando un ospite chiama, anche a schermo spento. Un telefono perso si disattiva subito in Tablet.',
       },
       tipsForm: {
         title: 'Mancia sul conto',
@@ -3095,6 +3166,17 @@ export const screens = defineMessages(
         enable: 'Activar este dispositivo',
         enabled: 'Este dispositivo ya es una tableta de tu local.',
         failed: 'No se ha guardado. Inténtalo de nuevo.',
+        phone: 'teléfono de un camarero',
+        pairTitle: 'Vincular el teléfono de un camarero',
+        pairHint:
+          'Los camareros pueden usar la app DevQuake Venue en su propio teléfono: mesas, pedidos, llamadas con notificaciones y la carta con lo que está agotado. Pon un nombre al teléfono y escanea el código con la app. Después el camarero elige su nombre y escribe su PIN, como en la tableta.',
+        phonePlaceholder: 'Teléfono de Ana',
+        pairButton: 'Mostrar el código de vinculación',
+        pairScan: 'Escanea este código en la app Venue (Vincular este teléfono).',
+        pairCode: 'O escribe el código:',
+        pairServer: 'servidor {server}',
+        pairUntil: 'Válido hasta las {time}, una vez.',
+        pairDone: 'Hecho',
       },
       menu: {
         empty: 'Tu carta está vacía. Empieza con una categoría, como Café o Platos principales.',
@@ -3212,6 +3294,9 @@ export const screens = defineMessages(
         unit: 'Elige una unidad.',
         qty: 'Introduce una cantidad, por ejemplo 1,5.',
         nothingToBuy: 'Nada está por debajo de ese nivel.',
+        pairCode: 'Ese código de vinculación es incorrecto o ha caducado. Pide uno nuevo.',
+        pairTooMany:
+          'Hay cinco códigos de vinculación abiertos. Espera 10 minutos o usa uno de ellos.',
       },
       fields: {
         name: 'El nombre',
@@ -3246,6 +3331,7 @@ export const screens = defineMessages(
         s12: 'Abre la pantalla de cocina, barra o café en una tableta: allí espera el pedido de cada mesa, el más antiguo primero; toca lo que esté hecho y el camarero lo verá listo para llevar.',
         s13: 'Da a cada camarero una zona en Mesas. Los clientes que escanean la pegatina de una mesa reciben a su camarero y pueden tocar «Llamar al camarero»; el camarero lo oye en la sala y, con las notificaciones activadas, también lo recibe en el móvil.',
         s14: 'En Existencias añade tus ingredientes y bebidas con un nivel diario y uno semanal, y da a los productos de la carta sus recetas. Cada pedido descuenta su receta; un producto deja de estar disponible solo cuando se agota un ingrediente. Haz recuento diario o semanal y envía lo que hay que comprar a tu lista de compras.',
+        s15: 'Los camareros pueden usar la app Venue en su propio teléfono. En Tabletas, pon un nombre al teléfono y muestra el código de vinculación; la app lo escanea una vez. El camarero entra con su PIN, ve las mesas, toma pedidos, marca lo que ha llevado y recibe una notificación cuando un cliente llama, incluso con la pantalla apagada. Un teléfono perdido se desactiva al momento en Tabletas.',
       },
       tipsForm: {
         title: 'Propina en la cuenta',

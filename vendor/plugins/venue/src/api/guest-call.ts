@@ -3,6 +3,7 @@ import { localeOf, translator } from '../i18n';
 import { TABLE_CODE } from '../lib/bill';
 import { lastCallOfTable, pushCall, raiseHand, waiterFor } from '../lib/calls';
 import { openBill, tableByCode } from '../lib/floor';
+import { pushPhones } from '../lib/phones';
 
 // A guest at a table (its sticker's code is the key; no account): GET the table's latest call
 // (to show "on the way"); POST raises a hand: the table's waiter (or everyone, without one) is
@@ -42,10 +43,13 @@ export const POST: PluginApiHandler = async (request, { params, ctx }) => {
   );
   const { call, created } = await raiseHand(db, table.venueId, table, bill?.waiterStaffId ?? null);
   if (created)
-    await pushCall(db, table.venueId, call, {
-      title: t('call.pushTitle', { table: table.name }),
-      body: t('call.pushBody'),
-      url: '/tablet',
-    }).catch(() => undefined);
+    await Promise.all([
+      pushCall(db, table.venueId, call, {
+        title: t('call.pushTitle', { table: table.name }),
+        body: t('call.pushBody'),
+        url: '/tablet',
+      }).catch(() => undefined),
+      pushPhones(db, table.venueId, call).catch(() => undefined),
+    ]);
   return Response.json({ call: view(call) }, { headers: { 'Cache-Control': 'no-store' } });
 };

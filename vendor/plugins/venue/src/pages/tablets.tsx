@@ -25,6 +25,7 @@ export default async function Tablets({ ctx }: PluginPageProps) {
         initial={tablets.map((tab) => ({
           id: tab.id,
           name: tab.name,
+          kind: tab.kind,
           lastUsedAt: tab.lastUsedAt ? new Date(tab.lastUsedAt).toISOString() : null,
           createdAt: new Date(tab.createdAt).toISOString(),
         }))}

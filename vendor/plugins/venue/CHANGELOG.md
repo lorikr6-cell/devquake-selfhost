@@ -1,5 +1,9 @@
 # Changelog — Venue
 
+## 0.9.0
+
+- Waiters’ phones: under Tablets, pair a waiter’s phone by showing a code that the DevQuake Venue app scans once; the waiter then switches in with their PIN. The phone gets a notification when a guest calls, even with the screen off, and a lost phone can be disabled at once. The phone apps for Android and iPhone follow.
+
 ## 0.8.0
 
 - Stock: keep your ingredients and drinks with what is on hand and a daily and a weekly level, note deliveries and waste, and count daily or weekly. Give menu items a recipe and each order takes it off the stock; an item whose ingredient runs short is unavailable on its own, on the menu, the sticker page and for the waiter. “What to buy” fills up to the daily or weekly level and goes onto your purchasing list in Shopping with one tap.

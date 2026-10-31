@@ -175,6 +175,8 @@ export async function removeStaff(db: Db, venueId: number, staffId: number) {
 export interface Tablet {
   id: number;
   name: string;
+  /** A shared tablet (browser) or a waiter's phone (the Venue app, ADR 0083). */
+  kind: 'tablet' | 'phone';
   lastUsedAt: Date | null;
   createdAt: Date;
 }
@@ -183,15 +185,17 @@ export async function listTablets(db: Db, venueId: number): Promise<Tablet[]> {
   const rows = await db.query<{
     id: number;
     name: string;
+    kind: 'tablet' | 'phone';
     last_used_at: Date | null;
     created_at: Date;
   }>(
-    'SELECT id, name, last_used_at, created_at FROM tablets WHERE venue_id = ? AND revoked_at IS NULL ORDER BY created_at',
+    'SELECT id, name, kind, last_used_at, created_at FROM tablets WHERE venue_id = ? AND revoked_at IS NULL ORDER BY created_at',
     [venueId],
   );
   return rows.map((r) => ({
     id: r.id,
     name: r.name,
+    kind: r.kind === 'phone' ? 'phone' : 'tablet',
     lastUsedAt: r.last_used_at,
     createdAt: r.created_at,
   }));
