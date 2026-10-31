@@ -1,5 +1,9 @@
 # Changelog — Venue
 
+## 0.10.0
+
+- Ready for the owner’s Windows app: it can show your whole venue (menu, tables, staff, devices, stock, today’s takings) and the month’s reports, and change them as the website does.
+
 ## 0.9.0
 
 - Waiters’ phones: under Tablets, pair a waiter’s phone by showing a code that the DevQuake Venue app scans once; the waiter then switches in with their PIN. The phone gets a notification when a guest calls, even with the screen off, and a lost phone can be disabled at once. The phone apps for Android and iPhone follow.

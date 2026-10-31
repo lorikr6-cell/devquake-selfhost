@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'venue',
     name: 'Venue',
-    version: '0.9.0',
+    version: '0.10.0',
     description:
       'The business side of a café, bistro, fast food or bar: the venue with its country’s VAT rates, a menu with allergens, staff with PINs for a shared tablet, and a public menu for guests.',
     status: 'active',
@@ -138,6 +138,8 @@ export default definePlugin({
   api: {
     '/health': () => import('./api/health'),
     '/venue': () => import('./api/venue'),
+    '/app/owner': () => import('./api/app-owner'),
+    '/app/reports': () => import('./api/app-reports'),
     '/staff': () => import('./api/staff'),
     '/staff/:id': () => import('./api/staff-member'),
     '/tablets': () => import('./api/tablets'),

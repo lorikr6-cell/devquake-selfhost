@@ -23,7 +23,8 @@ export interface OwnerScope {
 /**
  * The venue's owner API (admin settings, the menu): a signed-in member, the database and their own
  * venue (ADR 0080: never a tablet PIN). Turns HttpError into JSON errors in the visitor's language
- * and return values into JSON (undefined → 204).
+ * ({ error, code }: the text and its key, for the owner's Windows app) and return values into JSON
+ * (undefined → 204).
  */
 export function ownerApi(
   fn: (scope: OwnerScope & { venue: Venue }) => Promise<unknown>,
@@ -39,8 +40,13 @@ export function ownerApi(
 ): PluginApiHandler {
   return async (request: Request, { params, ctx }: PluginApiArgs) => {
     const t = translator(localeOf(ctx));
-    if (!ctx.user) return Response.json({ error: t('errors.signIn') }, { status: 401 });
-    if (!ctx.db) return Response.json({ error: t('errors.unavailable') }, { status: 503 });
+    if (!ctx.user)
+      return Response.json({ error: t('errors.signIn'), code: 'signIn' }, { status: 401 });
+    if (!ctx.db)
+      return Response.json(
+        { error: t('errors.unavailable'), code: 'unavailable' },
+        { status: 503 },
+      );
     try {
       const venue = await venueOfOwner(ctx.db, ctx.user.id);
       if (options.needVenue !== false && !venue) throw new HttpError(404, 'noVenue');
@@ -52,7 +58,10 @@ export function ownerApi(
       if (err instanceof HttpError) {
         const { field, ...rest } = err.params;
         const values = field === undefined ? rest : { ...rest, field: t(`fields.${field}`) };
-        return Response.json({ error: t(`errors.${err.key}`, values) }, { status: err.status });
+        return Response.json(
+          { error: t(`errors.${err.key}`, values), code: err.key },
+          { status: err.status },
+        );
       }
       throw err; // the host logs it and answers 500
     }
