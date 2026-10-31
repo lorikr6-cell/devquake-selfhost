@@ -1,8 +1,9 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { Link } from '@devquake/ui';
+import { DemoPanel } from '../components/demo-panel';
 import { VenueForm } from '../components/venue-form';
 import { localeOf, translator } from '../i18n';
-import { listStaff, listTablets, menuOf, venueOfOwner } from '../lib/data';
+import { listStaff, listTablets, menuOf, venueOfOwner, venuesOfOwner } from '../lib/data';
 import { syncDarts } from '../lib/links';
 
 export async function generateMetadata({ ctx }: PluginPageProps) {
@@ -24,7 +25,10 @@ export default async function Home({ ctx }: PluginPageProps) {
         )}
       </section>
     );
-  const venue = await venueOfOwner(ctx.db, ctx.user.id);
+  const [venue, both] = await Promise.all([
+    venueOfOwner(ctx.db, ctx.user.id),
+    venuesOfOwner(ctx.db, ctx.user.id),
+  ]);
   if (!venue)
     return (
       <div className="space-y-6">
@@ -33,6 +37,11 @@ export default async function Home({ ctx }: PluginPageProps) {
           <p className="text-ink/70 dark:text-paper/70">{t('home.setupBody')}</p>
         </header>
         <VenueForm />
+        <section className="space-y-2 rounded-lg border border-dashed border-ink/20 p-4 dark:border-paper/20">
+          <h2 className="font-semibold">{t('demo.homeTitle')}</h2>
+          <p className="text-sm text-ink/70 dark:text-paper/70">{t('demo.setupOr')}</p>
+          <DemoPanel hasDemo={!!both.demo} inDemo={false} hasOwn={false} />
+        </section>
       </div>
     );
   // The darts copy for the public menu, refreshed while the owner uses Venue (ADR 0035).
@@ -92,6 +101,13 @@ export default async function Home({ ctx }: PluginPageProps) {
           <p className="text-sm">{t('home.publicMenuOff')}</p>
         )}
       </section>
+      {venue.isDemo ? null : (
+        <section className="space-y-2 rounded-lg border border-dashed border-ink/20 p-4 dark:border-paper/20">
+          <h2 className="font-semibold">{t('demo.homeTitle')}</h2>
+          <p className="text-sm text-ink/70 dark:text-paper/70">{t('demo.homeBody')}</p>
+          <DemoPanel hasDemo={!!both.demo} inDemo={false} hasOwn />
+        </section>
+      )}
       <p className="text-sm text-ink/60 dark:text-paper/60">{t('home.comingNext')}</p>
     </div>
   );

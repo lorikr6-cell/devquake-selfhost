@@ -1,6 +1,8 @@
 import { cookies } from 'next/headers';
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { GuestCall } from '../components/guest-call';
+import { GuestOrder } from '../components/guest-order';
+import { lastOrderOfTable } from '../lib/guest-orders';
 import { TableView } from '../components/table-view';
 import { TabletStaff } from '../components/tablet-staff';
 import { localeOf, translator } from '../i18n';
@@ -60,9 +62,41 @@ export default async function TablePage({ ctx, params }: PluginPageProps) {
       await waiterFor(ctx.db, venue.id, table.id),
     );
     const last = await lastCallOfTable(ctx.db, venue.id, table.id);
+    // Guests may order from here when the owner allows it (the waiter confirms each order).
+    const ordering = venue.guestOrders
+      ? await Promise.all([menuOf(ctx.db, venue.id), lastOrderOfTable(ctx.db, venue.id, table.id)])
+      : null;
     return (
       <>
         <DesignedMenu db={ctx.db} venue={venue} intro={t('table.guestIntro')} t={t} />
+        {ordering ? (
+          <GuestOrder
+            code={code}
+            currency={venue.currency}
+            decimals={venue.decimals}
+            items={ordering[0].items.map((i) => ({
+              id: i.id,
+              name: i.name,
+              category: ordering[0].categories.find((c) => c.id === i.categoryId)?.name ?? '',
+              priceMinor: i.priceMinor,
+              why: !i.available
+                ? t('table.soldOut')
+                : i.short.length
+                  ? t('table.outOfStock', { names: i.short.join(', ') })
+                  : null,
+            }))}
+            initial={
+              ordering[1]
+                ? {
+                    status: ordering[1].status,
+                    at: ordering[1].createdAt,
+                    by: ordering[1].answeredBy,
+                    lines: ordering[1].lines.map((l) => ({ name: l.name, qty: l.qty })),
+                  }
+                : null
+            }
+          />
+        ) : null}
         <GuestCall
           code={code}
           waiterName={bill?.waiterName ?? null}

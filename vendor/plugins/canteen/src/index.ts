@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'canteen',
     name: 'Social canteen',
-    version: '0.27.3',
+    version: '0.27.4',
     description:
       'For organisations that care for elderly people: profiles and papers stored encrypted, menus by diet and the kitchen sheet, delivery routes with a drivers’ view, the medical file, a waiting list with social work, and reports.',
     status: 'active',

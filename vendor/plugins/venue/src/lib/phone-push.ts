@@ -9,8 +9,10 @@ import { connect } from 'node:http2';
 
 export type Outcome = 'ok' | 'gone' | 'failed';
 
-/** What a phone is told about a guest's call. */
+/** What a phone is told about a guest: a call or an order waiting for the waiter. */
 export interface PhoneCall {
+  /** 'call' (default) or 'order'; the app's texts are <kind>_push_title / <kind>_push_body. */
+  kind?: 'call' | 'order';
   callId: number;
   tableId: number;
   tableName: string;
@@ -56,7 +58,7 @@ export function fcmMessage(token: string, call: PhoneCall) {
     message: {
       token,
       data: {
-        kind: 'call',
+        kind: call.kind ?? 'call',
         callId: String(call.callId),
         tableId: String(call.tableId),
         tableName: call.tableName,
@@ -156,9 +158,9 @@ export function apnsPayload(call: PhoneCall) {
   return {
     aps: {
       alert: {
-        'title-loc-key': 'call_push_title',
+        'title-loc-key': `${call.kind ?? 'call'}_push_title`,
         'title-loc-args': [call.tableName],
-        'loc-key': 'call_push_body',
+        'loc-key': `${call.kind ?? 'call'}_push_body`,
       },
       sound: 'default',
       'thread-id': `call-${call.tableId}`,

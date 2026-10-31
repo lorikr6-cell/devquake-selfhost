@@ -64,4 +64,6 @@ export const scheduled: PluginPlatformModule['scheduled'] = async ({ db }) => {
   await deleteOldBills(db);
   await deleteOldCalls(db);
   await deleteOldMoves(db);
+  const { deleteOldOrders } = await import('./lib/guest-orders');
+  await deleteOldOrders(db);
 };

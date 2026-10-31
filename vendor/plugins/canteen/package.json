@@ -1,6 +1,6 @@
 {
   "name": "@devquake/plugin-canteen",
-  "version": "0.27.3",
+  "version": "0.27.4",
   "private": true,
   "type": "module",
   "exports": {

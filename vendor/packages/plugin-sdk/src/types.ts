@@ -273,6 +273,11 @@ export interface PluginContext {
    * claim the platform made for them. Undefined otherwise and on older hosts.
    */
   claimRewards?: PluginClaimRewardsApi;
+  /**
+   * Notifications to members' native apps while they are closed (ADR 0084). Undefined on older
+   * hosts and without the platform database.
+   */
+  push?: PluginPush;
 }
 
 /** One setting of `PluginManifest.adminSettings`. /admin-cp is in English. */
@@ -632,6 +637,32 @@ export interface PluginScheduledContext extends PluginPlatformContext {
   lastActiveAt?: (userIds: number[]) => Promise<Record<number, string | null>>;
   /** NPS awards (ADR 0037); undefined without `manifest.npsAwards` and on older hosts. */
   nps?: PluginNpsApi;
+  /** Notifications to native apps (ADR 0084); undefined on older hosts. */
+  push?: PluginPush;
+}
+
+/**
+ * One notification for this app's native app (ADR 0084). It carries no text: the app writes it
+ * from its own texts `push_<kind>_title` and `push_<kind>_body` (Android and iPhone), filling in
+ * `args`, so it is in the member's language and Google or Apple see no content.
+ */
+export interface PluginPushMessage {
+  /** e.g. "route_changed": a–z, 0–9 and _, starting with a letter, at most 40. */
+  kind: string;
+  /** Up to 3 values for the texts' placeholders (e.g. a pet's name), each at most 80 characters. */
+  args?: string[];
+  /** What the app opens when it is tapped, e.g. "pet:12" (at most 60 characters). */
+  ref?: string;
+}
+
+/** See `PluginContext.push`. */
+export interface PluginPush {
+  /**
+   * Sends to the member's devices with this app's native app, if they allowed notifications and
+   * did not switch that device off (at most 5 devices). Returns how many devices it reached; 0
+   * when none (no device, switched off, keys not set on the server). Never throws.
+   */
+  send(userId: number, message: PluginPushMessage): Promise<number>;
 }
 
 /**

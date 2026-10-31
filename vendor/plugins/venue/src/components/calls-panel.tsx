@@ -6,7 +6,7 @@ import type { Call } from '../lib/calls';
 import { call as api, errorText } from './client';
 
 /** A short "ding" for a new call (no file to load). */
-function ding() {
+export function ding() {
   try {
     const ctx = new AudioContext();
     for (const [f, start] of [

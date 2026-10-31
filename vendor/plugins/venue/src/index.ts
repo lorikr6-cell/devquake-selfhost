@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'venue',
     name: 'Venue',
-    version: '0.10.0',
+    version: '0.12.1',
     description:
       'The business side of a café, bistro, fast food or bar: the venue with its country’s VAT rates, a menu with allergens, staff with PINs for a shared tablet, and a public menu for guests.',
     status: 'active',
@@ -40,6 +40,8 @@ export default definePlugin({
       '/phone/pair',
       '/push-sw',
       '/guest-call/:code',
+      '/guest-order/:code',
+      '/floor/orders/:id',
       '/guest/:code',
     ],
     about,
@@ -138,6 +140,8 @@ export default definePlugin({
   api: {
     '/health': () => import('./api/health'),
     '/venue': () => import('./api/venue'),
+    '/venue/guest-orders': () => import('./api/venue-guest-orders'),
+    '/demo': () => import('./api/demo'),
     '/app/owner': () => import('./api/app-owner'),
     '/app/reports': () => import('./api/app-reports'),
     '/staff': () => import('./api/staff'),
@@ -163,6 +167,8 @@ export default definePlugin({
     '/floor/bills/:id/waiter': () => import('./api/floor-bill-waiter'),
     '/floor/calls': () => import('./api/floor-calls'),
     '/floor/calls/:id': () => import('./api/floor-call'),
+    '/floor/orders/:id': () => import('./api/floor-order'),
+    '/guest-order/:code': () => import('./api/guest-order'),
     '/floor/device': () => import('./api/floor-device'),
     '/floor/menu': () => import('./api/floor-menu'),
     '/floor/sticker/:code': () => import('./api/floor-sticker'),

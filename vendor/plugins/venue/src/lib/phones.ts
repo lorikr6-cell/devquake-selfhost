@@ -105,16 +105,33 @@ export async function removePhonePush(db: Db, tabletId: number) {
  * A guest's call to the phones of the waiter on shift who looks after the table (anyone on a
  * phone when the table has no waiter); at most 10 phones. Gone addresses are deleted.
  */
-export async function pushPhones(db: Db, venueId: number, call: Call) {
+export async function pushPhones(
+  db: Db,
+  venueId: number,
+  call: Pick<Call, 'id' | 'tableId' | 'tableName' | 'waiterStaffId'>,
+  kind: 'call' | 'order' = 'call',
+) {
+  // Only who has something to do with it (owner's rule), in this venue only: the phone of the
+  // table's waiter when it has one; otherwise the phones of every waiter and manager on shift
+  // (never the kitchen's or the bar's).
   const rows = await db.query<{ platform: 'fcm' | 'apns'; token: string }>(
-    `SELECT p.platform, p.token FROM phone_push p JOIN tablets t ON t.id = p.tablet_id
-      WHERE p.venue_id = ? AND t.revoked_at IS NULL AND t.staff_id IS NOT NULL
-        AND t.staff_until > UTC_TIMESTAMP()${call.waiterStaffId === null ? '' : ' AND t.staff_id = ?'}
-      LIMIT 10`,
+    call.waiterStaffId === null
+      ? `SELECT p.platform, p.token FROM phone_push p
+           JOIN tablets t ON t.id = p.tablet_id AND t.venue_id = p.venue_id
+           JOIN staff s ON s.id = t.staff_id AND s.venue_id = p.venue_id
+          WHERE p.venue_id = ? AND t.revoked_at IS NULL AND t.staff_until > UTC_TIMESTAMP()
+            AND s.active = 1 AND s.role IN ('waiter', 'manager')
+          LIMIT 10`
+      : `SELECT p.platform, p.token FROM phone_push p
+           JOIN tablets t ON t.id = p.tablet_id AND t.venue_id = p.venue_id
+          WHERE p.venue_id = ? AND t.revoked_at IS NULL AND t.staff_until > UTC_TIMESTAMP()
+            AND t.staff_id = ?
+          LIMIT 10`,
     call.waiterStaffId === null ? [venueId] : [venueId, call.waiterStaffId],
   );
   if (!rows.length) return;
   const gone = await sendToPhones(rows, {
+    kind,
     callId: call.id,
     tableId: call.tableId,
     tableName: call.tableName,

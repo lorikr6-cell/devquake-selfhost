@@ -1,5 +1,21 @@
 # Changelog — Venue
 
+## 0.12.1
+
+- Notifications about a guest calling or ordering now go only to the people concerned: the table’s waiter when it has one, otherwise the venue’s waiters and managers (never the kitchen or the bar). A guest’s order goes to the waiter already looking after the table.
+
+## 0.12.0
+
+- Guests can order from the menu on their table’s sticker. Each order waits on the floor with a sound and a notification, and the table’s waiter confirms it (then it goes onto the bill and to the kitchen and bar) or refuses it. You can switch this off under Settings. The demo café has an order waiting to try it.
+
+## 0.11.0
+
+- Try the demo café: from the home page, a sample café beside your own venue with a menu, stock and recipes, tables with waiters, open and paid bills, three weeks of reports and guests calling. Switch back to your venue any time, and delete the demo when you are done.
+
+## 0.10.1
+
+- The app’s front page now says how guests reach the menu (the QR sticker on their table, no app needed), and what the waiters’ phone app and the owner’s Windows app are for.
+
 ## 0.10.0
 
 - Ready for the owner’s Windows app: it can show your whole venue (menu, tables, staff, devices, stock, today’s takings) and the month’s reports, and change them as the website does.

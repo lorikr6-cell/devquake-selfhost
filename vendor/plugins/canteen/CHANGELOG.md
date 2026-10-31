@@ -1,5 +1,9 @@
 # Changelog — Social canteen
 
+## 0.27.4
+
+- The demo organisation now also shows a photo and an ID card on a person’s profile and two medical papers in the medical file, so every part of the app can be tried.
+
 ## 0.27.3
 
 - Connecting the Cookbook or Shopping shows the NPS points it costs; without enough points the link says how many are needed.

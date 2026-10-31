@@ -1,12 +1,13 @@
 import { badInput, jsonBody, ownerApi } from '../lib/api';
-import { createVenue, updateVenue } from '../lib/data';
+import { createVenue, updateVenue, venuesOfOwner } from '../lib/data';
 import { HttpError } from '../lib/http';
 import { checkVenue } from '../lib/model';
 
-// POST /api/venue: the member's venue (one each for now), filled from the country's preset.
+// POST /api/venue: the member's own venue (one each, beside an optional demo venue), filled
+// from the country's preset.
 export const POST = ownerApi(
-  async ({ request, db, user, venue }) => {
-    if (venue) throw new HttpError(409, 'venueExists');
+  async ({ request, db, user }) => {
+    if ((await venuesOfOwner(db, user.id)).own) throw new HttpError(409, 'venueExists');
     const checked = checkVenue(await jsonBody(request));
     if (!checked.ok) throw badInput(checked);
     const made = await createVenue(db, user.id, checked.value);

@@ -19,6 +19,10 @@ export interface Venue {
   decimals: number;
   menuPublic: boolean;
   tips: TipSettings;
+  /** The owner's sample café (migration 0011), beside their own venue. */
+  isDemo: boolean;
+  /** Guests may order from the sticker's page; the waiter confirms (migration 0012). */
+  guestOrders: boolean;
 }
 
 interface VenueRow {
@@ -34,6 +38,8 @@ interface VenueRow {
   tip_mode: TipMode;
   tip_percents: string;
   tip_fixed_minor: number | string;
+  is_demo: number;
+  guest_orders: number;
 }
 
 const toVenue = (r: VenueRow): Venue => ({
@@ -51,16 +57,55 @@ const toVenue = (r: VenueRow): Venue => ({
     tipPercents: r.tip_percents.split(',').map(Number).filter(Number.isFinite),
     tipFixedMinor: Number(r.tip_fixed_minor),
   },
+  isDemo: Number(r.is_demo) === 1,
+  guestOrders: Number(r.guest_orders) === 1,
 });
 
 const VENUE_COLS = `id, owner_user_id, slug, name, country, currency, vat_rates, decimals, menu_public,
-  tip_mode, tip_percents, tip_fixed_minor`;
+  tip_mode, tip_percents, tip_fixed_minor, is_demo, guest_orders`;
 
+/**
+ * The venue the owner works in now: their own, or their demo venue while they look at it
+ * (venue_owner_view; no row: their own). Null when the chosen one does not exist yet (then the
+ * home page offers to set up the own venue, or to open the demo).
+ */
 export async function venueOfOwner(db: Db, userId: number): Promise<Venue | null> {
-  const [r] = await db.query<VenueRow>(`SELECT ${VENUE_COLS} FROM venues WHERE owner_user_id = ?`, [
-    userId,
-  ]);
+  const [r] = await db.query<VenueRow>(
+    `SELECT ${VENUE_COLS} FROM venues
+      WHERE owner_user_id = ?
+        AND is_demo = COALESCE((SELECT demo FROM venue_owner_view WHERE user_id = ?), 0)
+      LIMIT 1`,
+    [userId, userId],
+  );
   return r ? toVenue(r) : null;
+}
+
+/** The owner's own venue and demo venue (either may be missing), for the switch between them. */
+export async function venuesOfOwner(
+  db: Db,
+  userId: number,
+): Promise<{ own: Venue | null; demo: Venue | null }> {
+  const rows = await db.query<VenueRow>(
+    `SELECT ${VENUE_COLS} FROM venues WHERE owner_user_id = ?`,
+    [userId],
+  );
+  const all = rows.map(toVenue);
+  return { own: all.find((v) => !v.isDemo) ?? null, demo: all.find((v) => v.isDemo) ?? null };
+}
+
+/** Which venue the owner works in: their own (false) or the demo (true). */
+export async function setOwnerView(db: Db, userId: number, demo: boolean) {
+  await db.execute(
+    `INSERT INTO venue_owner_view (user_id, demo) VALUES (?, ?)
+     ON DUPLICATE KEY UPDATE demo = VALUES(demo)`,
+    [userId, demo ? 1 : 0],
+  );
+}
+
+/** Deletes the owner's demo venue with everything in it, and goes back to their own. */
+export async function deleteDemoVenue(db: Db, userId: number) {
+  await db.execute('DELETE FROM venues WHERE owner_user_id = ? AND is_demo = 1', [userId]);
+  await setOwnerView(db, userId, false);
 }
 
 export async function venueById(db: Db, id: number): Promise<Venue | null> {
@@ -85,7 +130,12 @@ function slugFrom(name: string): string {
   return s.length >= 2 ? s : 'venue';
 }
 
-export async function createVenue(db: Db, userId: number, v: VenueInput): Promise<Venue> {
+export async function createVenue(
+  db: Db,
+  userId: number,
+  v: VenueInput,
+  demo = false,
+): Promise<Venue> {
   const base = slugFrom(v.name);
   const taken = new Set(
     (
@@ -95,10 +145,12 @@ export async function createVenue(db: Db, userId: number, v: VenueInput): Promis
   let slug = base;
   for (let n = 2; taken.has(slug); n += 1) slug = `${base}-${n}`;
   await db.execute(
-    `INSERT INTO venues (owner_user_id, slug, name, country, currency, vat_rates, decimals)
-     VALUES (?, ?, ?, ?, ?, ?, ?)`,
-    [userId, slug, v.name, v.country, v.currency, v.vatRates.join(','), v.decimals],
+    `INSERT INTO venues (owner_user_id, is_demo, slug, name, country, currency, vat_rates, decimals)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    [userId, demo ? 1 : 0, slug, v.name, v.country, v.currency, v.vatRates.join(','), v.decimals],
   );
+  // The owner works in the venue just made (their own, or the demo).
+  await setOwnerView(db, userId, demo);
   return (await venueOfOwner(db, userId))!;
 }
 
@@ -111,6 +163,11 @@ export async function updateVenue(db: Db, venueId: number, v: VenueInput, menuPu
 }
 
 /** Tips on the bill: off, percentages before VAT, or a fixed tip. */
+/** The owner's setting: guests may order from the table (the waiter confirms). */
+export async function setGuestOrders(db: Db, venueId: number, on: boolean) {
+  await db.execute('UPDATE venues SET guest_orders = ? WHERE id = ?', [on ? 1 : 0, venueId]);
+}
+
 export async function updateTips(db: Db, venueId: number, tips: TipSettings) {
   await db.execute(
     'UPDATE venues SET tip_mode = ?, tip_percents = ?, tip_fixed_minor = ? WHERE id = ?',
@@ -395,6 +452,7 @@ export async function removeItem(db: Db, venueId: number, id: number) {
 /** Everything of a member's venue (account deletion, unsubscribing). */
 export async function deleteVenueOf(db: Db, userId: number) {
   await db.execute('DELETE FROM venues WHERE owner_user_id = ?', [userId]);
+  await db.execute('DELETE FROM venue_owner_view WHERE user_id = ?', [userId]);
 }
 
 export async function totals(db: Db) {

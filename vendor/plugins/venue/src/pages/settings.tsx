@@ -1,5 +1,6 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { Connections } from '../components/connections';
+import { GuestOrdersSwitch } from '../components/guest-orders-switch';
 import { TipSettingsForm } from '../components/tip-settings';
 import { VenueForm } from '../components/venue-form';
 import { localeOf, translator } from '../i18n';
@@ -31,6 +32,10 @@ export default async function Settings({ ctx }: PluginPageProps) {
           menuPublic: venue.menuPublic,
         }}
       />
+      <section className="space-y-3 rounded-lg border border-ink/10 p-4 dark:border-paper/10">
+        <h2 className="font-semibold">{t('order.settingTitle')}</h2>
+        <GuestOrdersSwitch on={venue.guestOrders} />
+      </section>
       <section className="space-y-3 rounded-lg border border-ink/10 p-4 dark:border-paper/10">
         <h2 className="font-semibold">{t('tipsForm.title')}</h2>
         <TipSettingsForm tips={venue.tips} currency={venue.currency} decimals={venue.decimals} />

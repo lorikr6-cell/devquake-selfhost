@@ -4,6 +4,7 @@ import { FloorView } from '../components/floor-view';
 import { TabletStaff } from '../components/tablet-staff';
 import { localeOf, translator } from '../i18n';
 import { openCalls } from '../lib/calls';
+import { waitingOrders } from '../lib/guest-orders';
 import { listTables, staffList } from '../lib/floor';
 import { floorActor } from '../lib/floor-api';
 import { TABLET_COOKIE } from '../lib/secure';
@@ -33,9 +34,10 @@ export default async function Floor({ ctx }: PluginPageProps) {
         <TabletStaff staff={await staffList(ctx.db, found.venue.id)} />
       </section>
     );
-  const [tables, calls] = await Promise.all([
+  const [tables, calls, orders] = await Promise.all([
     listTables(ctx.db, found.venue.id),
     openCalls(ctx.db, found.venue.id),
+    waitingOrders(ctx.db, found.venue.id),
   ]);
   return (
     <div className="space-y-6">
@@ -58,6 +60,7 @@ export default async function Floor({ ctx }: PluginPageProps) {
             : null,
         }))}
         initialCalls={calls}
+        initialOrders={orders}
         currency={found.venue.currency}
         decimals={found.venue.decimals}
         actorName={found.actor.name}

@@ -1,3 +1,4 @@
+import { waitingOrders } from '../lib/guest-orders';
 import { openCalls } from '../lib/calls';
 import { listTables } from '../lib/floor';
 import { floorApi } from '../lib/floor-api';
@@ -10,4 +11,5 @@ export const GET = floorApi(async ({ db, venue }) => ({
     bill: t.bill ? { ...t.bill, openedAt: t.bill.openedAt.toISOString() } : null,
   })),
   calls: await openCalls(db, venue.id),
+  orders: await waitingOrders(db, venue.id),
 }));

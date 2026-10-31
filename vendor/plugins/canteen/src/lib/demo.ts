@@ -1,11 +1,20 @@
 import type { PluginDatabase, PluginUser } from '@devquake/plugin-sdk';
 import { cnpChecksum } from './cnp';
-import { addIncident, createOrg, createPerson, requireCan, saveIdentity } from './data';
+import {
+  addIncident,
+  createOrg,
+  createPerson,
+  requireCan,
+  saveDocument,
+  saveIdentity,
+} from './data';
+import { demoIdCard, demoPdf, demoPortrait } from './demo-files';
 import { addDays, mondayOf, type IsoDate } from './dates';
 import { HttpError } from './http';
 import { saveLicence } from './licence-data';
 import { saveMealTime, saveMenu } from './meals-data';
 import { addMedNote, saveMedication, saveProfile, saveStay } from './medical-data';
+import { addPaper } from './med-papers';
 import type { Diet } from './model';
 import { saveDescription, saveHeaderLook } from './org-page';
 import { isRole, type Role } from './roles';
@@ -650,9 +659,50 @@ export async function createDemoOrg(
     lines,
   );
 
+  // A photo and an ID card (sample pictures), sealed like real ones; skipped without the
+  // server's master key (CANTEEN_MASTER_KEY), as uploads are.
+  try {
+    const portrait = demoPortrait();
+    await saveDocument(db, orgId, maria, 'photo', me, {
+      mime: 'image/png',
+      data: portrait,
+      thumb: { mime: 'image/png', data: demoPortrait(64) },
+    });
+    await saveDocument(db, orgId, maria, 'id_card', me, {
+      mime: 'image/png',
+      data: demoIdCard(),
+      thumb: null,
+    });
+  } catch (err) {
+    if (!(err instanceof HttpError)) throw err;
+  }
+
   // The medical file is the medical staff's alone: written in that role, then back.
   await setOwnRole(db, orgId, me, 'medical');
   try {
+    // Medical papers (sample PDFs), as the medical staff upload them.
+    try {
+      await addPaper(db, orgId, maria, me, {
+        title: 'Analize de sânge (exemplu)',
+        mime: 'application/pdf',
+        data: demoPdf('Analize de sange - exemplu', [
+          'Glicemie a jeun: 128 mg/dl',
+          'HbA1c: 6,9 %',
+          'Document de exemplu pentru organizatia demo.',
+        ]),
+      });
+      await addPaper(db, orgId, vasile, me, {
+        title: 'Bilet de externare (exemplu)',
+        mime: 'application/pdf',
+        data: demoPdf('Bilet de externare - exemplu', [
+          'Diagnostic: contuzie sold drept',
+          'Recomandari: repaus, control peste 14 zile',
+          'Document de exemplu pentru organizatia demo.',
+        ]),
+      });
+    } catch (err) {
+      if (!(err instanceof HttpError)) throw err;
+    }
     await saveProfile(db, orgId, maria, me, {
       conditions: 'Diabet tip 2, hipertensiune',
       allergies: null,

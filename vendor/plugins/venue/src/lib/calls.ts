@@ -255,14 +255,20 @@ export async function removeSubscription(db: Db, venueId: number, endpoint: stri
 export async function pushCall(
   db: Db,
   venueId: number,
-  call: Call,
+  call: Pick<Call, 'tableId' | 'waiterStaffId'>,
   message: { title: string; body: string; url: string },
 ) {
+  // Only who has something to do with it (owner's rule), in this venue only: the table's waiter
+  // when it has one; otherwise every waiter and manager of the venue, and the owner.
   const rows = await db.query<{ endpoint: string; p256dh: string; auth: string }>(
     call.waiterStaffId === null
-      ? 'SELECT endpoint, p256dh, auth FROM push_subscriptions WHERE venue_id = ? LIMIT 10'
+      ? `SELECT p.endpoint, p.p256dh, p.auth FROM push_subscriptions p
+           LEFT JOIN staff s ON s.id = p.staff_id AND s.venue_id = p.venue_id
+          WHERE p.venue_id = ?
+            AND (p.is_owner = 1 OR (s.active = 1 AND s.role IN ('waiter', 'manager')))
+          LIMIT 10`
       : `SELECT endpoint, p256dh, auth FROM push_subscriptions
-          WHERE venue_id = ? AND (staff_id = ? OR is_owner = 1) LIMIT 10`,
+          WHERE venue_id = ? AND staff_id = ? LIMIT 10`,
     call.waiterStaffId === null ? [venueId] : [venueId, call.waiterStaffId],
   );
   if (!rows.length) return;

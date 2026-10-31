@@ -6,6 +6,8 @@ import { formatMinor } from '../lib/model';
 import { call, errorText, fieldClass, primaryButton } from './client';
 import type { Call } from '../lib/calls';
 import { CallsPanel, PushToggle } from './calls-panel';
+import type { GuestOrder } from '../lib/guest-orders';
+import { OrdersPanel } from './orders-panel';
 import { Status } from './status';
 
 interface FloorTable {
@@ -137,6 +139,7 @@ export function StaffPicker({
 export function FloorView({
   initial,
   initialCalls = [],
+  initialOrders = [],
   currency,
   decimals,
   actorName,
@@ -145,6 +148,8 @@ export function FloorView({
   initial: FloorTable[];
   /** The tables calling now (guests raised a hand). */
   initialCalls?: Call[];
+  /** Guests' orders waiting for a waiter. */
+  initialOrders?: GuestOrder[];
   currency: string;
   decimals: number;
   actorName: string;
@@ -153,13 +158,19 @@ export function FloorView({
   const t = useT('floor');
   const [tables, setTables] = useState(initial);
   const [calls, setCalls] = useState(initialCalls);
+  const [orders, setOrders] = useState(initialOrders);
   const [q, setQ] = useState('');
   const refresh = useCallback(async () => {
     const res = await fetch('/api/floor/tables', { cache: 'no-store' }).catch(() => null);
     if (!res?.ok) return;
-    const data = (await res.json()) as { tables: FloorTable[]; calls?: Call[] };
+    const data = (await res.json()) as {
+      tables: FloorTable[];
+      calls?: Call[];
+      orders?: GuestOrder[];
+    };
     setTables(data.tables);
     if (data.calls) setCalls(data.calls);
+    if (data.orders) setOrders(data.orders);
   }, []);
   useVisibleInterval(refresh, 10_000);
   const query = q.trim().toLowerCase();
@@ -167,6 +178,7 @@ export function FloorView({
 
   return (
     <div className="space-y-4">
+      <OrdersPanel orders={orders} onChange={setOrders} currency={currency} decimals={decimals} />
       <CallsPanel calls={calls} onChange={setCalls} />
       <div className="flex flex-wrap items-center gap-3">
         <input
