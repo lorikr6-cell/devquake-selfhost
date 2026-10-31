@@ -1166,3 +1166,52 @@ export async function takePaymentEmails(db: Db, limit: number): Promise<PaymentE
   }
   return emails;
 }
+
+/** The member's utilities (for another app to choose from, e.g. a venue's running costs). */
+export async function utilitiesOfMember(db: Db, userId: number) {
+  const rows = await db.query<{ id: number; name: string; category: string; currency: string }>(
+    `SELECT u.id, u.name, u.category, u.currency
+       FROM utilities u JOIN utility_members m ON m.utility_id = u.id
+      WHERE m.user_id = ? ORDER BY u.name LIMIT 100`,
+    [userId],
+  );
+  return rows.map((r) => ({
+    id: Number(r.id),
+    name: r.name,
+    category: r.category,
+    currency: r.currency,
+  }));
+}
+
+/** Bills of the member's utilities whose period falls between two days (totals as numbers). */
+export async function billsOfMember(db: Db, userId: number, from: string, to: string) {
+  const rows = await db.query<{
+    id: number;
+    utility_id: number;
+    utility: string;
+    category: string;
+    currency: string;
+    period: string;
+    due_on: string | null;
+    total: string | number;
+  }>(
+    `SELECT b.id, b.utility_id, u.name AS utility, u.category, u.currency,
+            DATE_FORMAT(b.period, '%Y-%m-%d') AS period, DATE_FORMAT(b.due_on, '%Y-%m-%d') AS due_on,
+            b.total
+       FROM bills b JOIN utilities u ON u.id = b.utility_id
+       JOIN utility_members m ON m.utility_id = u.id AND m.user_id = ?
+      WHERE b.period BETWEEN ? AND ?
+      ORDER BY b.period, u.name LIMIT 500`,
+    [userId, from, to],
+  );
+  return rows.map((r) => ({
+    id: Number(r.id),
+    utilityId: Number(r.utility_id),
+    utility: r.utility,
+    category: r.category,
+    currency: r.currency,
+    period: r.period,
+    dueOn: r.due_on,
+    total: Number(r.total),
+  }));
+}

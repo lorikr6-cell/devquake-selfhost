@@ -1,5 +1,9 @@
 # Registro de cambios — Facturas del hogar
 
+## 0.14.0
+
+- Un local de la app Venue puede contar las facturas de los suministros que elijas como costes corrientes (solo pasan los nombres y los importes).
+
 ## 0.13.0
 
 - Consejos en cada página: cómo ver los detalles, cómo añadir y cómo cambiar. Actívalos o desactívalos con 💡 arriba; la elección se guarda en este dispositivo.

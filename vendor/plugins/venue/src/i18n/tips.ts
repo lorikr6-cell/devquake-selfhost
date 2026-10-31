@@ -18,6 +18,7 @@ export const TIPS_PAGES: Record<string, string> = {
   '/b/:code': 'guestBill',
   '/menu/design': 'menuDesign',
   '/menu/print': 'menuPrint',
+  '/station/:station': 'station',
 };
 
 /** How-to tips for each page: how to see the details, how to add, how to change. */
@@ -99,6 +100,11 @@ export const tips = defineMessages(
         create: 'Print it from here; the background repeats on each page.',
         edit: 'Change the design or the items, and print again.',
       },
+      station: {
+        see: 'What is still to make here, one ticket per table, oldest first.',
+        create: 'New orders appear by themselves within seconds.',
+        edit: 'Tap a line or “All ready” when it is made.',
+      },
     },
   },
   {
@@ -179,6 +185,11 @@ export const tips = defineMessages(
           create: 'Drucke sie von hier; der Hintergrund wiederholt sich auf jeder Seite.',
           edit: 'Ändere Gestaltung oder Einträge und drucke erneut.',
         },
+        station: {
+          see: 'Was hier noch zuzubereiten ist, ein Bon pro Tisch, der älteste zuerst.',
+          create: 'Neue Bestellungen erscheinen von selbst innerhalb von Sekunden.',
+          edit: 'Tippe eine Zeile oder „Alles fertig“ an, wenn es fertig ist.',
+        },
       },
     },
     ro: {
@@ -257,6 +268,11 @@ export const tips = defineMessages(
           see: 'Meniul tău în designul lui, gata pentru A4.',
           create: 'Tipărește-l de aici; fundalul se repetă pe fiecare pagină.',
           edit: 'Schimbă designul sau produsele și tipărește din nou.',
+        },
+        station: {
+          see: 'Ce mai e de pregătit aici, un bon pe masă, cel mai vechi întâi.',
+          create: 'Comenzile noi apar singure în câteva secunde.',
+          edit: 'Atinge o linie sau „Tot e gata” când e gata.',
         },
       },
     },
@@ -337,6 +353,11 @@ export const tips = defineMessages(
           create: 'Innen nyomtathatod; a háttér minden oldalon ismétlődik.',
           edit: 'Módosítsd a dizájnt vagy a tételeket, és nyomtass újra.',
         },
+        station: {
+          see: 'Ami itt még elkészítendő, asztalonként egy blokk, a legrégebbi elöl.',
+          create: 'Az új rendelések néhány másodpercen belül maguktól megjelennek.',
+          edit: 'Koppints egy sorra vagy a „Minden kész” gombra, ha elkészült.',
+        },
       },
     },
     it: {
@@ -416,6 +437,11 @@ export const tips = defineMessages(
           create: 'Stampalo da qui; lo sfondo si ripete su ogni pagina.',
           edit: 'Cambia il design o le voci e stampa di nuovo.',
         },
+        station: {
+          see: 'Ciò che resta da preparare qui, una comanda per tavolo, la più vecchia per prima.',
+          create: 'I nuovi ordini compaiono da soli in pochi secondi.',
+          edit: 'Tocca una riga o «Tutto pronto» quando è pronto.',
+        },
       },
     },
     es: {
@@ -494,6 +520,11 @@ export const tips = defineMessages(
           see: 'Tu carta con su diseño, lista para A4.',
           create: 'Imprímela desde aquí; el fondo se repite en cada página.',
           edit: 'Cambia el diseño o los productos e imprime de nuevo.',
+        },
+        station: {
+          see: 'Lo que queda por preparar aquí, una comanda por mesa, la más antigua primero.',
+          create: 'Los pedidos nuevos aparecen solos en segundos.',
+          edit: 'Toca una línea o «Todo listo» cuando esté hecho.',
         },
       },
     },

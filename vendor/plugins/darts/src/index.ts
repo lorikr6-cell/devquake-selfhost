@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'darts',
     name: 'Darts',
-    version: '0.9.0',
+    version: '0.10.0',
     description:
       'Darts on your phone: practise alone with drills made from your weak spots, play casual games with friends who join by QR code, or run tournaments on your boards with a knock-out bracket, entry fees and live scores. 501/301, Cricket, Shanghai, Around the Clock, Killer and more, with finishing suggestions.',
     status: 'active',
@@ -32,6 +32,18 @@ export default definePlugin({
             es: 'Ver las partidas de dardos que jugaste y quién ganó',
           },
         },
+        {
+          id: 'tournaments.open',
+          kind: 'read',
+          title: {
+            en: 'See the tournaments you run that are open or playing',
+            de: 'Die Turniere sehen, die du veranstaltest und die offen sind oder laufen',
+            ro: 'Să vadă turneele pe care le organizezi și care sunt deschise sau în desfășurare',
+            hu: 'Lássa az általad szervezett nyitott vagy zajló versenyeket',
+            it: 'Vedere i tornei che organizzi aperti o in corso',
+            es: 'Ver los torneos que organizas abiertos o en juego',
+          },
+        },
       ],
       targets: [
         {
@@ -44,6 +56,18 @@ export default definePlugin({
             hu: 'egy darts játékot',
             it: 'una partita di freccette',
             es: 'una partida de dardos',
+          },
+        },
+        {
+          id: 'join',
+          path: '/join/:code',
+          title: {
+            en: 'the page to join a tournament',
+            de: 'die Seite zum Mitmachen bei einem Turnier',
+            ro: 'pagina de înscriere la un turneu',
+            hu: 'a versenyre jelentkezés oldalát',
+            it: 'la pagina per iscriversi a un torneo',
+            es: 'la página para unirse a un torneo',
           },
         },
       ],
@@ -85,6 +109,7 @@ export default definePlugin({
   },
   platform: () => import('./platform'),
   linkHandlers: {
+    'tournaments.open': () => import('./links/tournaments-open'),
     'activity.day': () => import('./links/activity-day'),
   },
 });

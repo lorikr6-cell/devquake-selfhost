@@ -11,7 +11,14 @@ interface FloorTable {
   name: string;
   seats: number;
   code: string;
-  bill: { id: number; code: string; openedBy: string; pending: number; gross: number } | null;
+  bill: {
+    id: number;
+    code: string;
+    openedBy: string;
+    pending: number;
+    ready: number;
+    gross: number;
+  } | null;
 }
 
 /** Refreshes while the page is visible (no timers in the background; hosting cost). */
@@ -199,7 +206,11 @@ export function FloorView({
                 </span>
                 {x.bill ? (
                   <span className="mt-1 block text-xs">
-                    {x.bill.pending ? t('toBring', { count: x.bill.pending }) : t('allBrought')}
+                    {x.bill.ready
+                      ? `🔔 ${t('readyCount', { count: x.bill.ready })}`
+                      : x.bill.pending
+                        ? t('toBring', { count: x.bill.pending })
+                        : t('allBrought')}
                     {' · '}
                     {x.bill.openedBy}
                   </span>

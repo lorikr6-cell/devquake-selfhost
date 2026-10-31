@@ -754,3 +754,34 @@ export async function myTournaments(db: Db, userId: number): Promise<TournamentS
     };
   });
 }
+
+/** The member's own tournaments that are not finished (for a venue's public page). */
+export async function openTournamentsOf(db: Db, userId: number) {
+  const rows = await db.query<{
+    id: number;
+    name: string;
+    game_type: string;
+    status: string;
+    join_code: string;
+    fee_cents: number;
+    currency: string;
+    players: number;
+  }>(
+    `SELECT t.id, t.name, t.game_type, t.status, t.join_code, t.fee_cents, t.currency,
+            (SELECT COUNT(*) FROM tournament_players p WHERE p.tournament_id = t.id) AS players
+       FROM tournaments t
+      WHERE t.owner_user_id = ? AND t.status <> 'finished'
+      ORDER BY t.created_at DESC LIMIT 20`,
+    [userId],
+  );
+  return rows.map((r) => ({
+    id: Number(r.id),
+    name: r.name,
+    game: r.game_type,
+    status: r.status,
+    joinCode: r.join_code,
+    feeCents: Number(r.fee_cents),
+    currency: r.currency,
+    players: Number(r.players),
+  }));
+}

@@ -1,5 +1,9 @@
 # Registro de cambios — Darts
 
+## 0.10.0
+
+- Un local de la app Venue puede mostrar los torneos que organizas en su carta pública, con un enlace para unirse.
+
 ## 0.9.0
 
 - Las apps conectadas, como Hábitos y diario, ya pueden mostrar las partidas que jugaste cada día y quién ganó, con un enlace de vuelta a la partida aquí.

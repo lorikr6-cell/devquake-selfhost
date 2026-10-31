@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'venue',
     name: 'Venue',
-    version: '0.4.1',
+    version: '0.6.0',
     description:
       'The business side of a café, bistro, fast food or bar: the venue with its country’s VAT rates, a menu with allergens, staff with PINs for a shared tablet, and a public menu for guests.',
     status: 'active',
@@ -16,7 +16,7 @@ export default definePlugin({
     // For guests and staff tablets, without a DevQuake account (ADR 0047, 0080): the public menu
     // (while the owner keeps it public), a table's sticker, the guests' bill, the tablet's floor.
     openRoutes: {
-      pages: ['/m/:slug', '/t/:code', '/b/:code', '/tablet'],
+      pages: ['/m/:slug', '/t/:code', '/b/:code', '/tablet', '/station/:station'],
       api: ['/menu-bg/:slug'],
     },
     // The floor's API (the owner's browser or an enabled tablet; the app checks the tablet cookie
@@ -29,6 +29,7 @@ export default definePlugin({
       '/floor/bills/:id/lines',
       '/floor/bills/:id/finalize',
       '/floor/lines/:id',
+      '/floor/station/:station',
       '/guest/:code',
     ],
     about,
@@ -61,6 +62,43 @@ export default definePlugin({
             es: 'Añade a la carta una receta de tu recetario: su nombre, ingredientes y alérgenos se rellenan solos.',
           },
         },
+        {
+          app: 'expenses',
+          points: ['groups.overview', 'expense.add'],
+          benefit: {
+            en: 'Book the month’s purchases and utility bills in an expense group with one tap.',
+            de: 'Buche die Einkäufe und Nebenkosten des Monats mit einem Tipp in einer Ausgabengruppe.',
+            ro: 'Înregistrează cu o atingere cumpărăturile și facturile lunii într-un grup de cheltuieli.',
+            hu: 'Egy koppintással könyveld a hónap beszerzéseit és rezsiszámláit egy kiadáscsoportba.',
+            it: 'Registra con un tocco gli acquisti e le bollette del mese in un gruppo di spese.',
+            es: 'Registra con un toque las compras y facturas del mes en un grupo de gastos.',
+          },
+        },
+        {
+          app: 'utilities',
+          points: ['utilities.list', 'bills.costs'],
+          benefit: {
+            en: 'The bills of the utilities you choose count as the venue’s running costs in the reports.',
+            de: 'Die Rechnungen der gewählten Versorgungen zählen in den Berichten als laufende Kosten des Lokals.',
+            ro: 'Facturile utilităților alese contează în rapoarte ca și costuri curente ale localului.',
+            hu: 'A választott közművek számlái a kimutatásokban a hely folyó költségeként számítanak.',
+            it: 'Le bollette delle utenze scelte contano nei resoconti come costi correnti del locale.',
+            es: 'Las facturas de los suministros elegidos cuentan en los informes como costes corrientes del local.',
+          },
+        },
+        {
+          app: 'darts',
+          points: ['tournaments.open'],
+          targets: ['join'],
+          benefit: {
+            en: 'Your open darts tournaments show on the venue’s public menu, with a link to join.',
+            de: 'Deine offenen Dartturniere erscheinen auf der öffentlichen Karte des Lokals, mit einem Link zum Mitmachen.',
+            ro: 'Turneele tale de darts deschise apar în meniul public al localului, cu un link de înscriere.',
+            hu: 'A nyitott darts versenyeid megjelennek a hely nyilvános étlapján, jelentkezési linkkel.',
+            it: 'I tuoi tornei di freccette aperti compaiono nel menu pubblico del locale, con un link per iscriversi.',
+            es: 'Tus torneos de dardos abiertos aparecen en la carta pública del local, con un enlace para unirse.',
+          },
+        },
       ],
     },
   },
@@ -80,6 +118,7 @@ export default definePlugin({
     '/t/:code': () => import('./pages/table'),
     '/b/:code': () => import('./pages/bill'),
     '/reports': () => import('./pages/reports'),
+    '/station/:station': () => import('./pages/station'),
     '/m/:slug': () => import('./pages/public-menu'),
     '/help': () => import('./pages/help'),
     '/about': () => import('./pages/about'),
@@ -105,11 +144,15 @@ export default definePlugin({
     '/floor/bills/:id/lines': () => import('./api/floor-lines'),
     '/floor/bills/:id/finalize': () => import('./api/floor-finalize'),
     '/floor/lines/:id': () => import('./api/floor-line'),
+    '/floor/station/:station': () => import('./api/floor-station'),
     '/guest/:code': () => import('./api/guest-bill'),
     '/menu/design': () => import('./api/menu-design'),
     '/menu/design/background': () => import('./api/menu-background'),
     '/menu-bg/:slug': () => import('./api/public-background'),
     '/links/shopping': () => import('./api/links-shopping'),
     '/links/recipes': () => import('./api/links-recipes'),
+    '/links/expenses': () => import('./api/links-expenses'),
+    '/links/utilities': () => import('./api/links-utilities'),
+    '/links/darts': () => import('./api/links-darts'),
   },
 });

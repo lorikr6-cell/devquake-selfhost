@@ -1,5 +1,9 @@
 # Modificări — Darts
 
+## 0.10.0
+
+- Un local din aplicația Venue poate arăta turneele pe care le organizezi în meniul său public, cu un link de înscriere.
+
 ## 0.9.0
 
 - Aplicațiile conectate, precum Obiceiuri și jurnal, pot arăta acum jocurile pe care le-ai jucat în fiecare zi și cine a câștigat, cu un link înapoi la joc aici.

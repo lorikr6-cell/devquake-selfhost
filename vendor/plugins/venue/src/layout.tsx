@@ -14,6 +14,7 @@ import { TIPS_PAGES } from './i18n/tips';
 const ADMIN_LINKS = [
   ['/', 'nav.home'],
   ['/floor', 'nav.floor'],
+  ['/station/kitchen', 'nav.kitchen'],
   ['/menu', 'nav.menu'],
   ['/tables', 'nav.tables'],
   ['/reports', 'nav.reports'],

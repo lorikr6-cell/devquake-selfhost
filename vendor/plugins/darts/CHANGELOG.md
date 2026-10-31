@@ -1,5 +1,9 @@
 # Changelog — Darts
 
+## 0.10.0
+
+- A venue in the Venue app can show the tournaments you run on its public menu, with a link to join.
+
 ## 0.9.0
 
 - Connected apps such as Habits and journal can now show the games you played on each day and who won, with a link back to the game here.

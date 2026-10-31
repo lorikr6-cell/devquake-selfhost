@@ -18,6 +18,7 @@ export const screens = defineMessages(
       floor: 'Floor',
       tables: 'Tables',
       reports: 'Reports',
+      kitchen: 'Kitchen',
     },
     signIn: {
       title: 'Your café, bistro or bar',
@@ -170,6 +171,11 @@ export const screens = defineMessages(
       search: 'Search the menu',
       noMatch: 'Nothing matches your search.',
       empty: 'The menu is being prepared.',
+      darts: 'Darts tournaments',
+      players: '{count} players',
+      fee: 'entry {fee}',
+      join: 'Join',
+      playing: 'playing now',
     },
     errors: {
       signIn: 'Please sign in to DevQuake first.',
@@ -208,6 +214,11 @@ export const screens = defineMessages(
       imageTooLarge: 'The picture is too large.',
       imageType: 'Choose a JPEG, PNG or WebP picture.',
       notConnected: 'Connect the app first, under Settings.',
+      noExpensesGroup: 'Choose an expense group first, under Settings.',
+      currencyMismatch: 'The expense group is in {currency}; the amounts are in another currency.',
+      noShoppingList: 'Choose a purchasing list first, under Settings.',
+      nothingToBook: 'There is nothing to book for this month.',
+      bookFailed: 'Expenses did not take it. Please try again.',
     },
     fields: {
       name: 'The name',
@@ -239,6 +250,7 @@ export const screens = defineMessages(
       s9: 'Show the guests their bill QR: they see their order, what is still coming, the VAT, choose a tip and see the total, without an account.',
       s10: 'Finalise the bill with cash, card or other: the table is free and a new bill gets a new code. Bills are deleted after six months; the reports keep the numbers.',
       s11: 'Under Settings → Connected apps: choose your purchasing list in Shopping (the reports show what was bought next to the takings), and add recipes from your Cookbook to the menu.',
+      s12: 'Open the kitchen, bar or coffee screen on a tablet: each table’s order waits there, oldest first; tap what is made, and the waiter sees it ready to bring.',
     },
     tipsForm: {
       title: 'Tips on the bill',
@@ -273,6 +285,7 @@ export const screens = defineMessages(
       toBring: '{count} to bring',
       allBrought: 'All brought',
       noTables: 'No tables yet. The owner adds them under Tables.',
+      readyCount: '{count} ready to bring',
     },
     table: {
       free: 'This table is free.',
@@ -311,6 +324,7 @@ export const screens = defineMessages(
       goneBody: 'This QR code does not belong to a table any more.',
       askStaff: 'Welcome! Please ask the staff for the menu.',
       guestIntro: 'Welcome! Here is our menu; your waiter will take your order.',
+      readyToBring: '{count} ready to bring',
     },
     guest: {
       title: 'Your bill',
@@ -386,6 +400,12 @@ export const screens = defineMessages(
       costsUnavailable:
         'The purchasing list cannot be read right now (is Shopping still connected?).',
       openList: 'Open the list in Shopping',
+      bookPurchases: 'Book in {group}',
+      utilitiesTitle: 'Running costs (Utilities)',
+      utilitiesTotal: 'Bills this month',
+      bookUtilities: 'Book in {group}',
+      utilitiesUnavailable:
+        'The utility bills cannot be read right now (is Utilities still connected?).',
     },
     design: {
       pageTitle: 'Design the menu',
@@ -451,6 +471,29 @@ export const screens = defineMessages(
       searchRecipes: 'Search your recipes',
       search: 'Search',
       noRecipes: 'No recipes found.',
+      expensesGroup: 'Expense group for the venue’s costs',
+      groupChosen: 'Expense group saved.',
+      groupCleared: 'No expense group.',
+      expensesHint:
+        'From the reports you can book a month’s purchases or utility bills there as one expense. Saved as soon as you choose.',
+      noUtilities: 'You have no utilities yet.',
+      utilitiesTitle: 'The venue’s utilities (running costs)',
+      utilityOn: '{name} counts as a running cost.',
+      utilityOff: '{name} no longer counts.',
+      dartsShow: 'Show my open darts tournaments on the public menu',
+      dartsOn: 'Shown on the public menu ({count} now).',
+      dartsOff: 'Not shown on the public menu.',
+      booked: '{amount} booked in {group}.',
+      alreadyBooked: 'Already booked in {group}.',
+    },
+    station: {
+      search: 'Find a table or a dish',
+      failed: 'That did not work. Please try again.',
+      counter: 'Counter',
+      minutes: '{count} min',
+      allReady: 'All ready',
+      nothing: 'Nothing to make right now.',
+      unknown: 'There is no such station.',
     },
   },
   {
@@ -470,6 +513,7 @@ export const screens = defineMessages(
         floor: 'Gastraum',
         tables: 'Tische',
         reports: 'Berichte',
+        kitchen: 'Küche',
       },
       signIn: {
         title: 'Dein Café, Bistro oder deine Bar',
@@ -624,6 +668,11 @@ export const screens = defineMessages(
         search: 'Karte durchsuchen',
         noMatch: 'Nichts passt zu deiner Suche.',
         empty: 'Die Karte wird gerade vorbereitet.',
+        darts: 'Dartturniere',
+        players: '{count} Spieler',
+        fee: 'Startgeld {fee}',
+        join: 'Mitmachen',
+        playing: 'läuft gerade',
       },
       errors: {
         signIn: 'Bitte melde dich zuerst bei DevQuake an.',
@@ -662,6 +711,12 @@ export const screens = defineMessages(
         imageTooLarge: 'Das Bild ist zu groß.',
         imageType: 'Wähle ein JPEG-, PNG- oder WebP-Bild.',
         notConnected: 'Verbinde zuerst die App, unter „Einstellungen“.',
+        noExpensesGroup: 'Wähle zuerst eine Ausgabengruppe, unter „Einstellungen“.',
+        currencyMismatch:
+          'Die Ausgabengruppe ist in {currency}; die Beträge sind in einer anderen Währung.',
+        noShoppingList: 'Wähle zuerst eine Einkaufsliste, unter „Einstellungen“.',
+        nothingToBook: 'Für diesen Monat gibt es nichts zu buchen.',
+        bookFailed: 'Ausgaben hat es nicht angenommen. Bitte versuche es noch einmal.',
       },
       fields: {
         name: 'Der Name',
@@ -693,6 +748,7 @@ export const screens = defineMessages(
         s9: 'Zeig den Gästen ihren Rechnungs-QR: Sie sehen Bestellung, was noch kommt, MwSt., wählen ein Trinkgeld und sehen die Summe, ohne Konto.',
         s10: 'Schließe die Rechnung mit Bar, Karte oder Sonstigem ab: Der Tisch ist frei, eine neue Rechnung bekommt einen neuen Code. Rechnungen werden nach sechs Monaten gelöscht; die Berichte behalten die Zahlen.',
         s11: 'Unter Einstellungen → Verbundene Apps: Wähle deine Einkaufsliste in Einkaufen (die Berichte zeigen die Einkäufe neben den Einnahmen) und füge Rezepte aus deinem Kochbuch zur Karte hinzu.',
+        s12: 'Öffne den Bildschirm für Küche, Bar oder Kaffee auf einem Tablet: Dort wartet die Bestellung jedes Tisches, die älteste zuerst; tippe an, was fertig ist, und die Bedienung sieht es bereit zum Bringen.',
       },
       tipsForm: {
         title: 'Trinkgeld auf der Rechnung',
@@ -727,6 +783,7 @@ export const screens = defineMessages(
         toBring: '{count} zu bringen',
         allBrought: 'Alles gebracht',
         noTables: 'Noch keine Tische. Der Inhaber legt sie unter „Tische“ an.',
+        readyCount: '{count} bereit zum Bringen',
       },
       table: {
         free: 'Dieser Tisch ist frei.',
@@ -765,6 +822,7 @@ export const screens = defineMessages(
         goneBody: 'Dieser QR-Code gehört zu keinem Tisch mehr.',
         askStaff: 'Willkommen! Bitte frag das Personal nach der Karte.',
         guestIntro: 'Willkommen! Hier ist unsere Karte; deine Bedienung nimmt die Bestellung auf.',
+        readyToBring: '{count} bereit zum Bringen',
       },
       guest: {
         title: 'Deine Rechnung',
@@ -841,6 +899,12 @@ export const screens = defineMessages(
         costsUnavailable:
           'Die Einkaufsliste kann gerade nicht gelesen werden (ist Einkaufen noch verbunden?).',
         openList: 'Liste in Einkaufen öffnen',
+        bookPurchases: 'In {group} buchen',
+        utilitiesTitle: 'Laufende Kosten (Nebenkosten)',
+        utilitiesTotal: 'Rechnungen diesen Monat',
+        bookUtilities: 'In {group} buchen',
+        utilitiesUnavailable:
+          'Die Rechnungen können gerade nicht gelesen werden (ist Nebenkosten noch verbunden?).',
       },
       design: {
         pageTitle: 'Die Karte gestalten',
@@ -906,6 +970,29 @@ export const screens = defineMessages(
         searchRecipes: 'Deine Rezepte durchsuchen',
         search: 'Suchen',
         noRecipes: 'Keine Rezepte gefunden.',
+        expensesGroup: 'Ausgabengruppe für die Kosten des Lokals',
+        groupChosen: 'Ausgabengruppe gespeichert.',
+        groupCleared: 'Keine Ausgabengruppe.',
+        expensesHint:
+          'In den Berichten kannst du die Einkäufe oder Nebenkosten eines Monats dort als eine Ausgabe buchen. Wird gespeichert, sobald du wählst.',
+        noUtilities: 'Du hast noch keine Versorgungen.',
+        utilitiesTitle: 'Versorgungen des Lokals (laufende Kosten)',
+        utilityOn: '{name} zählt als laufende Kosten.',
+        utilityOff: '{name} zählt nicht mehr.',
+        dartsShow: 'Meine offenen Dartturniere auf der öffentlichen Karte zeigen',
+        dartsOn: 'Auf der öffentlichen Karte gezeigt (jetzt {count}).',
+        dartsOff: 'Nicht auf der öffentlichen Karte.',
+        booked: '{amount} in {group} gebucht.',
+        alreadyBooked: 'Schon in {group} gebucht.',
+      },
+      station: {
+        search: 'Tisch oder Gericht suchen',
+        failed: 'Das hat nicht geklappt. Bitte versuche es noch einmal.',
+        counter: 'Theke',
+        minutes: '{count} Min.',
+        allReady: 'Alles fertig',
+        nothing: 'Gerade nichts zuzubereiten.',
+        unknown: 'Diese Station gibt es nicht.',
       },
     },
     ro: {
@@ -924,6 +1011,7 @@ export const screens = defineMessages(
         floor: 'Sala',
         tables: 'Mese',
         reports: 'Rapoarte',
+        kitchen: 'Bucătărie',
       },
       signIn: {
         title: 'Cafeneaua, bistroul sau barul tău',
@@ -1077,6 +1165,11 @@ export const screens = defineMessages(
         search: 'Caută în meniu',
         noMatch: 'Nimic nu se potrivește căutării.',
         empty: 'Meniul este în pregătire.',
+        darts: 'Turnee de darts',
+        players: '{count} jucători',
+        fee: 'taxă {fee}',
+        join: 'Înscrie-te',
+        playing: 'în desfășurare',
       },
       errors: {
         signIn: 'Te rugăm să te conectezi mai întâi la DevQuake.',
@@ -1115,6 +1208,11 @@ export const screens = defineMessages(
         imageTooLarge: 'Imaginea este prea mare.',
         imageType: 'Alege o imagine JPEG, PNG sau WebP.',
         notConnected: 'Conectează mai întâi aplicația, la Setări.',
+        noExpensesGroup: 'Alege mai întâi un grup de cheltuieli, la Setări.',
+        currencyMismatch: 'Grupul de cheltuieli este în {currency}; sumele sunt în altă monedă.',
+        noShoppingList: 'Alege mai întâi o listă de achiziții, la Setări.',
+        nothingToBook: 'Nu e nimic de înregistrat pentru această lună.',
+        bookFailed: 'Cheltuieli nu a acceptat-o. Te rugăm să încerci din nou.',
       },
       fields: {
         name: 'Numele',
@@ -1146,6 +1244,7 @@ export const screens = defineMessages(
         s9: 'Arată clienților codul QR al notei: își văd comanda, ce mai vine, TVA-ul, aleg un bacșiș și văd totalul, fără cont.',
         s10: 'Închide nota cu cash, card sau altfel: masa se eliberează, iar o notă nouă primește un cod nou. Notele se șterg după șase luni; rapoartele păstrează cifrele.',
         s11: 'La Setări → Aplicații conectate: alege lista de achiziții din Cumpărături (rapoartele arată cumpărăturile lângă încasări) și adaugă în meniu rețete din cartea ta de bucate.',
+        s12: 'Deschide ecranul pentru bucătărie, bar sau cafea pe o tabletă: acolo așteaptă comanda fiecărei mese, cea mai veche întâi; atinge ce e gata, iar ospătarul o vede gata de adus.',
       },
       tipsForm: {
         title: 'Bacșișul pe notă',
@@ -1180,6 +1279,7 @@ export const screens = defineMessages(
         toBring: '{count} de adus',
         allBrought: 'Tot a fost adus',
         noTables: 'Încă nu sunt mese. Proprietarul le adaugă la Mese.',
+        readyCount: '{count} gata de adus',
       },
       table: {
         free: 'Masa este liberă.',
@@ -1218,6 +1318,7 @@ export const screens = defineMessages(
         goneBody: 'Acest cod QR nu mai aparține unei mese.',
         askStaff: 'Bine ai venit! Te rugăm să ceri meniul personalului.',
         guestIntro: 'Bine ai venit! Iată meniul nostru; ospătarul îți va lua comanda.',
+        readyToBring: '{count} gata de adus',
       },
       guest: {
         title: 'Nota ta',
@@ -1293,6 +1394,12 @@ export const screens = defineMessages(
         costsUnavailable:
           'Lista de achiziții nu poate fi citită acum (mai e conectată aplicația Cumpărături?).',
         openList: 'Deschide lista în Cumpărături',
+        bookPurchases: 'Înregistrează în {group}',
+        utilitiesTitle: 'Costuri curente (Utilități)',
+        utilitiesTotal: 'Facturi luna aceasta',
+        bookUtilities: 'Înregistrează în {group}',
+        utilitiesUnavailable:
+          'Facturile nu pot fi citite acum (mai e conectată aplicația Utilități?).',
       },
       design: {
         pageTitle: 'Proiectează meniul',
@@ -1359,6 +1466,29 @@ export const screens = defineMessages(
         searchRecipes: 'Caută în rețetele tale',
         search: 'Caută',
         noRecipes: 'Nicio rețetă găsită.',
+        expensesGroup: 'Grupul de cheltuieli pentru costurile localului',
+        groupChosen: 'Grupul de cheltuieli a fost salvat.',
+        groupCleared: 'Niciun grup de cheltuieli.',
+        expensesHint:
+          'Din rapoarte poți înregistra acolo cumpărăturile sau facturile unei luni ca o singură cheltuială. Se salvează imediat ce alegi.',
+        noUtilities: 'Încă nu ai utilități.',
+        utilitiesTitle: 'Utilitățile localului (costuri curente)',
+        utilityOn: '{name} contează ca un cost curent.',
+        utilityOff: '{name} nu mai contează.',
+        dartsShow: 'Arată turneele mele de darts deschise în meniul public',
+        dartsOn: 'Afișate în meniul public ({count} acum).',
+        dartsOff: 'Nu apar în meniul public.',
+        booked: '{amount} înregistrat în {group}.',
+        alreadyBooked: 'Deja înregistrat în {group}.',
+      },
+      station: {
+        search: 'Caută o masă sau un fel',
+        failed: 'Nu a mers. Te rugăm să încerci din nou.',
+        counter: 'Tejghea',
+        minutes: '{count} min',
+        allReady: 'Tot e gata',
+        nothing: 'Nimic de pregătit acum.',
+        unknown: 'Nu există această stație.',
       },
     },
     hu: {
@@ -1377,6 +1507,7 @@ export const screens = defineMessages(
         floor: 'Vendégtér',
         tables: 'Asztalok',
         reports: 'Kimutatások',
+        kitchen: 'Konyha',
       },
       signIn: {
         title: 'A kávézód, bisztród vagy bárod',
@@ -1530,6 +1661,11 @@ export const screens = defineMessages(
         search: 'Keresés az étlapon',
         noMatch: 'Nincs találat.',
         empty: 'Az étlap készül.',
+        darts: 'Darts versenyek',
+        players: '{count} játékos',
+        fee: 'nevezési díj {fee}',
+        join: 'Jelentkezés',
+        playing: 'zajlik',
       },
       errors: {
         signIn: 'Kérjük, előbb jelentkezz be a DevQuake-be.',
@@ -1568,6 +1704,11 @@ export const screens = defineMessages(
         imageTooLarge: 'A kép túl nagy.',
         imageType: 'JPEG, PNG vagy WebP képet válassz.',
         notConnected: 'Előbb csatlakoztasd az alkalmazást a Beállításokban.',
+        noExpensesGroup: 'Előbb válassz kiadáscsoportot a Beállításokban.',
+        currencyMismatch: 'A kiadáscsoport pénzneme {currency}; az összegek más pénznemben vannak.',
+        noShoppingList: 'Előbb válassz beszerzési listát a Beállításokban.',
+        nothingToBook: 'Erre a hónapra nincs mit könyvelni.',
+        bookFailed: 'A Kiadások nem fogadta el. Kérjük, próbáld újra.',
       },
       fields: {
         name: 'A név',
@@ -1599,6 +1740,7 @@ export const screens = defineMessages(
         s9: 'Mutasd meg a vendégeknek a számla QR-kódját: látják a rendelést, ami még jön, az áfát, választhatnak borravalót, és látják a végösszeget, fiók nélkül.',
         s10: 'Zárd le a számlát készpénzzel, kártyával vagy másképp: az asztal felszabadul, egy új számla új kódot kap. A számlák hat hónap után törlődnek; a kimutatások megőrzik a számokat.',
         s11: 'A Beállítások → Csatlakoztatott alkalmazások alatt válaszd ki a beszerzési listádat a Bevásárlásban (a kimutatások a bevétel mellett mutatják a beszerzést), és tegyél fel recepteket a szakácskönyvedből az étlapra.',
+        s12: 'Nyisd meg a konyha, a pult vagy a kávé kijelzőjét egy tableten: ott vár minden asztal rendelése, a legrégebbi elöl; koppints arra, ami elkészült, és a felszolgáló látja, hogy kivihető.',
       },
       tipsForm: {
         title: 'Borravaló a számlán',
@@ -1633,6 +1775,7 @@ export const screens = defineMessages(
         toBring: '{count} kihozandó',
         allBrought: 'Minden kint van',
         noTables: 'Még nincsenek asztalok. A tulajdonos az Asztalok alatt veszi fel őket.',
+        readyCount: '{count} kivihető',
       },
       table: {
         free: 'Ez az asztal szabad.',
@@ -1671,6 +1814,7 @@ export const screens = defineMessages(
         goneBody: 'Ez a QR-kód már nem tartozik asztalhoz.',
         askStaff: 'Üdvözlünk! Kérd el az étlapot a személyzettől.',
         guestIntro: 'Üdvözlünk! Itt az étlapunk; a felszolgáló felveszi a rendelést.',
+        readyToBring: '{count} kivihető',
       },
       guest: {
         title: 'A számlád',
@@ -1746,6 +1890,11 @@ export const screens = defineMessages(
         costsUnavailable:
           'A beszerzési lista most nem olvasható (csatlakoztatva van még a Bevásárlás?).',
         openList: 'A lista megnyitása a Bevásárlásban',
+        bookPurchases: 'Könyvelés ide: {group}',
+        utilitiesTitle: 'Folyó költségek (Rezsi)',
+        utilitiesTotal: 'Ebben a hónapban a számlák',
+        bookUtilities: 'Könyvelés ide: {group}',
+        utilitiesUnavailable: 'A számlák most nem olvashatók (csatlakoztatva van még a Rezsi?).',
       },
       design: {
         pageTitle: 'Az étlap tervezése',
@@ -1811,6 +1960,29 @@ export const screens = defineMessages(
         searchRecipes: 'Keresés a receptjeid között',
         search: 'Keresés',
         noRecipes: 'Nincs találat.',
+        expensesGroup: 'Kiadáscsoport a hely költségeihez',
+        groupChosen: 'A kiadáscsoport mentve.',
+        groupCleared: 'Nincs kiadáscsoport.',
+        expensesHint:
+          'A kimutatásokból oda könyvelheted egy hónap beszerzéseit vagy rezsiszámláit egyetlen kiadásként. Választáskor azonnal mentődik.',
+        noUtilities: 'Még nincsenek közműveid.',
+        utilitiesTitle: 'A hely közművei (folyó költségek)',
+        utilityOn: '{name} folyó költségként számít.',
+        utilityOff: '{name} már nem számít.',
+        dartsShow: 'A nyitott darts versenyeim mutatása a nyilvános étlapon',
+        dartsOn: 'Megjelenik a nyilvános étlapon (most {count}).',
+        dartsOff: 'Nem jelenik meg a nyilvános étlapon.',
+        booked: '{amount} könyvelve ide: {group}.',
+        alreadyBooked: 'Már könyvelve ide: {group}.',
+      },
+      station: {
+        search: 'Asztal vagy étel keresése',
+        failed: 'Nem sikerült. Kérjük, próbáld újra.',
+        counter: 'Pult',
+        minutes: '{count} perc',
+        allReady: 'Minden kész',
+        nothing: 'Most nincs mit elkészíteni.',
+        unknown: 'Nincs ilyen állomás.',
       },
     },
     it: {
@@ -1829,6 +2001,7 @@ export const screens = defineMessages(
         floor: 'Sala',
         tables: 'Tavoli',
         reports: 'Resoconti',
+        kitchen: 'Cucina',
       },
       signIn: {
         title: 'Il tuo caffè, bistrot o bar',
@@ -1981,6 +2154,11 @@ export const screens = defineMessages(
         search: 'Cerca nel menu',
         noMatch: 'Nessun risultato.',
         empty: 'Il menu è in preparazione.',
+        darts: 'Tornei di freccette',
+        players: '{count} giocatori',
+        fee: 'iscrizione {fee}',
+        join: 'Iscriviti',
+        playing: 'in corso',
       },
       errors: {
         signIn: 'Accedi prima a DevQuake.',
@@ -2019,6 +2197,12 @@ export const screens = defineMessages(
         imageTooLarge: 'L’immagine è troppo grande.',
         imageType: 'Scegli un’immagine JPEG, PNG o WebP.',
         notConnected: 'Collega prima l’app, in Impostazioni.',
+        noExpensesGroup: 'Scegli prima un gruppo di spese, in Impostazioni.',
+        currencyMismatch:
+          'Il gruppo di spese è in {currency}; gli importi sono in un’altra valuta.',
+        noShoppingList: 'Scegli prima una lista degli acquisti, in Impostazioni.',
+        nothingToBook: 'Non c’è niente da registrare per questo mese.',
+        bookFailed: 'Spese non l’ha accettata. Riprova.',
       },
       fields: {
         name: 'Il nome',
@@ -2050,6 +2234,7 @@ export const screens = defineMessages(
         s9: 'Mostra ai clienti il QR del conto: vedono l’ordine, cosa arriva ancora, l’IVA, scelgono la mancia e vedono il totale, senza account.',
         s10: 'Chiudi il conto in contanti, con carta o altro: il tavolo si libera e un nuovo conto riceve un nuovo codice. I conti si eliminano dopo sei mesi; i resoconti tengono i numeri.',
         s11: 'In Impostazioni → App collegate: scegli la lista degli acquisti in Spesa (i resoconti mostrano gli acquisti accanto agli incassi) e aggiungi al menu ricette dal tuo ricettario.',
+        s12: 'Apri lo schermo di cucina, bar o caffè su un tablet: lì aspetta l’ordine di ogni tavolo, il più vecchio per primo; tocca ciò che è pronto e il cameriere lo vede pronto da portare.',
       },
       tipsForm: {
         title: 'Mancia sul conto',
@@ -2084,6 +2269,7 @@ export const screens = defineMessages(
         toBring: '{count} da portare',
         allBrought: 'Tutto portato',
         noTables: 'Ancora nessun tavolo. Il titolare li aggiunge in Tavoli.',
+        readyCount: '{count} pronti da portare',
       },
       table: {
         free: 'Questo tavolo è libero.',
@@ -2122,6 +2308,7 @@ export const screens = defineMessages(
         goneBody: 'Questo codice QR non appartiene più a un tavolo.',
         askStaff: 'Benvenuto! Chiedi il menu al personale.',
         guestIntro: 'Benvenuto! Ecco il nostro menu; il cameriere prenderà l’ordine.',
+        readyToBring: '{count} pronti da portare',
       },
       guest: {
         title: 'Il tuo conto',
@@ -2197,6 +2384,12 @@ export const screens = defineMessages(
         costsUnavailable:
           'Al momento la lista degli acquisti non si può leggere (Spesa è ancora collegata?).',
         openList: 'Apri la lista in Spesa',
+        bookPurchases: 'Registra in {group}',
+        utilitiesTitle: 'Costi correnti (Utenze)',
+        utilitiesTotal: 'Bollette di questo mese',
+        bookUtilities: 'Registra in {group}',
+        utilitiesUnavailable:
+          'Al momento le bollette non si possono leggere (Utenze è ancora collegata?).',
       },
       design: {
         pageTitle: 'Progetta il menu',
@@ -2262,6 +2455,29 @@ export const screens = defineMessages(
         searchRecipes: 'Cerca nelle tue ricette',
         search: 'Cerca',
         noRecipes: 'Nessuna ricetta trovata.',
+        expensesGroup: 'Gruppo di spese per i costi del locale',
+        groupChosen: 'Gruppo di spese salvato.',
+        groupCleared: 'Nessun gruppo di spese.',
+        expensesHint:
+          'Dai resoconti puoi registrare lì gli acquisti o le bollette di un mese come un’unica spesa. Si salva appena scegli.',
+        noUtilities: 'Non hai ancora utenze.',
+        utilitiesTitle: 'Le utenze del locale (costi correnti)',
+        utilityOn: '{name} conta come costo corrente.',
+        utilityOff: '{name} non conta più.',
+        dartsShow: 'Mostra i miei tornei di freccette aperti nel menu pubblico',
+        dartsOn: 'Mostrati nel menu pubblico (ora {count}).',
+        dartsOff: 'Non mostrati nel menu pubblico.',
+        booked: '{amount} registrato in {group}.',
+        alreadyBooked: 'Già registrato in {group}.',
+      },
+      station: {
+        search: 'Cerca un tavolo o un piatto',
+        failed: 'Non ha funzionato. Riprova.',
+        counter: 'Bancone',
+        minutes: '{count} min',
+        allReady: 'Tutto pronto',
+        nothing: 'Niente da preparare ora.',
+        unknown: 'Questa postazione non esiste.',
       },
     },
     es: {
@@ -2280,6 +2496,7 @@ export const screens = defineMessages(
         floor: 'Sala',
         tables: 'Mesas',
         reports: 'Informes',
+        kitchen: 'Cocina',
       },
       signIn: {
         title: 'Tu cafetería, bistró o bar',
@@ -2433,6 +2650,11 @@ export const screens = defineMessages(
         search: 'Buscar en la carta',
         noMatch: 'Nada coincide con tu búsqueda.',
         empty: 'La carta se está preparando.',
+        darts: 'Torneos de dardos',
+        players: '{count} jugadores',
+        fee: 'inscripción {fee}',
+        join: 'Unirse',
+        playing: 'en juego',
       },
       errors: {
         signIn: 'Inicia sesión en DevQuake primero.',
@@ -2471,6 +2693,12 @@ export const screens = defineMessages(
         imageTooLarge: 'La imagen es demasiado grande.',
         imageType: 'Elige una imagen JPEG, PNG o WebP.',
         notConnected: 'Conecta primero la app, en Ajustes.',
+        noExpensesGroup: 'Elige primero un grupo de gastos, en Ajustes.',
+        currencyMismatch:
+          'El grupo de gastos está en {currency}; los importes están en otra moneda.',
+        noShoppingList: 'Elige primero una lista de compras, en Ajustes.',
+        nothingToBook: 'No hay nada que registrar este mes.',
+        bookFailed: 'Gastos no lo aceptó. Inténtalo de nuevo.',
       },
       fields: {
         name: 'El nombre',
@@ -2502,6 +2730,7 @@ export const screens = defineMessages(
         s9: 'Enseña a los clientes el QR de su cuenta: ven el pedido, lo que falta, el IVA, eligen propina y ven el total, sin cuenta de DevQuake.',
         s10: 'Cierra la cuenta en efectivo, con tarjeta u otra forma: la mesa queda libre y una cuenta nueva recibe un código nuevo. Las cuentas se borran a los seis meses; los informes guardan las cifras.',
         s11: 'En Ajustes → Apps conectadas: elige tu lista de compras en Compras (los informes muestran las compras junto a los ingresos) y añade a la carta recetas de tu recetario.',
+        s12: 'Abre la pantalla de cocina, barra o café en una tableta: allí espera el pedido de cada mesa, el más antiguo primero; toca lo que esté hecho y el camarero lo verá listo para llevar.',
       },
       tipsForm: {
         title: 'Propina en la cuenta',
@@ -2536,6 +2765,7 @@ export const screens = defineMessages(
         toBring: '{count} por llevar',
         allBrought: 'Todo servido',
         noTables: 'Aún no hay mesas. El propietario las añade en Mesas.',
+        readyCount: '{count} listos para llevar',
       },
       table: {
         free: 'Esta mesa está libre.',
@@ -2574,6 +2804,7 @@ export const screens = defineMessages(
         goneBody: 'Este código QR ya no pertenece a una mesa.',
         askStaff: '¡Bienvenido! Pide la carta al personal.',
         guestIntro: '¡Bienvenido! Esta es nuestra carta; tu camarero tomará el pedido.',
+        readyToBring: '{count} listos para llevar',
       },
       guest: {
         title: 'Tu cuenta',
@@ -2648,6 +2879,12 @@ export const screens = defineMessages(
         afterCosts: 'Ingresos menos compras',
         costsUnavailable: 'Ahora no se puede leer la lista de compras (¿sigue conectada Compras?).',
         openList: 'Abrir la lista en Compras',
+        bookPurchases: 'Registrar en {group}',
+        utilitiesTitle: 'Costes corrientes (Suministros)',
+        utilitiesTotal: 'Facturas de este mes',
+        bookUtilities: 'Registrar en {group}',
+        utilitiesUnavailable:
+          'Ahora no se pueden leer las facturas (¿sigue conectada Suministros?).',
       },
       design: {
         pageTitle: 'Diseña la carta',
@@ -2714,6 +2951,29 @@ export const screens = defineMessages(
         searchRecipes: 'Busca en tus recetas',
         search: 'Buscar',
         noRecipes: 'No se encontraron recetas.',
+        expensesGroup: 'Grupo de gastos para los costes del local',
+        groupChosen: 'Grupo de gastos guardado.',
+        groupCleared: 'Sin grupo de gastos.',
+        expensesHint:
+          'Desde los informes puedes registrar allí las compras o las facturas de un mes como un solo gasto. Se guarda en cuanto eliges.',
+        noUtilities: 'Aún no tienes suministros.',
+        utilitiesTitle: 'Los suministros del local (costes corrientes)',
+        utilityOn: '{name} cuenta como coste corriente.',
+        utilityOff: '{name} ya no cuenta.',
+        dartsShow: 'Mostrar mis torneos de dardos abiertos en la carta pública',
+        dartsOn: 'Se muestran en la carta pública ({count} ahora).',
+        dartsOff: 'No se muestran en la carta pública.',
+        booked: '{amount} registrado en {group}.',
+        alreadyBooked: 'Ya registrado en {group}.',
+      },
+      station: {
+        search: 'Buscar una mesa o un plato',
+        failed: 'No ha funcionado. Inténtalo de nuevo.',
+        counter: 'Mostrador',
+        minutes: '{count} min',
+        allReady: 'Todo listo',
+        nothing: 'Nada que preparar ahora.',
+        unknown: 'No existe esta estación.',
       },
     },
   },

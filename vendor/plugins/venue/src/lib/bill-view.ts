@@ -22,6 +22,7 @@ export function billView(bill: Bill, venue: Venue) {
       vatRate: l.vatRate,
       station: l.station,
       qty: l.qty,
+      ready: l.ready,
       delivered: l.delivered,
       note: l.note,
       addedBy: l.addedBy,

@@ -47,6 +47,7 @@ export default async function Floor({ ctx }: PluginPageProps) {
                 code: x.bill.code,
                 openedBy: x.bill.openedBy,
                 pending: x.bill.pending,
+                ready: x.bill.ready,
                 gross: x.bill.gross,
               }
             : null,

@@ -1,5 +1,13 @@
 # Changelog — Venue
 
+## 0.6.0
+
+- Kitchen, bar and coffee screens: each table’s order waits there, oldest first, with how long it has waited; tap what is made, and the waiter sees it ready to bring on the table and the floor.
+
+## 0.5.0
+
+- Connect Expenses, Utilities and Darts: book a month’s purchases or utility bills in an expense group with one tap, see the bills of the venue’s utilities as running costs in the reports, and show your open darts tournaments on the public menu with a link to join.
+
 ## 0.4.1
 
 - Connecting another app shows its NPS points on the button; without enough points the button says how many are needed.

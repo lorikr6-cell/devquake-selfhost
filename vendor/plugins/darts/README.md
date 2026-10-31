@@ -100,3 +100,6 @@ pnpm db:migrate --plugin darts           # needs DARTS_DB_* in the environment
 
 Offers `activity.day` (read; `links/activity-day.ts`): the games the member finished, by their day,
 with who won, each linking to `/games/:id` (target `game`). Habits and journal shows them.
+
+Offers `tournaments.open` (read; `links/tournaments-open.ts`): the tournaments the member runs
+that are not finished, with the join code (target `join`), for a venue's public menu.

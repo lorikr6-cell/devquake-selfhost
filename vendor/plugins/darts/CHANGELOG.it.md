@@ -1,5 +1,9 @@
 # Registro delle modifiche — Darts
 
+## 0.10.0
+
+- Un locale nell’app Venue può mostrare i tornei che organizzi nel suo menu pubblico, con un link per iscriversi.
+
 ## 0.9.0
 
 - Le app collegate, come Abitudini e diario, ora possono mostrare le partite che hai giocato ogni giorno e chi ha vinto, con un link per tornare qui alla partita.

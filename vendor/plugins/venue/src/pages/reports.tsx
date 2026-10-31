@@ -4,7 +4,8 @@ import { localeOf, translator } from '../i18n';
 import { addDays, todayIn } from '../lib/dates';
 import { salesDays, searchBills, topItems } from '../lib/floor';
 import { formatMinor } from '../lib/model';
-import { purchases, topPurchases, venueLink } from '../lib/links';
+import { BookButton } from '../components/link-pickers';
+import { byCurrency, idsOf, purchases, topPurchases, utilityBills, venueLink } from '../lib/links';
 import { ownVenue } from '../lib/page';
 
 export async function generateMetadata({ ctx }: PluginPageProps) {
@@ -35,6 +36,15 @@ export default async function Reports({ ctx, searchParams }: PluginPageProps) {
     searchBills(db, venue.id, q, 50),
     venueLink(db, venue.id, 'shoppingList'),
   ]);
+  const [utilities, group] = await Promise.all([
+    venueLink(db, venue.id, 'utilities'),
+    venueLink(db, venue.id, 'expensesGroup'),
+  ]);
+  // Running costs: the bills of the venue's utilities with a period in the month (ADR 0035).
+  const costBills =
+    utilities && ctx.links
+      ? await utilityBills(ctx.links, idsOf(utilities.ref), first, last).catch(() => null)
+      : null;
   // The month's costs: what was bought on the venue's purchasing list in Shopping (ADR 0035).
   const bought =
     list && ctx.links
@@ -127,11 +137,62 @@ export default async function Reports({ ctx, searchParams }: PluginPageProps) {
               {t('reports.costsUnavailable')}
             </p>
           )}
-          {listUrl ? (
-            <a href={listUrl} className="text-sm underline">
-              {t('reports.openList')}
-            </a>
-          ) : null}
+          <p className="flex flex-wrap gap-3">
+            {listUrl ? (
+              <a href={listUrl} className="text-sm underline">
+                {t('reports.openList')}
+              </a>
+            ) : null}
+            {group && bought && bought.total > 0 ? (
+              <BookButton
+                kind="purchases"
+                month={month}
+                label={t('reports.bookPurchases', { group: group.name })}
+              />
+            ) : null}
+          </p>
+        </section>
+      ) : null}
+      {utilities ? (
+        <section className="space-y-2 rounded-lg border border-ink/10 p-4 dark:border-paper/10">
+          <h2 className="font-semibold">{t('reports.utilitiesTitle')}</h2>
+          {costBills ? (
+            costBills.length ? (
+              <>
+                <ul className="space-y-0.5 text-sm">
+                  {costBills.map((b, i) => (
+                    <li key={i} className="flex justify-between gap-3">
+                      <span>{b.utility}</span>
+                      <span className="tabular-nums">
+                        {b.total.toFixed(2)} {b.currency}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                {byCurrency(costBills).map((s) => (
+                  <p key={s.currency} className="flex justify-between gap-3 font-semibold">
+                    <span>{t('reports.utilitiesTotal')}</span>
+                    <span className="tabular-nums">
+                      {s.total.toFixed(2)} {s.currency}
+                    </span>
+                  </p>
+                ))}
+                {group ? (
+                  <BookButton
+                    kind="utilities"
+                    month={month}
+                    label={t('reports.bookUtilities', { group: group.name })}
+                  />
+                ) : null}
+              </>
+            ) : (
+              <p className="text-sm text-ink/70 dark:text-paper/70">{t('reports.noBills')}</p>
+            )
+          ) : (
+            <p className="text-sm text-ink/70 dark:text-paper/70">
+              {t('reports.utilitiesUnavailable')}
+            </p>
+          )}
         </section>
       ) : null}
       <section>

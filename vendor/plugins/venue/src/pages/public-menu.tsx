@@ -5,6 +5,7 @@ import { panelStyle, sheetStyle } from '../components/menu-sheet';
 import { localeOf, translator } from '../i18n';
 import { menuOf, venueBySlug, type Venue } from '../lib/data';
 import { designOf } from '../lib/design';
+import { venueTournaments, type VenueTournament } from '../lib/links';
 
 type Db = NonNullable<PluginPageProps['ctx']['db']>;
 
@@ -32,9 +33,30 @@ export async function publicMenu(db: Db, venue: Venue): Promise<PublicMenuData> 
  * The public menu in the owner's design (when they show it there): their background, font and
  * colours around the searchable menu.
  */
-export async function DesignedMenu({ db, venue, intro }: { db: Db; venue: Venue; intro?: string }) {
-  const [menu, design] = await Promise.all([publicMenu(db, venue), designOf(db, venue.id)]);
-  if (!design.onPublic) return <MenuBrowser menu={menu} intro={intro} />;
+export async function DesignedMenu({
+  db,
+  venue,
+  intro,
+  t,
+}: {
+  db: Db;
+  venue: Venue;
+  intro?: string;
+  t: (key: string, values?: Record<string, string | number>) => string;
+}) {
+  const [menu, design, tournaments] = await Promise.all([
+    publicMenu(db, venue),
+    designOf(db, venue.id),
+    venueTournaments(db, venue.id).catch(() => [] as VenueTournament[]),
+  ]);
+  const darts = <Tournaments list={tournaments} t={t} />;
+  if (!design.onPublic)
+    return (
+      <>
+        <MenuBrowser menu={menu} intro={intro} />
+        {darts}
+      </>
+    );
   const bg =
     design.background !== null ? `/api/menu-bg/${venue.slug}?v=${design.background}` : null;
   return (
@@ -47,8 +69,43 @@ export async function DesignedMenu({ db, venue, intro }: { db: Db; venue: Venue;
           menu={{ ...menu, name: design.title || menu.name }}
           intro={intro || design.subtitle}
         />
+        {darts}
       </div>
     </div>
+  );
+}
+
+/** The owner's open darts tournaments (a copy kept from Darts), with a link to join. */
+function Tournaments({
+  list,
+  t,
+}: {
+  list: VenueTournament[];
+  t: (key: string, values?: Record<string, string | number>) => string;
+}) {
+  if (!list.length) return null;
+  return (
+    <section className="mt-8 space-y-2">
+      <h2 className="font-display text-xl font-bold">🎯 {t('publicMenu.darts')}</h2>
+      <ul className="space-y-2">
+        {list.map((x) => (
+          <li key={x.ref} className="flex flex-wrap items-baseline gap-x-3">
+            <span className="font-medium">{x.name}</span>
+            <span className="text-sm opacity-80">
+              {x.game} · {t('publicMenu.players', { count: x.players })}
+              {x.fee ? ` · ${t('publicMenu.fee', { fee: x.fee })}` : ''}
+            </span>
+            {x.url ? (
+              <a href={x.url} className="text-sm font-medium underline">
+                {t('publicMenu.join')}
+              </a>
+            ) : (
+              <span className="text-sm">{t('publicMenu.playing')}</span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
@@ -81,5 +138,5 @@ export default async function PublicMenu(props: PluginPageProps) {
         <p>{t('publicMenu.goneBody')}</p>
       </section>
     );
-  return <DesignedMenu db={db} venue={venue} />;
+  return <DesignedMenu db={db} venue={venue} t={t} />;
 }

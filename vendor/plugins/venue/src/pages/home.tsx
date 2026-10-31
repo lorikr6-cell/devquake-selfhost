@@ -3,6 +3,7 @@ import { Link } from '@devquake/ui';
 import { VenueForm } from '../components/venue-form';
 import { localeOf, translator } from '../i18n';
 import { listStaff, listTablets, menuOf, venueOfOwner } from '../lib/data';
+import { syncDarts } from '../lib/links';
 
 export async function generateMetadata({ ctx }: PluginPageProps) {
   return { title: translator(localeOf(ctx))('appName') };
@@ -34,6 +35,8 @@ export default async function Home({ ctx }: PluginPageProps) {
         <VenueForm />
       </div>
     );
+  // The darts copy for the public menu, refreshed while the owner uses Venue (ADR 0035).
+  await syncDarts(ctx.db, venue.id, ctx.links).catch(() => undefined);
   const [menu, staff, tablets] = await Promise.all([
     menuOf(ctx.db, venue.id),
     listStaff(ctx.db, venue.id),

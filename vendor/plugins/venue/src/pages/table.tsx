@@ -48,7 +48,7 @@ export default async function TablePage({ ctx, params }: PluginPageProps) {
           <p>{t('table.askStaff')}</p>
         </section>
       );
-    return <DesignedMenu db={ctx.db} venue={venue} intro={t('table.guestIntro')} />;
+    return <DesignedMenu db={ctx.db} venue={venue} intro={t('table.guestIntro')} t={t} />;
   }
   const venue = found.venue;
   const [bill, menu] = await Promise.all([

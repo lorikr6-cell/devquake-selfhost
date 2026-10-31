@@ -1,5 +1,9 @@
 # Registro delle modifiche — Bollette
 
+## 0.14.0
+
+- Un locale nell’app Venue può contare le bollette delle utenze che scegli come costi correnti (passano solo i nomi e i totali).
+
 ## 0.13.0
 
 - Suggerimenti su ogni pagina: come vedere i dettagli, come aggiungere e come modificare. Attivali o disattivali con 💡 in alto; la scelta resta su questo dispositivo.

@@ -1,5 +1,9 @@
 # Változások — Közműszámlák
 
+## 0.14.0
+
+- A Venue alkalmazás egy vendéglátóhelye az általad választott közművek számláit folyó költségként számolhatja (csak a nevek és az összegek mennek át).
+
 ## 0.13.0
 
 - Tippek minden oldalon: hogyan látod a részleteket, hogyan adsz hozzá és hogyan módosítasz. Felül a 💡 gombbal kapcsolhatod be vagy ki; a választás ezen az eszközön marad.

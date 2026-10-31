@@ -158,3 +158,6 @@ pnpm dev                                  # from the repo root, then http://util
 pnpm --filter @devquake/plugin-utilities test
 pnpm db:migrate --plugin utilities            # needs UTILITIES_DB_* in the environment
 ```
+
+Offers `utilities.list` and `bills.costs` (read, `{ from, to, utilityIds? }`): the member's
+utilities and their bills' totals by period, for a venue's running costs (Venue).

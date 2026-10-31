@@ -1,5 +1,9 @@
 # Modificări — Facturi utilități
 
+## 0.14.0
+
+- Un local din aplicația Venue poate număra facturile utilităților pe care le alegi ca și costuri curente (trec doar numele și totalurile).
+
 ## 0.13.0
 
 - Sfaturi pe fiecare pagină: cum vezi detaliile, cum adaugi și cum modifici. Pornește-le sau oprește-le cu 💡 din partea de sus; alegerea rămâne pe acest dispozitiv.

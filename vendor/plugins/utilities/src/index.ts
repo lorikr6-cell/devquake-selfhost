@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'utilities',
     name: 'Utility bill manager',
-    version: '0.13.0',
+    version: '0.14.0',
     description:
       'Shared utility bills: upload the provider’s PDF, send meter readings with a photo, split the bill by consumption or equally, record who paid what with carry-over, and follow consumption, payments and prices in a calendar and statistics.',
     status: 'active',
@@ -28,6 +28,30 @@ export default definePlugin({
             hu: 'Lássa a rezsiszámláid esedékességét',
             it: 'Vedere le scadenze delle tue bollette',
             es: 'Ver los vencimientos de tus facturas de suministros',
+          },
+        },
+        {
+          id: 'utilities.list',
+          kind: 'read',
+          title: {
+            en: 'See the names of your utilities',
+            de: 'Die Namen deiner Versorgungen sehen',
+            ro: 'Să vadă numele utilităților tale',
+            hu: 'Lássa a közműveid nevét',
+            it: 'Vedere i nomi delle tue utenze',
+            es: 'Ver los nombres de tus suministros',
+          },
+        },
+        {
+          id: 'bills.costs',
+          kind: 'read',
+          title: {
+            en: 'See the totals of your bills, by month',
+            de: 'Die Beträge deiner Rechnungen sehen, nach Monaten',
+            ro: 'Să vadă totalurile facturilor tale, pe luni',
+            hu: 'Lássa a számláid összegét havonta',
+            it: 'Vedere i totali delle tue bollette, per mese',
+            es: 'Ver los importes de tus facturas, por mes',
           },
         },
       ],
@@ -139,6 +163,8 @@ export default definePlugin({
   },
   platform: () => import('./platform'),
   linkHandlers: {
+    'bills.costs': () => import('./links/bills-costs'),
+    'utilities.list': () => import('./links/utilities-list'),
     'calendar.events': () => import('./links/calendar-events'),
   },
 });

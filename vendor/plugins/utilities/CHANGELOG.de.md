@@ -1,5 +1,9 @@
 # Änderungen — Nebenkosten
 
+## 0.14.0
+
+- Ein Lokal in der App Venue kann die Rechnungen der Versorgungen, die du wählst, als laufende Kosten zählen (nur Namen und Beträge gehen hinüber).
+
 ## 0.13.0
 
 - Tipps auf jeder Seite: wie du Details siehst, etwas hinzufügst und änderst. Schalte sie oben mit 💡 ein oder aus; die Wahl bleibt auf diesem Gerät.

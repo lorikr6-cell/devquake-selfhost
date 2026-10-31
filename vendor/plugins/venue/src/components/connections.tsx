@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { connectBlocked, connectLabel, useT } from '@devquake/ui';
 import { call, errorText, fieldClass } from './client';
+import { DartsToggle, ExpensesGroup, UtilitiesChoice } from './link-pickers';
 import { Status } from './status';
 
 interface LinkedApp {
@@ -75,7 +76,7 @@ function ShoppingList() {
 }
 
 /** The apps Venue works with: why, whether connected, and what is chosen in them. */
-export function Connections({ apps }: { apps: LinkedApp[] }) {
+export function Connections({ apps, dartsOn = false }: { apps: LinkedApp[]; dartsOn?: boolean }) {
   const t = useT('links');
   if (!apps.length) return <p className="text-sm">{t('none')}</p>;
   return (
@@ -94,6 +95,9 @@ export function Connections({ apps }: { apps: LinkedApp[] }) {
               <>
                 <p className="text-sm text-green-700 dark:text-green-400">✓ {t('connected')}</p>
                 {a.app === 'shopping' ? <ShoppingList /> : null}
+                {a.app === 'expenses' ? <ExpensesGroup /> : null}
+                {a.app === 'utilities' ? <UtilitiesChoice /> : null}
+                {a.app === 'darts' ? <DartsToggle initial={dartsOn} /> : null}
               </>
             ) : connectBlocked(a) ? (
               <button

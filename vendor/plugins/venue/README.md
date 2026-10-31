@@ -29,6 +29,7 @@ The admin settings are the venue owner's only (a signed-in member, never a PIN).
 | Page | `/t/:code`                | open route                                         | `src/pages/table.tsx` (staff: order; guests: menu) |
 | Page | `/b/:code`                | open route (the bill code)                         | `src/pages/bill.tsx` (the guests' bill)            |
 | Page | `/reports`                | the venue's owner                                  | `src/pages/reports.tsx` (sales, items, bills)      |
+| Page | `/station/:station`       | open route: owner or tablet staff                  | `src/pages/station.tsx` (kitchen, bar, coffee)     |
 | Page | `/help`                   | public                                             | `src/pages/help.tsx` (user manual)                 |
 | Page | `/about`                  | public                                             | `src/pages/about.tsx`                              |
 | API  | `/venue`                  | POST (create), PUT                                 | `src/api/venue.ts`                                 |
@@ -47,6 +48,7 @@ The admin settings are the venue owner's only (a signed-in member, never a PIN).
 | API  | `/menu/design`            | PUT (the design's settings, owner)                 | `src/api/menu-design.ts`                           |
 | API  | `/menu/design/background` | GET, PUT (flattened image), DELETE (owner)         | `src/api/menu-background.ts`                       |
 | API  | `/menu-bg/:slug`          | open route: GET the public menu's background       | `src/api/public-background.ts`                     |
+| API  | `/floor/station/:station` | key route: GET tickets, POST made                  | `src/api/floor-station.ts`                         |
 | API  | `/health`                 | public                                             | `src/api/health.ts`                                |
 
 Every API route but `/health` is the owner's (`ownerApi` in `src/lib/api.ts`); every page but
@@ -56,7 +58,8 @@ Database (own, `VENUE_DB_*`): `db/migrations/0001_venue.sql` (venues, staff, tab
 menu_categories, menu_items), `0002_venue_tips.sql` (the venue's tip settings),
 `0003_venue_tables_bills.sql` (venue_tables, bills, bill_lines, sales_days, sales_items; staff on
 tablets). The scheduled run deletes finalised bills after 183 days (`deleteOldBills`).
-`0004_venue_menu_design.sql` (menu_designs: the menu's look and its flattened background). Next stages: tables and orders on the tablet with PIN switching,
+`0004_venue_menu_design.sql` (menu_designs: the menu's look and its flattened background).
+`0007_venue_stations.sql` (bill_lines.ready: what a station has made). Next stages: tables and orders on the tablet with PIN switching,
 kitchen and bar screens, payments and the daily closing, stock, shifts, reservations, HACCP.
 
 ## Links with other apps (ADR 0035)
@@ -66,8 +69,11 @@ kitchen and bar screens, payments and the daily closing, stock, shifts, reservat
 | shopping | `lists.overview`, `list.purchases`; `list` | The purchasing list (settings) and the month's costs (reports) |
 | cookbook | `recipes.search`, `recipe.get`; `recipe`   | "Add from your cookbook" in the menu editor                    |
 
-The chosen list is kept in `venue_links` (migration `0005_venue_links.sql`); purchases are read
-when the reports open, never stored here. API: `/links/shopping` (GET, PUT), `/links/recipes` (GET).
+The choices are kept in `venue_links` (migration `0005_venue_links.sql`); purchases and bills
+are read when the reports open, never stored here. The darts tournaments are copied into
+`venue_darts` (migration `0006_venue_darts.sql`) when the owner opens Venue (at most every 10
+minutes), so guests see them on the public menu. API: `/links/shopping` (GET, PUT), `/links/recipes` (GET), `/links/expenses` (GET, PUT, POST to
+book), `/links/utilities` (GET, PUT), `/links/darts` (PUT).
 
 ## Development
 

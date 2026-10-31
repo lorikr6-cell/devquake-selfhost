@@ -102,6 +102,6 @@ only asks that the licence and copyright notice stay with copies of the code.
 
 ## About
 
-Darts club is a [DevQuake](https://devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=darts) app (darts 0.9.0),
+Darts club is a [DevQuake](https://devquake.com/?utm_source=selfhost&utm_medium=readme&utm_campaign=darts) app (darts 0.10.0),
 packaged to run on its own. Licence: [MIT](../../LICENSE). Problems and ideas:
 [GitHub issues](https://github.com/lorikr6-cell/devquake-selfhost/issues).

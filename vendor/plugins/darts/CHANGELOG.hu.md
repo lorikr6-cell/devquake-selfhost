@@ -1,5 +1,9 @@
 # Változások — Darts
 
+## 0.10.0
+
+- A Venue alkalmazás egy vendéglátóhelye megmutathatja az általad szervezett versenyeket a nyilvános étlapján, jelentkezési linkkel.
+
 ## 0.9.0
 
 - A csatlakoztatott alkalmazások, például a Szokások és napló, mostantól megmutathatják, milyen játékokat játszottál naponta és ki nyert, egy linkkel vissza ide a játékhoz.

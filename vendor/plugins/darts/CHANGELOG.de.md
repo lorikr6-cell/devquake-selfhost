@@ -1,5 +1,9 @@
 # Änderungen — Darts
 
+## 0.10.0
+
+- Ein Lokal in der App Venue kann die Turniere, die du veranstaltest, auf seiner öffentlichen Karte zeigen, mit einem Link zum Mitmachen.
+
 ## 0.9.0
 
 - Verbundene Apps wie Gewohnheiten und Tagebuch können jetzt die Spiele zeigen, die du an jedem Tag gespielt hast, und wer gewonnen hat, mit einem Link zurück zum Spiel hier.

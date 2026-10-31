@@ -38,6 +38,8 @@ export interface VenueTable {
     openedAt: Date;
     openedBy: string;
     pending: number;
+    /** Made at their station and not brought yet. */
+    ready: number;
     gross: number;
   } | null;
 }
@@ -55,10 +57,13 @@ export async function listTables(db: Db, venueId: number): Promise<VenueTable[]>
       opened_at: Date;
       opened_by: string;
       pending: number | null;
+      ready: number | null;
       gross: number | null;
     }>(
       `SELECT b.id, b.table_id, b.code, b.opened_at, b.opened_by,
-              SUM(GREATEST(l.qty - l.delivered, 0)) AS pending, SUM(l.price_minor * l.qty) AS gross
+              SUM(GREATEST(l.qty - l.delivered, 0)) AS pending,
+              SUM(GREATEST(LEAST(l.ready, l.qty) - l.delivered, 0)) AS ready,
+              SUM(l.price_minor * l.qty) AS gross
          FROM bills b LEFT JOIN bill_lines l ON l.bill_id = b.id
         WHERE b.venue_id = ? AND b.status = 'open'
         GROUP BY b.id`,
@@ -80,6 +85,7 @@ export async function listTables(db: Db, venueId: number): Promise<VenueTable[]>
             openedAt: new Date(b.opened_at),
             openedBy: b.opened_by,
             pending: Number(b.pending ?? 0),
+            ready: Number(b.ready ?? 0),
             gross: Number(b.gross ?? 0),
           }
         : null,
@@ -149,6 +155,8 @@ export interface Line {
   vatRate: number;
   station: Station;
   qty: number;
+  /** Made at the station (kitchen, bar, coffee). */
+  ready: number;
   delivered: number;
   note: string | null;
   addedBy: string;
@@ -200,11 +208,12 @@ async function billWhere(db: Db, where: string, args: unknown[]): Promise<Bill |
     vat_rate: number;
     station: Station;
     qty: number;
+    ready: number;
     delivered: number;
     note: string | null;
     added_by: string;
   }>(
-    `SELECT id, item_id, name, price_minor, vat_rate, station, qty, delivered, note, added_by
+    `SELECT id, item_id, name, price_minor, vat_rate, station, qty, ready, delivered, note, added_by
        FROM bill_lines WHERE bill_id = ? ORDER BY id`,
     [b.id],
   );
@@ -232,6 +241,7 @@ async function billWhere(db: Db, where: string, args: unknown[]): Promise<Bill |
       vatRate: Number(l.vat_rate),
       station: l.station,
       qty: Number(l.qty),
+      ready: Number(l.ready),
       delivered: Number(l.delivered),
       note: l.note,
       addedBy: l.added_by,

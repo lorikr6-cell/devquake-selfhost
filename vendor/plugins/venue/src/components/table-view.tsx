@@ -208,7 +208,9 @@ export function TableView({
                       >
                         {done
                           ? `✓ ${t('brought')}`
-                          : t('broughtOf', { n: l.delivered, qty: l.qty })}
+                          : l.station !== 'none' && l.ready > l.delivered
+                            ? `🔔 ${t('readyToBring', { count: Math.min(l.ready, l.qty) - l.delivered })}`
+                            : t('broughtOf', { n: l.delivered, qty: l.qty })}
                       </span>
                       {!done ? (
                         <button
