@@ -1,5 +1,9 @@
 # Änderungen — Kochbuch
 
+## 0.10.0
+
+- Neues Rezept in der Bibliothek: Paprikahuhn mit Nockerln.
+
 ## 0.9.0
 
 - Tipps auf jeder Seite: wie du Details siehst, etwas hinzufügst und änderst. Schalte sie oben mit 💡 ein oder aus; die Wahl bleibt auf diesem Gerät.

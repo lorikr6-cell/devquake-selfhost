@@ -1,5 +1,11 @@
 # Registro delle modifiche — Spese condivise
 
+## 0.5.0
+
+- Un gruppo demo per provare tutto prima: un weekend con tre amici, spese divise in tutti i modi, commenti e un pagamento, nella tua lingua. Aprilo dalla pagina iniziale; è solo tuo e si può eliminare come ogni gruppo.
+- Passa da un gruppo all’altro dalla parte alta di ogni pagina di gruppo, restando nella stessa scheda.
+- Notifiche per le app su Android, iPhone e Windows: vieni avvisato quando una spesa in cui sei viene aggiunta, modificata o eliminata, di un pagamento verso di te o da te, di un commento a una spesa in cui sei e (come proprietario) quando qualcuno entra. Nessun altro viene avvisato, mai chi ha fatto la modifica.
+
 ## 0.4.0
 
 - Suggerimenti su ogni pagina: come vedere i dettagli, come aggiungere e come modificare. Attivali o disattivali con 💡 in alto; la scelta resta su questo dispositivo.

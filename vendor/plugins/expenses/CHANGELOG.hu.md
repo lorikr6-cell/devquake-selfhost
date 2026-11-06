@@ -1,5 +1,11 @@
 # Változásnapló — Közös kiadások
 
+## 0.5.0
+
+- Demó csoport, hogy előbb mindent kipróbálhass: egy hétvégi kirándulás három baráttal, mindenféleképpen megosztott kiadásokkal, hozzászólásokkal és egy kifizetéssel, a saját nyelveden. A kezdőlapról nyitod meg; csak a tiéd, és bármelyik csoporthoz hasonlóan törölhető.
+- Bármelyik csoportoldal tetején válthatsz a csoportjaid között, ugyanazon a fülön maradva.
+- Értesítések az androidos, iPhone-os és windowsos alkalmazásokhoz: megtudod, ha egy kiadást, amelyben benne vagy, hozzáadnak, módosítanak vagy törölnek, ha neked vagy tőled érkezik kifizetés, ha hozzászólnak egy kiadásodhoz, és (tulajdonosként) ha valaki csatlakozik. Senki más nem kap értesítést, és soha az, aki a változtatást végezte.
+
 ## 0.4.0
 
 - Tippek minden oldalon: hogyan látod a részleteket, hogyan adsz hozzá és hogyan módosítasz. Felül a 💡 gombbal kapcsolhatod be vagy ki; a választás ezen az eszközön marad.

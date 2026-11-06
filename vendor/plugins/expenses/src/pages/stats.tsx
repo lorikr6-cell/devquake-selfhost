@@ -28,6 +28,7 @@ export default async function StatsPage({ ctx, params }: PluginPageProps) {
   return (
     <GroupShell
       group={group}
+      groups={scope.groups}
       tab="stats"
       members={members.filter((m) => m.active).length}
       balance={

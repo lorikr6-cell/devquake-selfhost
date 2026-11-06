@@ -1,5 +1,11 @@
 # Registro de cambios — Gastos compartidos
 
+## 0.5.0
+
+- Un grupo de demostración para probarlo todo antes: un fin de semana con tres amigos, gastos divididos de todas las formas, comentarios y un pago, en tu idioma. Ábrelo desde la página de inicio; es solo tuyo y se puede eliminar como cualquier grupo.
+- Cambia entre tus grupos desde la parte superior de cualquier página de grupo, sin salir de la misma pestaña.
+- Notificaciones para las apps de Android, iPhone y Windows: te enteras cuando un gasto en el que estás se añade, cambia o elimina, de un pago a ti o tuyo, de un comentario en un gasto en el que estás y (como propietario) cuando alguien se une. Nadie más recibe aviso, nunca quien hizo el cambio.
+
 ## 0.4.0
 
 - Consejos en cada página: cómo ver los detalles, cómo añadir y cómo cambiar. Actívalos o desactívalos con 💡 arriba; la elección se guarda en este dispositivo.

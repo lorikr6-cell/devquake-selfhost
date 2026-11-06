@@ -1,5 +1,11 @@
 # Jurnal de modificări — Cheltuieli comune
 
+## 0.5.0
+
+- Un grup demo ca să încerci totul mai întâi: o excursie de weekend cu trei prieteni, cheltuieli împărțite în toate felurile, comentarii și o plată, în limba ta. Îl deschizi de pe pagina principală; e doar al tău și se poate șterge ca orice grup.
+- Treci de la un grup la altul din partea de sus a oricărei pagini de grup, rămânând pe aceeași filă.
+- Notificări pentru aplicațiile de Android, iPhone și Windows: afli când o cheltuială în care ești este adăugată, schimbată sau ștearsă, de o plată către tine sau de la tine, de un comentariu la o cheltuială în care ești și (ca proprietar) când intră cineva în grup. Nimeni altcineva nu e anunțat, niciodată cel care a făcut schimbarea.
+
 ## 0.4.0
 
 - Sfaturi pe fiecare pagină: cum vezi detaliile, cum adaugi și cum modifici. Pornește-le sau oprește-le cu 💡 din partea de sus; alegerea rămâne pe acest dispozitiv.

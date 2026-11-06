@@ -11,34 +11,44 @@ ADR 0043), from the owner's DevQuake referrals, or are added **by name without a
 shares**, **by percent** or as **exact amounts**; the parts are computed in whole cents and stored.
 **Balances** show who is owed and who owes, **settling up** suggests the fewest transfers, and
 **payments** record them. Expenses have **comments**; the **activity** feed lists every change;
-**statistics** show spending by category, month and person.
+**statistics** show spending by category, month and person. A member may have many groups and
+switches between them from the top of every group page; **Open a demo group** makes a sample
+trip (once per person) to try everything. The native apps (Android, iPhone, Windows, the same
+features everywhere) read `/api/app/*` and write through the same API as the website; members
+get **phone notifications** only for what concerns them (`lib/notify.ts`).
 
 ## Routes
 
-| Type | Pattern                                         | File                     |
-| ---- | ----------------------------------------------- | ------------------------ |
-| Page | `/`                                             | `src/pages/home.tsx`     |
-| Page | `/groups/:id`                                   | `src/pages/group.tsx`    |
-| Page | `/groups/:id/balances`                          | `src/pages/balances.tsx` |
-| Page | `/groups/:id/activity`                          | `src/pages/activity.tsx` |
-| Page | `/groups/:id/stats`                             | `src/pages/stats.tsx`    |
-| Page | `/groups/:id/members`                           | `src/pages/members.tsx`  |
-| Page | `/groups/:id/expenses/:expenseId`               | `src/pages/expense.tsx`  |
-| Page | `/join/:code` (signed-in route)                 | `src/pages/join.tsx`     |
-| Page | `/help` (public)                                | `src/pages/help.tsx`     |
-| API  | `/health`                                       | `src/api/health.ts`      |
-| API  | `/groups` POST                                  | `src/api/groups.ts`      |
-| API  | `/groups/:id` PATCH, DELETE                     | `src/api/group.ts`       |
-| API  | `/groups/:id/expenses` POST                     | `src/api/expenses.ts`    |
-| API  | `/groups/:id/expenses/:expenseId` PATCH, DELETE | `src/api/expense.ts`     |
-| API  | `/groups/:id/expenses/:expenseId/comments` POST | `src/api/comments.ts`    |
-| API  | `/groups/:id/comments/:commentId` DELETE        | `src/api/comment.ts`     |
-| API  | `/groups/:id/payments` POST                     | `src/api/payments.ts`    |
-| API  | `/groups/:id/payments/:paymentId` DELETE        | `src/api/payment.ts`     |
-| API  | `/groups/:id/invite` POST                       | `src/api/invite.ts`      |
-| API  | `/groups/:id/members` POST                      | `src/api/members.ts`     |
-| API  | `/groups/:id/members/:memberId` PATCH, DELETE   | `src/api/member.ts`      |
-| API  | `/join` POST (signed-in route)                  | `src/api/join.ts`        |
+| Type | Pattern                                         | File                      |
+| ---- | ----------------------------------------------- | ------------------------- |
+| Page | `/`                                             | `src/pages/home.tsx`      |
+| Page | `/groups/:id`                                   | `src/pages/group.tsx`     |
+| Page | `/groups/:id/balances`                          | `src/pages/balances.tsx`  |
+| Page | `/groups/:id/activity`                          | `src/pages/activity.tsx`  |
+| Page | `/groups/:id/stats`                             | `src/pages/stats.tsx`     |
+| Page | `/groups/:id/members`                           | `src/pages/members.tsx`   |
+| Page | `/groups/:id/expenses/:expenseId`               | `src/pages/expense.tsx`   |
+| Page | `/join/:code` (signed-in route)                 | `src/pages/join.tsx`      |
+| Page | `/help` (public)                                | `src/pages/help.tsx`      |
+| API  | `/health`                                       | `src/api/health.ts`       |
+| API  | `/groups` POST                                  | `src/api/groups.ts`       |
+| API  | `/groups/:id` PATCH, DELETE                     | `src/api/group.ts`        |
+| API  | `/groups/:id/expenses` POST                     | `src/api/expenses.ts`     |
+| API  | `/groups/:id/expenses/:expenseId` PATCH, DELETE | `src/api/expense.ts`      |
+| API  | `/groups/:id/expenses/:expenseId/comments` POST | `src/api/comments.ts`     |
+| API  | `/groups/:id/comments/:commentId` DELETE        | `src/api/comment.ts`      |
+| API  | `/groups/:id/payments` POST                     | `src/api/payments.ts`     |
+| API  | `/groups/:id/payments/:paymentId` DELETE        | `src/api/payment.ts`      |
+| API  | `/groups/:id/invite` POST                       | `src/api/invite.ts`       |
+| API  | `/groups/:id/members` POST                      | `src/api/members.ts`      |
+| API  | `/groups/:id/members/:memberId` PATCH, DELETE   | `src/api/member.ts`       |
+| API  | `/join` POST (signed-in route)                  | `src/api/join.ts`         |
+| API  | `/demo` POST (the visitor's demo group)         | `src/api/demo.ts`         |
+| API  | `/app/groups` GET (native apps)                 | `src/api/app-groups.ts`   |
+| API  | `/app/groups/:id` GET (native apps)             | `src/api/app-group.ts`    |
+| API  | `/app/groups/:id/expenses/:expenseId` GET       | `src/api/app-expense.ts`  |
+| API  | `/app/groups/:id/activity` GET (native apps)    | `src/api/app-activity.ts` |
+| API  | `/app/groups/:id/stats` GET (native apps)       | `src/api/app-stats.ts`    |
 
 ## Links with other apps (ADR 0035)
 
@@ -53,7 +63,7 @@ bill with everyone's exact share; Shopping adds what was bought, split equally. 
 
 ## Database
 
-`db/migrations/0001_expenses.sql` and `0002_expense_source.sql` on the app's own database (`EXPENSES_DB_*`): `expense_groups`,
+`db/migrations/0001_expenses.sql`, `0002_expense_source.sql` and `0003_expense_demo.sql` on the app's own database (`EXPENSES_DB_*`): `expense_groups`,
 `group_members`, `group_invites`, `expenses`, `expense_shares`, `payments`, `expense_comments`,
 `group_activity`. The platform's project row: `db/migrations/0054_expenses_project.sql`.
 

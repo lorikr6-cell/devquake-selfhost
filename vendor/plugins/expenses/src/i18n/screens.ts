@@ -37,6 +37,28 @@ export const screens = defineMessages(
       newGroup: 'New group',
       expensesCount: { one: '{count} expense', other: '{count} expenses' },
       total: 'Spent together: {amount}',
+      demo: {
+        intro:
+          'Try the app first: a demo trip with four friends, expenses split every way, comments and a payment. It is yours alone and you can delete it like any group.',
+        create: 'Open a demo group',
+        creating: 'Making the demo…',
+        created: 'Demo group ready',
+        group: 'Demo · Weekend in Lisbon',
+        items: {
+          flights: 'Flights',
+          apartment: 'Apartment',
+          dinner: 'Dinner by the river',
+          groceries: 'Groceries',
+          taxi: 'Taxi from the airport',
+          museum: 'Museum tickets',
+          gift: 'Gift for Lena',
+          coffee: 'Coffee and pastries',
+        },
+        comment1: 'I paid with my card, the receipt is in my email.',
+        comment2: 'Thanks! I will send my part tonight.',
+        note: 'Two nights, four people',
+        payment: 'Bank transfer',
+      },
     },
     kinds: {
       trip: 'Trip',
@@ -77,6 +99,7 @@ export const screens = defineMessages(
     },
     group: {
       back: '← Your groups',
+      switch: 'Switch group',
       tabs: {
         label: 'Parts of the group',
         expenses: 'Expenses',
@@ -314,6 +337,28 @@ export const screens = defineMessages(
         newGroup: 'Neue Gruppe',
         expensesCount: { one: '{count} Ausgabe', other: '{count} Ausgaben' },
         total: 'Gemeinsam ausgegeben: {amount}',
+        demo: {
+          intro:
+            'Probier die App zuerst aus: ein Demo-Ausflug mit vier Freunden, Ausgaben auf jede Art geteilt, Kommentare und eine Zahlung. Sie gehört nur dir, und du kannst sie wie jede Gruppe löschen.',
+          create: 'Demo-Gruppe öffnen',
+          creating: 'Demo wird erstellt…',
+          created: 'Demo-Gruppe bereit',
+          group: 'Demo · Wochenende in Lissabon',
+          items: {
+            flights: 'Flüge',
+            apartment: 'Wohnung',
+            dinner: 'Abendessen am Fluss',
+            groceries: 'Lebensmittel',
+            taxi: 'Taxi vom Flughafen',
+            museum: 'Museumstickets',
+            gift: 'Geschenk für Lena',
+            coffee: 'Kaffee und Gebäck',
+          },
+          comment1: 'Ich habe mit Karte bezahlt, der Beleg ist in meiner E-Mail.',
+          comment2: 'Danke! Ich schicke meinen Teil heute Abend.',
+          note: 'Zwei Nächte, vier Personen',
+          payment: 'Überweisung',
+        },
       },
       kinds: {
         trip: 'Reise',
@@ -355,6 +400,7 @@ export const screens = defineMessages(
       },
       group: {
         back: '← Deine Gruppen',
+        switch: 'Gruppe wechseln',
         tabs: {
           label: 'Bereiche der Gruppe',
           expenses: 'Ausgaben',
@@ -603,6 +649,28 @@ export const screens = defineMessages(
           other: '{count} de cheltuieli',
         },
         total: 'Cheltuit împreună: {amount}',
+        demo: {
+          intro:
+            'Încearcă mai întâi aplicația: o excursie demo cu patru prieteni, cheltuieli împărțite în toate felurile, comentarii și o plată. E doar a ta și o poți șterge ca pe orice grup.',
+          create: 'Deschide un grup demo',
+          creating: 'Se pregătește demo-ul…',
+          created: 'Grupul demo e gata',
+          group: 'Demo · Weekend la Lisabona',
+          items: {
+            flights: 'Bilete de avion',
+            apartment: 'Apartament',
+            dinner: 'Cină pe malul râului',
+            groceries: 'Cumpărături',
+            taxi: 'Taxi de la aeroport',
+            museum: 'Bilete la muzeu',
+            gift: 'Cadou pentru Lena',
+            coffee: 'Cafea și prăjituri',
+          },
+          comment1: 'Am plătit cu cardul, bonul e în e-mailul meu.',
+          comment2: 'Mulțumesc! Îți trimit partea mea diseară.',
+          note: 'Două nopți, patru persoane',
+          payment: 'Transfer bancar',
+        },
       },
       kinds: {
         trip: 'Excursie',
@@ -643,6 +711,7 @@ export const screens = defineMessages(
       },
       group: {
         back: '← Grupurile tale',
+        switch: 'Schimbă grupul',
         tabs: {
           label: 'Secțiunile grupului',
           expenses: 'Cheltuieli',
@@ -886,6 +955,28 @@ export const screens = defineMessages(
         newGroup: 'Új csoport',
         expensesCount: { one: '{count} kiadás', other: '{count} kiadás' },
         total: 'Együtt elköltve: {amount}',
+        demo: {
+          intro:
+            'Próbáld ki előbb az alkalmazást: egy demó kirándulás négy baráttal, mindenféleképpen megosztott kiadásokkal, hozzászólásokkal és egy kifizetéssel. Csak a tiéd, és bármelyik csoporthoz hasonlóan törölheted.',
+          create: 'Demó csoport megnyitása',
+          creating: 'A demó készül…',
+          created: 'A demó csoport kész',
+          group: 'Demó · Hétvége Lisszabonban',
+          items: {
+            flights: 'Repülőjegyek',
+            apartment: 'Apartman',
+            dinner: 'Vacsora a folyóparton',
+            groceries: 'Élelmiszer',
+            taxi: 'Taxi a reptérről',
+            museum: 'Múzeumi belépők',
+            gift: 'Ajándék Lenának',
+            coffee: 'Kávé és sütemény',
+          },
+          comment1: 'Kártyával fizettem, a nyugta az e-mailemben van.',
+          comment2: 'Köszi! Ma este elküldöm a részemet.',
+          note: 'Két éjszaka, négy fő',
+          payment: 'Banki átutalás',
+        },
       },
       kinds: {
         trip: 'Utazás',
@@ -927,6 +1018,7 @@ export const screens = defineMessages(
       },
       group: {
         back: '← A csoportjaid',
+        switch: 'Csoport váltása',
         tabs: {
           label: 'A csoport részei',
           expenses: 'Kiadások',
@@ -1165,6 +1257,28 @@ export const screens = defineMessages(
         newGroup: 'Nuovo gruppo',
         expensesCount: { one: '{count} spesa', many: '{count} spese', other: '{count} spese' },
         total: 'Speso insieme: {amount}',
+        demo: {
+          intro:
+            'Prova prima l’app: un viaggio demo con quattro amici, spese divise in tutti i modi, commenti e un pagamento. È solo tuo e puoi eliminarlo come ogni gruppo.',
+          create: 'Apri un gruppo demo',
+          creating: 'Preparo la demo…',
+          created: 'Gruppo demo pronto',
+          group: 'Demo · Weekend a Lisbona',
+          items: {
+            flights: 'Voli',
+            apartment: 'Appartamento',
+            dinner: 'Cena sul fiume',
+            groceries: 'Spesa',
+            taxi: 'Taxi dall’aeroporto',
+            museum: 'Biglietti del museo',
+            gift: 'Regalo per Lena',
+            coffee: 'Caffè e pasticcini',
+          },
+          comment1: 'Ho pagato con la carta, la ricevuta è nella mia email.',
+          comment2: 'Grazie! Stasera ti mando la mia parte.',
+          note: 'Due notti, quattro persone',
+          payment: 'Bonifico',
+        },
       },
       kinds: {
         trip: 'Viaggio',
@@ -1206,6 +1320,7 @@ export const screens = defineMessages(
       },
       group: {
         back: '← I tuoi gruppi',
+        switch: 'Cambia gruppo',
         tabs: {
           label: 'Sezioni del gruppo',
           expenses: 'Spese',
@@ -1449,6 +1564,28 @@ export const screens = defineMessages(
         newGroup: 'Nuevo grupo',
         expensesCount: { one: '{count} gasto', many: '{count} gastos', other: '{count} gastos' },
         total: 'Gastado juntos: {amount}',
+        demo: {
+          intro:
+            'Prueba primero la app: un viaje de demostración con cuatro amigos, gastos divididos de todas las formas, comentarios y un pago. Es solo tuyo y puedes eliminarlo como cualquier grupo.',
+          create: 'Abrir un grupo de demostración',
+          creating: 'Preparando la demostración…',
+          created: 'Grupo de demostración listo',
+          group: 'Demo · Fin de semana en Lisboa',
+          items: {
+            flights: 'Vuelos',
+            apartment: 'Apartamento',
+            dinner: 'Cena junto al río',
+            groceries: 'Compra',
+            taxi: 'Taxi desde el aeropuerto',
+            museum: 'Entradas del museo',
+            gift: 'Regalo para Lena',
+            coffee: 'Café y pasteles',
+          },
+          comment1: 'Pagué con tarjeta, el recibo está en mi correo.',
+          comment2: '¡Gracias! Esta noche te envío mi parte.',
+          note: 'Dos noches, cuatro personas',
+          payment: 'Transferencia',
+        },
       },
       kinds: {
         trip: 'Viaje',
@@ -1489,6 +1626,7 @@ export const screens = defineMessages(
       },
       group: {
         back: '← Tus grupos',
+        switch: 'Cambiar de grupo',
         tabs: {
           label: 'Secciones del grupo',
           expenses: 'Gastos',

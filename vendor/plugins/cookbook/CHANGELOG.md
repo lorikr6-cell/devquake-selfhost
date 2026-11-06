@@ -1,5 +1,9 @@
 # Changelog — Cookbook
 
+## 0.10.0
+
+- A new recipe in the library: chicken paprikash with dumplings.
+
 ## 0.9.0
 
 - Tips on every page: how to see the details, how to add and how to change. Turn them on or off with 💡 at the top; the choice is kept on this device.

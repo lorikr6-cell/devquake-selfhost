@@ -1,5 +1,11 @@
 # Changelog — Shared expenses
 
+## 0.5.0
+
+- A demo group to try everything first: a weekend trip with three friends, expenses split every way, comments and a payment, in your language. Open it from the home page; it is yours alone and can be deleted like any group.
+- Switch between your groups from the top of any group page, staying on the same tab.
+- Phone notifications for the apps on Android, iPhone and Windows: you hear of an expense you are in being added, changed or deleted, a payment to or from you, a comment on an expense you are in, and (as the owner) someone joining. Nobody else is told, and never the person who made the change.
+
 ## 0.4.0
 
 - Tips on every page: how to see the details, how to add and how to change. Turn them on or off with 💡 at the top; the choice is kept on this device.

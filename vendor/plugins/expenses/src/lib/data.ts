@@ -151,6 +151,19 @@ export async function groupsOf(db: Db, userId: number): Promise<GroupSummary[]> 
   }));
 }
 
+/** The visitor's groups by name (the group switcher): id, name and kind, by name. */
+export async function groupNamesOf(
+  db: Db,
+  userId: number,
+): Promise<{ id: number; name: string; kind: GroupKind }[]> {
+  const rows = await db.query<{ id: number; name: string; kind: GroupKind }>(
+    `SELECT g.id, g.name, g.kind FROM group_members m JOIN expense_groups g ON g.id = m.group_id
+      WHERE m.user_id = ? AND m.left_at IS NULL ORDER BY g.name, g.id`,
+    [userId],
+  );
+  return rows.map((r) => ({ id: num(r.id), name: r.name, kind: r.kind }));
+}
+
 export async function createGroup(
   db: PluginDatabase,
   user: PluginUser,
@@ -459,7 +472,9 @@ export async function groupByInvite(db: Db, code: string): Promise<InvitedGroup 
 export async function joinByInvite(db: Db, code: string, user: PluginUser) {
   const group = await groupByInvite(db, code);
   if (!group) throw new HttpError(404, 'inviteInvalid');
-  if (await membership(db, group.id, user.id)) return { groupId: group.id, inviter: null };
+  if (await membership(db, group.id, user.id)) {
+    return { groupId: group.id, inviter: null, isNew: false };
+  }
   if (group.members >= LIMITS.membersPerGroup) {
     throw new HttpError(400, 'tooManyMembers', { max: LIMITS.membersPerGroup });
   }
@@ -470,7 +485,7 @@ export async function joinByInvite(db: Db, code: string, user: PluginUser) {
     [group.id, user.id, user.displayName.slice(0, LIMITS.memberName), inviter],
   );
   await logActivity(db, group.id, res.insertId, 'member_joined', { otherId: res.insertId });
-  return { groupId: group.id, inviter };
+  return { groupId: group.id, inviter, isNew: true };
 }
 
 /** Who brought this user into a group (the platform's invitedBy hook, ADR 0043). */

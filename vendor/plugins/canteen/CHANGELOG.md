@@ -1,5 +1,13 @@
 # Changelog — Social canteen
 
+## 0.29.0
+
+- Drivers are now told about every change an organiser makes to their route for today or tomorrow: a stop added, removed or moved to another driver, a new order, last week's routes copied, a package ticked or a comment. Each driver whose route changed gets one notification; the drivers’ app shows the new route straight away.
+
+## 0.28.0
+
+- Drivers get a notification on their phone (Android drivers’ app) when an organiser changes their route for today or tomorrow; nobody else is told.
+
 ## 0.27.4
 
 - The demo organisation now also shows a photo and an ID card on a person’s profile and two medical papers in the medical file, so every part of the app can be tried.

@@ -41,6 +41,7 @@ export default async function BalancesPage({ ctx, params }: PluginPageProps) {
   return (
     <GroupShell
       group={group}
+      groups={scope.groups}
       tab="balances"
       members={members.filter((m) => m.active).length}
       balance={

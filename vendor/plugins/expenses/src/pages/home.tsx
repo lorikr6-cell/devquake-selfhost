@@ -1,6 +1,7 @@
 import type { PluginPageProps } from '@devquake/plugin-sdk';
 import { Link } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
+import { DemoButton } from '../components/demo-button';
 import { GroupForm } from '../components/group-form';
 import { BalanceText } from '../components/group-shell';
 import { moneyIn, pageScope } from '../components/guard';
@@ -77,6 +78,8 @@ export default async function Home({ ctx }: PluginPageProps) {
         <h2 className="font-display text-lg font-semibold">{t('newGroup')}</h2>
         <GroupForm />
       </Panel>
+
+      <DemoButton />
     </div>
   );
 }

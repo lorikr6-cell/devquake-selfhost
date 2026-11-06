@@ -1,5 +1,9 @@
 # Registro de cambios — Recetario
 
+## 0.10.0
+
+- Una receta nueva en la biblioteca: pollo al pimentón con ñoquis húngaros.
+
 ## 0.9.0
 
 - Consejos en cada página: cómo ver los detalles, cómo añadir y cómo cambiar. Actívalos o desactívalos con 💡 arriba; la elección se guarda en este dispositivo.

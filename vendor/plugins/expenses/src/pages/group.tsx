@@ -34,6 +34,7 @@ export default async function GroupPage({ ctx, params, searchParams }: PluginPag
   return (
     <GroupShell
       group={group}
+      groups={scope.groups}
       tab="expenses"
       members={active.length}
       balance={

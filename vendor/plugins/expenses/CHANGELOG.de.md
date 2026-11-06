@@ -1,5 +1,11 @@
 # Änderungsprotokoll — Geteilte Ausgaben
 
+## 0.5.0
+
+- Eine Demo-Gruppe, um zuerst alles auszuprobieren: ein Wochenendausflug mit drei Freunden, Ausgaben auf jede Art geteilt, Kommentare und eine Zahlung, in deiner Sprache. Öffne sie auf der Startseite; sie gehört nur dir und lässt sich wie jede Gruppe löschen.
+- Wechsle oben auf jeder Gruppenseite zwischen deinen Gruppen und bleib dabei auf demselben Reiter.
+- Benachrichtigungen für die Apps auf Android, iPhone und Windows: Du erfährst, wenn eine Ausgabe, an der du beteiligt bist, hinzugefügt, geändert oder gelöscht wird, von einer Zahlung an dich oder von dir, von einem Kommentar zu einer deiner Ausgaben und (als Inhaber) wenn jemand beitritt. Sonst niemand wird benachrichtigt, nie die Person, die die Änderung gemacht hat.
+
 ## 0.4.0
 
 - Tipps auf jeder Seite: wie du Details siehst, etwas hinzufügst und änderst. Schalte sie oben mit 💡 ein oder aus; die Wahl bleibt auf diesem Gerät.

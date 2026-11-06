@@ -3,8 +3,10 @@ import type {
   PluginApiHandler,
   PluginDatabase,
   PluginPeople,
+  PluginPush,
   PluginUser,
 } from '@devquake/plugin-sdk';
+import type { Locale } from '@devquake/ui';
 import { localeOf, translator } from '../i18n';
 import { todayIn } from './dates';
 import { HttpError } from './http';
@@ -20,6 +22,12 @@ export interface ApiScope {
   people: PluginPeople | undefined;
   /** Free access for people a member invited (ADR 0043). */
   grantInvitedAccess: ((inviterUserId: number) => Promise<boolean>) | undefined;
+  /** Phone notifications to members (ADR 0084): only to those concerned (lib/notify.ts). */
+  push: PluginPush | undefined;
+  /** The page or app language. */
+  locale: Locale;
+  /** This app's address, e.g. https://expenses.devquake.com (invite links). */
+  baseUrl: string;
 }
 
 /**
@@ -40,6 +48,9 @@ export function api(fn: (scope: ApiScope) => Promise<unknown>): PluginApiHandler
         today: todayIn(ctx.timeZone || 'UTC'),
         people: ctx.people,
         grantInvitedAccess: ctx.grantInvitedAccess,
+        push: ctx.push,
+        locale: localeOf(ctx),
+        baseUrl: ctx.baseUrl,
       });
       if (result instanceof Response) return result;
       if (result === undefined) return new Response(null, { status: 204 });

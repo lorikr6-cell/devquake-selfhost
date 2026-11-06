@@ -1,5 +1,9 @@
 # Változások — Szakácskönyv
 
+## 0.10.0
+
+- Új recept a könyvtárban: paprikás csirke nokedlivel.
+
 ## 0.9.0
 
 - Tippek minden oldalon: hogyan látod a részleteket, hogyan adsz hozzá és hogyan módosítasz. Felül a 💡 gombbal kapcsolhatod be vagy ki; a választás ezen az eszközön marad.

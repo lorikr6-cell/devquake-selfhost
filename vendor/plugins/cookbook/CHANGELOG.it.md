@@ -1,5 +1,9 @@
 # Registro delle modifiche — Ricettario
 
+## 0.10.0
+
+- Una nuova ricetta nella raccolta: pollo alla paprika con gnocchetti.
+
 ## 0.9.0
 
 - Suggerimenti su ogni pagina: come vedere i dettagli, come aggiungere e come modificare. Attivali o disattivali con 💡 in alto; la scelta resta su questo dispositivo.

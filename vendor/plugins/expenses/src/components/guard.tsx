@@ -3,7 +3,16 @@ import type { PluginContext, PluginDatabase, PluginUser } from '@devquake/plugin
 import { LOCALE_TAGS, rich, type Locale, type Translate } from '@devquake/ui';
 import type { ReactNode } from 'react';
 import { localeOf, translator } from '../i18n';
-import { groupById, membersOf, membership, type Group, type Me, type Member } from '../lib/data';
+import {
+  groupById,
+  groupNamesOf,
+  membersOf,
+  membership,
+  type Group,
+  type Me,
+  type Member,
+} from '../lib/data';
+import { KIND_ICONS } from '../lib/model';
 import { todayIn } from '../lib/dates';
 import { formatMoney } from '../lib/model';
 import { Notice } from './ui';
@@ -62,7 +71,13 @@ export function pageScope(ctx: PluginContext): PageScope {
 }
 
 export type GroupScope =
-  | (Extract<PageScope, { ok: true }> & { group: Group; me: Me; members: Member[] })
+  | (Extract<PageScope, { ok: true }> & {
+      group: Group;
+      me: Me;
+      members: Member[];
+      /** The visitor's groups, for the switcher. */
+      groups: { id: number; name: string; icon: string }[];
+    })
   | { ok: false; notice: ReactNode };
 
 /**
@@ -81,7 +96,17 @@ export async function groupScope(
   if (!me) notFound();
   const group = await groupById(scope.db, groupId);
   if (!group) notFound();
-  return { ...scope, group, me, members: await membersOf(scope.db, groupId) };
+  const [members, groups] = await Promise.all([
+    membersOf(scope.db, groupId),
+    groupNamesOf(scope.db, scope.user.id),
+  ]);
+  return {
+    ...scope,
+    group,
+    me,
+    members,
+    groups: groups.map((g) => ({ id: g.id, name: g.name, icon: KIND_ICONS[g.kind] })),
+  };
 }
 
 /** A member's name; people whose account was deleted show as "Former member". */

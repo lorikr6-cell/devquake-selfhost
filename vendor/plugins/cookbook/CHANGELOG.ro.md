@@ -1,5 +1,9 @@
 # Modificări — Carte de bucate
 
+## 0.10.0
+
+- O rețetă nouă în bibliotecă: papricaș de pui cu găluște.
+
 ## 0.9.0
 
 - Sfaturi pe fiecare pagină: cum vezi detaliile, cum adaugi și cum modifici. Pornește-le sau oprește-le cu 💡 din partea de sus; alegerea rămâne pe acest dispozitiv.

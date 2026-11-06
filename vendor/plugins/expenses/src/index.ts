@@ -5,7 +5,7 @@ export default definePlugin({
   manifest: {
     id: 'expenses',
     name: 'Shared expenses',
-    version: '0.4.0',
+    version: '0.5.0',
     description:
       'Who paid what on a trip, in a flat, for a couple or an event, who owes whom, and the fewest transfers to settle up. Split equally, by shares, by percent or exact amounts; friends join by link or QR.',
     status: 'active',
@@ -115,6 +115,7 @@ export default definePlugin({
   api: {
     '/health': () => import('./api/health'),
     '/groups': () => import('./api/groups'),
+    '/demo': () => import('./api/demo'),
     '/groups/:id': () => import('./api/group'),
     '/groups/:id/expenses': () => import('./api/expenses'),
     '/groups/:id/expenses/:expenseId': () => import('./api/expense'),
@@ -126,6 +127,12 @@ export default definePlugin({
     '/groups/:id/members': () => import('./api/members'),
     '/groups/:id/members/:memberId': () => import('./api/member'),
     '/join': () => import('./api/join'),
+    // The native apps (ADR 0062): Android, iPhone and Windows show the same.
+    '/app/groups': () => import('./api/app-groups'),
+    '/app/groups/:id': () => import('./api/app-group'),
+    '/app/groups/:id/expenses/:expenseId': () => import('./api/app-expense'),
+    '/app/groups/:id/activity': () => import('./api/app-activity'),
+    '/app/groups/:id/stats': () => import('./api/app-stats'),
   },
   linkHandlers: {
     'groups.overview': () => import('./links/groups-overview'),

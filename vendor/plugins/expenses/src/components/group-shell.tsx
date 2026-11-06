@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { BackLink, Link, cn, type Translate } from '@devquake/ui';
 import type { Group } from '../lib/data';
 import { KIND_ICONS } from '../lib/model';
+import { GroupSwitch } from './group-switch';
 
 export type GroupTab = 'expenses' | 'balances' | 'activity' | 'stats' | 'members';
 
@@ -42,6 +43,7 @@ export function BalanceText({
 /** The group's header and its tabs: expenses, balances, activity, statistics and members. */
 export function GroupShell({
   group,
+  groups,
   tab,
   members,
   balance,
@@ -50,6 +52,8 @@ export function GroupShell({
   children,
 }: {
   group: Group;
+  /** The visitor's groups, for the switcher (shown with two or more). */
+  groups: { id: number; name: string; icon: string }[];
   tab: GroupTab;
   /** Active members. */
   members: number;
@@ -62,9 +66,16 @@ export function GroupShell({
   return (
     <div className="space-y-6">
       <div>
-        <BackLink href="/" className="text-sm text-ink/60 hover:text-quake dark:text-paper/60">
-          {t('back')}
-        </BackLink>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <BackLink href="/" className="text-sm text-ink/60 hover:text-quake dark:text-paper/60">
+            {t('back')}
+          </BackLink>
+          <GroupSwitch
+            current={group.id}
+            groups={groups}
+            path={TABS.find((x) => x.tab === tab)?.path ?? ''}
+          />
+        </div>
         <div className="mt-2 flex items-center gap-4">
           <span
             aria-hidden

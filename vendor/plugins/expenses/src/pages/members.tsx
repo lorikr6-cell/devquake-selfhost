@@ -50,6 +50,7 @@ export default async function MembersPage({ ctx, params }: PluginPageProps) {
   return (
     <GroupShell
       group={group}
+      groups={scope.groups}
       tab="members"
       members={active.length}
       balance={
